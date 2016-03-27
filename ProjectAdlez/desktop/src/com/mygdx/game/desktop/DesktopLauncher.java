@@ -7,6 +7,8 @@ import com.mygdx.game.AdlezDesktop;
 public class DesktopLauncher {
 	public static void main (String[] arg) {
 		LwjglApplicationConfiguration config = new LwjglApplicationConfiguration();
+		config.title = "Adlez";
 		new LwjglApplication(new AdlezDesktop(), config);
+
 	}
 }
