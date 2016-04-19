@@ -16,7 +16,13 @@ public abstract class Character extends WorldObject implements ICharacter {
 	public Character(){
 		
 	}
-	
+
+	@Override
+	public void move(float x, float y) {
+		this.setPosX(this.getPosX() + x);
+		this.setPosY(this.getPosY() + y);
+	}
+
 	@Override
 	public int getHealth(){
 		return health;

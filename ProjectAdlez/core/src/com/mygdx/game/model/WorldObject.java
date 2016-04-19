@@ -14,7 +14,7 @@ public abstract class WorldObject {
     }
 
     public float getPosY() {
-        return posX;
+        return posY;
     }
 
     public void setPosY(float y) {

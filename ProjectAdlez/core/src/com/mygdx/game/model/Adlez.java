@@ -12,7 +12,13 @@ public class Adlez {
         return adlez;
     }
 
+    private Player player;
+
     private Adlez() {
+        player = new Player();
     }
 
+    public Player getPlayer() {
+        return player;
+    }
 }

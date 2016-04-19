@@ -4,6 +4,8 @@ package com.mygdx.game.model;
  * Created by Michel on 2016-04-19.
  */
 public interface ICharacter {
+	void move(float x, float y);
+
 	int getHealth();
 	void setHealth(int health);
 	int getMana();
