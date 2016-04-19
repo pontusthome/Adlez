@@ -3,7 +3,7 @@ package com.mygdx.game.model;
 /**
  * Created by Michel on 2016-04-19.
  */
-public abstract class CharacterModel implements ICharacterModel{
+public abstract class Character extends WorldObject implements ICharacter {
 	private int health;
 	private int maxHealth;
 	private int mana;
@@ -13,7 +13,7 @@ public abstract class CharacterModel implements ICharacterModel{
 	private String name;
 	private String characterType;
 	
-	public CharacterModel(){
+	public Character(){
 		
 	}
 	

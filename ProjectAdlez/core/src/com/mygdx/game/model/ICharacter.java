@@ -3,7 +3,7 @@ package com.mygdx.game.model;
 /**
  * Created by Michel on 2016-04-19.
  */
-public interface ICharacterModel{
+public interface ICharacter {
 	int getHealth();
 	void setHealth(int health);
 	int getMana();
