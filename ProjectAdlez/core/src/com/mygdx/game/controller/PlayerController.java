@@ -37,27 +37,29 @@ public class PlayerController implements CharacterActions {
     @Override
     public void moveDirection() {
         if (Gdx.input.isKeyPressed(Input.Keys.W)) {
-            characterView.setCharacterPositionY(characterView.getCharacterPosition().y + 2f);
-            // Animation from View
-            characterView.setCurrentFrame(characterView.getAnimation().getKeyFrame(4 + characterView.getStateTime()));
-            //playerPosition.y +=2f;
+            move(0, 2f);
+            updateAnimation(4);
         } else if (Gdx.input.isKeyPressed(Input.Keys.S)) {
-            characterView.setCharacterPositionY(characterView.getCharacterPosition().y - 2f);
-            // Animation from View
-            characterView.setCurrentFrame(characterView.getAnimation().getKeyFrame(0 + characterView.getStateTime()));
-            //playerPosition.y -=2f;
+            move(0, -2f);
+            updateAnimation(0);
         } else if (Gdx.input.isKeyPressed(Input.Keys.A)) {
-            characterView.setCharacterPositionX(characterView.getCharacterPosition().x - 2f);
-            // Animation from View
-            characterView.setCurrentFrame(characterView.getAnimation().getKeyFrame(2 + characterView.getStateTime()));
-            //playerPosition.x -=2f;
+            move(-2f, 0);
+            updateAnimation(2);
         } else if (Gdx.input.isKeyPressed(Input.Keys.D)) {
-            characterView.setCharacterPositionX(characterView.getCharacterPosition().x + 2f);
-            // Animation from View
-            characterView.setCurrentFrame(characterView.getAnimation().getKeyFrame(6 + characterView.getStateTime()));
-            //playerPosition.x +=2f;
+            move(2f, 0);
+            updateAnimation(6);
         }
     }
+
+    public void move(float x, float y) {
+        characterView.setCharacterPositionX(characterView.getCharacterPosition().x + x);
+        characterView.setCharacterPositionY(characterView.getCharacterPosition().y + y);
+    }
+
+    public void updateAnimation(int frame) {
+        characterView.setCurrentFrame(characterView.getAnimation().getKeyFrame(frame + characterView.getStateTime()));
+    }
+
 
     @Override
     public void attackDirection() {
