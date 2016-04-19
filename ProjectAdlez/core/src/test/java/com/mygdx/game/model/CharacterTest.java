@@ -29,6 +29,9 @@ public class CharacterTest {
         player.move(3, 2);
         assertTrue(player.getPosX() == 5);
         assertTrue(player.getPosY() == 5);
+        player.move(-10, -2);
+        assertTrue(player.getPosX() == -5);
+        assertTrue(player.getPosY() == 3);
     }
 
 }
