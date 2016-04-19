@@ -6,11 +6,13 @@ package com.mygdx.game.model;
  * Singleton of the model Adlez
  */
 public class Adlez {
-    private static final Adlez INSTANCE = new Adlez();
-
-    private Adlez() {}
+    private static Adlez adlez = new Adlez();
 
     public static Adlez getInstance() {
-        return INSTANCE;
+        return adlez;
     }
+
+    private Adlez() {
+    }
+
 }
