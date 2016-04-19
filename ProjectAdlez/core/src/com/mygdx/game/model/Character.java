@@ -12,9 +12,10 @@ public abstract class Character extends WorldObject implements ICharacter {
 	private int gold;
 	private String name;
 	private String characterType;
+	private int direction;
 	
 	public Character(){
-		
+		direction = Direction.NORTH;
 	}
 
 	@Override
@@ -101,5 +102,15 @@ public abstract class Character extends WorldObject implements ICharacter {
 	@Override
 	public void setMaxMana(int maxMana){
 		this.maxMana = maxMana;
+	}
+
+	@Override
+	public int getDirection() {
+		return direction;
+	}
+
+	@Override
+	public void setDirection(int direction) {
+		this.direction = direction;
 	}
 }

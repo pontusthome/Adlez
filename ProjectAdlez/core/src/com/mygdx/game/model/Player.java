@@ -11,7 +11,5 @@ public class Player extends Character {
 	//Change String class to IItem/Item later
 	private List<String> items;
 	private List<String> itemsEquipped;
-	
-	
-	
+
 }

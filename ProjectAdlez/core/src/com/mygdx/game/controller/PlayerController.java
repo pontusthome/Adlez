@@ -3,65 +3,44 @@ package com.mygdx.game.controller;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
 import com.badlogic.gdx.math.Vector2;
+import com.mygdx.game.model.Adlez;
+import com.mygdx.game.model.Direction;
+import com.mygdx.game.model.Player;
 import com.mygdx.game.view.CharacterView;
 
 /**
  * Created by martinso on 27/03/16.
  */
-public class PlayerController implements CharacterActions {
+public class PlayerController {
 
-    private CharacterView characterView;
+    private Player player;
 
-    private Vector2 playerPosition;
-
-    public PlayerController(CharacterView character) {
-        characterView = character;
+    public PlayerController(Player player) {
+        this.player = player;
     }
 
     // Updating the character's animation.
     public void updatePlayer() {
         moveDirection();
-
-        if (characterView.getStateTime() < 2) {
-            characterView.setStateTime(characterView.getStateTime() + Gdx.graphics.getDeltaTime() * 6);
-            if (characterView.getStateTime() > 2) {
-                characterView.setStateTime(0);
-            }
-        } else {
-            characterView.setStateTime(0);
-        }
-        characterView.setStateTime(characterView.getStateTime() + Gdx.graphics.getDeltaTime());
     }
 
     // Moving player with keys: W A S D
-    @Override
     public void moveDirection() {
         if (Gdx.input.isKeyPressed(Input.Keys.W)) {
-            move(0, 2f);
-            updateAnimation(4);
+            player.move(0, 2f);
+            player.setDirection(Direction.NORTH);
         } else if (Gdx.input.isKeyPressed(Input.Keys.S)) {
-            move(0, -2f);
-            updateAnimation(0);
+            player.move(0, -2f);
+            player.setDirection(Direction.SOUTH);
         } else if (Gdx.input.isKeyPressed(Input.Keys.A)) {
-            move(-2f, 0);
-            updateAnimation(2);
+            player.move(-2f, 0);
+            player.setDirection(Direction.WEST);
         } else if (Gdx.input.isKeyPressed(Input.Keys.D)) {
-            move(2f, 0);
-            updateAnimation(6);
+            player.move(2f, 0);
+            player.setDirection(Direction.EAST);
         }
     }
 
-    public void move(float x, float y) {
-        characterView.setCharacterPositionX(characterView.getCharacterPosition().x + x);
-        characterView.setCharacterPositionY(characterView.getCharacterPosition().y + y);
-    }
-
-    public void updateAnimation(int frame) {
-        characterView.setCurrentFrame(characterView.getAnimation().getKeyFrame(frame + characterView.getStateTime()));
-    }
-
-
-    @Override
     public void attackDirection() {
         if (Gdx.input.isKeyPressed((Input.Keys.K))) {
         }

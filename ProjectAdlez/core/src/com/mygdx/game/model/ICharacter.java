@@ -22,4 +22,6 @@ public interface ICharacter {
 	void setMaxHealth(int maxHealth);
 	int getMaxMana();
 	void setMaxMana(int maxMana);
+	int getDirection();
+	void setDirection(int direction);
 }

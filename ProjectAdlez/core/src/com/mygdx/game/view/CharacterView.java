@@ -11,7 +11,6 @@ import com.badlogic.gdx.math.Vector2;
  */
 public class CharacterView {
 
-    private Vector2 characterPosition;
     private String characterImg;
 
     private Texture characterTexture;
@@ -23,12 +22,13 @@ public class CharacterView {
 
     private Animation animation;
 
-    public CharacterView(Vector2 position, String characterImg) {
-        this.characterPosition = position;
+    public CharacterView(String characterImg) {
         this.characterImg = characterImg;
 
         characterTexture = new Texture((Gdx.files.internal((characterImg))));
-        TextureRegion[][] tmp = TextureRegion.split(characterTexture, characterTexture.getWidth() / col, characterTexture.getHeight() / row);
+        TextureRegion[][] tmp = TextureRegion.split(characterTexture,
+                                                    characterTexture.getWidth() / col,
+                                                    characterTexture.getHeight() / row);
         characterFrames = new TextureRegion[col * row];
 
         // Setting frames from player sheet.
@@ -48,12 +48,24 @@ public class CharacterView {
 
     }
 
+    public void update() {
+        if (getStateTime() < 2) {
+            setStateTime(getStateTime() + Gdx.graphics.getDeltaTime() * 6);
+            if (getStateTime() > 2) {
+                setStateTime(0);
+            }
+        } else {
+            setStateTime(0);
+        }
+        setStateTime(getStateTime() + Gdx.graphics.getDeltaTime());
+    }
+
     public TextureRegion getCurrentFrame() {
         return currentFrame;
     }
 
-    public void setCurrentFrame(TextureRegion currentFrame) {
-        this.currentFrame = currentFrame;
+    public void setCurrentFrame(int frame) {
+        this.currentFrame = getAnimation().getKeyFrame(frame + getStateTime());
     }
 
     public float getStateTime() {
@@ -62,18 +74,6 @@ public class CharacterView {
 
     public void setStateTime(float stateTime) {
         this.stateTime = stateTime;
-    }
-
-    public Vector2 getCharacterPosition() {
-        return characterPosition;
-    }
-
-    public void setCharacterPositionX(float characterPosition) {
-        this.characterPosition.x = characterPosition;
-    }
-
-    public void setCharacterPositionY(float characterPosition) {
-        this.characterPosition.y = characterPosition;
     }
 
     public Animation getAnimation() {
