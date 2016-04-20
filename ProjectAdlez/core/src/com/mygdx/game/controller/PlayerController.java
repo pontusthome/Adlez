@@ -8,7 +8,7 @@ import com.mygdx.game.model.Player;
 /**
  * Created by martinso on 27/03/16.
  */
-public class PlayerController {
+public class PlayerController implements CharacterActions {
 
     private Player player;
 
@@ -21,6 +21,7 @@ public class PlayerController {
      * Move with: W A S D
      * Attack with: K
      */
+    @Override
     public void update() {
         if (Gdx.input.isKeyPressed(Input.Keys.W)) {
             player.move(0, 2f);

@@ -13,9 +13,11 @@ public abstract class Character extends WorldObject implements ICharacter {
 	private String name;
 	private String characterType;
 	private int direction;
+	private float speed;
 	
 	public Character(){
 		direction = Direction.NORTH;
+		speed = 2f;
 	}
 
 	@Override
@@ -112,5 +114,15 @@ public abstract class Character extends WorldObject implements ICharacter {
 	@Override
 	public void setDirection(int direction) {
 		this.direction = direction;
+	}
+
+	@Override
+	public float getSpeed() {
+		return speed;
+	}
+
+	@Override
+	public void setSpeed(float speed) {
+		this.speed = speed;
 	}
 }

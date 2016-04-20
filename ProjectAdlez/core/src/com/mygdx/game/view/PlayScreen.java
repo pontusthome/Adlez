@@ -11,9 +11,14 @@ import com.badlogic.gdx.maps.tiled.TmxMapLoader;
 import com.badlogic.gdx.maps.tiled.renderers.OrthoCachedTiledMapRenderer;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.utils.viewport.ScreenViewport;
+import com.mygdx.game.controller.EnemyController;
 import com.mygdx.game.controller.PlayerController;
 import com.mygdx.game.model.Adlez;
+import com.mygdx.game.model.NPC;
 import com.mygdx.game.model.Player;
+
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Created by martinso on 27/03/16.
@@ -22,9 +27,13 @@ public class PlayScreen implements Screen {
 
     private Adlez adlez = Adlez.getInstance();
     private Player player = adlez.getPlayer();
+    private List<NPC> enemies = adlez.getEnemies();
 
     private CharacterView playerView;
     private PlayerController playerController;
+
+    private List<CharacterView> enemyViews;
+    private EnemyController enemyController;
 
     private Game game;
 
@@ -53,6 +62,14 @@ public class PlayScreen implements Screen {
         playerView = new CharacterView("playerSpritesMove.png");
         playerController = new PlayerController(player);
 
+        // Spawning enemies.
+        enemyController = new EnemyController(enemies, player);
+        enemyViews = new ArrayList<CharacterView>();
+        for (int i = 0; i < enemies.size(); i++) {
+            CharacterView enemyView = new CharacterView("playerSpritesMove.png");
+            enemyViews.add(enemyView);
+        }
+
         // temporary things, just testing
         testing1 = new TmxMapLoader().load("test1.tmx");
         renderer = new OrthoCachedTiledMapRenderer(testing1);
@@ -76,7 +93,7 @@ public class PlayScreen implements Screen {
 
         batch.begin();
 
-        // Updating playerController
+        // Updating player
         playerController.update();
         playerView.setCurrentFrame(player.getDirection());
         playerView.update();
@@ -86,6 +103,19 @@ public class PlayScreen implements Screen {
         batch.draw(playerView.getCurrentFrame(),
                    player.getPosX(),
                    player.getPosY());
+
+        // Updating enemies
+        enemyController.update();
+        for (int i = 0; i < enemyViews.size(); i++) {
+            CharacterView enemyView = enemyViews.get(i);
+            NPC enemy = enemies.get(i);
+
+            enemyView.setCurrentFrame(enemy.getDirection());
+            enemyView.update();
+            batch.draw(enemyView.getCurrentFrame(),
+                    enemy.getPosX(),
+                    enemy.getPosY());
+        }
 
         batch.end();
     }

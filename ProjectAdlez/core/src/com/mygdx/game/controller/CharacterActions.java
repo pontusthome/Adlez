@@ -5,9 +5,11 @@ package com.mygdx.game.controller;
  */
 public interface CharacterActions {
 
-    // Basic characteristics for a player
-    public void moveDirection();
+    public void update();
 
-    public void attackDirection();
+    // Basic characteristics for a player
+//    public void moveDirection();
+
+//    public void attackDirection();
 
 }

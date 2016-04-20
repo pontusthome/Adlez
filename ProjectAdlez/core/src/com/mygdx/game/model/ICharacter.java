@@ -24,4 +24,6 @@ public interface ICharacter {
 	void setMaxMana(int maxMana);
 	int getDirection();
 	void setDirection(int direction);
+	float getSpeed();
+	void setSpeed(float speed);
 }
