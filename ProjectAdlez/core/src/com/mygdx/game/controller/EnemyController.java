@@ -31,22 +31,26 @@ public class EnemyController implements CharacterActions {
             float playerY = player.getPosY();
             float x = enemy.getPosX();
             float y = enemy.getPosY();
-            if (playerY > y && Math.abs(playerY - y) > 1) {
+            boolean inRange = inRange(playerX, x, playerY, y, 200);
+            if (playerY > y && Math.abs(playerY - y) > 1 && inRange) {
                 enemy.move(0, enemy.getSpeed());
                 enemy.setDirection(Direction.NORTH);
             }
-            if (playerY < y && Math.abs(playerY - y) > 1) {
+            if (playerY < y && Math.abs(playerY - y) > 1 && inRange) {
                 enemy.move(0, -enemy.getSpeed());
                 enemy.setDirection(Direction.SOUTH);
             }
-            if (playerX < x && Math.abs(playerX - x) > 1) {
+            if (playerX < x && Math.abs(playerX - x) > 1 && inRange) {
                 enemy.move(-enemy.getSpeed(), 0);
                 enemy.setDirection(Direction.WEST);
             }
-            if (playerX > x && Math.abs(playerX - x) > 1) {
+            if (playerX > x && Math.abs(playerX - x) > 1 && inRange) {
                 enemy.move(enemy.getSpeed(), 0);
                 enemy.setDirection(Direction.EAST);
             }
         }
+    }
+    public boolean inRange(float x1, float x2, float y1, float y2, int range) {
+        return (Math.sqrt(Math.pow(Math.abs(x1-x2),2) + Math.pow(Math.abs(y1-y2),2)) < range);
     }
 }
