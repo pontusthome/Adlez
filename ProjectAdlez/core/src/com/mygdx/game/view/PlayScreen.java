@@ -9,7 +9,6 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.maps.tiled.TiledMap;
 import com.badlogic.gdx.maps.tiled.TmxMapLoader;
 import com.badlogic.gdx.maps.tiled.renderers.OrthoCachedTiledMapRenderer;
-import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.utils.viewport.ScreenViewport;
 import com.mygdx.game.controller.PlayerController;
@@ -24,10 +23,10 @@ public class PlayScreen implements Screen {
     private Adlez adlez = Adlez.getInstance();
     private Player player = adlez.getPlayer();
 
-    private Game game;
-
-    private CharacterView characterView;
+    private CharacterView playerView;
     private PlayerController playerController;
+
+    private Game game;
 
     private OrthographicCamera playerCam;
 
@@ -41,7 +40,6 @@ public class PlayScreen implements Screen {
         this.game = game;
     }
 
-
     @Override
     public void show() {
         playerCam = new OrthographicCamera(Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
@@ -52,7 +50,7 @@ public class PlayScreen implements Screen {
         stage.getViewport().update(Gdx.graphics.getWidth(), Gdx.graphics.getHeight(), false);
 
         // Spawning player.
-        characterView = new CharacterView("playerSpritesMove.png");
+        playerView = new CharacterView("playerSpritesMove.png");
         playerController = new PlayerController(player);
 
         // temporary things, just testing
@@ -79,15 +77,15 @@ public class PlayScreen implements Screen {
         batch.begin();
 
         // Updating playerController
-        playerController.updatePlayer();
-        characterView.setCurrentFrame(player.getDirection());
-        characterView.update();
-        playerCam.position.set(player.getPosX() + (characterView.getCurrentFrame().getRegionWidth() / 2),
-                               player.getPosY() + (characterView.getCurrentFrame().getRegionHeight() / 2),
+        playerController.update();
+        playerView.setCurrentFrame(player.getDirection());
+        playerView.update();
+        playerCam.position.set(player.getPosX() + (playerView.getCurrentFrame().getRegionWidth() / 2),
+                               player.getPosY() + (playerView.getCurrentFrame().getRegionHeight() / 2),
                                0); // z = 0, non 3D
-        batch.draw(characterView.getCurrentFrame(),
-                player.getPosX(),
-                player.getPosY());
+        batch.draw(playerView.getCurrentFrame(),
+                   player.getPosX(),
+                   player.getPosY());
 
         batch.end();
     }
