@@ -4,7 +4,10 @@ package com.mygdx.game.model;
  * Created by Michel on 2016-04-19.
  */
 public interface ICharacter {
-	void move(float x, float y);
+	void moveNorth();
+	void moveSouth();
+	void moveWest();
+	void moveEast();
 
 	int getAttackDamage();
 	void setAttackDamage(int attackDamage);

@@ -11,6 +11,7 @@ import com.mygdx.game.model.Player;
 public class PlayerController implements CharacterActions {
 
     private Player player;
+    private CollisionHandler collisionHandler = new CollisionHandler();
 
     public PlayerController(Player player) {
         this.player = player;
@@ -24,20 +25,32 @@ public class PlayerController implements CharacterActions {
     @Override
     public void update() {
         if (Gdx.input.isKeyPressed(Input.Keys.W)) {
-            player.move(0, 2f);
+            player.moveNorth();
             player.setDirection(Direction.NORTH);
+            if (collisionHandler.checkCollision(player)) {
+                player.moveSouth();
+            }
         }
         if (Gdx.input.isKeyPressed(Input.Keys.S)) {
-            player.move(0, -2f);
+            player.moveSouth();
             player.setDirection(Direction.SOUTH);
+            if (collisionHandler.checkCollision(player)) {
+                player.moveNorth();
+            }
         }
         if (Gdx.input.isKeyPressed(Input.Keys.A)) {
-            player.move(-2f, 0);
+            player.moveWest();
             player.setDirection(Direction.WEST);
+            if (collisionHandler.checkCollision(player)) {
+                player.moveEast();
+            }
         }
         if (Gdx.input.isKeyPressed(Input.Keys.D)) {
-            player.move(2f, 0);
+            player.moveEast();
             player.setDirection(Direction.EAST);
+            if (collisionHandler.checkCollision(player)) {
+                player.moveWest();
+            }
         }
         if (Gdx.input.isKeyPressed((Input.Keys.K))) {
             // Attack

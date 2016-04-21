@@ -14,6 +14,13 @@ public class Player extends Character {
     private Weapon weapon;
     private Armor armor;
 
+    public Player() {
+        setDirection(Direction.NORTH);
+        setSpeed(2f);
+        setWidth(10);
+        setHeight(10);
+    }
+
     public void equipItem(Item item) {
         if (item.equals(weapon)) {
             swordEquipped.add(item);

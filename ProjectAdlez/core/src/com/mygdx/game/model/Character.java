@@ -17,17 +17,32 @@ public abstract class Character extends WorldObject implements ICharacter {
 	private int direction;
 	private float speed;
 
-	// Character ska ta in värden såsom health och attack. Nu har character inga stats...
+	// Character ska ta in värden så som health och attack. Nu har character inga stats...
 	public Character(){
 		direction = Direction.NORTH;
 		speed = 2f;
+		setWidth(2);
+		setHeight(2);
 	}
 
 	@Override
-	public void move(float x, float y) {
-		this.setPosX(this.getPosX() + x);
-		this.setPosY(this.getPosY() + y);
+	public void moveNorth() {
+		this.setPosY(this.getPosY() + this.getSpeed());
 	}
+	@Override
+	public void moveSouth() {
+		this.setPosY(this.getPosY() - this.getSpeed());
+	}
+	@Override
+	public void moveWest() {
+		this.setPosX(this.getPosX() - this.getSpeed());
+	}
+	@Override
+	public void moveEast() {
+		this.setPosX(this.getPosX() + this.getSpeed());
+	}
+
+
 
 	@Override
 	public int getAttackDamage() {

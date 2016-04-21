@@ -23,15 +23,21 @@ public class CharacterTest {
 
     @org.junit.Test
     public void move() throws Exception {
-        player.move(2, 3);
-        assertTrue(player.getPosX() == 2);
-        assertTrue(player.getPosY() == 3);
-        player.move(3, 2);
-        assertTrue(player.getPosX() == 5);
-        assertTrue(player.getPosY() == 5);
-        player.move(-10, -2);
-        assertTrue(player.getPosX() == -5);
-        assertTrue(player.getPosY() == 3);
+        player.moveEast();
+        assertTrue(player.getPosX() == player.getSpeed());
+        assertTrue(player.getPosY() == 0);
+        player.moveWest();
+        assertTrue(player.getPosX() == 0);
+        assertTrue(player.getPosY() == 0);
+        player.moveWest();
+        assertTrue(player.getPosX() == -player.getSpeed());
+        assertTrue(player.getPosY() == 0);
+        player.moveSouth();
+        assertTrue(player.getPosX() == -player.getSpeed());
+        assertTrue(player.getPosY() == -player.getSpeed());
+        player.moveNorth();
+        assertTrue(player.getPosX() == -player.getSpeed());
+        assertTrue(player.getPosY() == 0);
     }
 
 }
