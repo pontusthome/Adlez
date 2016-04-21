@@ -4,6 +4,8 @@ package com.mygdx.game.model;
  * Created by Michel on 2016-04-19.
  */
 public abstract class Character extends WorldObject implements ICharacter {
+
+	private int attackDamage;
 	private int health;
 	private int maxHealth;
 	private int mana;
@@ -14,7 +16,8 @@ public abstract class Character extends WorldObject implements ICharacter {
 	private String characterType;
 	private int direction;
 	private float speed;
-	
+
+	// Character ska ta in värden såsom health och attack. Nu har character inga stats...
 	public Character(){
 		direction = Direction.NORTH;
 		speed = 2f;
@@ -24,6 +27,16 @@ public abstract class Character extends WorldObject implements ICharacter {
 	public void move(float x, float y) {
 		this.setPosX(this.getPosX() + x);
 		this.setPosY(this.getPosY() + y);
+	}
+
+	@Override
+	public int getAttackDamage() {
+		return attackDamage;
+	}
+
+	@Override
+	public void setAttackDamage(int attackDamage) {
+		this.attackDamage = attackDamage;
 	}
 
 	@Override

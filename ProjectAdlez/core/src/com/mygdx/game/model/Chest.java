@@ -9,13 +9,13 @@ import java.util.List;
 public class Chest extends WorldObject {
 
     private int chestSize;
-    List<Items> slots = new ArrayList<Items>(chestSize);
+    List<Item> slots = new ArrayList<Item>(chestSize);
 
     public void Chest(int chestSize) {
         this.chestSize = chestSize;
     }
 
-    public void addItems(Items type) {
+    public void addItems(Item type) {
         slots.add(type);
     }
 }

@@ -6,6 +6,8 @@ package com.mygdx.game.model;
 public interface ICharacter {
 	void move(float x, float y);
 
+	int getAttackDamage();
+	void setAttackDamage(int attackDamage);
 	int getHealth();
 	void setHealth(int health);
 	int getMana();

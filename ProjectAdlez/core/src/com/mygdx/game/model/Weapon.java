@@ -3,7 +3,7 @@ package com.mygdx.game.model;
 /**
  * Created by martinso on 20/04/16.
  */
-public class Weapon implements Items {
+public class Weapon implements Item {
 
     private String type;
     private String name;
@@ -31,11 +31,11 @@ public class Weapon implements Items {
         this.name = name;
     }
 
-    public int getDamage() {
+    public int getStats() {
         return damage;
     }
 
-    public void setDamage(int damage) {
+    public void setStats(int damage) {
         this.damage = damage;
     }
 }

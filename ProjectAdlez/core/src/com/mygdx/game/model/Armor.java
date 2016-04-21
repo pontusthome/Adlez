@@ -3,7 +3,7 @@ package com.mygdx.game.model;
 /**
  * Created by martinso on 20/04/16.
  */
-public class Armor implements Items {
+public class Armor implements Item {
 
     private String type;
     private String name;
@@ -35,11 +35,11 @@ public class Armor implements Items {
         this.name = name;
     }
 
-    public int getBonusHealth() {
+    public int getStats() {
         return bonusHealth;
     }
 
-    public void setBonusHealth(int bonusHealth) {
+    public void setStats(int bonusHealth) {
         this.bonusHealth = bonusHealth;
     }
 }
