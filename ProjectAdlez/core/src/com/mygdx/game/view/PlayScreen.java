@@ -95,8 +95,7 @@ public class PlayScreen implements Screen {
 
         // Updating player
         playerController.update();
-        playerView.setCurrentFrame(player.getDirection());
-        playerView.update();
+        playerView.update(player.getDirection());
         playerCam.position.set(player.getPosX() + (playerView.getCurrentFrame().getRegionWidth() / 2),
                                player.getPosY() + (playerView.getCurrentFrame().getRegionHeight() / 2),
                                0); // z = 0, non 3D
@@ -110,8 +109,7 @@ public class PlayScreen implements Screen {
             CharacterView enemyView = enemyViews.get(i);
             NPC enemy = enemies.get(i);
 
-            enemyView.setCurrentFrame(enemy.getDirection());
-            enemyView.update();
+            enemyView.update(enemy.getDirection());
             batch.draw(enemyView.getCurrentFrame(),
                     enemy.getPosX(),
                     enemy.getPosY());

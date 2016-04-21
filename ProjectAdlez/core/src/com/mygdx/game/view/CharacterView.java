@@ -11,8 +11,6 @@ import com.badlogic.gdx.math.Vector2;
  */
 public class CharacterView {
 
-    private String characterImg;
-
     private Texture characterTexture;
     private TextureRegion[] characterFrames;
     private TextureRegion currentFrame;
@@ -23,7 +21,6 @@ public class CharacterView {
     private Animation animation;
 
     public CharacterView(String characterImg) {
-        this.characterImg = characterImg;
 
         characterTexture = new Texture((Gdx.files.internal((characterImg))));
         TextureRegion[][] tmp = TextureRegion.split(characterTexture,
@@ -48,7 +45,9 @@ public class CharacterView {
 
     }
 
-    public void update() {
+    public void update(int frame) {
+        setCurrentFrame(frame);
+
         if (getStateTime() < 2) {
             setStateTime(getStateTime() + Gdx.graphics.getDeltaTime() * 6);
             if (getStateTime() > 2) {
