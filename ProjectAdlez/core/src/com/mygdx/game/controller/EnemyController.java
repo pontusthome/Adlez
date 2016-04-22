@@ -4,6 +4,7 @@ import com.mygdx.game.model.Direction;
 import com.mygdx.game.model.NPC;
 import com.mygdx.game.model.Player;
 import com.mygdx.game.utils.Utils;
+import com.mygdx.game.view.CharacterView;
 
 import java.util.List;
 
@@ -14,51 +15,53 @@ import static com.badlogic.gdx.math.MathUtils.random;
  */
 public class EnemyController implements CharacterActions {
 
-    private List<NPC> enemies;
+    private NPC enemy;
+    private CharacterView view;
     private Player player;
+
     private CollisionHandler collisionHandler = new CollisionHandler();
 
-    public EnemyController(List<NPC> enemies, Player player) {
+    public EnemyController(NPC enemy, CharacterView view, Player player) {
+        this.enemy = enemy;
+        this.view = view;
         this.player = player;
-        this.enemies = enemies;
     }
 
     @Override
     public void update() {
-        for (NPC enemy : enemies) {
-            float playerX = player.getPosX();
-            float playerY = player.getPosY();
-            float x = enemy.getPosX();
-            float y = enemy.getPosY();
-            boolean inRange = Utils.inRange(playerX, x, playerY, y, 200);
-            if (playerY > y && Math.abs(playerY - y) > 1 && inRange) {
-                enemy.moveNorth();
-                enemy.setDirection(Direction.NORTH);
-                if (collisionHandler.checkCollision(enemy)) {
-                    enemy.moveSouth();
-                }
-            }
-            if (playerY < y && Math.abs(playerY - y) > 1 && inRange) {
+        float playerX = player.getPosX();
+        float playerY = player.getPosY();
+        float x = enemy.getPosX();
+        float y = enemy.getPosY();
+        boolean inRange = Utils.inRange(playerX, x, playerY, y, 200);
+        if (playerY > y && Math.abs(playerY - y) > 1 && inRange) {
+            enemy.moveNorth();
+            enemy.setDirection(Direction.NORTH);
+            if (collisionHandler.checkCollision(enemy)) {
                 enemy.moveSouth();
-                enemy.setDirection(Direction.SOUTH);
-                if (collisionHandler.checkCollision(enemy)) {
-                    enemy.moveNorth();
-                }
-            }
-            if (playerX < x && Math.abs(playerX - x) > 1 && inRange) {
-                enemy.moveWest();
-                enemy.setDirection(Direction.WEST);
-                if (collisionHandler.checkCollision(enemy)) {
-                    enemy.moveEast();
-                }
-            }
-            if (playerX > x && Math.abs(playerX - x) > 1 && inRange) {
-                enemy.moveEast();
-                enemy.setDirection(Direction.EAST);
-                if (collisionHandler.checkCollision(enemy)) {
-                    enemy.moveWest();
-                }
             }
         }
+        if (playerY < y && Math.abs(playerY - y) > 1 && inRange) {
+            enemy.moveSouth();
+            enemy.setDirection(Direction.SOUTH);
+            if (collisionHandler.checkCollision(enemy)) {
+                enemy.moveNorth();
+            }
+        }
+        if (playerX < x && Math.abs(playerX - x) > 1 && inRange) {
+            enemy.moveWest();
+            enemy.setDirection(Direction.WEST);
+            if (collisionHandler.checkCollision(enemy)) {
+                enemy.moveEast();
+            }
+        }
+        if (playerX > x && Math.abs(playerX - x) > 1 && inRange) {
+            enemy.moveEast();
+            enemy.setDirection(Direction.EAST);
+            if (collisionHandler.checkCollision(enemy)) {
+                enemy.moveWest();
+            }
+        }
+        view.update(enemy.getDirection());
     }
 }

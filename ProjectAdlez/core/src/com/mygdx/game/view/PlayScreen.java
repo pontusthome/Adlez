@@ -18,7 +18,9 @@ import com.mygdx.game.model.NPC;
 import com.mygdx.game.model.Player;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 /**
  * Created by martinso on 27/03/16.
@@ -26,14 +28,13 @@ import java.util.List;
 public class PlayScreen implements Screen {
 
     private Adlez adlez = Adlez.getInstance();
-    private Player player = adlez.getPlayer();
-    private List<NPC> enemies = adlez.getEnemies();
 
+    private Player player = adlez.getPlayer();
     private CharacterView playerView;
     private PlayerController playerController;
 
-    private List<CharacterView> enemyViews;
-    private EnemyController enemyController;
+    private HashMap<NPC, CharacterView> enemies;
+    private List<EnemyController> enemyControllers;
 
     private Game game;
 
@@ -60,14 +61,16 @@ public class PlayScreen implements Screen {
 
         // Spawning player.
         playerView = new CharacterView("playerSpritesMove.png");
-        playerController = new PlayerController(player);
+        playerController = new PlayerController(player, playerView);
 
         // Spawning enemies.
-        enemyController = new EnemyController(enemies, player);
-        enemyViews = new ArrayList<CharacterView>();
-        for (int i = 0; i < enemies.size(); i++) {
+        enemies = new HashMap<NPC, CharacterView>();
+        enemyControllers = new ArrayList<EnemyController>();
+        for (NPC enemy: adlez.getEnemies()) {
             CharacterView enemyView = new CharacterView("playerSpritesMove.png");
-            enemyViews.add(enemyView);
+            EnemyController enemyController = new EnemyController(enemy, enemyView, player);
+            enemyControllers.add(enemyController);
+            enemies.put(enemy, enemyView);
         }
 
         // temporary things, just testing
@@ -95,7 +98,6 @@ public class PlayScreen implements Screen {
 
         // Updating player
         playerController.update();
-        playerView.update(player.getDirection());
         playerCam.position.set(player.getPosX() + (playerView.getCurrentFrame().getRegionWidth() / 2),
                                player.getPosY() + (playerView.getCurrentFrame().getRegionHeight() / 2),
                                0); // z = 0, non 3D
@@ -104,13 +106,13 @@ public class PlayScreen implements Screen {
                    player.getPosY());
 
         // Updating enemies
-        enemyController.update();
-        for (int i = 0; i < enemyViews.size(); i++) {
-            CharacterView enemyView = enemyViews.get(i);
-            NPC enemy = enemies.get(i);
-
-            enemyView.update(enemy.getDirection());
-            batch.draw(enemyView.getCurrentFrame(),
+        for (EnemyController enemyController: enemyControllers) {
+            enemyController.update();
+        }
+        for(Map.Entry<NPC, CharacterView> entry : enemies.entrySet()) {
+            NPC enemy = entry.getKey();
+            CharacterView view = entry.getValue();
+            batch.draw(view.getCurrentFrame(),
                     enemy.getPosX(),
                     enemy.getPosY());
         }
