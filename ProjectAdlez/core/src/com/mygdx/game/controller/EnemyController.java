@@ -33,21 +33,21 @@ public class EnemyController implements CharacterActions {
             boolean inRange = Utils.inRange(playerX, x, playerY, y, 200);
             if (playerY > y && Math.abs(playerY - y) > 1 && inRange) {
                 enemy.moveNorth();
-                enemy.setDirection(Direction.EAST);
+                enemy.setDirection(Direction.NORTH);
                 if (collisionHandler.checkCollision(enemy)) {
                     enemy.moveSouth();
                 }
             }
             if (playerY < y && Math.abs(playerY - y) > 1 && inRange) {
                 enemy.moveSouth();
-                enemy.setDirection(Direction.EAST);
+                enemy.setDirection(Direction.SOUTH);
                 if (collisionHandler.checkCollision(enemy)) {
                     enemy.moveNorth();
                 }
             }
             if (playerX < x && Math.abs(playerX - x) > 1 && inRange) {
                 enemy.moveWest();
-                enemy.setDirection(Direction.EAST);
+                enemy.setDirection(Direction.WEST);
                 if (collisionHandler.checkCollision(enemy)) {
                     enemy.moveEast();
                 }
