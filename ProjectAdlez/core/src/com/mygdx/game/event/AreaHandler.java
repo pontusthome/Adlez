@@ -2,6 +2,7 @@ package com.mygdx.game.event;
 
 import com.badlogic.gdx.physics.box2d.World;
 import com.mygdx.game.model.Area;
+import com.mygdx.game.model.Direction;
 import com.mygdx.game.model.NPC;
 import com.mygdx.game.model.WorldObject;
 
@@ -37,10 +38,14 @@ public final class AreaHandler {
         stationaryObjects = new ArrayList<WorldObject>();
 
         for (int i = 0; i < 20; i++) {
-            NPC enemy = new NPC();
-            enemy.setPosX(random.nextInt(1000)-500);
-            enemy.setPosY(random.nextInt(1000)-500);
-            enemy.setSpeed(random.nextFloat() * (2f - 1f) + 1);
+            float speed = random.nextFloat() * (2f - 1f) + 1;
+            float xPos = random.nextInt(1000)-500;
+            float yPos = random.nextInt(1000)-500;
+
+            NPC enemy = new NPC(Direction.NORTH, speed,
+                                10, 10,
+                                xPos, yPos,
+                                100, 5, 0);
             enemies.add(enemy);
         }
 

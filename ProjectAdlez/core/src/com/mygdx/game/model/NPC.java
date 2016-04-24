@@ -6,11 +6,20 @@ package com.mygdx.game.model;
 public class NPC extends Character {
 	private boolean isEnemy;
 
-	public NPC() {
-		setDirection(Direction.NORTH);
-		setSpeed(2f);
-		setWidth(10);
-		setHeight(10);
+	public NPC(int direction, float speed,
+			   float width, float height,
+			   float posX, float posY,
+			   int maxHealth, int attackDamage, int gold) {
+		setDirection(direction);
+		setSpeed(speed);
+		setWidth(width);
+		setHeight(height);
+		setPosX(posX);
+		setPosY(posY);
+		setMaxHealth(maxHealth);
+		setHealth(maxHealth);
+		setAttackDamage(attackDamage);
+		setGold(gold);
 	}
 
 }

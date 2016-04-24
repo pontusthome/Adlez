@@ -1,5 +1,7 @@
 package com.mygdx.game.model;
 
+import java.util.ArrayList;
+
 /**
  * Created by Michel on 2016-04-19.
  */
@@ -23,6 +25,22 @@ public abstract class Character extends WorldObject implements ICharacter {
 		speed = 2f;
 		setWidth(2);
 		setHeight(2);
+	}
+
+	public Character(int direction, float speed,
+				  float width, float height,
+				  float posX, float posY,
+				  int maxHealth, int attackDamage, int gold) {
+		setDirection(direction);
+		setSpeed(speed);
+		setWidth(width);
+		setHeight(height);
+		setPosX(posX);
+		setPosY(posY);
+		setMaxHealth(maxHealth);
+		setHealth(maxHealth);
+		setAttackDamage(attackDamage);
+		setGold(gold);
 	}
 
 	@Override

@@ -26,7 +26,10 @@ public class Adlez {
     private List<WorldObject> stationaryObjects;
 
     private Adlez() {
-        player = new Player();
+        player = new Player(Direction.NORTH, 2f,
+                            10, 10,
+                            0, 0,
+                            100, 20, 0);
     }
 
     public void initiateArea(Area area) {
@@ -34,6 +37,10 @@ public class Adlez {
         worldObjects = new ArrayList<WorldObject>();
 
         // add the player and set him to the new position
+        player = new Player(Direction.NORTH, 2f,
+                            10, 10,
+                            0, 0,
+                            100, 20, 0);
         worldObjects.add(player);
         player.setPosX(area.getPlayerXposition());
         player.setPosY(area.getPlayerYposition());

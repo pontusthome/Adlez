@@ -3,13 +3,17 @@ package com.mygdx.game.view;
 import com.badlogic.gdx.Game;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
+import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
+import com.badlogic.gdx.graphics.g2d.BitmapFont;
+import com.badlogic.gdx.graphics.g2d.GlyphLayout;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.maps.tiled.TiledMap;
 import com.badlogic.gdx.maps.tiled.TmxMapLoader;
 import com.badlogic.gdx.maps.tiled.renderers.OrthoCachedTiledMapRenderer;
 import com.badlogic.gdx.scenes.scene2d.Stage;
+import com.badlogic.gdx.utils.Align;
 import com.badlogic.gdx.utils.viewport.ScreenViewport;
 import com.mygdx.game.controller.EnemyController;
 import com.mygdx.game.controller.PlayerController;
@@ -46,6 +50,9 @@ public class PlayScreen implements Screen {
     private OrthoCachedTiledMapRenderer renderer;
     private Stage stage;
 
+    private String health;
+    BitmapFont bitmapFont;
+
     public PlayScreen(Game game) {
         this.game = game;
     }
@@ -53,6 +60,9 @@ public class PlayScreen implements Screen {
     @Override
     public void show() {
         playerCam = new OrthographicCamera(Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
+
+        health = "Health: " + player.getHealth();
+        bitmapFont = new BitmapFont();
 
         batch = new SpriteBatch();
 
@@ -117,7 +127,16 @@ public class PlayScreen implements Screen {
                     enemy.getPosY());
         }
 
+        drawPlayerStats();
         batch.end();
+    }
+
+    public void drawPlayerStats() {
+        health = "Health: " + player.getHealth();
+        bitmapFont.setColor(Color.BLUE);
+        bitmapFont.draw(batch, health,
+                player.getPosX() + (playerView.getCurrentFrame().getRegionWidth() / 2) - Gdx.graphics.getWidth()/2 +20,
+                player.getPosY() + (playerView.getCurrentFrame().getRegionHeight() / 2) + Gdx.graphics.getHeight()/2 );
     }
 
     @Override

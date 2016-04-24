@@ -19,14 +19,11 @@ public class Player extends Character {
     private boolean isArmorSlotEmpty = true;
     private List<IItem> inventory;
 
-    public Player() {
-        setDirection(Direction.NORTH);
-        setSpeed(2f);
-        setWidth(10);
-        setHeight(10);
-    }
     // This constructor should be used.
-    public Player(int direction, float speed, float width, float height, float posX, float posY, int maxHealth, int attackDamage, int gold) {
+    public Player(int direction, float speed,
+                  float width, float height,
+                  float posX, float posY,
+                  int maxHealth, int attackDamage, int gold) {
         setDirection(direction);
         setSpeed(speed);
         setWidth(width);
@@ -34,10 +31,11 @@ public class Player extends Character {
         setPosX(posX);
         setPosY(posY);
         setMaxHealth(maxHealth);
+        setHealth(maxHealth);
         setAttackDamage(attackDamage);
         setGold(gold);
         // Size of inventory
-        inventory = new ArrayList<>(16);
+        inventory = new ArrayList<IItem>(16);
     }
 
     public void equipItem(IItem item) {
