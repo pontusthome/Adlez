@@ -15,5 +15,13 @@ public class NPC extends Character {
 		isEnemy = true;
 		isAlive = true;
 	}
+	
+	public boolean isAlive(){
+		return isAlive;
+	}
+	
+	public void setAliveStatus(boolean bool){
+		isAlive = bool;
+	}
 
 }

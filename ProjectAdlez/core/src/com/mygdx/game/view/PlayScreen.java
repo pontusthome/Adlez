@@ -16,6 +16,7 @@ import com.mygdx.game.controller.PlayerController;
 import com.mygdx.game.model.Adlez;
 import com.mygdx.game.model.NPC;
 import com.mygdx.game.model.Player;
+import com.mygdx.game.model.WorldObject;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -104,7 +105,30 @@ public class PlayScreen implements Screen {
         batch.draw(playerView.getCurrentFrame(),
                    player.getPosX(),
                    player.getPosY());
-
+        
+        if(!playerController.getEnemiesToKeep().isEmpty()){
+            System.out.println("Test2");
+            
+            List<WorldObject> enemiesToRemove = playerController.getEnemiesToRemove();
+    
+            List<WorldObject> enemiesToKeep = playerController.getEnemiesToKeep();
+    
+            List<EnemyController> enemyControllersToKeep = new ArrayList<EnemyController>();
+            
+            for(EnemyController enemyController: enemyControllers){
+                if(enemyController.isAlive()){
+                    enemyControllersToKeep.add(enemyController);
+                }else{
+                    enemies.remove(enemyController.getEnemy());
+                }
+            }
+            
+            enemyControllers = enemyControllersToKeep; 
+            playerController.clearEnemiesToKeep();
+        }
+        
+        
+        
         // Updating enemies
         for (EnemyController enemyController: enemyControllers) {
             enemyController.update();

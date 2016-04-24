@@ -64,4 +64,12 @@ public class EnemyController implements CharacterActions {
         }
         view.update(enemy.getDirection());
     }
+    
+    public NPC getEnemy(){
+        return enemy;
+    }
+    
+    public boolean isAlive(){
+        return enemy.isAlive();
+    }
 }
