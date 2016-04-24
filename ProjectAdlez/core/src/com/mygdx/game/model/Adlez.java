@@ -22,22 +22,30 @@ public class Adlez {
 
     private Player player;
     private List<NPC> enemies;
+    private List<NPC> friendlyNPCs;
+    private List<WorldObject> stationaryObjects;
 
     private Adlez() {
+        player = new Player();
+    }
+
+    public void initiateArea(Area area) {
+        // Reset the world and then set it up for the new area
         worldObjects = new ArrayList<WorldObject>();
 
-        player = new Player();
+        // add the player and set him to the new position
         worldObjects.add(player);
+        player.setPosX(area.getPlayerXposition());
+        player.setPosY(area.getPlayerYposition());
 
-        enemies = new ArrayList<NPC>();
-        for (int i = 0; i < 20; i++) {
-            NPC enemy = new NPC();
-            enemy.setPosX(random.nextInt(1000)-500);
-            enemy.setPosY(random.nextInt(1000)-500);
-            enemy.setSpeed(random.nextFloat() * (2f - 1f) + 1);
-            enemies.add(enemy);
-            worldObjects.add(enemy);
-        }
+        enemies = area.getEnemies();
+        worldObjects.addAll(enemies);
+
+        friendlyNPCs = area.getFriendlyNPCs();
+        worldObjects.addAll(friendlyNPCs);
+
+        stationaryObjects = area.getStationaryObjects();
+        worldObjects.addAll(stationaryObjects);
     }
 
     public Player getPlayer() {
@@ -45,6 +53,14 @@ public class Adlez {
     }
 
     public List<NPC> getEnemies() { return enemies; }
+
+    public List<NPC> getFriendlyNPCs() {
+        return friendlyNPCs;
+    }
+
+    public List<WorldObject> getStationaryObjects() {
+        return stationaryObjects;
+    }
 
     public List<WorldObject> getWorldObjects() {
         return worldObjects;
