@@ -3,7 +3,7 @@ package com.mygdx.game.model;
 /**
  * Created by martinso on 20/04/16.
  */
-public class Armor implements Item {
+public class Armor implements IItem {
 
     private String type;
     private String name;
