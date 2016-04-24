@@ -2,9 +2,13 @@ package com.mygdx.game.controller;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
-import com.mygdx.game.model.Direction;
-import com.mygdx.game.model.Player;
+import com.badlogic.gdx.physics.box2d.World;
+import com.mygdx.game.model.*;
 import com.mygdx.game.view.CharacterView;
+
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
 
 /**
  * Created by martinso on 27/03/16.
@@ -14,6 +18,8 @@ public class PlayerController implements CharacterActions {
     private Player player;
     private CharacterView view;
     private CollisionHandler collisionHandler = new CollisionHandler();
+    private List<WorldObject> worldObjectList = Adlez.getInstance().getWorldObjects();
+    
 
     public PlayerController(Player player, CharacterView view) {
         this.player = player;
@@ -57,6 +63,25 @@ public class PlayerController implements CharacterActions {
         }
         if (Gdx.input.isKeyPressed((Input.Keys.K))) {
             // Attack
+        }
+        if (Gdx.input.isKeyPressed((Input.Keys.SPACE))) {
+            // Trying to implement an AOE attack around the player to begin with, 
+            // which should be easier to implement than a normal attack
+            List<WorldObject> objectsToKeep = new ArrayList<WorldObject>(worldObjectList);
+    
+            System.out.println(worldObjectList.size());
+            
+            for(WorldObject object : worldObjectList){
+                if (player.collide(object)) {
+                    System.out.println("Test");
+                    objectsToKeep.remove(object);
+                }
+            }
+            
+            worldObjectList.clear();
+            worldObjectList.addAll(objectsToKeep);
+    
+            System.out.println(worldObjectList.size());
         }
 
         view.update(player.getDirection());
