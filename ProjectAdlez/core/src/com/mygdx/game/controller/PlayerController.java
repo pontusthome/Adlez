@@ -28,8 +28,8 @@ public class PlayerController implements CharacterActions {
     private List<WorldObject> worldObjectList = Adlez.getInstance().getWorldObjects();
     
     
-    private Rectangle playerHitbox = new Rectangle();
-    private Rectangle enemyHitbox = new Rectangle();
+    public static Rectangle playerHitbox = new Rectangle(10,10,10,10);
+    public static Rectangle enemyHitbox = new Rectangle(10,10,10,10);
     
 
     public PlayerController(Player player, CharacterView view) {
@@ -62,24 +62,24 @@ public class PlayerController implements CharacterActions {
         // Trying to implement attack
         if (Gdx.input.isKeyPressed((Input.Keys.SPACE))) {
             
-            playerHitbox.set(player.getPosX(), player.getPosY(), player.getHeight() * 2, player.getHeight() * 2);
+            playerHitbox.set(player.getPosX(), player.getPosY(), player.getWidth(), player.getHeight());
             
             switch(player.getDirection()){
                 case Direction.NORTH:
-                    playerHitbox.setPosition(player.getPosX(), player.getPosY());
+                    playerHitbox.setPosition(player.getPosX(), player.getPosY() + player.getHeight());
                     break;
                 case Direction.SOUTH:
                     playerHitbox.setPosition(player.getPosX(), player.getPosY() - player.getHeight());
                     break;
                 case Direction.EAST:
-                    playerHitbox.setPosition(player.getPosX(), player.getPosY() - player.getHeight());
+                    playerHitbox.setPosition(player.getPosX() + player.getWidth(), player.getPosY());
                     break;
                 case Direction.WEST:
-                    playerHitbox.setPosition(player.getPosX() - 2 * player.getWidth(), player.getPosY() - player.getHeight());
+                    playerHitbox.setPosition(player.getPosX() - player.getWidth(), player.getPosY());
                     break;
             }
             
-            sound.play();
+            sound.play(0.05f);
             enemiesToKeep.clear();
             
             for(WorldObject object : worldObjectList){

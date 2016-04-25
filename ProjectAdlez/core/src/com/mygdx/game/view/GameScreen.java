@@ -12,6 +12,7 @@ import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.maps.tiled.TiledMap;
 import com.badlogic.gdx.maps.tiled.TmxMapLoader;
 import com.badlogic.gdx.maps.tiled.renderers.OrthoCachedTiledMapRenderer;
@@ -106,22 +107,22 @@ public class GameScreen extends AbstractScreen {
         batch.draw(playerView.getCurrentFrame(),
                 player.getPosX(),
                 player.getPosY());
-        
+                
         // Data for first implementation of attack
-        switch(player.getDirection()){
-            case Direction.NORTH:
-                batch.draw(playerView.getCurrentFrame(), player.getPosX(), player.getPosY() + player.getHeight());
-                break;
-            case Direction.SOUTH:
-                batch.draw(playerView.getCurrentFrame(), player.getPosX(), player.getPosY() - player.getHeight());
-                break;
-            case Direction.EAST:
-                batch.draw(playerView.getCurrentFrame(), player.getPosX() + player.getWidth(), player.getPosY());
-                break;
-            case Direction.WEST:
-                batch.draw(playerView.getCurrentFrame(), player.getPosX() - player.getWidth(), player.getPosY());
-                break;
-        }
+//        switch(player.getDirection()){
+//            case Direction.NORTH:
+//                batch.draw(playerView.getCurrentFrame(), player.getPosX(), player.getPosY() + player.getHeight());
+//                break;
+//            case Direction.SOUTH:
+//                batch.draw(playerView.getCurrentFrame(), player.getPosX(), player.getPosY() - player.getHeight());
+//                break;
+//            case Direction.EAST:
+//                batch.draw(playerView.getCurrentFrame(), player.getPosX() + player.getWidth(), player.getPosY());
+//                break;
+//            case Direction.WEST:
+//                batch.draw(playerView.getCurrentFrame(), player.getPosX() - player.getWidth(), player.getPosY());
+//                break;
+//        }
         if(!playerController.getEnemiesToKeep().isEmpty()){
             List<EnemyController> enemyControllersToKeep = new ArrayList<>();
             for(EnemyController enemyController: enemyControllers){
@@ -150,6 +151,14 @@ public class GameScreen extends AbstractScreen {
                     enemy.getPosX(),
                     enemy.getPosY());
         }
+        
+        // For debugging attack hitbox
         batch.end();
+        ShapeRenderer shapeRenderer = new ShapeRenderer();
+        shapeRenderer.setProjectionMatrix(playerCam.combined);
+        shapeRenderer.begin(ShapeRenderer.ShapeType.Line);
+        shapeRenderer.setColor(1, 1, 0, 1);
+        shapeRenderer.rect(PlayerController.playerHitbox.getX(), PlayerController.playerHitbox.getY(), PlayerController.playerHitbox.getWidth(), PlayerController.playerHitbox.getHeight());
+        shapeRenderer.end();
     }
 }
