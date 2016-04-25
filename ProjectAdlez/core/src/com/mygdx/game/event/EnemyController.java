@@ -1,5 +1,7 @@
-package com.mygdx.game.controller;
+package com.mygdx.game.event;
 
+import com.mygdx.game.controller.CharacterActions;
+import com.mygdx.game.event.CollisionHandler;
 import com.mygdx.game.model.NPC;
 import com.mygdx.game.model.Player;
 import com.mygdx.game.utils.Utils;

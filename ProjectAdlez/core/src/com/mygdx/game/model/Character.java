@@ -1,8 +1,6 @@
 package com.mygdx.game.model;
 
-import com.mygdx.game.controller.CollisionHandler;
-
-import java.util.ArrayList;
+import com.mygdx.game.event.CollisionHandler;
 
 /**
  * Created by Michel on 2016-04-19.

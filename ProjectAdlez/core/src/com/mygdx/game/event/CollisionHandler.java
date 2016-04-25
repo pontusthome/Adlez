@@ -1,4 +1,4 @@
-package com.mygdx.game.controller;
+package com.mygdx.game.event;
 
 import com.mygdx.game.model.Adlez;
 import com.mygdx.game.model.WorldObject;
