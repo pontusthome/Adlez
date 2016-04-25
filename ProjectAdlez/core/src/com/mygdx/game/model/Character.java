@@ -1,6 +1,6 @@
 package com.mygdx.game.model;
 
-import com.mygdx.game.event.CollisionHandler;
+import com.mygdx.game.model.handler.CollisionHandler;
 
 /**
  * Created by Michel on 2016-04-19.

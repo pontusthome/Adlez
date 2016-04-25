@@ -2,6 +2,8 @@ package com.mygdx.game.view;
 
 import com.badlogic.gdx.Game;
 import com.badlogic.gdx.Screen;
+import com.mygdx.game.event.AreaHandler;
+import com.mygdx.game.model.Adlez;
 
 
 /**
@@ -31,6 +33,9 @@ public class ScreenManager {
     // Initialization with the game class
     public void initialize(Game game) {
         this.game = game;
+        // Initiate the area
+        Adlez adlez = Adlez.getInstance();
+        adlez.initiateArea(AreaHandler.testLevel());
         showScreen(ScreenEnum.INTRO);
     }
 
