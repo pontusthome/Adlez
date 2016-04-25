@@ -9,10 +9,10 @@ import java.util.List;
  * @author Pontus
  */
 public class CollisionHandler {
-    private Adlez adlez = Adlez.getInstance();
-    private List<WorldObject> worldObjects;
+    private static Adlez adlez = Adlez.getInstance();
+    private static List<WorldObject> worldObjects;
 
-    public boolean checkCollision(WorldObject object) {
+    public static boolean checkCollision(WorldObject object) {
         worldObjects = adlez.getWorldObjects();
 
         for (WorldObject otherObject: worldObjects) {

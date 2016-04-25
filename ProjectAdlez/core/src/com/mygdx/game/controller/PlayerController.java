@@ -29,31 +29,15 @@ public class PlayerController implements CharacterActions {
     public void update() {
         if (Gdx.input.isKeyPressed(Input.Keys.W)) {
             player.moveNorth();
-            player.setDirection(Direction.NORTH);
-            if (collisionHandler.checkCollision(player)) {
-                player.moveSouth();
-            }
         }
         if (Gdx.input.isKeyPressed(Input.Keys.S)) {
             player.moveSouth();
-            player.setDirection(Direction.SOUTH);
-            if (collisionHandler.checkCollision(player)) {
-                player.moveNorth();
-            }
         }
         if (Gdx.input.isKeyPressed(Input.Keys.A)) {
             player.moveWest();
-            player.setDirection(Direction.WEST);
-            if (collisionHandler.checkCollision(player)) {
-                player.moveEast();
-            }
         }
         if (Gdx.input.isKeyPressed(Input.Keys.D)) {
             player.moveEast();
-            player.setDirection(Direction.EAST);
-            if (collisionHandler.checkCollision(player)) {
-                player.moveWest();
-            }
         }
         if (Gdx.input.isKeyPressed((Input.Keys.K))) {
             // Attack
