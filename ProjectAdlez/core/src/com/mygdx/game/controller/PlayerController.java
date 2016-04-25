@@ -62,7 +62,7 @@ public class PlayerController implements CharacterActions {
         // Trying to implement attack
         if (Gdx.input.isKeyPressed((Input.Keys.SPACE))) {
             
-            playerHitbox.set(player.getPosX(), player.getPosY(), player.getWidth(), player.getHeight());
+            playerHitbox.set(player.getPosX(), player.getPosY(), player.getWidth() / 2, player.getHeight() / 2);
             
             switch(player.getDirection()){
                 case Direction.NORTH:
