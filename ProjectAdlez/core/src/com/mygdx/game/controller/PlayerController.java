@@ -62,7 +62,6 @@ public class PlayerController implements CharacterActions {
         // Trying to implement attack
         if (Gdx.input.isKeyPressed((Input.Keys.SPACE))) {
             
-    
             playerHitbox.set(player.getPosX(), player.getPosY(), player.getHeight() * 2, player.getHeight() * 2);
             
             switch(player.getDirection()){
@@ -84,14 +83,9 @@ public class PlayerController implements CharacterActions {
             enemiesToKeep.clear();
             
             for(WorldObject object : worldObjectList){
-                
                 if(object instanceof NPC){
-                    
-                    
-                    
                     enemyHitbox.set(object.getPosX(), object.getPosY(),
                             object.getWidth(), object.getHeight());
-                    
                     if (playerHitbox.overlaps(enemyHitbox)) {
                         NPC enemy = (NPC) object;
                         enemy.setAliveStatus(false);

@@ -129,6 +129,10 @@ public class GameScreen extends AbstractScreen {
                     enemyControllersToKeep.add(enemyController);
                 }else{
                     enemies.remove(enemyController.getEnemy());
+                    
+                    adlez.getEnemies().remove(enemyController.getEnemy());
+    
+                    adlez.getWorldObjects().remove(enemyController.getEnemy());
                 }
             }
             enemyControllers = enemyControllersToKeep;
