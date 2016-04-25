@@ -11,7 +11,7 @@ public class Chest extends WorldObject {
     private int chestSize;
     List<IItem> slots;
 
-    public void Chest(int chestSize) {
+    public Chest(int chestSize) {
         this.chestSize = chestSize;
         slots = new ArrayList<IItem>(chestSize);
     }

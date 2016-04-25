@@ -1,22 +1,26 @@
 package com.mygdx.game.controller;
 
 import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.Input;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
+import com.mygdx.game.controller.CharacterActions;
+import com.mygdx.game.model.NPC;
 import com.mygdx.game.model.Player;
+import com.mygdx.game.utils.Utils;
+import com.mygdx.game.controller.CharacterView;
 
 /**
- * Created by martinso on 27/03/16.
+ * @author Pontus
  */
-public class PlayerController extends CharacterView implements CharacterActions {
+public class EnemyController extends CharacterView implements CharacterActions {
 
+    private NPC enemy;
     private Player player;
 
-    public PlayerController(Player player, String characterImg) {
+    public EnemyController(NPC enemy, String characterImg, Player player) {
+        this.enemy = enemy;
         this.player = player;
-
         characterTexture = new Texture((Gdx.files.internal((characterImg))));
         TextureRegion[][] tmp = TextureRegion.split(characterTexture,
                 characterTexture.getWidth() / col,
@@ -37,31 +41,28 @@ public class PlayerController extends CharacterView implements CharacterActions 
         animation = new Animation(1, characterFrames);
         stateTime = 0f;
         currentFrame = animation.getKeyFrame(0);
+
     }
 
-    /**
-     * Handles all the character actions.
-     * Move with: W A S D
-     * Attack with: K
-     */
     @Override
     public void update() {
-        if (Gdx.input.isKeyPressed(Input.Keys.W)) {
-            player.moveNorth();
+        float playerX = player.getPosX();
+        float playerY = player.getPosY();
+        float x = enemy.getPosX();
+        float y = enemy.getPosY();
+        boolean inRange = Utils.inRange(playerX, x, playerY, y, 200);
+        if (playerY > y && Math.abs(playerY - y) > 1 && inRange) {
+            enemy.moveNorth();
         }
-        if (Gdx.input.isKeyPressed(Input.Keys.S)) {
-            player.moveSouth();
+        if (playerY < y && Math.abs(playerY - y) > 1 && inRange) {
+            enemy.moveSouth();
         }
-        if (Gdx.input.isKeyPressed(Input.Keys.A)) {
-            player.moveWest();
+        if (playerX < x && Math.abs(playerX - x) > 1 && inRange) {
+            enemy.moveWest();
         }
-        if (Gdx.input.isKeyPressed(Input.Keys.D)) {
-            player.moveEast();
+        if (playerX > x && Math.abs(playerX - x) > 1 && inRange) {
+            enemy.moveEast();
         }
-        if (Gdx.input.isKeyPressed((Input.Keys.K))) {
-            // Attack
-        }
-
-        viewUpdate(player.getDirection());
+        viewUpdate(enemy.getDirection());
     }
 }

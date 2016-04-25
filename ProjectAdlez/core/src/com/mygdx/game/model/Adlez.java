@@ -2,9 +2,6 @@ package com.mygdx.game.model;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Random;
-
-import static com.badlogic.gdx.math.MathUtils.random;
 
 /**
  * @author Pontus
