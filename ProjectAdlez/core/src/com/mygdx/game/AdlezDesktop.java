@@ -13,13 +13,12 @@ public class AdlezDesktop extends Game {
     public void create() {
         game = this;
 
+
         // Initiate the area
         adlez.initiateArea(AreaHandler.testLevel());
 
         // Loads up the startscreen
         ScreenManager.getInstance().initialize(this);
-
-
     }
 
     @Override

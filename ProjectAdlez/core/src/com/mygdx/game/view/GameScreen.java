@@ -6,10 +6,16 @@ import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
+
+import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.graphics.GL20;
+import com.badlogic.gdx.graphics.OrthographicCamera;
+
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.maps.tiled.TiledMap;
 import com.badlogic.gdx.maps.tiled.TmxMapLoader;
 import com.badlogic.gdx.maps.tiled.renderers.OrthoCachedTiledMapRenderer;
+
 import com.mygdx.game.controller.PlayerController;
 import com.mygdx.game.event.EnemyController;
 import com.mygdx.game.model.Adlez;
@@ -20,6 +26,9 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+
+import com.badlogic.gdx.math.Vector2;
+import com.mygdx.game.controller.PlayerController;
 
 /**
  * Created by Viktor on 2016-04-19.
@@ -32,13 +41,14 @@ public class GameScreen extends AbstractScreen {
     private HashMap<NPC, CharacterView> enemies;
     private List<EnemyController> enemyControllers;
 
+    private CharacterView playerView;
+
     public SpriteBatch batch;
     private OrthoCachedTiledMapRenderer renderer;
-    private CharacterView playerView;
     private PlayerController playerController;
     private OrthographicCamera playerCam;
     private TiledMap tileMap;
-    BitmapFont bitmapFont;
+
 
     public GameScreen(){
         super();
@@ -64,7 +74,6 @@ public class GameScreen extends AbstractScreen {
             enemyControllers.add(enemyController);
             enemies.put(enemy, enemyView);
         }
-
         // temporary things, just testing
         tileMap = new TmxMapLoader().load("test1.tmx");
         float unitScale = 1/3f;
