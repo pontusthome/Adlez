@@ -1,15 +1,11 @@
 package com.mygdx.game.model;
 
-import com.badlogic.gdx.physics.box2d.World;
-
 import java.util.ArrayList;
 import java.util.List;
-
-import static com.badlogic.gdx.math.MathUtils.random;
 import static org.junit.Assert.*;
 
 /**
- * Created by Pontus on 2016-04-19.
+ * @author Pontus
  */
 public class CharacterTest {
 

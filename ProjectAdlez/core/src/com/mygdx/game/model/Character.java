@@ -53,7 +53,6 @@ public abstract class Character extends WorldObject implements ICharacter {
 		if (CollisionHandler.checkCollision(this)) {
 			this.setPosY(oldYpos);
 		}
-
 	}
 	@Override
 	public void moveSouth() {

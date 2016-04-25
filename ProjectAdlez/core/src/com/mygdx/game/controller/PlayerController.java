@@ -2,7 +2,6 @@ package com.mygdx.game.controller;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
-import com.mygdx.game.model.Direction;
 import com.mygdx.game.model.Player;
 import com.mygdx.game.view.CharacterView;
 
