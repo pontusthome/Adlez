@@ -5,6 +5,11 @@ package com.mygdx.game.model;
  */
 public class NPC extends Character {
 	private boolean isEnemy;
+	
+	// Data for first implementation of attack
+	private boolean isAlive = true;
+	public boolean isAlive(){return isAlive;}
+	public void setAliveStatus(boolean bool){isAlive = bool;}
 
 	public NPC(int direction, float speed,
 			   float width, float height,

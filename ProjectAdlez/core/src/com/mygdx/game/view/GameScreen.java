@@ -29,6 +29,7 @@ import java.util.Map;
 
 import com.badlogic.gdx.math.Vector2;
 import com.mygdx.game.controller.PlayerController;
+import com.mygdx.game.model.WorldObject;
 
 /**
  * Created by Viktor on 2016-04-19.
@@ -108,6 +109,20 @@ public class GameScreen extends AbstractScreen {
         batch.draw(playerView.getCurrentFrame(),
                 player.getPosX(),
                 player.getPosY());
+    
+        // Data for first implementation of attack
+        if(!playerController.getEnemiesToKeep().isEmpty()){
+            List<EnemyController> enemyControllersToKeep = new ArrayList<EnemyController>();
+            for(EnemyController enemyController: enemyControllers){
+                if(enemyController.isAlive()){
+                    enemyControllersToKeep.add(enemyController);
+                }else{
+                    enemies.remove(enemyController.getEnemy());
+                }
+            }
+            enemyControllers = enemyControllersToKeep;
+            playerController.clearEnemiesToKeep();
+        }
 
         // Updating enemies
         for (EnemyController enemyController: enemyControllers) {

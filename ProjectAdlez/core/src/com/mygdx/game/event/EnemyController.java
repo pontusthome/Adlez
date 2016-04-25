@@ -17,6 +17,10 @@ public class EnemyController implements CharacterActions {
     private Player player;
 
     private CollisionHandler collisionHandler = new CollisionHandler();
+    
+    // Data for first implementation of attack
+    public NPC getEnemy(){return enemy;}
+    public boolean isAlive(){return enemy.isAlive();}
 
     public EnemyController(NPC enemy, CharacterView view, Player player) {
         this.enemy = enemy;
