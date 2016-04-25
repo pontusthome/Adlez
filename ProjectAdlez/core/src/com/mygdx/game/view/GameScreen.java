@@ -78,7 +78,7 @@ public class GameScreen extends AbstractScreen {
         tileMap = new TmxMapLoader().load("test1.tmx");
         float unitScale = 1/3f;
         renderer = new OrthoCachedTiledMapRenderer(tileMap,unitScale);
-        playerCam.setToOrtho(false,200,200);
+        playerCam.setToOrtho(false,Gdx.graphics.getWidth()*2/3,Gdx.graphics.getHeight()*2/3);
 
         Gdx.input.setInputProcessor(this);
     }
