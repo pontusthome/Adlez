@@ -42,7 +42,7 @@ public class PlayScreen implements Screen {
 
     private OrthographicCamera playerCam;
 
-    private SpriteBatch batch;
+    public SpriteBatch batch;
 
     private TiledMap testing1;
     private OrthoCachedTiledMapRenderer renderer;
