@@ -31,6 +31,7 @@ public class ScreenManager {
     // Initialization with the game class
     public void initialize(Game game) {
         this.game = game;
+        showScreen(ScreenEnum.INTRO);
     }
 
     // Show in the game the screen which enum type is received
