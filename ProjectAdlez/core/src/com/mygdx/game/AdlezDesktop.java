@@ -2,6 +2,8 @@ package com.mygdx.game;
 
 import com.badlogic.gdx.Game;
 import com.mygdx.game.view.PlayScreen;
+import com.mygdx.game.view.ScreenEnum;
+import com.mygdx.game.view.ScreenManager;
 
 public class AdlezDesktop extends Game {
     Game game;
@@ -10,7 +12,10 @@ public class AdlezDesktop extends Game {
     public void create() {
         game = this;
         // Temporary start screen. Needs to be a proper main menu screen.
-        setScreen(new PlayScreen(game));
+        ScreenManager.getInstance().initialize(this);
+        ScreenManager.getInstance().showScreen(ScreenEnum.INTRO);
+
+
     }
 
     @Override
