@@ -10,10 +10,12 @@ import java.util.List;
  */
 public class CollisionHandler {
     private Adlez adlez = Adlez.getInstance();
-    private List<WorldObject> worldObjectList = adlez.getWorldObjects();
+    private List<WorldObject> worldObjects;
 
     public boolean checkCollision(WorldObject object) {
-        for (WorldObject otherObject: worldObjectList) {
+        worldObjects = adlez.getWorldObjects();
+
+        for (WorldObject otherObject: worldObjects) {
             if (!otherObject.equals(object) && object.collide(otherObject)) {
                 return true;
             }
