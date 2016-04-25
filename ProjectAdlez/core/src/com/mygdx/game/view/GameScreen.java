@@ -18,9 +18,7 @@ import com.badlogic.gdx.maps.tiled.renderers.OrthoCachedTiledMapRenderer;
 
 import com.mygdx.game.controller.PlayerController;
 import com.mygdx.game.event.EnemyController;
-import com.mygdx.game.model.Adlez;
-import com.mygdx.game.model.NPC;
-import com.mygdx.game.model.Player;
+import com.mygdx.game.model.*;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -29,7 +27,6 @@ import java.util.Map;
 
 import com.badlogic.gdx.math.Vector2;
 import com.mygdx.game.controller.PlayerController;
-import com.mygdx.game.model.WorldObject;
 
 /**
  * Created by Viktor on 2016-04-19.
@@ -67,8 +64,8 @@ public class GameScreen extends AbstractScreen {
         playerController = new PlayerController(player, playerView);
 
         // Spawning enemies.
-        enemies = new HashMap<NPC, CharacterView>();
-        enemyControllers = new ArrayList<EnemyController>();
+        enemies = new HashMap<>();
+        enemyControllers = new ArrayList<>();
         for (NPC enemy: adlez.getEnemies()) {
             CharacterView enemyView = new CharacterView("playerSpritesMove.png");
             EnemyController enemyController = new EnemyController(enemy, enemyView, player);
@@ -109,10 +106,24 @@ public class GameScreen extends AbstractScreen {
         batch.draw(playerView.getCurrentFrame(),
                 player.getPosX(),
                 player.getPosY());
-    
+        
         // Data for first implementation of attack
+        switch(player.getDirection()){
+            case Direction.NORTH:
+                batch.draw(playerView.getCurrentFrame(), player.getPosX(), player.getPosY() + player.getHeight());
+                break;
+            case Direction.SOUTH:
+                batch.draw(playerView.getCurrentFrame(), player.getPosX(), player.getPosY() - player.getHeight());
+                break;
+            case Direction.EAST:
+                batch.draw(playerView.getCurrentFrame(), player.getPosX() + player.getWidth(), player.getPosY());
+                break;
+            case Direction.WEST:
+                batch.draw(playerView.getCurrentFrame(), player.getPosX() - player.getWidth(), player.getPosY());
+                break;
+        }
         if(!playerController.getEnemiesToKeep().isEmpty()){
-            List<EnemyController> enemyControllersToKeep = new ArrayList<EnemyController>();
+            List<EnemyController> enemyControllersToKeep = new ArrayList<>();
             for(EnemyController enemyController: enemyControllers){
                 if(enemyController.isAlive()){
                     enemyControllersToKeep.add(enemyController);

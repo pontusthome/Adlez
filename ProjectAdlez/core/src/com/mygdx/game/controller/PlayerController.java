@@ -5,10 +5,7 @@ import com.badlogic.gdx.Input;
 import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.math.Rectangle;
 import com.mygdx.game.event.CollisionHandler;
-import com.mygdx.game.model.Adlez;
-import com.mygdx.game.model.NPC;
-import com.mygdx.game.model.Player;
-import com.mygdx.game.model.WorldObject;
+import com.mygdx.game.model.*;
 import com.mygdx.game.view.CharacterView;
 
 import java.util.ArrayList;
@@ -60,28 +57,42 @@ public class PlayerController implements CharacterActions {
             player.moveEast();
         }
         if (Gdx.input.isKeyPressed((Input.Keys.K))) {
-            // Attack
+            
         }
+        // Trying to implement attack
         if (Gdx.input.isKeyPressed((Input.Keys.SPACE))) {
-            // Trying to implement an AOE attack around the player to begin with, 
-            // which should be easier to implement than a normal attack
-        
+            
+    
+            playerHitbox.set(player.getPosX(), player.getPosY(), player.getHeight() * 2, player.getHeight() * 2);
+            
+            switch(player.getDirection()){
+                case Direction.NORTH:
+                    playerHitbox.setPosition(player.getPosX(), player.getPosY());
+                    break;
+                case Direction.SOUTH:
+                    playerHitbox.setPosition(player.getPosX(), player.getPosY() - player.getHeight());
+                    break;
+                case Direction.EAST:
+                    playerHitbox.setPosition(player.getPosX(), player.getPosY() - player.getHeight());
+                    break;
+                case Direction.WEST:
+                    playerHitbox.setPosition(player.getPosX() - 2 * player.getWidth(), player.getPosY() - player.getHeight());
+                    break;
+            }
+            
             sound.play();
-        
             enemiesToKeep.clear();
-        
+            
             for(WorldObject object : worldObjectList){
+                
                 if(object instanceof NPC){
-                
-                    playerHitbox.set(player.getPosX() - player.getWidth()/2, player.getPosY() - player.getHeight()/2,
-                            player.getWidth()*4, player.getHeight()*4);
-                
+                    
+                    
+                    
                     enemyHitbox.set(object.getPosX(), object.getPosY(),
                             object.getWidth(), object.getHeight());
-                
-                    if (playerHitbox.overlaps(enemyHitbox)) {
-                        System.out.println("Test");
                     
+                    if (playerHitbox.overlaps(enemyHitbox)) {
                         NPC enemy = (NPC) object;
                         enemy.setAliveStatus(false);
                     }else{
@@ -89,8 +100,6 @@ public class PlayerController implements CharacterActions {
                     }
                 }
             }
-        
-            System.out.println(enemiesToKeep.size());
         }
 
         view.update(player.getDirection());
