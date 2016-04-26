@@ -148,7 +148,6 @@ public class GameScreen extends AbstractScreen {
         shapeRenderer.setColor(1, 1, 0, 1);
         shapeRenderer.rect(CombatHandler.playerWeaponHitbox.getX(), CombatHandler.playerWeaponHitbox.getY(), CombatHandler.playerWeaponHitbox.getWidth(), CombatHandler.playerWeaponHitbox.getHeight());
         shapeRenderer.rect(player.getPosX(), player.getPosY(), player.getWidth(), player.getHeight());
-        System.out.println(CombatHandler.playerWeaponHitbox.getX() + "+++" + CombatHandler.playerWeaponHitbox.getY());
         shapeRenderer.end();
     }
 }

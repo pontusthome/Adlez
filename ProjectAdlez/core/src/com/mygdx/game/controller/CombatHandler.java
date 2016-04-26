@@ -15,22 +15,42 @@ public class CombatHandler{
 	
 	private static boolean isEnemyKilled = false;
 	
-	/** Set to static for debugging purposes in-game */
-	public static Rectangle playerWeaponHitbox = new Rectangle(0,0,0,0);
+	/** Set to public & static for debugging purposes in-game */
+	public static Rectangle playerWeaponHitbox = new Rectangle();
+	public static Rectangle enemyHitbox = new Rectangle();
+	private static Sound sound;
 	
 	public static void handleMeleeAttack(){
-		Adlez adlez = Adlez.getInstance();
-		Player player = adlez.getPlayer();
-		List<WorldObject> worldObjects = adlez.getWorldObjects();
-		
-		/** Temporary sound for attack */
-		Sound sound = Gdx.audio.newSound(Gdx.files.internal("Gun_Shot.mp3"));
-		sound.play(0.01f);
-		
-		/** Hitboxes for where a player's weapon lands as well as for body of the enemy */
-		playerWeaponHitbox = new Rectangle();
-		Rectangle enemyHitbox = new Rectangle();
-		
+		sound = Gdx.audio.newSound(Gdx.files.internal("punch2.wav"));
+		sound.play(0.1f);
+		playerWeaponHitbox = createPlayerMeleeHitbox();
+		attackEnemies(playerWeaponHitbox, 1);
+	}
+	
+	public static void handleAOEAttack(){
+		sound = Gdx.audio.newSound(Gdx.files.internal("fire_attack.wav"));
+		sound.play(0.5f);
+		playerWeaponHitbox = createPlayerAOEHitbox();
+		attackEnemies(playerWeaponHitbox, 5);
+	}
+	
+	public static void handleRangeAttack(){
+		sound = Gdx.audio.newSound(Gdx.files.internal("ice_attack.wav"));
+		sound.play(0.1f);
+		playerWeaponHitbox = createPlayerRangeHitbox();
+		attackEnemies(playerWeaponHitbox, 5);
+	}
+	
+	public static boolean isEnemyKilled(){
+		return isEnemyKilled;
+	}
+	
+	public static void clearIsEnemyKilled(){
+		isEnemyKilled = false;
+	}
+	
+	private static Rectangle createPlayerMeleeHitbox(){
+		Player player = Adlez.getInstance().getPlayer();
 		playerWeaponHitbox.setSize(player.getWidth(), player.getHeight());
 		
 		/** Set player weapon hitbox location depending on where player is facing */
@@ -48,21 +68,61 @@ public class CombatHandler{
 				playerWeaponHitbox.setPosition(player.getPosX() - player.getWidth(), player.getPosY());
 				break;
 		}
+		return playerWeaponHitbox;
+	}
+	
+	private static Rectangle createPlayerAOEHitbox(){
+		Player player = Adlez.getInstance().getPlayer();
+		playerWeaponHitbox.set(player.getPosX() - player.getWidth(), player.getPosY() - player.getHeight(), 
+				player.getWidth() * 3, player.getHeight() * 3);
+		return playerWeaponHitbox;
+	}
+	
+	private static Rectangle createPlayerRangeHitbox(){
+		Player player = Adlez.getInstance().getPlayer();
+		
+		/** Set player weapon hitbox location depending on where player is facing */
+		switch(player.getDirection()){
+			case Direction.NORTH:
+				playerWeaponHitbox.set(player.getPosX(), player.getPosY() + player.getHeight(), player.getWidth(),
+						player.getHeight() * 3);
+				break;
+			case Direction.SOUTH:
+				playerWeaponHitbox.set(player.getPosX(), player.getPosY() - player.getHeight() * 3, player.getWidth(),
+						player.getHeight() * 3);
+				break;
+			case Direction.EAST:
+				playerWeaponHitbox.set(player.getPosX() + player.getWidth(), player.getPosY(), player.getWidth() * 3,
+						player.getHeight());
+				break;
+			case Direction.WEST:
+				playerWeaponHitbox.set(player.getPosX() - player.getWidth() * 3, player.getPosY(), player.getWidth() * 3,
+						player.getHeight());
+				break;
+		}
+		return playerWeaponHitbox;
+	}
+	
+	private static void attackEnemies(Rectangle hitbox, int attackModifier){
+		Adlez adlez = Adlez.getInstance();
+		Player player = adlez.getPlayer();
+		List<WorldObject> worldObjects = adlez.getWorldObjects();
 		
 		/** Since you can't remove something from a list while iterating through it, this temporary list is used to
 		 * keep track of which enemies to remove from the world.
 		 */
 		List<WorldObject> worldObjectsToRemove = new ArrayList<>();
 		
-		/** Iterate through all enemies and check if each and everyone of them are inside the weapon hitbox of the 
-		 * player. If so, enemy is to be killed and removed from the game.
-		 * To be modified later so that consideration is taken to enemy health, player damage etc.*/
 		for(WorldObject object : worldObjects){
 			if(object instanceof NPC){
 				enemyHitbox.set(object.getPosX(), object.getPosY(), object.getWidth(), object.getHeight());
 				if (playerWeaponHitbox.overlaps(enemyHitbox)) {
-					worldObjectsToRemove.add(object);
-					isEnemyKilled = true;
+					NPC enemy = (NPC) object;
+					enemy.setHealth(enemy.getHealth() - player.getAttackDamage() * attackModifier);
+					if(enemy.getHealth() <= 0){
+						worldObjectsToRemove.add(object);
+						isEnemyKilled = true;
+					}
 				}
 			}
 		}
@@ -73,13 +133,5 @@ public class CombatHandler{
 			enemy.setAliveStatus(false);
 			adlez.removeEnemyFromWorld(enemy);
 		}
-	}
-	
-	public static boolean isEnemyKilled(){
-		return isEnemyKilled;
-	}
-	
-	public static void clearIsEnemyKilled(){
-		isEnemyKilled = false;
 	}
 }
