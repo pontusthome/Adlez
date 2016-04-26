@@ -39,7 +39,7 @@ public class PlayerController implements CharacterActions {
         if (Gdx.input.isKeyPressed(Input.Keys.D)) {
             player.moveEast();
         }
-        if (Gdx.input.isKeyPressed((Input.Keys.SPACE))) {
+        if (Gdx.input.isKeyJustPressed(Input.Keys.SPACE)) {
             CombatHandler.handleMeleeAttack();
         }
 
