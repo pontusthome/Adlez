@@ -15,6 +15,9 @@ public class CombatHandler{
 	
 	private static boolean isEnemyKilled = false;
 	
+	/** Set to static for debugging purposes in-game */
+	public static Rectangle playerWeaponHitbox = new Rectangle(0,0,0,0);
+	
 	public static void handleMeleeAttack(){
 		Adlez adlez = Adlez.getInstance();
 		Player player = adlez.getPlayer();
@@ -25,10 +28,10 @@ public class CombatHandler{
 		sound.play(0.01f);
 		
 		/** Hitboxes for where a player's weapon lands as well as for body of the enemy */
-		Rectangle playerWeaponHitbox = new Rectangle();
+		playerWeaponHitbox = new Rectangle();
 		Rectangle enemyHitbox = new Rectangle();
 		
-		playerWeaponHitbox.setSize(player.getWidth() / 2, player.getHeight() / 2);
+		playerWeaponHitbox.setSize(player.getWidth(), player.getHeight());
 		
 		/** Set player weapon hitbox location depending on where player is facing */
 		switch(player.getDirection()){

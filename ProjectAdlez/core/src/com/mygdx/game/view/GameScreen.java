@@ -12,6 +12,7 @@ import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.maps.tiled.TiledMap;
 import com.badlogic.gdx.maps.tiled.TmxMapLoader;
 import com.badlogic.gdx.maps.tiled.renderers.OrthoCachedTiledMapRenderer;
@@ -139,5 +140,15 @@ public class GameScreen extends AbstractScreen {
                     enemy.getPosY());
         }
         batch.end();
+    
+        // For debugging attack hitbox
+        ShapeRenderer shapeRenderer = new ShapeRenderer();
+        shapeRenderer.setProjectionMatrix(playerCam.combined);
+        shapeRenderer.begin(ShapeRenderer.ShapeType.Line);
+        shapeRenderer.setColor(1, 1, 0, 1);
+        shapeRenderer.rect(CombatHandler.playerWeaponHitbox.getX(), CombatHandler.playerWeaponHitbox.getY(), CombatHandler.playerWeaponHitbox.getWidth(), CombatHandler.playerWeaponHitbox.getHeight());
+        shapeRenderer.rect(player.getPosX(), player.getPosY(), player.getWidth(), player.getHeight());
+        System.out.println(CombatHandler.playerWeaponHitbox.getX() + "+++" + CombatHandler.playerWeaponHitbox.getY());
+        shapeRenderer.end();
     }
 }
