@@ -20,6 +20,7 @@ public class CharacterView implements ICharacterView {
     protected Animation animation;
 
     public CharacterView(String characterImg) {
+
         characterTexture = new Texture((Gdx.files.internal((characterImg))));
         TextureRegion[][] tmp = TextureRegion.split(characterTexture,
                 characterTexture.getWidth() / col,
@@ -45,9 +46,9 @@ public class CharacterView implements ICharacterView {
     public void viewUpdate(int frame) {
         setCurrentFrame(frame);
 
-        if (getStateTime() < 2) {
+        if (getStateTime() < row) {
             setStateTime(getStateTime() + Gdx.graphics.getDeltaTime() * 6);
-            if (getStateTime() > 2) {
+            if (getStateTime() > row) {
                 setStateTime(0);
             }
         } else {

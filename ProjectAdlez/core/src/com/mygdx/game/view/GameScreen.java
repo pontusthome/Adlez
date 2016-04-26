@@ -64,7 +64,7 @@ public class GameScreen extends AbstractScreen {
         // Spawning enemies.
         enemies = new HashMap<INPC, IController>();
         for (INPC enemy: adlez.getEnemies()) {
-            EnemyController enemyController = new EnemyController(enemy, AssetStrings.MOVE_SPRITES_IMAGE, player);
+            EnemyController enemyController = new EnemyController(enemy, AssetStrings.AZURE_SPRITES_IMAGE, player);
             enemies.put(enemy, enemyController);
         }
 
