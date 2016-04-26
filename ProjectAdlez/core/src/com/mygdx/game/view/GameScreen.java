@@ -12,7 +12,6 @@ import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
-import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.maps.tiled.TiledMap;
 import com.badlogic.gdx.maps.tiled.TmxMapLoader;
 import com.badlogic.gdx.maps.tiled.renderers.OrthoCachedTiledMapRenderer;
@@ -20,7 +19,9 @@ import com.badlogic.gdx.maps.tiled.renderers.OrthoCachedTiledMapRenderer;
 import com.mygdx.game.controller.CombatHandler;
 import com.mygdx.game.controller.PlayerController;
 import com.mygdx.game.event.EnemyController;
-import com.mygdx.game.model.*;
+import com.mygdx.game.model.Adlez;
+import com.mygdx.game.model.NPC;
+import com.mygdx.game.model.Player;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -66,8 +67,8 @@ public class GameScreen extends AbstractScreen {
         playerController = new PlayerController(player, playerView);
 
         // Spawning enemies.
-        enemies = new HashMap<>();
-        enemyControllers = new ArrayList<>();
+        enemies = new HashMap<NPC, CharacterView>();
+        enemyControllers = new ArrayList<EnemyController>();
         for (NPC enemy: adlez.getEnemies()) {
             CharacterView enemyView = new CharacterView("playerSpritesMove.png");
             EnemyController enemyController = new EnemyController(enemy, enemyView, player);
@@ -137,7 +138,6 @@ public class GameScreen extends AbstractScreen {
                     enemy.getPosX(),
                     enemy.getPosY());
         }
-        
         batch.end();
     }
 }

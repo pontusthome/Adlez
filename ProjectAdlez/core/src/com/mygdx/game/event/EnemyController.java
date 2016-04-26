@@ -17,7 +17,7 @@ public class EnemyController implements CharacterActions {
     private Player player;
 
     private CollisionHandler collisionHandler = new CollisionHandler();
-    
+
     public EnemyController(NPC enemy, CharacterView view, Player player) {
         this.enemy = enemy;
         this.view = view;
