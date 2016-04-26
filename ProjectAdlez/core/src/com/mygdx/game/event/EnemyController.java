@@ -18,10 +18,6 @@ public class EnemyController implements CharacterActions {
 
     private CollisionHandler collisionHandler = new CollisionHandler();
     
-    // Data for first implementation of attack
-    public NPC getEnemy(){return enemy;}
-    public boolean isAlive(){return enemy.isAlive();}
-
     public EnemyController(NPC enemy, CharacterView view, Player player) {
         this.enemy = enemy;
         this.view = view;
@@ -48,5 +44,13 @@ public class EnemyController implements CharacterActions {
             enemy.moveEast();
         }
         view.update(enemy.getDirection());
+    }
+    
+    public NPC getEnemy(){
+        return enemy;
+    }
+    
+    public boolean isAlive(){
+        return enemy.isAlive();
     }
 }

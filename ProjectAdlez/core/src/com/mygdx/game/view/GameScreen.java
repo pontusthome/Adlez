@@ -17,6 +17,7 @@ import com.badlogic.gdx.maps.tiled.TiledMap;
 import com.badlogic.gdx.maps.tiled.TmxMapLoader;
 import com.badlogic.gdx.maps.tiled.renderers.OrthoCachedTiledMapRenderer;
 
+import com.mygdx.game.controller.CombatHandler;
 import com.mygdx.game.controller.PlayerController;
 import com.mygdx.game.event.EnemyController;
 import com.mygdx.game.model.*;
@@ -108,36 +109,21 @@ public class GameScreen extends AbstractScreen {
                 player.getPosX(),
                 player.getPosY());
                 
-        // Data for first implementation of attack
-//        switch(player.getDirection()){
-//            case Direction.NORTH:
-//                batch.draw(playerView.getCurrentFrame(), player.getPosX(), player.getPosY() + player.getHeight());
-//                break;
-//            case Direction.SOUTH:
-//                batch.draw(playerView.getCurrentFrame(), player.getPosX(), player.getPosY() - player.getHeight());
-//                break;
-//            case Direction.EAST:
-//                batch.draw(playerView.getCurrentFrame(), player.getPosX() + player.getWidth(), player.getPosY());
-//                break;
-//            case Direction.WEST:
-//                batch.draw(playerView.getCurrentFrame(), player.getPosX() - player.getWidth(), player.getPosY());
-//                break;
-//        }
-        if(!playerController.getEnemiesToKeep().isEmpty()){
+        /** Needed at least temporarily to exclude EnemyControllers of enemies that got killed by a player attack. 
+         * isEnemyKilled() returns true if at least one enemy has been killed */
+        if(CombatHandler.isEnemyKilled()){
             List<EnemyController> enemyControllersToKeep = new ArrayList<>();
             for(EnemyController enemyController: enemyControllers){
                 if(enemyController.isAlive()){
                     enemyControllersToKeep.add(enemyController);
                 }else{
                     enemies.remove(enemyController.getEnemy());
-                    
-                    adlez.getEnemies().remove(enemyController.getEnemy());
-    
-                    adlez.getWorldObjects().remove(enemyController.getEnemy());
                 }
             }
             enemyControllers = enemyControllersToKeep;
-            playerController.clearEnemiesToKeep();
+            
+            /** Verifies for CombatHandler that necessary actions have been taken after enemies have gotten killed */
+            CombatHandler.clearIsEnemyKilled();
         }
 
         // Updating enemies
@@ -152,13 +138,6 @@ public class GameScreen extends AbstractScreen {
                     enemy.getPosY());
         }
         
-        // For debugging attack hitbox
         batch.end();
-        ShapeRenderer shapeRenderer = new ShapeRenderer();
-        shapeRenderer.setProjectionMatrix(playerCam.combined);
-        shapeRenderer.begin(ShapeRenderer.ShapeType.Line);
-        shapeRenderer.setColor(1, 1, 0, 1);
-        shapeRenderer.rect(PlayerController.playerHitbox.getX(), PlayerController.playerHitbox.getY(), PlayerController.playerHitbox.getWidth(), PlayerController.playerHitbox.getHeight());
-        shapeRenderer.end();
     }
 }

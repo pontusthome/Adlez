@@ -72,4 +72,9 @@ public class Adlez {
     public List<WorldObject> getWorldObjects() {
         return worldObjects;
     }
+    
+    public void removeEnemyFromWorld(NPC enemy){
+        enemies.remove(enemy);
+        worldObjects.remove(enemy);
+    }
 }

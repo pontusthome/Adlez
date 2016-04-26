@@ -56,44 +56,8 @@ public class PlayerController implements CharacterActions {
         if (Gdx.input.isKeyPressed(Input.Keys.D)) {
             player.moveEast();
         }
-        if (Gdx.input.isKeyPressed((Input.Keys.K))) {
-            
-        }
-        // Trying to implement attack
         if (Gdx.input.isKeyPressed((Input.Keys.SPACE))) {
-            
-            playerHitbox.set(player.getPosX(), player.getPosY(), player.getWidth() / 2, player.getHeight() / 2);
-            
-            switch(player.getDirection()){
-                case Direction.NORTH:
-                    playerHitbox.setPosition(player.getPosX(), player.getPosY() + player.getHeight());
-                    break;
-                case Direction.SOUTH:
-                    playerHitbox.setPosition(player.getPosX(), player.getPosY() - player.getHeight());
-                    break;
-                case Direction.EAST:
-                    playerHitbox.setPosition(player.getPosX() + player.getWidth(), player.getPosY());
-                    break;
-                case Direction.WEST:
-                    playerHitbox.setPosition(player.getPosX() - player.getWidth(), player.getPosY());
-                    break;
-            }
-            
-            sound.play(0.05f);
-            enemiesToKeep.clear();
-            
-            for(WorldObject object : worldObjectList){
-                if(object instanceof NPC){
-                    enemyHitbox.set(object.getPosX(), object.getPosY(),
-                            object.getWidth(), object.getHeight());
-                    if (playerHitbox.overlaps(enemyHitbox)) {
-                        NPC enemy = (NPC) object;
-                        enemy.setAliveStatus(false);
-                    }else{
-                        enemiesToKeep.add(object);
-                    }
-                }
-            }
+            CombatHandler.handleMeleeAttack();
         }
 
         view.update(player.getDirection());
