@@ -46,7 +46,7 @@ public final class AreaHandler {
             NPC enemy = new NPC(Direction.NORTH, speed,
                                 29, 29,
                                 xPos, yPos,
-                                100, 5, 0);
+                                100, 5, 0, 100);
             enemies.add(enemy);
         }
 

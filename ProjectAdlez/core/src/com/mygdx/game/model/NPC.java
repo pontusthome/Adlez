@@ -10,7 +10,7 @@ public class NPC extends Character {
 	public NPC(int direction, float speed,
 			   float width, float height,
 			   float posX, float posY,
-			   int maxHealth, int attackDamage, int gold) {
+			   int maxHealth, int attackDamage, int gold, int mana) {
 		setDirection(direction);
 		setSpeed(speed);
 		setWidth(width);
@@ -21,6 +21,7 @@ public class NPC extends Character {
 		setHealth(maxHealth);
 		setAttackDamage(attackDamage);
 		setGold(gold);
+		setMana(mana);
 	}
 	
 	public boolean isAlive(){

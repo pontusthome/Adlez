@@ -30,7 +30,7 @@ public class Adlez {
         player = new Player(Direction.NORTH, 2f,
                             29, 29,
                             0, 0,
-                            100, 20, 0);
+                            100, 20, 0, 100);
     }
 
     public void initiateArea(Area area) {
@@ -42,7 +42,7 @@ public class Adlez {
         player = new Player(Direction.NORTH, 2f,
                             29, 29,
                             0, 0,
-                            100, 20, 0);
+                            100, 20, 0, 100);
         worldObjects.add(player);
         player.setPosX(area.getPlayerXposition());
         player.setPosY(area.getPlayerYposition());

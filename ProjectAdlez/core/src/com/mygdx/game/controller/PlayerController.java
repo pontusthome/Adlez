@@ -43,10 +43,10 @@ public class PlayerController implements CharacterActions {
             CombatHandler.handleMeleeAttack();
         }
         if (Gdx.input.isKeyJustPressed(Input.Keys.E)) {
-            CombatHandler.handleRangeAttack();
+            CombatHandler.handleRangeMagicAttack();
         }
         if (Gdx.input.isKeyJustPressed(Input.Keys.F)) {
-            CombatHandler.handleAOEAttack();
+            CombatHandler.handleAOEMagicAttack();
         }
 
         view.update(player.getDirection());

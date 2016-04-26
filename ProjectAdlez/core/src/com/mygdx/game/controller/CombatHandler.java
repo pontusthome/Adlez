@@ -24,21 +24,31 @@ public class CombatHandler{
 		sound = Gdx.audio.newSound(Gdx.files.internal("punch2.wav"));
 		sound.play(0.1f);
 		playerWeaponHitbox = createPlayerMeleeHitbox();
-		attackEnemies(playerWeaponHitbox, 1);
+		attackEnemies(playerWeaponHitbox, 2, 0);
 	}
 	
-	public static void handleAOEAttack(){
+	public static void handleAOEMagicAttack(){
+		if(Adlez.getInstance().getPlayer().getMana() <= 0){
+			sound = Gdx.audio.newSound(Gdx.files.internal("out_of_mana.wav"));
+			sound.play(0.5f);
+			return;
+		}
 		sound = Gdx.audio.newSound(Gdx.files.internal("fire_attack.wav"));
 		sound.play(0.5f);
 		playerWeaponHitbox = createPlayerAOEHitbox();
-		attackEnemies(playerWeaponHitbox, 5);
+		attackEnemies(playerWeaponHitbox, 5, 20);
 	}
 	
-	public static void handleRangeAttack(){
+	public static void handleRangeMagicAttack(){
+		if(Adlez.getInstance().getPlayer().getMana() <= 0){
+			sound = Gdx.audio.newSound(Gdx.files.internal("out_of_mana.wav"));
+			sound.play(0.5f);
+			return;
+		}
 		sound = Gdx.audio.newSound(Gdx.files.internal("ice_attack.wav"));
 		sound.play(0.1f);
 		playerWeaponHitbox = createPlayerRangeHitbox();
-		attackEnemies(playerWeaponHitbox, 5);
+		attackEnemies(playerWeaponHitbox, 5, 20);
 	}
 	
 	public static boolean isEnemyKilled(){
@@ -103,10 +113,12 @@ public class CombatHandler{
 		return playerWeaponHitbox;
 	}
 	
-	private static void attackEnemies(Rectangle hitbox, int attackModifier){
+	private static void attackEnemies(Rectangle hitbox, int attackModifier, int manaUsed){
 		Adlez adlez = Adlez.getInstance();
 		Player player = adlez.getPlayer();
 		List<WorldObject> worldObjects = adlez.getWorldObjects();
+		
+		player.setMana(player.getMana() - manaUsed);
 		
 		/** Since you can't remove something from a list while iterating through it, this temporary list is used to
 		 * keep track of which enemies to remove from the world.
