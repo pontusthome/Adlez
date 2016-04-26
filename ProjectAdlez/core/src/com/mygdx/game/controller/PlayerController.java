@@ -20,18 +20,6 @@ public class PlayerController implements CharacterActions {
     private CharacterView view;
     private CollisionHandler collisionHandler = new CollisionHandler();
     
-    // Data for first implementation of attack
-    private Sound sound = Gdx.audio.newSound(Gdx.files.internal("Gun_Shot.mp3"));
-    private List<WorldObject> enemiesToKeep = new ArrayList<>();
-    public List<WorldObject> getEnemiesToKeep(){return enemiesToKeep;}
-    public void clearEnemiesToKeep(){enemiesToKeep.clear();}
-    private List<WorldObject> worldObjectList = Adlez.getInstance().getWorldObjects();
-    
-    
-    public static Rectangle playerHitbox = new Rectangle(10,10,10,10);
-    public static Rectangle enemyHitbox = new Rectangle(10,10,10,10);
-    
-
     public PlayerController(Player player, CharacterView view) {
         this.player = player;
         this.view = view;
