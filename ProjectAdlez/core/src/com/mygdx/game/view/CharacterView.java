@@ -15,12 +15,14 @@ public class CharacterView {
     private TextureRegion[] characterFrames;
     private TextureRegion currentFrame;
     private float stateTime;
-    private static final int col = 4;
-    private static final int row = 2;
 
     private Animation animation;
+    private int col;
+    private int row;
 
-    public CharacterView(String characterImg) {
+    public CharacterView(String characterImg, int col, int row) {
+        this.col = col;
+        this.row = row;
 
         characterTexture = new Texture((Gdx.files.internal((characterImg))));
         TextureRegion[][] tmp = TextureRegion.split(characterTexture,
@@ -48,9 +50,9 @@ public class CharacterView {
     public void update(int frame) {
         setCurrentFrame(frame);
 
-        if (getStateTime() < 2) {
+        if (getStateTime() < row) {
             setStateTime(getStateTime() + Gdx.graphics.getDeltaTime() * 6);
-            if (getStateTime() > 2) {
+            if (getStateTime() > row) {
                 setStateTime(0);
             }
         } else {

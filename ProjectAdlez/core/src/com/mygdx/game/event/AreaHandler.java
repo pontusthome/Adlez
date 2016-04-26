@@ -43,7 +43,7 @@ public final class AreaHandler {
             float yPos = random.nextInt(1000)-500;
 
             NPC enemy = new NPC(Direction.NORTH, speed,
-                                10, 10,
+                                20, 20,
                                 xPos, yPos,
                                 100, 5, 0);
             enemies.add(enemy);

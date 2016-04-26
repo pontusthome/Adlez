@@ -62,14 +62,14 @@ public class GameScreen extends AbstractScreen {
         getViewport().update(Gdx.graphics.getWidth(), Gdx.graphics.getHeight(), false);
 
         // Spawning player.
-        playerView = new CharacterView("playerSpritesMove.png");
+        playerView = new CharacterView("playerSpritesMove.png",4,2);
         playerController = new PlayerController(player, playerView);
 
         // Spawning enemies.
         enemies = new HashMap<NPC, CharacterView>();
         enemyControllers = new ArrayList<EnemyController>();
         for (NPC enemy: adlez.getEnemies()) {
-            CharacterView enemyView = new CharacterView("playerSpritesMove.png");
+            CharacterView enemyView = new CharacterView("Azurewalk.png",4,2);
             EnemyController enemyController = new EnemyController(enemy, enemyView, player);
             enemyControllers.add(enemyController);
             enemies.put(enemy, enemyView);
