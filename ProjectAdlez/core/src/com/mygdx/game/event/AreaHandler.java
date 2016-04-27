@@ -44,7 +44,7 @@ public final class AreaHandler {
 
             /** Set NPC's width & height to size of texture for debugging purposes */
             NPC enemy = new NPC(Direction.NORTH, speed,
-                                29, 29,
+                                17, 17,
                                 xPos, yPos,
                                 100, 5, 0, 100);
             enemies.add(enemy);

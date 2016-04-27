@@ -30,7 +30,7 @@ public class Adlez {
     private Adlez() {
         /** Set players's width & height to size of texture for debugging purposes */
         player = new Player(Direction.NORTH, 2f,
-                            29, 29,
+                            17, 17,
                             0, 0,
                             100, 20, 0, 100);
     }
