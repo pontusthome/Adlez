@@ -7,7 +7,7 @@ public class NPC extends Character {
 	private boolean isEnemy;
 
 	public NPC(int direction, float speed,
-			   float width, float height,
+			   int width, int height,
 			   float posX, float posY,
 			   int maxHealth, int attackDamage, int gold) {
 		setDirection(direction);

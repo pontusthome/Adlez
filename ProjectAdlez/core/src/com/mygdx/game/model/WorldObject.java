@@ -4,8 +4,8 @@ public abstract class WorldObject {
 
     private float posX;
     private float posY;
-    private float width;
-    private float height;
+    private int width;
+    private int height;
 
     public boolean collide(WorldObject other) {
         float width = this.getWidth();
@@ -46,19 +46,19 @@ public abstract class WorldObject {
         this.posY = y;
     }
 
-    public float getWidth() {
+    public int getWidth() {
         return width;
     }
 
-    public void setWidth(float width) {
+    public void setWidth(int width) {
         this.width = width;
     }
 
-    public float getHeight() {
+    public int getHeight() {
         return height;
     }
 
-    public void setHeight(float height) {
+    public void setHeight(int height) {
         this.height = height;
     }
 }

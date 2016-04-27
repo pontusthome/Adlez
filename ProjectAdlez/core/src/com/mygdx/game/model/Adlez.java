@@ -24,6 +24,7 @@ public class Adlez {
     private List<NPC> enemies;
     private List<NPC> friendlyNPCs;
     private List<WorldObject> stationaryObjects;
+    private List<Wall> walls;
 
     private Adlez() {
         player = new Player(Direction.NORTH, 2f,
@@ -53,6 +54,9 @@ public class Adlez {
 
         stationaryObjects = area.getStationaryObjects();
         worldObjects.addAll(stationaryObjects);
+
+        walls = area.getWalls();
+        worldObjects.addAll(walls);
     }
 
     public Player getPlayer() {
@@ -71,5 +75,9 @@ public class Adlez {
 
     public List<WorldObject> getWorldObjects() {
         return worldObjects;
+    }
+
+    public List<Wall> getWalls() {
+        return walls;
     }
 }

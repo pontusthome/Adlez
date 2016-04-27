@@ -8,6 +8,7 @@ import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.maps.tiled.TiledMap;
 import com.badlogic.gdx.maps.tiled.TmxMapLoader;
 import com.badlogic.gdx.maps.tiled.renderers.OrthoCachedTiledMapRenderer;
@@ -74,7 +75,7 @@ public class PlayScreen implements Screen {
         // Spawning enemies.
         enemies = new HashMap<NPC, CharacterView>();
         enemyControllers = new ArrayList<EnemyController>();
-        for (NPC enemy: adlez.getEnemies()) {
+        for (NPC enemy : adlez.getEnemies()) {
             CharacterView enemyView = new CharacterView("playerSpritesMove.png");
             EnemyController enemyController = new EnemyController(enemy, enemyView, player);
             enemyControllers.add(enemyController);
@@ -107,17 +108,17 @@ public class PlayScreen implements Screen {
         // Updating player
         playerController.update();
         playerCam.position.set(player.getPosX() + (playerView.getCurrentFrame().getRegionWidth() / 2),
-                               player.getPosY() + (playerView.getCurrentFrame().getRegionHeight() / 2),
-                               0); // z = 0, non 3D
+                player.getPosY() + (playerView.getCurrentFrame().getRegionHeight() / 2),
+                0); // z = 0, non 3D
         batch.draw(playerView.getCurrentFrame(),
-                   player.getPosX(),
-                   player.getPosY());
+                player.getPosX(),
+                player.getPosY());
 
         // Updating enemies
-        for (EnemyController enemyController: enemyControllers) {
+        for (EnemyController enemyController : enemyControllers) {
             enemyController.update();
         }
-        for(Map.Entry<NPC, CharacterView> entry : enemies.entrySet()) {
+        for (Map.Entry<NPC, CharacterView> entry : enemies.entrySet()) {
             NPC enemy = entry.getKey();
             CharacterView view = entry.getValue();
             batch.draw(view.getCurrentFrame(),
@@ -133,8 +134,8 @@ public class PlayScreen implements Screen {
         health = "Health: " + player.getHealth();
         bitmapFont.setColor(Color.BLUE);
         bitmapFont.draw(batch, health,
-                player.getPosX() + (playerView.getCurrentFrame().getRegionWidth() / 2) - Gdx.graphics.getWidth()/2 +20,
-                player.getPosY() + (playerView.getCurrentFrame().getRegionHeight() / 2) + Gdx.graphics.getHeight()/2 );
+                player.getPosX() + (playerView.getCurrentFrame().getRegionWidth() / 2) - Gdx.graphics.getWidth() / 2 + 20,
+                player.getPosY() + (playerView.getCurrentFrame().getRegionHeight() / 2) + Gdx.graphics.getHeight() / 2);
     }
 
     @Override

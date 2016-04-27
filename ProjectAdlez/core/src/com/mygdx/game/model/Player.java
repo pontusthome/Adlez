@@ -21,7 +21,7 @@ public class Player extends Character {
 
     // This constructor should be used.
     public Player(int direction, float speed,
-                  float width, float height,
+                  int width, int height,
                   float posX, float posY,
                   int maxHealth, int attackDamage, int gold) {
         setDirection(direction);

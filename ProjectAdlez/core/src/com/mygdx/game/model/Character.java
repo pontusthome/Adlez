@@ -28,7 +28,7 @@ public abstract class Character extends WorldObject implements ICharacter {
 	}
 
 	public Character(int direction, float speed,
-				  float width, float height,
+				  int width, int height,
 				  float posX, float posY,
 				  int maxHealth, int attackDamage, int gold) {
 		setDirection(direction);
