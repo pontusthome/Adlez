@@ -77,8 +77,8 @@ public class GameScreen extends AbstractScreen {
             enemies.put(enemy, enemyView);
         }
         // temporary things, just testing
-        tileMap = new TmxMapLoader().load("test1.tmx");
-        float unitScale = 1 / 3f;
+        tileMap = new TmxMapLoader().load("testLevel1.tmx");
+        float unitScale = 1 / 2f;
         renderer = new OrthoCachedTiledMapRenderer(tileMap, unitScale);
         playerCam.setToOrtho(false, Gdx.graphics.getWidth() * 2 / 3, Gdx.graphics.getHeight() * 2 / 3);
 

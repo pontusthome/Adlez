@@ -73,7 +73,7 @@ public class CharacterTest {
         NPC stationaryEnemy = new NPC(Direction.NORTH, objectSpeed,
                                        objectWidth, objectHeight,
                                        objectXpostion, objectYposition,
-                                       0, 0, 0);
+                                       0, 0, 0, 0);
         enemies.add(stationaryEnemy);
 
         Area area = new Area(playerXposition, playerYposition,
@@ -123,7 +123,7 @@ public class CharacterTest {
         NPC stationaryEnemy = new NPC(Direction.NORTH, objectSpeed,
                 objectWidth, objectHeight,
                 objectXpostion, objectYposition,
-                0, 0, 0);
+                0, 0, 0,0 );
         enemies.add(stationaryEnemy);
 
         Area area = new Area(playerXposition, playerYposition,

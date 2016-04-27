@@ -27,8 +27,8 @@ public final class AreaHandler {
      * a list of areas might help with that? /PT 24/4
      */
     public static Area testLevel() {
-        playerXposition = 200;
-        playerYposition = 200;
+        playerXposition = 3*64/3;
+        playerYposition = 3*64/3;
 
         enemies = new ArrayList<NPC>();
         friendlyNPCs = new ArrayList<NPC>();
@@ -48,7 +48,7 @@ public final class AreaHandler {
             enemies.add(enemy);
         }
         Wall wall = new Wall();
-        walls.addAll(wall.createAreaBounds(10, 10));
+        walls.addAll(wall.createAreaBounds(10, 10, 64/2));
 
         area = new Area(playerXposition, playerYposition,
                 enemies, friendlyNPCs, stationaryObjects, walls);
