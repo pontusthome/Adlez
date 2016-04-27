@@ -25,6 +25,7 @@ public class Adlez {
     private List<NPC> friendlyNPCs;
     private List<WorldObject> stationaryObjects;
     private List<Wall> walls;
+    private List<Obstacles> obstacles;
 
     private Adlez() {
         /** Set players's width & height to size of texture for debugging purposes */
@@ -59,6 +60,9 @@ public class Adlez {
 
         walls = area.getWalls();
         worldObjects.addAll(walls);
+
+        obstacles = area.getObstacles();
+        worldObjects.addAll(obstacles);
     }
 
     public Player getPlayer() {
@@ -81,6 +85,10 @@ public class Adlez {
 
     public List<Wall> getWalls() {
         return walls;
+    }
+
+    public List<Obstacles> getObstacles() {
+        return obstacles;
     }
     
     public void removeEnemyFromWorld(NPC enemy){

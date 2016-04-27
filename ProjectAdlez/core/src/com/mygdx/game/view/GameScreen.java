@@ -22,6 +22,7 @@ import com.mygdx.game.controller.PlayerController;
 import com.mygdx.game.event.EnemyController;
 import com.mygdx.game.model.Adlez;
 import com.mygdx.game.model.NPC;
+import com.mygdx.game.model.Obstacles;
 import com.mygdx.game.model.Player;
 
 import java.util.ArrayList;
@@ -45,16 +46,18 @@ public class GameScreen extends AbstractScreen {
 
     private CharacterView playerView;
 
-    public SpriteBatch batch;
+    private SpriteBatch batch;
     private OrthoCachedTiledMapRenderer renderer;
     private PlayerController playerController;
     private OrthographicCamera playerCam;
     private TiledMap tileMap;
 
+    private ObstaclesView obstaclesView;
 
     public GameScreen() {
         super();
         batch = new SpriteBatch();
+        obstaclesView = new ObstaclesView(batch, "boxObstacle.jpeg");
     }
 
     @Override
@@ -139,6 +142,9 @@ public class GameScreen extends AbstractScreen {
                     enemy.getPosX(),
                     enemy.getPosY());
         }
+        // Generate obstacles
+        obstaclesView.generateObstacles();
+
         batch.end();
 
         // For debugging attack hitbox

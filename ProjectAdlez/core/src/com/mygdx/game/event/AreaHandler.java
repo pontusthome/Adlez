@@ -21,19 +21,21 @@ public final class AreaHandler {
     private static List<NPC> friendlyNPCs;
     private static List<WorldObject> stationaryObjects;
     private static List<Wall> walls;
+    private static List<Obstacles> obstacles;
 
     /**
      * If we want to save the areas as they are when the player leaves them
      * a list of areas might help with that? /PT 24/4
      */
     public static Area testLevel() {
-        playerXposition = 3*64/3;
-        playerYposition = 3*64/3;
+        playerXposition = 64;
+        playerYposition = 64;
 
         enemies = new ArrayList<NPC>();
         friendlyNPCs = new ArrayList<NPC>();
         stationaryObjects = new ArrayList<WorldObject>();
         walls = new ArrayList<Wall>();
+        obstacles = new ArrayList<Obstacles>();
 
         for (int i = 0; i < 20; i++) {
             float speed = random.nextFloat() * (2f - 1f) + 1;
@@ -50,8 +52,13 @@ public final class AreaHandler {
         Wall wall = new Wall();
         walls.addAll(wall.createAreaBounds(10, 10, 64/2));
 
+        Obstacles obst1 = new Obstacles(32*5,32*5,32,32,0);
+        Obstacles obst2 = new Obstacles(32*7,32*7,32,32,0);
+        obstacles.add(obst1);
+        obstacles.add(obst2);
+
         area = new Area(playerXposition, playerYposition,
-                enemies, friendlyNPCs, stationaryObjects, walls);
+                enemies, friendlyNPCs, stationaryObjects, walls, obstacles);
 
         return area;
     }

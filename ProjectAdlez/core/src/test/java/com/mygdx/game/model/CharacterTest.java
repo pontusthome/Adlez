@@ -15,6 +15,7 @@ public class CharacterTest {
     List<NPC> friendlyNPCs;
     List<WorldObject> stationaryObjects;
     List<Wall> walls;
+    List<Obstacles> obstacles;
 
     @org.junit.Before
     public void setUp() throws Exception {
@@ -22,6 +23,7 @@ public class CharacterTest {
         friendlyNPCs = new ArrayList<NPC>();
         stationaryObjects = new ArrayList<WorldObject>();
         walls = new ArrayList<Wall>();
+        obstacles = new ArrayList<Obstacles>();
     }
 
     @org.junit.After
@@ -35,7 +37,7 @@ public class CharacterTest {
         float playerYposition = 0;
 
         Area area = new Area(playerXposition, playerYposition,
-                enemies, friendlyNPCs, stationaryObjects, walls);
+                enemies, friendlyNPCs, stationaryObjects, walls, obstacles);
         // No worldobjects
         adlez.initiateArea(area);
         player = adlez.getPlayer();
@@ -77,7 +79,7 @@ public class CharacterTest {
         enemies.add(stationaryEnemy);
 
         Area area = new Area(playerXposition, playerYposition,
-                enemies, friendlyNPCs, stationaryObjects, walls);
+                enemies, friendlyNPCs, stationaryObjects, walls, obstacles);
         // With one stationary enemy to the north of player
         adlez.initiateArea(area);
         player = adlez.getPlayer();
@@ -127,7 +129,7 @@ public class CharacterTest {
         enemies.add(stationaryEnemy);
 
         Area area = new Area(playerXposition, playerYposition,
-                enemies, friendlyNPCs, stationaryObjects, walls);
+                enemies, friendlyNPCs, stationaryObjects, walls, obstacles);
         // With one stationary enemy to the west of player
         adlez.initiateArea(area);
         player = adlez.getPlayer();

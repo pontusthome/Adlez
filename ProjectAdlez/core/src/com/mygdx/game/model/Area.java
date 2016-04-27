@@ -15,9 +15,10 @@ public final class Area {
     private List<NPC> friendlyNPCs;
     private List<WorldObject> stationaryObjects;
     private List<Wall> walls;
+    private List<Obstacles> obstacles;
 
     public Area(float playerXposition, float playerYposition,
-                List<NPC> enemies, List<NPC> friendlyNPCs, List<WorldObject> stationaryObjects, List<Wall> walls) {
+                List<NPC> enemies, List<NPC> friendlyNPCs, List<WorldObject> stationaryObjects, List<Wall> walls, List<Obstacles> obstacles) {
         this.playerXposition = playerXposition;
         this.playerYposition = playerYposition;
 
@@ -25,6 +26,7 @@ public final class Area {
         this.friendlyNPCs = friendlyNPCs;
         this.stationaryObjects = stationaryObjects;
         this.walls = walls;
+        this.obstacles = obstacles;
     }
 
     public float getPlayerXposition() {
@@ -49,5 +51,9 @@ public final class Area {
 
     public List<Wall> getWalls() {
         return walls;
+    }
+
+    public List<Obstacles> getObstacles() {
+        return obstacles;
     }
 }
