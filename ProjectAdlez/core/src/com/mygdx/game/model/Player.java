@@ -23,7 +23,7 @@ public class Player extends Character {
     public Player(int direction, float speed,
                   int width, int height,
                   float posX, float posY,
-                  int maxHealth, int attackDamage, int gold) {
+                  int maxHealth, int attackDamage, int gold, int mana) {
         setDirection(direction);
         setSpeed(speed);
         setWidth(width);
@@ -34,6 +34,7 @@ public class Player extends Character {
         setHealth(maxHealth);
         setAttackDamage(attackDamage);
         setGold(gold);
+        setMana(mana);
         // Size of inventory
         inventory = new ArrayList<IItem>(16);
     }

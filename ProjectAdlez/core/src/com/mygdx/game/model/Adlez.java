@@ -27,10 +27,11 @@ public class Adlez {
     private List<Wall> walls;
 
     private Adlez() {
+        /** Set players's width & height to size of texture for debugging purposes */
         player = new Player(Direction.NORTH, 2f,
-                            10, 10,
+                            29, 29,
                             0, 0,
-                            100, 20, 0);
+                            100, 20, 0, 100);
     }
 
     public void initiateArea(Area area) {
@@ -38,10 +39,11 @@ public class Adlez {
         worldObjects = new ArrayList<WorldObject>();
 
         // add the player and set him to the new position
+        /** Set players's width & height to size of texture for debugging purposes */
         player = new Player(Direction.NORTH, 2f,
-                            10, 10,
+                            29, 29,
                             0, 0,
-                            100, 20, 0);
+                            100, 20, 0, 100);
         worldObjects.add(player);
         player.setPosX(area.getPlayerXposition());
         player.setPosY(area.getPlayerYposition());
@@ -79,5 +81,10 @@ public class Adlez {
 
     public List<Wall> getWalls() {
         return walls;
+    }
+    
+    public void removeEnemyFromWorld(NPC enemy){
+        enemies.remove(enemy);
+        worldObjects.remove(enemy);
     }
 }

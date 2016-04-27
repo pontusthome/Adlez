@@ -40,10 +40,11 @@ public final class AreaHandler {
             float xPos = random.nextInt(1000) - 500;
             float yPos = random.nextInt(1000) - 500;
 
+            /** Set NPC's width & height to size of texture for debugging purposes */
             NPC enemy = new NPC(Direction.NORTH, speed,
-                    10, 10,
-                    xPos, yPos,
-                    100, 5, 0);
+                                29, 29,
+                                xPos, yPos,
+                                100, 5, 0, 100);
             enemies.add(enemy);
         }
         Wall wall = new Wall();

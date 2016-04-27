@@ -2,20 +2,24 @@ package com.mygdx.game.view;
 
 import com.badlogic.gdx.Game;
 import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
+
+import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.graphics.GL20;
+import com.badlogic.gdx.graphics.OrthographicCamera;
+
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.maps.tiled.TiledMap;
 import com.badlogic.gdx.maps.tiled.TmxMapLoader;
 import com.badlogic.gdx.maps.tiled.renderers.OrthoCachedTiledMapRenderer;
-import com.badlogic.gdx.scenes.scene2d.Stage;
-import com.badlogic.gdx.utils.viewport.ScreenViewport;
-import com.mygdx.game.event.EnemyController;
+
+import com.mygdx.game.controller.CombatHandler;
 import com.mygdx.game.controller.PlayerController;
+import com.mygdx.game.event.EnemyController;
 import com.mygdx.game.model.Adlez;
 import com.mygdx.game.model.NPC;
 import com.mygdx.game.model.Player;
@@ -25,48 +29,39 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import com.badlogic.gdx.math.Vector2;
+import com.mygdx.game.controller.PlayerController;
+
 /**
- * Created by martinso on 27/03/16.
+ * Created by Viktor on 2016-04-19.
  */
-public class PlayScreen implements Screen {
+public class GameScreen extends AbstractScreen {
 
     private Adlez adlez = Adlez.getInstance();
-
     private Player player = adlez.getPlayer();
-    private CharacterView playerView;
-    private PlayerController playerController;
 
     private HashMap<NPC, CharacterView> enemies;
     private List<EnemyController> enemyControllers;
 
-    private Game game;
+    private CharacterView playerView;
 
-    private OrthographicCamera playerCam;
-
-    private SpriteBatch batch;
-
-    private TiledMap testing1;
+    public SpriteBatch batch;
     private OrthoCachedTiledMapRenderer renderer;
-    private Stage stage;
+    private PlayerController playerController;
+    private OrthographicCamera playerCam;
+    private TiledMap tileMap;
 
-    private String health;
-    BitmapFont bitmapFont;
 
-    public PlayScreen(Game game) {
-        this.game = game;
+    public GameScreen() {
+        super();
+        batch = new SpriteBatch();
     }
 
     @Override
-    public void show() {
+    public void buildStage() {
+
         playerCam = new OrthographicCamera(Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
-
-        health = "Health: " + player.getHealth();
-        bitmapFont = new BitmapFont();
-
-        batch = new SpriteBatch();
-
-        stage = new Stage(new ScreenViewport());
-        stage.getViewport().update(Gdx.graphics.getWidth(), Gdx.graphics.getHeight(), false);
+        getViewport().update(Gdx.graphics.getWidth(), Gdx.graphics.getHeight(), false);
 
         // Spawning player.
         playerView = new CharacterView("playerSpritesMove.png");
@@ -81,25 +76,27 @@ public class PlayScreen implements Screen {
             enemyControllers.add(enemyController);
             enemies.put(enemy, enemyView);
         }
-
         // temporary things, just testing
-        testing1 = new TmxMapLoader().load("test1.tmx");
-        renderer = new OrthoCachedTiledMapRenderer(testing1);
+        tileMap = new TmxMapLoader().load("test1.tmx");
+        float unitScale = 1 / 3f;
+        renderer = new OrthoCachedTiledMapRenderer(tileMap, unitScale);
+        playerCam.setToOrtho(false, Gdx.graphics.getWidth() * 2 / 3, Gdx.graphics.getHeight() * 2 / 3);
 
-        Gdx.input.setInputProcessor(stage);
+        Gdx.input.setInputProcessor(this);
     }
 
     @Override
     public void render(float delta) {
-        Gdx.gl.glClearColor(1, 1, 1, 1);
+        // Clear screen
+        Gdx.gl.glClearColor(0, 0, 0, 1);
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
 
         // Render Tiled map
         renderer.setView(playerCam);
         renderer.render();
-        stage.act();
+        act();
 
-        stage.draw();
+        draw();
         batch.setProjectionMatrix((playerCam.combined));
         playerCam.update();
 
@@ -114,6 +111,23 @@ public class PlayScreen implements Screen {
                 player.getPosX(),
                 player.getPosY());
 
+        /** Needed at least temporarily to exclude EnemyControllers of enemies that got killed by a player attack. 
+         * isEnemyKilled() returns true if at least one enemy has been killed */
+        if (CombatHandler.isEnemyKilled()) {
+            List<EnemyController> enemyControllersToKeep = new ArrayList<>();
+            for (EnemyController enemyController : enemyControllers) {
+                if (enemyController.isAlive()) {
+                    enemyControllersToKeep.add(enemyController);
+                } else {
+                    enemies.remove(enemyController.getEnemy());
+                }
+            }
+            enemyControllers = enemyControllersToKeep;
+
+            /** Verifies for CombatHandler that necessary actions have been taken after enemies have gotten killed */
+            CombatHandler.clearIsEnemyKilled();
+        }
+
         // Updating enemies
         for (EnemyController enemyController : enemyControllers) {
             enemyController.update();
@@ -125,41 +139,15 @@ public class PlayScreen implements Screen {
                     enemy.getPosX(),
                     enemy.getPosY());
         }
-
-        drawPlayerStats();
         batch.end();
-    }
 
-    public void drawPlayerStats() {
-        health = "Health: " + player.getHealth();
-        bitmapFont.setColor(Color.BLUE);
-        bitmapFont.draw(batch, health,
-                player.getPosX() + (playerView.getCurrentFrame().getRegionWidth() / 2) - Gdx.graphics.getWidth() / 2 + 20,
-                player.getPosY() + (playerView.getCurrentFrame().getRegionHeight() / 2) + Gdx.graphics.getHeight() / 2);
-    }
-
-    @Override
-    public void resize(int width, int height) {
-
-    }
-
-    @Override
-    public void pause() {
-
-    }
-
-    @Override
-    public void resume() {
-
-    }
-
-    @Override
-    public void hide() {
-
-    }
-
-    @Override
-    public void dispose() {
-
+        // For debugging attack hitbox
+        ShapeRenderer shapeRenderer = new ShapeRenderer();
+        shapeRenderer.setProjectionMatrix(playerCam.combined);
+        shapeRenderer.begin(ShapeRenderer.ShapeType.Line);
+        shapeRenderer.setColor(1, 1, 0, 1);
+        shapeRenderer.rect(CombatHandler.playerWeaponHitbox.getX(), CombatHandler.playerWeaponHitbox.getY(), CombatHandler.playerWeaponHitbox.getWidth(), CombatHandler.playerWeaponHitbox.getHeight());
+        shapeRenderer.rect(player.getPosX(), player.getPosY(), player.getWidth(), player.getHeight());
+        shapeRenderer.end();
     }
 }
