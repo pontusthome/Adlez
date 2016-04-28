@@ -30,17 +30,11 @@ public class CollisionHandler {
     public static void checkCollision() {
         worldObjects = adlez.getWorldObjects();
 
-        for (WorldObject object1: worldObjects) {
-            for (WorldObject object2: worldObjects ) {
-                if (!object1.equals(object2) && collide(object1, object2)) {
-                    if (object1 instanceof Player) {
-                        Player player = (Player) object1;
-                        player.onCollide(object2);
-                    }
-                    else if (object1 instanceof NPC) {
-                        NPC character = (NPC) object1;
-                        character.onCollide(object2);
-                    }
+        for (int i = 0; i < worldObjects.size(); i++ ) {
+            for (int j = i+1; j < worldObjects.size(); j++) {
+                if (collide(worldObjects.get(i), worldObjects.get(j))) {
+                    worldObjects.get(i).onCollide(worldObjects.get(j));
+                    worldObjects.get(j).onCollide(worldObjects.get(i));
                 }
             }
         }

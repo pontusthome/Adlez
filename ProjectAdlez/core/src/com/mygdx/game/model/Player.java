@@ -29,6 +29,8 @@ public class Player extends Character {
         setWidth(width);
         setHeight(height);
         setPosX(posX);
+        setPosX(posX);
+        setPosY(posY);
         setPosY(posY);
         setMaxHealth(maxHealth);
         setHealth(maxHealth);
@@ -41,8 +43,8 @@ public class Player extends Character {
 
     @Override
     public void onCollide(WorldObject other) {
-        this.setPosX(getOldXpos());
-        this.setPosY(getOldYpos());
+        setPosX(getOldXpos());
+        setPosY(getOldYpos());
     }
 
     public void equipItem(IItem item) {

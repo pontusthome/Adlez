@@ -86,7 +86,6 @@ public class GameScreen extends AbstractScreen {
 
         draw();
         batch.setProjectionMatrix((playerCam.combined));
-        playerCam.update();
 
         playerController.update();
 
@@ -108,6 +107,8 @@ public class GameScreen extends AbstractScreen {
         }
 
         CollisionHandler.checkCollision();
+
+        playerCam.update();
 
         batch.begin();
 

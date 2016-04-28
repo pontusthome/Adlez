@@ -17,6 +17,8 @@ public class NPC extends Character {
 		setHeight(height);
 		setPosX(posX);
 		setPosY(posY);
+		setPosX(posX);
+		setPosY(posY);
 		setMaxHealth(maxHealth);
 		setHealth(maxHealth);
 		setAttackDamage(attackDamage);
@@ -26,8 +28,8 @@ public class NPC extends Character {
 
 	@Override
 	public void onCollide(WorldObject other) {
-		this.setPosX(getOldXpos());
-		this.setPosY(getOldYpos());
+		setPosX(getOldXpos());
+		setPosY(getOldYpos());
 	}
 
 	public boolean isAlive(){
