@@ -14,12 +14,16 @@ public class CharacterTest {
     List<NPC> enemies;
     List<NPC> friendlyNPCs;
     List<WorldObject> stationaryObjects;
+    List<Wall> walls;
+    List<Obstacles> obstacles;
 
     @org.junit.Before
     public void setUp() throws Exception {
         enemies = new ArrayList<NPC>();
         friendlyNPCs = new ArrayList<NPC>();
         stationaryObjects = new ArrayList<WorldObject>();
+        walls = new ArrayList<Wall>();
+        obstacles = new ArrayList<Obstacles>();
     }
 
     @org.junit.After
@@ -33,7 +37,7 @@ public class CharacterTest {
         float playerYposition = 0;
 
         Area area = new Area(playerXposition, playerYposition,
-                enemies, friendlyNPCs, stationaryObjects);
+                enemies, friendlyNPCs, stationaryObjects, walls, obstacles);
         // No worldobjects
         adlez.initiateArea(area);
         player = adlez.getPlayer();
@@ -65,17 +69,17 @@ public class CharacterTest {
         float objectSpeed = 0;
         float objectXpostion = 0;
         float objectYposition = playerSpeed-1; // Should collide after first move to the north
-        float objectWidth = 10;
-        float objectHeight = 10;
+        int objectWidth = 10;
+        int objectHeight = 10;
 
         NPC stationaryEnemy = new NPC(Direction.NORTH, objectSpeed,
                                        objectWidth, objectHeight,
                                        objectXpostion, objectYposition,
-                                       0, 0, 0);
+                                       0, 0, 0, 0);
         enemies.add(stationaryEnemy);
 
         Area area = new Area(playerXposition, playerYposition,
-                enemies, friendlyNPCs, stationaryObjects);
+                enemies, friendlyNPCs, stationaryObjects, walls, obstacles);
         // With one stationary enemy to the north of player
         adlez.initiateArea(area);
         player = adlez.getPlayer();
@@ -115,17 +119,17 @@ public class CharacterTest {
         float objectSpeed = 0;
         float objectXpostion = -playerSpeed +1; // Should collide after first move to the west
         float objectYposition = 0;
-        float objectWidth = 10;
-        float objectHeight = 10;
+        int objectWidth = 10;
+        int objectHeight = 10;
 
         NPC stationaryEnemy = new NPC(Direction.NORTH, objectSpeed,
                 objectWidth, objectHeight,
                 objectXpostion, objectYposition,
-                0, 0, 0);
+                0, 0, 0,0 );
         enemies.add(stationaryEnemy);
 
         Area area = new Area(playerXposition, playerYposition,
-                enemies, friendlyNPCs, stationaryObjects);
+                enemies, friendlyNPCs, stationaryObjects, walls, obstacles);
         // With one stationary enemy to the west of player
         adlez.initiateArea(area);
         player = adlez.getPlayer();

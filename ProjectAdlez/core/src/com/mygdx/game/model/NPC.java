@@ -5,11 +5,12 @@ package com.mygdx.game.model;
  */
 public class NPC extends Character {
 	private boolean isEnemy;
+	private boolean isAlive = true;
 
 	public NPC(int direction, float speed,
-			   float width, float height,
+			   int width, int height,
 			   float posX, float posY,
-			   int maxHealth, int attackDamage, int gold) {
+			   int maxHealth, int attackDamage, int gold, int mana) {
 		setDirection(direction);
 		setSpeed(speed);
 		setWidth(width);
@@ -20,6 +21,14 @@ public class NPC extends Character {
 		setHealth(maxHealth);
 		setAttackDamage(attackDamage);
 		setGold(gold);
+		setMana(mana);
 	}
-
+	
+	public boolean isAlive(){
+		return isAlive;
+	}
+	
+	public void setAliveStatus(boolean bool){
+		isAlive = bool;
+	}
 }

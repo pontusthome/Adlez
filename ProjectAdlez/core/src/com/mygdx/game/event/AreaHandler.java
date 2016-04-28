@@ -1,10 +1,6 @@
 package com.mygdx.game.event;
 
-import com.badlogic.gdx.physics.box2d.World;
-import com.mygdx.game.model.Area;
-import com.mygdx.game.model.Direction;
-import com.mygdx.game.model.NPC;
-import com.mygdx.game.model.WorldObject;
+import com.mygdx.game.model.*;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -24,33 +20,45 @@ public final class AreaHandler {
     private static List<NPC> enemies;
     private static List<NPC> friendlyNPCs;
     private static List<WorldObject> stationaryObjects;
+    private static List<Wall> walls;
+    private static List<Obstacles> obstacles;
 
     /**
-     *  If we want to save the areas as they are when the player leaves them
-     *  a list of areas might help with that? /PT 24/4
+     * If we want to save the areas as they are when the player leaves them
+     * a list of areas might help with that? /PT 24/4
      */
     public static Area testLevel() {
-        playerXposition = 200;
-        playerYposition = 200;
+        playerXposition = 64;
+        playerYposition = 64;
 
         enemies = new ArrayList<NPC>();
         friendlyNPCs = new ArrayList<NPC>();
         stationaryObjects = new ArrayList<WorldObject>();
+        walls = new ArrayList<Wall>();
+        obstacles = new ArrayList<Obstacles>();
 
-        for (int i = 0; i < 20; i++) {
+        for (int i = 0; i < 10; i++) {
             float speed = random.nextFloat() * (2f - 1f) + 1;
-            float xPos = random.nextInt(1000)-500;
-            float yPos = random.nextInt(1000)-500;
+            float xPos = random.nextInt(250) + 35;
+            float yPos = random.nextInt(250) + 35;
 
+            /** Set NPC's width & height to size of texture for debugging purposes */
             NPC enemy = new NPC(Direction.NORTH, speed,
-                                10, 10,
+                                17, 17,
                                 xPos, yPos,
-                                100, 5, 0);
+                                100, 5, 0, 100);
             enemies.add(enemy);
         }
+        Wall wall = new Wall();
+        walls.addAll(wall.createAreaBounds(10, 10, 64/2));
+
+        Obstacles obst1 = new Obstacles(32*5,32*5,32,32,0);
+        Obstacles obst2 = new Obstacles(32*7,32*7,32,32,0);
+        obstacles.add(obst1);
+        obstacles.add(obst2);
 
         area = new Area(playerXposition, playerYposition,
-                        enemies, friendlyNPCs, stationaryObjects);
+                enemies, friendlyNPCs, stationaryObjects, walls, obstacles);
 
         return area;
     }

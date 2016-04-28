@@ -21,12 +21,15 @@ public class Adlez {
     private List<NPC> enemies;
     private List<NPC> friendlyNPCs;
     private List<WorldObject> stationaryObjects;
+    private List<Wall> walls;
+    private List<Obstacles> obstacles;
 
     private Adlez() {
+        /** Set players's width & height to size of texture for debugging purposes */
         player = new Player(Direction.NORTH, 2f,
-                            10, 10,
+                            17, 17,
                             0, 0,
-                            100, 20, 0);
+                            100, 20, 0, 100);
     }
 
     public void initiateArea(Area area) {
@@ -34,10 +37,11 @@ public class Adlez {
         worldObjects = new ArrayList<WorldObject>();
 
         // add the player and set him to the new position
+        /** Set players's width & height to size of texture for debugging purposes */
         player = new Player(Direction.NORTH, 2f,
-                            10, 10,
+                            17, 17,
                             0, 0,
-                            100, 20, 0);
+                            100, 20, 0, 100);
         worldObjects.add(player);
         player.setPosX(area.getPlayerXposition());
         player.setPosY(area.getPlayerYposition());
@@ -50,6 +54,12 @@ public class Adlez {
 
         stationaryObjects = area.getStationaryObjects();
         worldObjects.addAll(stationaryObjects);
+
+        walls = area.getWalls();
+        worldObjects.addAll(walls);
+
+        obstacles = area.getObstacles();
+        worldObjects.addAll(obstacles);
     }
 
     public Player getPlayer() {
@@ -68,5 +78,18 @@ public class Adlez {
 
     public List<WorldObject> getWorldObjects() {
         return worldObjects;
+    }
+
+    public List<Wall> getWalls() {
+        return walls;
+    }
+
+    public List<Obstacles> getObstacles() {
+        return obstacles;
+    }
+    
+    public void removeEnemyFromWorld(NPC enemy){
+        enemies.remove(enemy);
+        worldObjects.remove(enemy);
     }
 }
