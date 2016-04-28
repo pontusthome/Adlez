@@ -10,6 +10,7 @@ import com.badlogic.gdx.maps.tiled.TiledMap;
 import com.badlogic.gdx.maps.tiled.TmxMapLoader;
 import com.badlogic.gdx.maps.tiled.renderers.OrthoCachedTiledMapRenderer;
 
+import com.mygdx.game.CollisionHandler.CollisionHandler;
 import com.mygdx.game.controller.CombatHandler;
 import com.mygdx.game.controller.PlayerController;
 import com.mygdx.game.controller.EnemyController;
@@ -87,10 +88,30 @@ public class GameScreen extends AbstractScreen {
         batch.setProjectionMatrix((playerCam.combined));
         playerCam.update();
 
+        playerController.update();
+
+        // Updating enemyView
+        List<NPC> killedEnemies = new ArrayList<NPC>();
+        for(Map.Entry<NPC, EnemyController> entry : enemies.entrySet()) {
+            NPC enemy = entry.getKey();
+            EnemyController enemyController = entry.getValue();
+
+            if (enemy.isAlive()) {
+                enemyController.update();
+            }
+            else {
+                killedEnemies.add(enemy);
+            }
+        }
+        for (NPC deadEnemy: killedEnemies) {
+            enemies.remove(deadEnemy);
+        }
+
+        CollisionHandler.checkCollision();
+
         batch.begin();
 
-        // Updating player and render. Send batch
-        playerController.update();
+        // Updating playerView and camera
         playerCam.position.set(player.getPosX() + (playerController.getCurrentFrame().getRegionWidth() / 2),
                 player.getPosY() + (playerController.getCurrentFrame().getRegionHeight() / 2),
                 0); // z = 0, non 3D
@@ -98,25 +119,16 @@ public class GameScreen extends AbstractScreen {
                 player.getPosX(),
                 player.getPosY());
 
-        // Updating enemies
-        List<NPC> killedEnemies = new ArrayList<NPC>();
+        // Updating enemyView
         for(Map.Entry<NPC, EnemyController> entry : enemies.entrySet()) {
             NPC enemy = entry.getKey();
             EnemyController enemyController = entry.getValue();
 
-            if (!enemy.isAlive()) {
-                killedEnemies.add(enemy);
-            }
-            else {
-                enemyController.update();
-                batch.draw(enemyController.getCurrentFrame(),
-                        enemy.getPosX(),
-                        enemy.getPosY());
-            }
+            batch.draw(enemyController.getCurrentFrame(),
+                    enemy.getPosX(),
+                    enemy.getPosY());
         }
-        for (NPC deadEnemy: killedEnemies) {
-            enemies.remove(deadEnemy);
-        }
+
         // Generate obstacles
         obstaclesView.generateObstacles();
 

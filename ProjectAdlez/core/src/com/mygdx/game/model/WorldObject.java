@@ -4,37 +4,19 @@ public abstract class WorldObject {
 
     private float posX;
     private float posY;
+    private float oldXpos;
+    private float oldYpos;
     private int width;
     private int height;
 
-    public boolean collide(WorldObject other) {
-        float width = this.getWidth();
-        float height = this.getHeight();
-        float otherWidth = other.getWidth();
-        float otherHeight = other.getHeight();
-        if (otherWidth <= 0 || otherHeight <= 0 || width <= 0 || height <= 0) {
-            return false;
-        }
-        float x = this.getPosX();
-        float y = this.getPosY();
-        float otherX = other.getPosX();
-        float otherY = other.getPosY();
-        otherWidth += otherX;
-        otherHeight += otherY;
-        width += x;
-        height += y;
-        //      overflow || intersect
-        return ((otherWidth < otherX || otherWidth > x) &&
-                (otherHeight < otherY || otherHeight > y) &&
-                (width < x || width > otherX) &&
-                (height < y || height > otherY));
-    }
+    public void onCollide(WorldObject other) {}
 
     public float getPosX() {
         return posX;
     }
 
     public void setPosX(float x) {
+        this.oldXpos = posX;
         this.posX = x;
     }
 
@@ -43,6 +25,7 @@ public abstract class WorldObject {
     }
 
     public void setPosY(float y) {
+        this.oldYpos = posY;
         this.posY = y;
     }
 
@@ -60,5 +43,13 @@ public abstract class WorldObject {
 
     public void setHeight(int height) {
         this.height = height;
+    }
+
+    public float getOldXpos() {
+        return oldXpos;
+    }
+
+    public float getOldYpos() {
+        return oldYpos;
     }
 }

@@ -23,7 +23,13 @@ public class NPC extends Character {
 		setGold(gold);
 		setMana(mana);
 	}
-	
+
+	@Override
+	public void onCollide(WorldObject other) {
+		this.setPosX(getOldXpos());
+		this.setPosY(getOldYpos());
+	}
+
 	public boolean isAlive(){
 		return isAlive;
 	}

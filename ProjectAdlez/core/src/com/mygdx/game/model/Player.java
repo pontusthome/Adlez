@@ -38,7 +38,13 @@ public class Player extends Character {
         // Size of inventory
         inventory = new ArrayList<IItem>(16);
     }
-    
+
+    @Override
+    public void onCollide(WorldObject other) {
+        this.setPosX(getOldXpos());
+        this.setPosY(getOldYpos());
+    }
+
     public void equipItem(IItem item) {
         if (item.equals(weapon)) {
             if(isWepSlotEmpty) {
