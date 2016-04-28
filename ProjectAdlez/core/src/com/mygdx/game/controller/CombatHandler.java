@@ -4,6 +4,7 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.math.Rectangle;
 import com.mygdx.game.model.*;
+import com.mygdx.game.utils.AssetStrings;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -21,7 +22,7 @@ public class CombatHandler{
 	private static Sound sound;
 	
 	public static void handleMeleeAttack(){
-		sound = Gdx.audio.newSound(Gdx.files.internal("punch2.wav"));
+		sound = Gdx.audio.newSound(Gdx.files.internal(AssetStrings.MELEE_ATTACK_SOUND));
 		sound.play(0.1f);
 		playerWeaponHitbox = createPlayerMeleeHitbox();
 		attackEnemies(playerWeaponHitbox, 2, 0);
@@ -29,11 +30,11 @@ public class CombatHandler{
 	
 	public static void handleAOEMagicAttack(){
 		if(Adlez.getInstance().getPlayer().getMana() <= 0){
-			sound = Gdx.audio.newSound(Gdx.files.internal("out_of_mana.wav"));
+			sound = Gdx.audio.newSound(Gdx.files.internal(AssetStrings.OUT_OF_MANA_SOUND));
 			sound.play(0.5f);
 			return;
 		}
-		sound = Gdx.audio.newSound(Gdx.files.internal("fire_attack.wav"));
+		sound = Gdx.audio.newSound(Gdx.files.internal(AssetStrings.AOE_MAGIC_ATTACK_SOUND));
 		sound.play(0.5f);
 		playerWeaponHitbox = createPlayerAOEHitbox();
 		attackEnemies(playerWeaponHitbox, 5, 20);
@@ -41,11 +42,11 @@ public class CombatHandler{
 	
 	public static void handleRangeMagicAttack(){
 		if(Adlez.getInstance().getPlayer().getMana() <= 0){
-			sound = Gdx.audio.newSound(Gdx.files.internal("out_of_mana.wav"));
+			sound = Gdx.audio.newSound(Gdx.files.internal(AssetStrings.OUT_OF_MANA_SOUND));
 			sound.play(0.5f);
 			return;
 		}
-		sound = Gdx.audio.newSound(Gdx.files.internal("ice_attack.wav"));
+		sound = Gdx.audio.newSound(Gdx.files.internal(AssetStrings.RANGE_MAGIC_ATTACK_SOUND));
 		sound.play(0.1f);
 		playerWeaponHitbox = createPlayerRangeHitbox();
 		attackEnemies(playerWeaponHitbox, 5, 20);

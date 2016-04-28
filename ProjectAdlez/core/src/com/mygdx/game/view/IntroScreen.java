@@ -8,6 +8,7 @@ import com.badlogic.gdx.scenes.scene2d.InputListener;
 import com.badlogic.gdx.scenes.scene2d.ui.Image;
 import com.badlogic.gdx.scenes.scene2d.ui.ImageButton;
 import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
+import com.mygdx.game.utils.AssetStrings;
 
 /**
  * Created by Viktor on 2016-04-19.
@@ -18,7 +19,7 @@ public class IntroScreen extends AbstractScreen {
 
     public IntroScreen(){
         super();
-        backgroundTexture = new Texture( Gdx.files.internal("ZeldaIntro.png") );
+        backgroundTexture = new Texture( Gdx.files.internal(AssetStrings.INTRO_SCREEN_BACKGROUND_IMAGE) );
     }
 
     @Override

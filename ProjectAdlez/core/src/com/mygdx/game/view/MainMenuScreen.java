@@ -9,6 +9,7 @@ import com.badlogic.gdx.scenes.scene2d.ui.Image;
 import com.badlogic.gdx.scenes.scene2d.ui.ImageButton;
 import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
 import com.badlogic.gdx.utils.Align;
+import com.mygdx.game.utils.AssetStrings;
 
 /**
  * Created by Viktor on 2016-04-19.
@@ -22,10 +23,10 @@ public class MainMenuScreen extends AbstractScreen {
 
     public MainMenuScreen() {
         super();
-        backGroundTexture = new Texture(Gdx.files.internal("mainMenuBackground.png"));
-        newGameButtonTexture = new Texture(Gdx.files.internal("newGameButton.png"));
-        loadGameButtonTexture = new Texture(Gdx.files.internal("loadGameButton.png"));
-        exitGameButtonTexture = new Texture(Gdx.files.internal("exitGameButton.png"));
+        backGroundTexture = new Texture(Gdx.files.internal(AssetStrings.MAIN_MENU_BACKGROUND_IMAGE));
+        newGameButtonTexture = new Texture(Gdx.files.internal(AssetStrings.NEW_GAME_BUTTON_IMAGE));
+        loadGameButtonTexture = new Texture(Gdx.files.internal(AssetStrings.LOAD_GAME_BUTTON_IMAGE));
+        exitGameButtonTexture = new Texture(Gdx.files.internal(AssetStrings.EXIT_GAME_BUTTON_IMAGE));
     }
 
     @Override

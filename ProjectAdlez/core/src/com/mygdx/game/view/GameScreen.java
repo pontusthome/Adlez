@@ -17,6 +17,7 @@ import com.mygdx.game.model.Adlez;
 import com.mygdx.game.model.NPC;
 import com.mygdx.game.model.Obstacles;
 import com.mygdx.game.model.Player;
+import com.mygdx.game.utils.AssetStrings;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -45,7 +46,7 @@ public class GameScreen extends AbstractScreen {
     public GameScreen() {
         super();
         batch = new SpriteBatch();
-        obstaclesView = new ObstaclesView(batch, "boxObstacle.jpeg");
+        obstaclesView = new ObstaclesView(batch, AssetStrings.BOX_OBSTACLE_IMAGE);
     }
 
     @Override
@@ -55,17 +56,17 @@ public class GameScreen extends AbstractScreen {
         getViewport().update(Gdx.graphics.getWidth(), Gdx.graphics.getHeight(), false);
 
         // Spawning player.
-        playerController = new PlayerController(player, "moveSpriteV2.png");
+        playerController = new PlayerController(player, AssetStrings.MOVE_SPRITES_IMAGE);
 
         // Spawning enemies.
         enemies = new HashMap<NPC, EnemyController>();
         for (NPC enemy: adlez.getEnemies()) {
-            EnemyController enemyController = new EnemyController(enemy, "moveSpriteV2.png", player);
+            EnemyController enemyController = new EnemyController(enemy, AssetStrings.MOVE_SPRITES_IMAGE, player);
             enemies.put(enemy, enemyController);
         }
 
         // temporary things, just testing
-        tileMap = new TmxMapLoader().load("testLevel1.tmx");
+        tileMap = new TmxMapLoader().load(AssetStrings.TEST_LEVEL_TMX);
         float unitScale = 1 / 2f;
 
         renderer = new OrthoCachedTiledMapRenderer(tileMap, unitScale);
