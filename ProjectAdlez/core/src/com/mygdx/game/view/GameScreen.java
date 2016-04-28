@@ -63,13 +63,13 @@ public class GameScreen extends AbstractScreen {
             EnemyController enemyController = new EnemyController(enemy, "moveSpriteV2.png", player);
             enemies.put(enemy, enemyController);
         }
+
         // temporary things, just testing
         tileMap = new TmxMapLoader().load("testLevel1.tmx");
         float unitScale = 1 / 2f;
+
         renderer = new OrthoCachedTiledMapRenderer(tileMap, unitScale);
         playerCam.setToOrtho(false, Gdx.graphics.getWidth() * 2 / 3, Gdx.graphics.getHeight() * 2 / 3);
-
-        Gdx.input.setInputProcessor(this);
     }
 
     @Override
@@ -89,7 +89,7 @@ public class GameScreen extends AbstractScreen {
 
         batch.begin();
 
-        // Updating player
+        // Updating player and render. Send batch
         playerController.update();
         playerCam.position.set(player.getPosX() + (playerController.getCurrentFrame().getRegionWidth() / 2),
                 player.getPosY() + (playerController.getCurrentFrame().getRegionHeight() / 2),

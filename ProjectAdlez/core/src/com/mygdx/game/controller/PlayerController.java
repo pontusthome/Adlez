@@ -10,33 +10,16 @@ import com.mygdx.game.model.Player;
 /**
  * Created by martinso on 27/03/16.
  */
-public class PlayerController extends CharacterView implements CharacterActions {
+public class PlayerController implements CharacterActions {
+
+    // Have a view not extend a view
 
     private Player player;
+    private CharacterView playerView;
 
     public PlayerController(Player player, String characterImg) {
         this.player = player;
-
-        characterTexture = new Texture((Gdx.files.internal((characterImg))));
-        TextureRegion[][] tmp = TextureRegion.split(characterTexture,
-                characterTexture.getWidth() / col,
-                characterTexture.getHeight() / row);
-        characterFrames = new TextureRegion[col * row];
-
-        // Setting frames from player sheet.
-        int index = 0;
-        for (int i = 0; i < col; i++) {
-            for (int j = 0; j < row; j++) {
-                characterFrames[index++] = tmp[j][i];
-            }
-        }
-        // Sheet index:
-        // 0 2 4 6
-        // 1 3 5 7
-
-        animation = new Animation(1, characterFrames);
-        stateTime = 0f;
-        currentFrame = animation.getKeyFrame(0);
+        playerView = new CharacterView(characterImg);
     }
 
     /**
@@ -68,6 +51,10 @@ public class PlayerController extends CharacterView implements CharacterActions 
             CombatHandler.handleAOEMagicAttack();
         }
 
-        viewUpdate(player.getDirection());
+        playerView.viewUpdate(player.getDirection());
+    }
+
+    public TextureRegion getCurrentFrame() {
+        return playerView.getCurrentFrame();
     }
 }

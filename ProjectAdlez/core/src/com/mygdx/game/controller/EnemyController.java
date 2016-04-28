@@ -13,35 +13,16 @@ import com.mygdx.game.controller.CharacterView;
 /**
  * @author Pontus
  */
-public class EnemyController extends CharacterView implements CharacterActions {
+public class EnemyController implements CharacterActions {
 
     private NPC enemy;
     private Player player;
+    private CharacterView enemyView;
 
     public EnemyController(NPC enemy, String characterImg, Player player) {
         this.enemy = enemy;
         this.player = player;
-        characterTexture = new Texture((Gdx.files.internal((characterImg))));
-        TextureRegion[][] tmp = TextureRegion.split(characterTexture,
-                characterTexture.getWidth() / col,
-                characterTexture.getHeight() / row);
-        characterFrames = new TextureRegion[col * row];
-
-        // Setting frames from player sheet.
-        int index = 0;
-        for (int i = 0; i < col; i++) {
-            for (int j = 0; j < row; j++) {
-                characterFrames[index++] = tmp[j][i];
-            }
-        }
-        // Sheet index:
-        // 0 2 4 6
-        // 1 3 5 7
-
-        animation = new Animation(1, characterFrames);
-        stateTime = 0f;
-        currentFrame = animation.getKeyFrame(0);
-
+        enemyView = new CharacterView(characterImg);
     }
 
     @Override
@@ -63,6 +44,10 @@ public class EnemyController extends CharacterView implements CharacterActions {
         if (playerX > x && Math.abs(playerX - x) > 1 && inRange) {
             enemy.moveEast();
         }
-        viewUpdate(enemy.getDirection());
+        enemyView.viewUpdate(enemy.getDirection());
+    }
+
+    public TextureRegion getCurrentFrame() {
+        return enemyView.getCurrentFrame();
     }
 }
