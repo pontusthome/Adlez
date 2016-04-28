@@ -3,6 +3,7 @@ package com.mygdx.game.controller;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Animation;
+import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.mygdx.game.controller.CharacterActions;
 import com.mygdx.game.model.NPC;
@@ -46,7 +47,12 @@ public class EnemyController implements CharacterActions {
         }
         enemyView.viewUpdate(enemy.getDirection());
     }
-
+    
+    @Override
+    public void render(SpriteBatch batch){
+        batch.draw(getCurrentFrame(), enemy.getPosX(), enemy.getPosY());
+    }
+    
     public TextureRegion getCurrentFrame() {
         return enemyView.getCurrentFrame();
     }

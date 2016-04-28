@@ -94,14 +94,11 @@ public class GameScreen extends AbstractScreen {
 
         batch.begin();
 
-        // Updating player and render. Send batch
+        // Updating player
         playerController.update();
         playerCam.position.set(player.getPosX() + (playerController.getCurrentFrame().getRegionWidth() / 2),
                 player.getPosY() + (playerController.getCurrentFrame().getRegionHeight() / 2),
                 0); // z = 0, non 3D
-        batch.draw(playerController.getCurrentFrame(),
-                player.getPosX(),
-                player.getPosY());
 
         // Updating enemies
         List<NPC> killedEnemies = new ArrayList<NPC>();
@@ -114,14 +111,21 @@ public class GameScreen extends AbstractScreen {
             }
             else {
                 enemyController.update();
-                batch.draw(enemyController.getCurrentFrame(),
-                        enemy.getPosX(),
-                        enemy.getPosY());
             }
         }
         for (NPC deadEnemy: killedEnemies) {
             enemies.remove(deadEnemy);
         }
+        
+        // Render player
+        playerController.render(batch);
+        
+        //Render enemies
+        for(Map.Entry<NPC, EnemyController> entry : enemies.entrySet()) {
+            EnemyController enemyController = entry.getValue();
+            enemyController.render(batch);
+        }
+        
         // Generate obstacles
         obstaclesView.generateObstacles();
 

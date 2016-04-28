@@ -4,6 +4,7 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Animation;
+import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.mygdx.game.model.Player;
 
@@ -53,7 +54,12 @@ public class PlayerController implements CharacterActions {
 
         playerView.viewUpdate(player.getDirection());
     }
-
+    
+    @Override
+    public void render(SpriteBatch batch){
+        batch.draw(getCurrentFrame(), player.getPosX(), player.getPosY());
+    }
+    
     public TextureRegion getCurrentFrame() {
         return playerView.getCurrentFrame();
     }
