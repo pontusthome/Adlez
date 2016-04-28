@@ -18,6 +18,7 @@ public class Player extends Character {
     private boolean isWepSlotEmpty = true;
     private boolean isArmorSlotEmpty = true;
     private List<IItem> inventory;
+    private static final int INVENTORY_MAX_SIZE = 16;
 
     // This constructor should be used.
     public Player(int direction, float speed,
@@ -36,7 +37,7 @@ public class Player extends Character {
         setGold(gold);
         setMana(mana);
         // Size of inventory
-        inventory = new ArrayList<IItem>(16);
+        inventory = new ArrayList<IItem>(INVENTORY_MAX_SIZE);
     }
     
     public void equipItem(IItem item) {
@@ -76,7 +77,7 @@ public class Player extends Character {
     }
 
     public void lootItem(IItem item) {
-        if(inventory.size() >= 16) {
+        if(inventory.size() >= INVENTORY_MAX_SIZE) {
             // Temporary print.
             System.out.println("Inventory full");
         } else {

@@ -3,7 +3,7 @@ package com.mygdx.game.utils;
 /**
  * Created by Michel on 28.4.2016.
  */
-public class AssetStrings{
+public final class AssetStrings{
 	
 	/** Sounds */
 	public static final String MELEE_ATTACK_SOUND = "punch2.wav";

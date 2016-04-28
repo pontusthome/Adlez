@@ -15,7 +15,6 @@ import com.mygdx.game.controller.PlayerController;
 import com.mygdx.game.controller.EnemyController;
 import com.mygdx.game.model.Adlez;
 import com.mygdx.game.model.NPC;
-import com.mygdx.game.model.Obstacles;
 import com.mygdx.game.model.Player;
 import com.mygdx.game.utils.AssetStrings;
 
@@ -42,6 +41,10 @@ public class GameScreen extends AbstractScreen {
     private TiledMap tileMap;
 
     private ObstaclesView obstaclesView;
+    
+    private static final float UNIT_SCALE = 2/3f;
+    private static final float WIDTH_SCALE = 2/3f;
+    private static final float HEIGHT_SCALE = 2/3f;
 
     public GameScreen() {
         super();
@@ -67,10 +70,11 @@ public class GameScreen extends AbstractScreen {
 
         // temporary things, just testing
         tileMap = new TmxMapLoader().load(AssetStrings.TEST_LEVEL_TMX);
-        float unitScale = 1 / 2f;
+        float unitScale = UNIT_SCALE;
 
         renderer = new OrthoCachedTiledMapRenderer(tileMap, unitScale);
-        playerCam.setToOrtho(false, Gdx.graphics.getWidth() * 2 / 3, Gdx.graphics.getHeight() * 2 / 3);
+        playerCam.setToOrtho(false, Gdx.graphics.getWidth() * WIDTH_SCALE, 
+                Gdx.graphics.getHeight() * HEIGHT_SCALE);
     }
 
     @Override
