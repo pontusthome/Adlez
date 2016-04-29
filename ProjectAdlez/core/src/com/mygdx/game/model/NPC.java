@@ -17,8 +17,8 @@ public class NPC extends Character {
 		setHeight(height);
 		setPosX(posX);
 		setPosY(posY);
-		setPosX(posX);
-		setPosY(posY);
+        setOldXpos(posX);
+        setOldYpos(posY);
 		setMaxHealth(maxHealth);
 		setHealth(maxHealth);
 		setAttackDamage(attackDamage);

@@ -45,24 +45,29 @@ public abstract class Character extends WorldObject implements ICharacter {
 
 	@Override
 	public void moveNorth() {
-		this.setPosY(this.getPosY() + this.getSpeed());
+		setPosY(getPosY() + getSpeed());
 		setDirection(Direction.NORTH);
 	}
 	@Override
 	public void moveSouth() {
-		this.setPosY(this.getPosY() - this.getSpeed());
+		setPosY(getPosY() - getSpeed());
 		setDirection(Direction.SOUTH);
 	}
 	@Override
 	public void moveWest() {
-		this.setPosX(this.getPosX() - this.getSpeed());
+		setPosX(getPosX() - getSpeed());
 		setDirection(Direction.WEST);
 	}
 	@Override
 	public void moveEast() {
-		this.setPosX(this.getPosX() + this.getSpeed());
+        setPosX(getPosX() + getSpeed());
 		setDirection(Direction.EAST);
 	}
+
+    public void savePosition() {
+        setOldXpos(getPosX());
+        setOldYpos(getPosY());
+    }
 
 	@Override
 	public int getAttackDamage() {

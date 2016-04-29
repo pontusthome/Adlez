@@ -21,7 +21,7 @@ import java.util.List;
  }
  Move all characters first
  Then run update on CollisionHandler
- Loop through all collidable and if collision call onCollide() for the the ones collide.
+ Loop through all collidable and if collision call onCollide() for the ones collide.
   */
 public class CollisionHandler {
     private static Adlez adlez = Adlez.getInstance();
@@ -30,11 +30,11 @@ public class CollisionHandler {
     public static void checkCollision() {
         worldObjects = adlez.getWorldObjects();
 
-        for (int i = 0; i < worldObjects.size(); i++ ) {
-            for (int j = i+1; j < worldObjects.size(); j++) {
-                if (collide(worldObjects.get(i), worldObjects.get(j))) {
-                    worldObjects.get(i).onCollide(worldObjects.get(j));
-                    worldObjects.get(j).onCollide(worldObjects.get(i));
+        for (WorldObject object1: worldObjects ) {
+            for (WorldObject object2: worldObjects) {
+                if (!object1.equals(object2) && collide(object1, object2)) {
+                    object1.onCollide(object2);
+                    break;
                 }
             }
         }

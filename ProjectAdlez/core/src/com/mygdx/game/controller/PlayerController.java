@@ -29,6 +29,7 @@ public class PlayerController implements CharacterActions {
      */
     @Override
     public void update() {
+        player.savePosition();
         if (Gdx.input.isKeyPressed(Input.Keys.W)) {
             player.moveNorth();
         }

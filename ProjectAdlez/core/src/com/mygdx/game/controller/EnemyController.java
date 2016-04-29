@@ -27,6 +27,8 @@ public class EnemyController implements CharacterActions {
 
     @Override
     public void update() {
+        enemy.savePosition();
+
         float playerX = player.getPosX();
         float playerY = player.getPosY();
         float x = enemy.getPosX();

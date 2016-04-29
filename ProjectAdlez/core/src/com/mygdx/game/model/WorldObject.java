@@ -16,7 +16,6 @@ public abstract class WorldObject {
     }
 
     public void setPosX(float x) {
-        this.oldXpos = posX;
         this.posX = x;
     }
 
@@ -25,7 +24,6 @@ public abstract class WorldObject {
     }
 
     public void setPosY(float y) {
-        this.oldYpos = posY;
         this.posY = y;
     }
 
@@ -52,4 +50,13 @@ public abstract class WorldObject {
     public float getOldYpos() {
         return oldYpos;
     }
+
+    public void setOldXpos(float oldXpos) {
+        this.oldXpos = oldXpos;
+    }
+
+    public void setOldYpos(float oldYpos) {
+        this.oldYpos = oldYpos;
+    }
+
 }
