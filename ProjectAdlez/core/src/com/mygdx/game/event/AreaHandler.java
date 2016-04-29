@@ -1,5 +1,6 @@
 package com.mygdx.game.event;
 
+import com.badlogic.gdx.physics.box2d.World;
 import com.mygdx.game.model.*;
 
 import java.util.ArrayList;
@@ -22,6 +23,7 @@ public final class AreaHandler {
     private static List<WorldObject> stationaryObjects;
     private static List<Wall> walls;
     private static List<Obstacles> obstacles;
+    private static List<AreaConnection> areaConnections;
 
     /**
      * If we want to save the areas as they are when the player leaves them
@@ -36,6 +38,7 @@ public final class AreaHandler {
         stationaryObjects = new ArrayList<WorldObject>();
         walls = new ArrayList<Wall>();
         obstacles = new ArrayList<Obstacles>();
+        areaConnections = new ArrayList<AreaConnection>();
 
         for (int i = 0; i < 10; i++) {
             float speed = random.nextFloat() * (1.5f - 1f) + 1;
