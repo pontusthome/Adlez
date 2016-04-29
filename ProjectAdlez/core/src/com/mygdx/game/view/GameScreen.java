@@ -59,6 +59,7 @@ public class GameScreen extends AbstractScreen {
         getViewport().update(Gdx.graphics.getWidth(), Gdx.graphics.getHeight(), false);
 
         // Spawning player.
+<<<<<<< HEAD
         playerController = new PlayerController(player, AssetStrings.MOVE_SPRITES_IMAGE);
 
         // Spawning enemies.
@@ -66,6 +67,19 @@ public class GameScreen extends AbstractScreen {
         for (INPC enemy: adlez.getEnemies()) {
             EnemyController enemyController = new EnemyController(enemy, AssetStrings.AZURE_SPRITES_IMAGE, player);
             enemies.put(enemy, enemyController);
+=======
+        playerView = new CharacterView("playerSpritesMove.png",4,2);
+        playerController = new PlayerController(player, playerView);
+
+        // Spawning enemies.
+        enemies = new HashMap<NPC, CharacterView>();
+        enemyControllers = new ArrayList<EnemyController>();
+        for (NPC enemy: adlez.getEnemies()) {
+            CharacterView enemyView = new CharacterView("Azurewalk.png",4,2);
+            EnemyController enemyController = new EnemyController(enemy, enemyView, player);
+            enemyControllers.add(enemyController);
+            enemies.put(enemy, enemyView);
+>>>>>>> origin/enemy_graphics
         }
 
         // temporary things, just testing

@@ -10,6 +10,7 @@ import com.badlogic.gdx.graphics.g2d.TextureRegion;
  */
 public class CharacterView implements ICharacterView {
 
+<<<<<<< HEAD:ProjectAdlez/core/src/com/mygdx/game/controller/CharacterView.java
     protected Texture characterTexture;
     protected TextureRegion[] characterFrames;
     protected TextureRegion currentFrame;
@@ -18,8 +19,20 @@ public class CharacterView implements ICharacterView {
     protected static final int row = 2;
 
     protected Animation animation;
+=======
+    private Texture characterTexture;
+    private TextureRegion[] characterFrames;
+    private TextureRegion currentFrame;
+    private float stateTime;
 
-    public CharacterView(String characterImg) {
+    private Animation animation;
+    private int col;
+    private int row;
+>>>>>>> origin/enemy_graphics:ProjectAdlez/core/src/com/mygdx/game/view/CharacterView.java
+
+    public CharacterView(String characterImg, int col, int row) {
+        this.col = col;
+        this.row = row;
 
         characterTexture = new Texture((Gdx.files.internal((characterImg))));
         TextureRegion[][] tmp = TextureRegion.split(characterTexture,
