@@ -42,7 +42,7 @@ public class GameScreen extends AbstractScreen {
 
     private ObstaclesView obstaclesView;
     
-    private static final float UNIT_SCALE = 2/3f;
+    private static final float UNIT_SCALE = 1/2f;
     private static final float WIDTH_SCALE = 2/3f;
     private static final float HEIGHT_SCALE = 2/3f;
 
@@ -55,6 +55,7 @@ public class GameScreen extends AbstractScreen {
     @Override
     public void buildStage() {
 
+        // Creating camera
         playerCam = new OrthographicCamera(Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
         getViewport().update(Gdx.graphics.getWidth(), Gdx.graphics.getHeight(), false);
 
@@ -79,6 +80,8 @@ public class GameScreen extends AbstractScreen {
 
     @Override
     public void render(float delta) {
+        updateGame();
+
         // Clear screen
         Gdx.gl.glClearColor(0, 0, 0, 1);
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
@@ -86,37 +89,16 @@ public class GameScreen extends AbstractScreen {
         // Render Tiled map
         renderer.setView(playerCam);
         renderer.render();
-        act();
 
-        draw();
         batch.setProjectionMatrix((playerCam.combined));
-        playerCam.update();
-
         batch.begin();
 
-        // Updating player
-        playerController.update();
+        // Update camera
+        playerCam.update();
         playerCam.position.set(player.getPosX() + (playerController.getCurrentFrame().getRegionWidth() / 2),
                 player.getPosY() + (playerController.getCurrentFrame().getRegionHeight() / 2),
                 0); // z = 0, non 3D
 
-        // Updating enemies
-        List<NPC> killedEnemies = new ArrayList<NPC>();
-        for(Map.Entry<NPC, EnemyController> entry : enemies.entrySet()) {
-            NPC enemy = entry.getKey();
-            EnemyController enemyController = entry.getValue();
-
-            if (!enemy.isAlive()) {
-                killedEnemies.add(enemy);
-            }
-            else {
-                enemyController.update();
-            }
-        }
-        for (NPC deadEnemy: killedEnemies) {
-            enemies.remove(deadEnemy);
-        }
-        
         // Render player
         playerController.render(batch);
         
@@ -139,5 +121,27 @@ public class GameScreen extends AbstractScreen {
         shapeRenderer.rect(CombatHandler.playerWeaponHitbox.getX(), CombatHandler.playerWeaponHitbox.getY(), CombatHandler.playerWeaponHitbox.getWidth(), CombatHandler.playerWeaponHitbox.getHeight());
         shapeRenderer.rect(player.getPosX(), player.getPosY(), player.getWidth(), player.getHeight());
         shapeRenderer.end();
+    }
+
+    public void updateGame() {
+        // Updating player
+        playerController.update();
+
+        // Updating enemies
+        List<NPC> killedEnemies = new ArrayList<NPC>();
+        for(Map.Entry<NPC, EnemyController> entry : enemies.entrySet()) {
+            NPC enemy = entry.getKey();
+            EnemyController enemyController = entry.getValue();
+
+            if (!enemy.isAlive()) {
+                killedEnemies.add(enemy);
+            }
+            else {
+                enemyController.update();
+            }
+        }
+        for (NPC deadEnemy: killedEnemies) {
+            enemies.remove(deadEnemy);
+        }
     }
 }
