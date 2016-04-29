@@ -1,13 +1,14 @@
 package com.mygdx.game.model;
 
-public abstract class WorldObject {
+public abstract class WorldObject implements IWorldObject {
 
     private float posX;
     private float posY;
     private int width;
     private int height;
 
-    public boolean collide(WorldObject other) {
+    @Override
+    public boolean collide(IWorldObject other) {
         float width = this.getWidth();
         float height = this.getHeight();
         float otherWidth = other.getWidth();

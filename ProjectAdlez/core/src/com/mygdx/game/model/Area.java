@@ -11,14 +11,15 @@ public final class Area {
     private float playerXposition;
     private float playerYposition;
 
-    private List<NPC> enemies;
-    private List<NPC> friendlyNPCs;
-    private List<WorldObject> stationaryObjects;
-    private List<Wall> walls;
-    private List<Obstacles> obstacles;
+    private List<INPC> enemies;
+    private List<INPC> friendlyNPCs;
+    private List<IWorldObject> stationaryObjects;
+    private List<IWall> walls;
+    private List<IObstacle> obstacles;
 
     public Area(float playerXposition, float playerYposition,
-                List<NPC> enemies, List<NPC> friendlyNPCs, List<WorldObject> stationaryObjects, List<Wall> walls, List<Obstacles> obstacles) {
+                List<INPC> enemies, List<INPC> friendlyNPCs, List<IWorldObject> stationaryObjects,
+                List<IWall> walls, List<IObstacle> obstacles) {
         this.playerXposition = playerXposition;
         this.playerYposition = playerYposition;
 
@@ -37,23 +38,23 @@ public final class Area {
         return playerYposition;
     }
 
-    public List<NPC> getEnemies() {
+    public List<INPC> getEnemies() {
         return enemies;
     }
 
-    public List<NPC> getFriendlyNPCs() {
+    public List<INPC> getFriendlyNPCs() {
         return friendlyNPCs;
     }
 
-    public List<WorldObject> getStationaryObjects() {
+    public List<IWorldObject> getStationaryObjects() {
         return stationaryObjects;
     }
 
-    public List<Wall> getWalls() {
+    public List<IWall> getWalls() {
         return walls;
     }
 
-    public List<Obstacles> getObstacles() {
+    public List<IObstacle> getObstacles() {
         return obstacles;
     }
 }

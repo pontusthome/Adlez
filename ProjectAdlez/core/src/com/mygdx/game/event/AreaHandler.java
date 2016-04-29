@@ -1,6 +1,5 @@
 package com.mygdx.game.event;
 
-import com.badlogic.gdx.physics.box2d.World;
 import com.mygdx.game.model.*;
 
 import java.util.ArrayList;
@@ -18,11 +17,11 @@ public final class AreaHandler {
     private static float playerXposition;
     private static float playerYposition;
 
-    private static List<NPC> enemies;
-    private static List<NPC> friendlyNPCs;
-    private static List<WorldObject> stationaryObjects;
-    private static List<Wall> walls;
-    private static List<Obstacles> obstacles;
+    private static List<INPC> enemies;
+    private static List<INPC> friendlyNPCs;
+    private static List<IWorldObject> stationaryObjects;
+    private static List<IWall> walls;
+    private static List<IObstacle> obstacles;
     private static List<AreaConnection> areaConnections;
 
     /**
@@ -33,11 +32,11 @@ public final class AreaHandler {
         playerXposition = 64;
         playerYposition = 64;
 
-        enemies = new ArrayList<NPC>();
-        friendlyNPCs = new ArrayList<NPC>();
-        stationaryObjects = new ArrayList<WorldObject>();
-        walls = new ArrayList<Wall>();
-        obstacles = new ArrayList<Obstacles>();
+        enemies = new ArrayList<INPC>();
+        friendlyNPCs = new ArrayList<INPC>();
+        stationaryObjects = new ArrayList<IWorldObject>();
+        walls = new ArrayList<IWall>();
+        obstacles = new ArrayList<IObstacle>();
         areaConnections = new ArrayList<AreaConnection>();
 
         for (int i = 0; i < 10; i++) {
@@ -55,8 +54,8 @@ public final class AreaHandler {
         Wall wall = new Wall();
         walls.addAll(wall.createAreaBounds(10, 10, 64/2));
 
-        Obstacles obst1 = new Obstacles(32*5,32*5,32,32,0);
-        Obstacles obst2 = new Obstacles(32*7,32*7,32,32,0);
+        Obstacle obst1 = new Obstacle(32*5,32*5,32,32,0);
+        Obstacle obst2 = new Obstacle(32*7,32*7,32,32,0);
         obstacles.add(obst1);
         obstacles.add(obst2);
 

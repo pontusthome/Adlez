@@ -61,7 +61,7 @@ public class CombatHandler{
 	}
 	
 	private static Rectangle createPlayerMeleeHitbox(){
-		Player player = Adlez.getInstance().getPlayer();
+		IPlayer player = Adlez.getInstance().getPlayer();
 		playerWeaponHitbox.setSize(player.getWidth(), player.getHeight());
 		
 		/** Set player weapon hitbox location depending on where player is facing */
@@ -83,14 +83,14 @@ public class CombatHandler{
 	}
 	
 	private static Rectangle createPlayerAOEHitbox(){
-		Player player = Adlez.getInstance().getPlayer();
+		IPlayer player = Adlez.getInstance().getPlayer();
 		playerWeaponHitbox.set(player.getPosX() - player.getWidth(), player.getPosY() - player.getHeight(), 
 				player.getWidth() * 3, player.getHeight() * 3);
 		return playerWeaponHitbox;
 	}
 	
 	private static Rectangle createPlayerRangeHitbox(){
-		Player player = Adlez.getInstance().getPlayer();
+		IPlayer player = Adlez.getInstance().getPlayer();
 		
 		/** Set player weapon hitbox location depending on where player is facing */
 		switch(player.getDirection()){
@@ -116,17 +116,17 @@ public class CombatHandler{
 	
 	private static void attackEnemies(Rectangle hitbox, int attackModifier, int manaUsed){
 		Adlez adlez = Adlez.getInstance();
-		Player player = adlez.getPlayer();
-		List<WorldObject> worldObjects = adlez.getWorldObjects();
+		IPlayer player = adlez.getPlayer();
+		List<IWorldObject> worldObjects = adlez.getWorldObjects();
 		
 		player.setMana(player.getMana() - manaUsed);
 		
 		/** Since you can't remove something from a list while iterating through it, this temporary list is used to
 		 * keep track of which enemies to remove from the world.
 		 */
-		List<WorldObject> worldObjectsToRemove = new ArrayList<WorldObject>();
+		List<IWorldObject> worldObjectsToRemove = new ArrayList<IWorldObject>();
 		
-		for(WorldObject object : worldObjects){
+		for(IWorldObject object : worldObjects){
 			if(object instanceof NPC){
 				enemyHitbox.set(object.getPosX(), object.getPosY(), object.getWidth(), object.getHeight());
 				if (playerWeaponHitbox.overlaps(enemyHitbox)) {
@@ -141,7 +141,7 @@ public class CombatHandler{
 		}
 		
 		/** Remove enemies that got killed from the world */
-		for(WorldObject object : worldObjectsToRemove){
+		for(IWorldObject object : worldObjectsToRemove){
 			NPC enemy = (NPC) object;
 			enemy.setAliveStatus(false);
 			adlez.removeEnemyFromWorld(enemy);

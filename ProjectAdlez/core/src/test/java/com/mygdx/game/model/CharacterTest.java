@@ -15,7 +15,7 @@ public class CharacterTest {
     List<NPC> friendlyNPCs;
     List<WorldObject> stationaryObjects;
     List<Wall> walls;
-    List<Obstacles> obstacles;
+    List<Obstacle> obstacles;
 
     @org.junit.Before
     public void setUp() throws Exception {
@@ -23,7 +23,7 @@ public class CharacterTest {
         friendlyNPCs = new ArrayList<NPC>();
         stationaryObjects = new ArrayList<WorldObject>();
         walls = new ArrayList<Wall>();
-        obstacles = new ArrayList<Obstacles>();
+        obstacles = new ArrayList<Obstacle>();
     }
 
     @org.junit.After

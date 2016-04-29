@@ -1,26 +1,21 @@
 package com.mygdx.game.controller;
 
-import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.graphics.Texture;
-import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
-import com.mygdx.game.controller.CharacterActions;
-import com.mygdx.game.model.NPC;
-import com.mygdx.game.model.Player;
+import com.mygdx.game.model.INPC;
+import com.mygdx.game.model.IPlayer;
 import com.mygdx.game.utils.Utils;
-import com.mygdx.game.controller.CharacterView;
 
 /**
  * @author Pontus
  */
 public class EnemyController implements CharacterActions {
 
-    private NPC enemy;
-    private Player player;
+    private INPC enemy;
+    private IPlayer player;
     private CharacterView enemyView;
 
-    public EnemyController(NPC enemy, String characterImg, Player player) {
+    public EnemyController(INPC enemy, String characterImg, IPlayer player) {
         this.enemy = enemy;
         this.player = player;
         enemyView = new CharacterView(characterImg);

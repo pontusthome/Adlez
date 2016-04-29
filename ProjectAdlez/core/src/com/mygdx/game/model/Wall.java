@@ -6,7 +6,7 @@ import java.util.List;
 /**
  * Created by martinso on 25/04/16.
  */
-public class Wall extends WorldObject {
+public class Wall extends WorldObject implements IWall {
 
     private static List<Wall> walls = new ArrayList<Wall>();
 

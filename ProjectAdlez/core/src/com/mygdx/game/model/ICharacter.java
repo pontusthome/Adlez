@@ -3,7 +3,7 @@ package com.mygdx.game.model;
 /**
  * Created by Michel on 2016-04-19.
  */
-public interface ICharacter {
+public interface ICharacter extends IWorldObject{
 	void moveNorth();
 	void moveSouth();
 	void moveWest();

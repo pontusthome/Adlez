@@ -15,14 +15,14 @@ public class Adlez {
         return adlez;
     }
 
-    private List<WorldObject> worldObjects;
+    private List<IWorldObject> worldObjects;
 
-    private Player player;
-    private List<NPC> enemies;
-    private List<NPC> friendlyNPCs;
-    private List<WorldObject> stationaryObjects;
-    private List<Wall> walls;
-    private List<Obstacles> obstacles;
+    private IPlayer player;
+    private List<INPC> enemies;
+    private List<INPC> friendlyNPCs;
+    private List<IWorldObject> stationaryObjects;
+    private List<IWall> walls;
+    private List<IObstacle> obstacles;
 
     private Adlez() {
         /** Set players's width & height to size of texture for debugging purposes */
@@ -34,7 +34,7 @@ public class Adlez {
 
     public void initiateArea(Area area) {
         // Reset the world and then set it up for the new area
-        worldObjects = new ArrayList<WorldObject>();
+        worldObjects = new ArrayList<IWorldObject>();
 
         // add the player and set him to the new position
         worldObjects.add(player);
@@ -57,33 +57,33 @@ public class Adlez {
         worldObjects.addAll(obstacles);
     }
 
-    public Player getPlayer() {
+    public IPlayer getPlayer() {
         return player;
     }
 
-    public List<NPC> getEnemies() { return enemies; }
+    public List<INPC> getEnemies() { return enemies; }
 
-    public List<NPC> getFriendlyNPCs() {
+    public List<INPC> getFriendlyNPCs() {
         return friendlyNPCs;
     }
 
-    public List<WorldObject> getStationaryObjects() {
+    public List<IWorldObject> getStationaryObjects() {
         return stationaryObjects;
     }
 
-    public List<WorldObject> getWorldObjects() {
+    public List<IWorldObject> getWorldObjects() {
         return worldObjects;
     }
 
-    public List<Wall> getWalls() {
+    public List<IWall> getWalls() {
         return walls;
     }
 
-    public List<Obstacles> getObstacles() {
+    public List<IObstacle> getObstacles() {
         return obstacles;
     }
     
-    public void removeEnemyFromWorld(NPC enemy){
+    public void removeEnemyFromWorld(INPC enemy){
         enemies.remove(enemy);
         worldObjects.remove(enemy);
     }

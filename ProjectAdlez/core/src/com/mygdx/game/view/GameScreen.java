@@ -13,9 +13,7 @@ import com.badlogic.gdx.maps.tiled.renderers.OrthoCachedTiledMapRenderer;
 import com.mygdx.game.controller.CombatHandler;
 import com.mygdx.game.controller.PlayerController;
 import com.mygdx.game.controller.EnemyController;
-import com.mygdx.game.model.Adlez;
-import com.mygdx.game.model.NPC;
-import com.mygdx.game.model.Player;
+import com.mygdx.game.model.*;
 import com.mygdx.game.utils.AssetStrings;
 
 import java.util.ArrayList;
@@ -30,11 +28,11 @@ public class GameScreen extends AbstractScreen {
 
     private Adlez adlez = Adlez.getInstance();
 
-    private Player player = adlez.getPlayer();
+    private IPlayer player = adlez.getPlayer();
     private PlayerController playerController;
     private OrthographicCamera playerCam;
 
-    private HashMap<NPC, EnemyController> enemies;
+    private HashMap<INPC, EnemyController> enemies;
 
     private SpriteBatch batch;
     private OrthoCachedTiledMapRenderer renderer;
@@ -63,8 +61,8 @@ public class GameScreen extends AbstractScreen {
         playerController = new PlayerController(player, AssetStrings.MOVE_SPRITES_IMAGE);
 
         // Spawning enemies.
-        enemies = new HashMap<NPC, EnemyController>();
-        for (NPC enemy: adlez.getEnemies()) {
+        enemies = new HashMap<INPC, EnemyController>();
+        for (INPC enemy: adlez.getEnemies()) {
             EnemyController enemyController = new EnemyController(enemy, AssetStrings.MOVE_SPRITES_IMAGE, player);
             enemies.put(enemy, enemyController);
         }
@@ -103,7 +101,7 @@ public class GameScreen extends AbstractScreen {
         playerController.render(batch);
         
         //Render enemies
-        for(Map.Entry<NPC, EnemyController> entry : enemies.entrySet()) {
+        for(Map.Entry<INPC, EnemyController> entry : enemies.entrySet()) {
             EnemyController enemyController = entry.getValue();
             enemyController.render(batch);
         }
@@ -128,9 +126,9 @@ public class GameScreen extends AbstractScreen {
         playerController.update();
 
         // Updating enemies
-        List<NPC> killedEnemies = new ArrayList<NPC>();
-        for(Map.Entry<NPC, EnemyController> entry : enemies.entrySet()) {
-            NPC enemy = entry.getKey();
+        List<INPC> killedEnemies = new ArrayList<INPC>();
+        for(Map.Entry<INPC, EnemyController> entry : enemies.entrySet()) {
+            INPC enemy = entry.getKey();
             EnemyController enemyController = entry.getValue();
 
             if (!enemy.isAlive()) {
@@ -140,7 +138,7 @@ public class GameScreen extends AbstractScreen {
                 enemyController.update();
             }
         }
-        for (NPC deadEnemy: killedEnemies) {
+        for (INPC deadEnemy: killedEnemies) {
             enemies.remove(deadEnemy);
         }
     }

@@ -2,11 +2,9 @@ package com.mygdx.game.controller;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
-import com.badlogic.gdx.graphics.Texture;
-import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
-import com.mygdx.game.model.Player;
+import com.mygdx.game.model.IPlayer;
 
 /**
  * Created by martinso on 27/03/16.
@@ -15,10 +13,10 @@ public class PlayerController implements CharacterActions {
 
     // Have a view not extend a view
 
-    private Player player;
+    private IPlayer player;
     private CharacterView playerView;
 
-    public PlayerController(Player player, String characterImg) {
+    public PlayerController(IPlayer player, String characterImg) {
         this.player = player;
         playerView = new CharacterView(characterImg);
     }

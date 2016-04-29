@@ -1,7 +1,7 @@
 package com.mygdx.game.model.handler;
 
 import com.mygdx.game.model.Adlez;
-import com.mygdx.game.model.WorldObject;
+import com.mygdx.game.model.IWorldObject;
 
 import java.util.List;
 
@@ -23,12 +23,12 @@ import java.util.List;
   */
 public class CollisionHandler {
     private static Adlez adlez = Adlez.getInstance();
-    private static List<WorldObject> worldObjects;
+    private static List<IWorldObject> worldObjects;
 
-    public static boolean checkCollision(WorldObject object) {
+    public static boolean checkCollision(IWorldObject object) {
         worldObjects = adlez.getWorldObjects();
 
-        for (WorldObject otherObject: worldObjects) {
+        for (IWorldObject otherObject: worldObjects) {
             if (!otherObject.equals(object) && object.collide(otherObject)) {
                 return true;
             }
