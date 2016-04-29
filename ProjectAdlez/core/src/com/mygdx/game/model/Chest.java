@@ -6,7 +6,7 @@ import java.util.List;
 /**
  * Created by martinso on 20/04/16.
  */
-public class Chest extends WorldObject {
+public class Chest extends WorldObject implements IChest {
 
     private int chestSize;
     List<IItem> slots;
