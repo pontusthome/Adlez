@@ -4,12 +4,11 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
-import com.badlogic.gdx.math.Vector2;
 
 /**
  * Created by martinso on 27/03/16.
  */
-public class CharacterView {
+public class CharacterView implements ICharacterView {
 
     protected Texture characterTexture;
     protected TextureRegion[] characterFrames;

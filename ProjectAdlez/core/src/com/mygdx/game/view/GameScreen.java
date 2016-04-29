@@ -10,6 +10,7 @@ import com.badlogic.gdx.maps.tiled.TiledMap;
 import com.badlogic.gdx.maps.tiled.TmxMapLoader;
 import com.badlogic.gdx.maps.tiled.renderers.OrthoCachedTiledMapRenderer;
 
+import com.mygdx.game.controller.IController;
 import com.mygdx.game.controller.CombatHandler;
 import com.mygdx.game.controller.PlayerController;
 import com.mygdx.game.controller.EnemyController;
@@ -29,10 +30,10 @@ public class GameScreen extends AbstractScreen {
     private Adlez adlez = Adlez.getInstance();
 
     private IPlayer player = adlez.getPlayer();
-    private PlayerController playerController;
+    private IController playerController;
     private OrthographicCamera playerCam;
 
-    private HashMap<INPC, EnemyController> enemies;
+    private HashMap<INPC, IController> enemies;
 
     private SpriteBatch batch;
     private OrthoCachedTiledMapRenderer renderer;
@@ -61,7 +62,7 @@ public class GameScreen extends AbstractScreen {
         playerController = new PlayerController(player, AssetStrings.MOVE_SPRITES_IMAGE);
 
         // Spawning enemies.
-        enemies = new HashMap<INPC, EnemyController>();
+        enemies = new HashMap<INPC, IController>();
         for (INPC enemy: adlez.getEnemies()) {
             EnemyController enemyController = new EnemyController(enemy, AssetStrings.MOVE_SPRITES_IMAGE, player);
             enemies.put(enemy, enemyController);
@@ -93,16 +94,16 @@ public class GameScreen extends AbstractScreen {
 
         // Update camera
         playerCam.update();
-        playerCam.position.set(player.getPosX() + (playerController.getCurrentFrame().getRegionWidth() / 2),
-                player.getPosY() + (playerController.getCurrentFrame().getRegionHeight() / 2),
+        playerCam.position.set(player.getPosX() + (playerController.getView().getCurrentFrame().getRegionWidth() / 2),
+                player.getPosY() + (playerController.getView().getCurrentFrame().getRegionHeight() / 2),
                 0); // z = 0, non 3D
 
         // Render player
         playerController.render(batch);
         
         //Render enemies
-        for(Map.Entry<INPC, EnemyController> entry : enemies.entrySet()) {
-            EnemyController enemyController = entry.getValue();
+        for(Map.Entry<INPC, IController> entry : enemies.entrySet()) {
+            IController enemyController = entry.getValue();
             enemyController.render(batch);
         }
         
@@ -127,9 +128,9 @@ public class GameScreen extends AbstractScreen {
 
         // Updating enemies
         List<INPC> killedEnemies = new ArrayList<INPC>();
-        for(Map.Entry<INPC, EnemyController> entry : enemies.entrySet()) {
+        for(Map.Entry<INPC, IController> entry : enemies.entrySet()) {
             INPC enemy = entry.getKey();
-            EnemyController enemyController = entry.getValue();
+            IController enemyController = entry.getValue();
 
             if (!enemy.isAlive()) {
                 killedEnemies.add(enemy);

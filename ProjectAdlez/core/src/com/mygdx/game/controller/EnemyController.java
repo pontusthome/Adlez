@@ -9,7 +9,7 @@ import com.mygdx.game.utils.Utils;
 /**
  * @author Pontus
  */
-public class EnemyController implements CharacterActions {
+public class EnemyController implements IController {
 
     private INPC enemy;
     private IPlayer player;
@@ -47,7 +47,12 @@ public class EnemyController implements CharacterActions {
     public void render(SpriteBatch batch){
         batch.draw(getCurrentFrame(), enemy.getPosX(), enemy.getPosY());
     }
-    
+
+    @Override
+    public ICharacterView getView() {
+        return enemyView;
+    }
+
     public TextureRegion getCurrentFrame() {
         return enemyView.getCurrentFrame();
     }

@@ -9,7 +9,7 @@ import com.mygdx.game.model.IPlayer;
 /**
  * Created by martinso on 27/03/16.
  */
-public class PlayerController implements CharacterActions {
+public class PlayerController implements IController {
 
     // Have a view not extend a view
 
@@ -57,7 +57,12 @@ public class PlayerController implements CharacterActions {
     public void render(SpriteBatch batch){
         batch.draw(getCurrentFrame(), player.getPosX(), player.getPosY());
     }
-    
+
+    @Override
+    public ICharacterView getView() {
+        return playerView;
+    }
+
     public TextureRegion getCurrentFrame() {
         return playerView.getCurrentFrame();
     }
