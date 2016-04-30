@@ -25,18 +25,11 @@ public class Player extends Character implements IPlayer {
                   int width, int height,
                   float posX, float posY,
                   int maxHealth, int attackDamage, int gold, int mana) {
-        setDirection(direction);
-        setSpeed(speed);
-        setWidth(width);
-        setHeight(height);
-        setPosX(posX);
-        setPosY(posY);
-        setMaxHealth(maxHealth);
-        setHealth(maxHealth);
-        setAttackDamage(attackDamage);
-        setGold(gold);
-        setMana(mana);
-        // Size of inventory
+        
+        super(direction, speed, width, height, 
+                posX, posY, maxHealth, attackDamage, 
+                gold, mana);
+        
         inventory = new ArrayList<IItem>(INVENTORY_MAX_SIZE);
     }
     
@@ -97,5 +90,10 @@ public class Player extends Character implements IPlayer {
                 itr.remove();
             }
         }
+    }
+    
+    @Override
+    public void onCollide(Collidable other){
+        
     }
 }

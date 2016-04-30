@@ -1,12 +1,25 @@
 package com.mygdx.game.model;
 
-public abstract class WorldObject implements IWorldObject {
+public abstract class WorldObject implements IWorldObject, Collidable {
 
     private float posX;
     private float posY;
     private int width;
     private int height;
-
+    private HitBox hitBox;
+    
+    public WorldObject(){
+        
+    }
+    
+    
+    public WorldObject(float posX, float posY, int width, int height){
+        this.posX = posX;
+        this.posY = posY;
+        this.width = width;
+        this.height = height;
+    }
+    
     @Override
     public boolean collide(IWorldObject other) {
         float width = this.getWidth();
@@ -61,5 +74,13 @@ public abstract class WorldObject implements IWorldObject {
 
     public void setHeight(int height) {
         this.height = height;
+    }
+    
+    public HitBox getHitBox(){
+        return hitBox;
+    }
+    
+    public void setHitBox(HitBox hitBox){
+        this.hitBox = hitBox;
     }
 }

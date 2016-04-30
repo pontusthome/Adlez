@@ -18,29 +18,28 @@ public abstract class Character extends WorldObject implements ICharacter {
 	private String characterType;
 	private int direction;
 	private float speed;
-
-	// Character ska ta in värden så som health och attack. Nu har character inga stats...
-	public Character(){
-		direction = Direction.NORTH;
-		speed = 2f;
-		setWidth(2);
-		setHeight(2);
+	
+	public Character() {
+		this(Direction.NORTH, 2f,
+				17, 17,
+				0, 0,
+				100, 5, 0, 100);
 	}
-
+	
 	public Character(int direction, float speed,
-				  int width, int height,
-				  float posX, float posY,
-				  int maxHealth, int attackDamage, int gold) {
+			   int width, int height,
+			   float posX, float posY,
+			   int maxHealth, int attackDamage, int gold, int mana) {
+		
+		super(posX, posY, width, height);
+		
 		setDirection(direction);
 		setSpeed(speed);
-		setWidth(width);
-		setHeight(height);
-		setPosX(posX);
-		setPosY(posY);
 		setMaxHealth(maxHealth);
 		setHealth(maxHealth);
 		setAttackDamage(attackDamage);
 		setGold(gold);
+		setMana(mana);
 	}
 
 	@Override

@@ -19,4 +19,9 @@ public class Chest extends WorldObject implements IChest {
     public void addItems(IItem type) {
         slots.add(type);
     }
+    
+    @Override
+    public void onCollide(Collidable other){
+        
+    }
 }

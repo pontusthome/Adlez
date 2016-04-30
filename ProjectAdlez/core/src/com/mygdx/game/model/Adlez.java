@@ -1,5 +1,7 @@
 package com.mygdx.game.model;
 
+import com.mygdx.game.model.handler.CollisionHandler2;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -23,6 +25,7 @@ public class Adlez {
     private List<IWorldObject> stationaryObjects;
     private List<IWall> walls;
     private List<IObstacle> obstacles;
+    private CollisionHandler2 collisionHandler;
 
     private Adlez() {
         /** Set players's width & height to size of texture for debugging purposes */
@@ -35,26 +38,35 @@ public class Adlez {
     public void initiateArea(Area area) {
         // Reset the world and then set it up for the new area
         worldObjects = new ArrayList<IWorldObject>();
+    
+        collisionHandler = new CollisionHandler2();
 
         // add the player and set him to the new position
         worldObjects.add(player);
+        collisionHandler.add((Collidable) player);
         player.setPosX(area.getPlayerXposition());
         player.setPosY(area.getPlayerYposition());
 
         enemies = area.getEnemies();
         worldObjects.addAll(enemies);
+        collisionHandler.addAll(enemies);
 
         friendlyNPCs = area.getFriendlyNPCs();
         worldObjects.addAll(friendlyNPCs);
+        collisionHandler.addAll(friendlyNPCs);
 
         stationaryObjects = area.getStationaryObjects();
         worldObjects.addAll(stationaryObjects);
+        collisionHandler.addAll(stationaryObjects);
 
         walls = area.getWalls();
         worldObjects.addAll(walls);
+        collisionHandler.addAll(walls);
 
         obstacles = area.getObstacles();
         worldObjects.addAll(obstacles);
+        collisionHandler.addAll(obstacles);
+        
     }
 
     public IPlayer getPlayer() {
@@ -86,5 +98,10 @@ public class Adlez {
     public void removeEnemyFromWorld(INPC enemy){
         enemies.remove(enemy);
         worldObjects.remove(enemy);
+        collisionHandler.remove((Collidable) enemy);
+    }
+    
+    public CollisionHandler2 getCollisionHandler(){
+        return collisionHandler;
     }
 }

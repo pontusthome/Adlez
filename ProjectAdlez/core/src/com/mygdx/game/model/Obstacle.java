@@ -12,10 +12,7 @@ public class Obstacle extends WorldObject implements IObstacle{
 
     // Destructable obstacles, requires a number of hits to destroy. (health)
     public Obstacle(float posX, float posY, int width, int height, int health) {
-        setPosX(posX);
-        setPosY(posY);
-        setWidth(width);
-        setHeight(height);
+        super(posX, posY, width, height);
         this.health = player.getAttackDamage()*health;
     }
 
@@ -26,5 +23,9 @@ public class Obstacle extends WorldObject implements IObstacle{
     public void setHealth(int health) {
         this.health = player.getAttackDamage()*health;
     }
-
+    
+    @Override
+    public void onCollide(Collidable other){
+        
+    }
 }

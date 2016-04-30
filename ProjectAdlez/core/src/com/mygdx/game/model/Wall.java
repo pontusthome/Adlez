@@ -45,6 +45,10 @@ public class Wall extends WorldObject implements IWall {
         }
         return walls;
     }
-
-
+    
+    
+    @Override
+    public void onCollide(Collidable other){
+        
+    }
 }

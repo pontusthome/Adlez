@@ -15,6 +15,7 @@ import com.mygdx.game.controller.CombatHandler;
 import com.mygdx.game.controller.PlayerController;
 import com.mygdx.game.controller.EnemyController;
 import com.mygdx.game.model.*;
+import com.mygdx.game.model.handler.CollisionHandler2;
 import com.mygdx.game.utils.AssetStrings;
 
 import java.util.ArrayList;
@@ -41,6 +42,8 @@ public class GameScreen extends AbstractScreen {
 
     private ObstaclesView obstaclesView;
     
+    private CollisionHandler2 collisionHandler;
+    
     private static final float UNIT_SCALE = 1/2f;
     private static final float WIDTH_SCALE = 2/3f;
     private static final float HEIGHT_SCALE = 2/3f;
@@ -53,7 +56,9 @@ public class GameScreen extends AbstractScreen {
 
     @Override
     public void buildStage() {
-
+    
+        collisionHandler = adlez.getCollisionHandler();
+        
         // Creating camera
         playerCam = new OrthographicCamera(Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
         getViewport().update(Gdx.graphics.getWidth(), Gdx.graphics.getHeight(), false);
@@ -142,5 +147,7 @@ public class GameScreen extends AbstractScreen {
         for (INPC deadEnemy: killedEnemies) {
             enemies.remove(deadEnemy);
         }
+        
+        //TODO: Update collisionHandler
     }
 }
