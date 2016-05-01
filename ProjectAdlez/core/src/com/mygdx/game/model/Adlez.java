@@ -100,6 +100,11 @@ public class Adlez {
         worldObjects.remove(enemy);
         collisionHandler.remove((Collidable) enemy);
     }
+
+    public void removeChestFromWorld(IChest chest) {
+        worldObjects.remove(chest);
+        collisionHandler.remove((Collidable) chest);
+    }
     
     public CollisionHandler2 getCollisionHandler(){
         return collisionHandler;

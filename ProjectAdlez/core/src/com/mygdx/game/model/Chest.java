@@ -8,8 +8,9 @@ import java.util.List;
  */
 public class Chest extends WorldObject implements IChest {
 
+    private Adlez adlez = Adlez.getInstance();
     private int chestSize;
-    List<IItem> slots;
+    private List<IItem> slots;
 
     public Chest(int chestSize) {
         this.chestSize = chestSize;
@@ -18,6 +19,15 @@ public class Chest extends WorldObject implements IChest {
 
     public void addItems(IItem type) {
         slots.add(type);
+    }
+
+    public List<IItem> getItems(Chest chest) {
+        return slots;
+    }
+
+    // Chest should be removed after chest is closed.
+    public void removeChest(Chest chest) {
+        adlez.removeChestFromWorld(chest);
     }
     
     @Override
