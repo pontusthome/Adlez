@@ -10,9 +10,6 @@ import java.util.List;
 public class Player extends Character implements IPlayer {
     private int experience;
 
-    private Weapon weapon;
-    private Armor armor;
-
     private IItem swordEquipped;
     private IItem armorEquipped;
     private boolean isWepSlotEmpty = true;
@@ -34,14 +31,14 @@ public class Player extends Character implements IPlayer {
     }
     
     public void equipItem(IItem item) {
-        if (item.equals(weapon)) {
+        if (item instanceof Weapon) {
             if(isWepSlotEmpty) {
                 isWepSlotEmpty = false;
                 swordEquipped = item;
                 setAttackDamage(getAttackDamage() + item.getStats());
                 removeItem(item);
             }
-        } else if(item.equals(armor)) {
+        } else if(item instanceof Armor) {
             if(isArmorSlotEmpty) {
                 isArmorSlotEmpty = false;
                 armorEquipped = item;
@@ -90,6 +87,14 @@ public class Player extends Character implements IPlayer {
                 itr.remove();
             }
         }
+    }
+
+    public IItem getSwordEquipped() {
+        return swordEquipped;
+    }
+
+    public IItem getArmorEquipped() {
+        return armorEquipped;
     }
     
     @Override

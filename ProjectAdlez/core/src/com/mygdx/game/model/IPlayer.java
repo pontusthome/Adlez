@@ -13,4 +13,6 @@ public interface IPlayer extends ICharacter {
     public void lootItem(IItem item);
     public List<IItem> getInventory();
     public void removeItem(IItem item);
+    public IItem getSwordEquipped();
+    public IItem getArmorEquipped();
 }
