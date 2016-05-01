@@ -41,6 +41,7 @@ public class GameScreen extends AbstractScreen {
     private TiledMap tileMap;
 
     private ObstaclesView obstaclesView;
+    private ChestView chestView;
     
     private CollisionHandler2 collisionHandler;
     
@@ -52,6 +53,8 @@ public class GameScreen extends AbstractScreen {
         super();
         batch = new SpriteBatch();
         obstaclesView = new ObstaclesView(batch, AssetStrings.BOX_OBSTACLE_IMAGE);
+        chestView = new ChestView(batch, AssetStrings.CHEST_IMAGE);
+
     }
 
     @Override
@@ -114,10 +117,11 @@ public class GameScreen extends AbstractScreen {
         
         // Generate obstacles
         obstaclesView.generateObstacles();
+        chestView.generateChests();
 
         batch.end();
 
-        // For debugging attack hitbox
+        // Render shapes for debugging purposes
         ShapeRenderer shapeRenderer = new ShapeRenderer();
         shapeRenderer.setProjectionMatrix(playerCam.combined);
         shapeRenderer.begin(ShapeRenderer.ShapeType.Line);
@@ -129,10 +133,7 @@ public class GameScreen extends AbstractScreen {
         for(IWall wall : listt){
             shapeRenderer.rect(wall.getPosX(), wall.getPosY(), wall.getWidth(), wall.getHeight());
         }
-            
         shapeRenderer.end();
-        
-        
     }
 
     public void updateGame() {
@@ -158,7 +159,5 @@ public class GameScreen extends AbstractScreen {
         }
         
         collisionHandler.update();
-        
-        //TODO: Update collisionHandler
     }
 }

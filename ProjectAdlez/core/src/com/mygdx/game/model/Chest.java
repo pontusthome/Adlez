@@ -9,19 +9,34 @@ import java.util.List;
 public class Chest extends WorldObject implements IChest {
 
     private int chestSize;
-    List<IItem> slots;
+    private int chestSizeCount = 0;
+    private Adlez adlez = Adlez.getInstance();
+    private List<IItem> slots = new ArrayList<IItem>(chestSize);
 
-    public Chest(int chestSize) {
+    public Chest(float posX, float posY, int width, int height, int chestSize) {
+        super(posX, posY, width, height);
         this.chestSize = chestSize;
         slots = new ArrayList<IItem>(chestSize);
     }
 
     public void addItems(IItem type) {
-        slots.add(type);
+        if (chestSizeCount < chestSize) {
+            slots.add(type);
+        }
+
     }
-    
+
+    public List<IItem> getItems(Chest chest) {
+        return slots;
+    }
+
+    // Chest should be removed after chest is closed.
+    public void removeChest(Chest chest) {
+        adlez.removeChestFromWorld(chest);
+    }
+
     @Override
-    public void onCollide(Collidable other){
-        
+    public void onCollide(Collidable other) {
+
     }
 }

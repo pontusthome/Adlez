@@ -34,14 +34,14 @@ public class Player extends Character implements IPlayer {
     }
     
     public void equipItem(IItem item) {
-        if (item.equals(weapon)) {
+        if (item instanceof Weapon) {
             if(isWepSlotEmpty) {
                 isWepSlotEmpty = false;
                 swordEquipped = item;
                 setAttackDamage(getAttackDamage() + item.getStats());
                 removeItem(item);
             }
-        } else if(item.equals(armor)) {
+        } else if(item instanceof Armor) {
             if(isArmorSlotEmpty) {
                 isArmorSlotEmpty = false;
                 armorEquipped = item;
@@ -91,11 +91,17 @@ public class Player extends Character implements IPlayer {
             }
         }
     }
+
+    public IItem getSwordEquipped() {
+        return swordEquipped;
+    }
+
+    public IItem getArmorEquipped() {
+        return armorEquipped;
+    }
     
     @Override
     public void onCollide(Collidable other){
         super.onCollide(other);
-        
-//        else if(other instanceof NPC)
     }
 }

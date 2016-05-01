@@ -2,6 +2,7 @@ package com.mygdx.game.model;
 
 import java.util.ArrayList;
 import java.util.List;
+
 import static org.junit.Assert.*;
 
 /**
@@ -10,20 +11,22 @@ import static org.junit.Assert.*;
 public class CharacterTest {
 
     Adlez adlez = Adlez.getInstance();
-    Player player;
-    List<NPC> enemies;
-    List<NPC> friendlyNPCs;
-    List<WorldObject> stationaryObjects;
-    List<Wall> walls;
-    List<Obstacle> obstacles;
+    IPlayer player;
+    List<IEnemy> enemies;
+    List<IFriendlyNPC> friendlyNPCs;
+    List<IWorldObject> stationaryObjects;
+    List<IWall> walls;
+    List<IObstacle> obstacles;
+    List<IChest> chests;
 
     @org.junit.Before
     public void setUp() throws Exception {
-        enemies = new ArrayList<NPC>();
-        friendlyNPCs = new ArrayList<NPC>();
-        stationaryObjects = new ArrayList<WorldObject>();
-        walls = new ArrayList<Wall>();
-        obstacles = new ArrayList<Obstacle>();
+        enemies = new ArrayList<IEnemy>();
+        friendlyNPCs = new ArrayList<IFriendlyNPC>();
+        stationaryObjects = new ArrayList<IWorldObject>();
+        walls = new ArrayList<IWall>();
+        obstacles = new ArrayList<IObstacle>();
+        chests = new ArrayList<IChest>();
     }
 
     @org.junit.After
@@ -37,7 +40,7 @@ public class CharacterTest {
         float playerYposition = 0;
 
         Area area = new Area(playerXposition, playerYposition,
-                enemies, friendlyNPCs, stationaryObjects, walls, obstacles);
+                enemies, friendlyNPCs, stationaryObjects, walls, obstacles, chests);
         // No worldobjects
         adlez.initiateArea(area);
         player = adlez.getPlayer();
@@ -68,18 +71,18 @@ public class CharacterTest {
 
         float objectSpeed = 0;
         float objectXpostion = 0;
-        float objectYposition = playerSpeed-1; // Should collide after first move to the north
+        float objectYposition = playerSpeed - 1; // Should collide after first move to the north
         int objectWidth = 10;
         int objectHeight = 10;
 
-        NPC stationaryEnemy = new NPC(Direction.NORTH, objectSpeed,
+        IEnemy stationaryEnemy = new Enemy(Direction.NORTH, objectSpeed,
                                        objectWidth, objectHeight,
                                        objectXpostion, objectYposition,
                                        0, 0, 0, 0);
         enemies.add(stationaryEnemy);
 
         Area area = new Area(playerXposition, playerYposition,
-                enemies, friendlyNPCs, stationaryObjects, walls, obstacles);
+                enemies, friendlyNPCs, stationaryObjects, walls, obstacles, chests);
         // With one stationary enemy to the north of player
         adlez.initiateArea(area);
         player = adlez.getPlayer();
@@ -94,7 +97,7 @@ public class CharacterTest {
         player.moveSouth();
         // Should have moved
         assertTrue(player.getPosX() == 0);
-        assertTrue(player.getPosY() == - player.getSpeed());
+        assertTrue(player.getPosY() == -player.getSpeed());
         assertTrue(player.getDirection() == Direction.SOUTH);
 
         player.moveNorth();
@@ -117,19 +120,19 @@ public class CharacterTest {
         float playerSpeed = 20;
 
         float objectSpeed = 0;
-        float objectXpostion = -playerSpeed +1; // Should collide after first move to the west
+        float objectXpostion = -playerSpeed + 1; // Should collide after first move to the west
         float objectYposition = 0;
         int objectWidth = 10;
         int objectHeight = 10;
 
-        NPC stationaryEnemy = new NPC(Direction.NORTH, objectSpeed,
+        IEnemy stationaryEnemy = new Enemy(Direction.NORTH, objectSpeed,
                 objectWidth, objectHeight,
                 objectXpostion, objectYposition,
                 0, 0, 0,0 );
         enemies.add(stationaryEnemy);
 
         Area area = new Area(playerXposition, playerYposition,
-                enemies, friendlyNPCs, stationaryObjects, walls, obstacles);
+                enemies, friendlyNPCs, stationaryObjects, walls, obstacles, chests);
         // With one stationary enemy to the west of player
         adlez.initiateArea(area);
         player = adlez.getPlayer();

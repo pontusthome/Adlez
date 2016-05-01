@@ -25,6 +25,7 @@ public class Adlez {
     private List<IWorldObject> stationaryObjects;
     private List<IWall> walls;
     private List<IObstacle> obstacles;
+    private List<IChest> chests;
     private CollisionHandler2 collisionHandler;
 
     private Adlez() {
@@ -45,9 +46,6 @@ public class Adlez {
         worldObjects.add(player);
         player.setPosX(area.getPlayerXposition());
         player.setPosY(area.getPlayerYposition());
-        ((WorldObject)player).setOldPosX(area.getPlayerXposition());
-        ((WorldObject)player).setOldPosY(area.getPlayerYposition());
-        ((WorldObject)player).setHitBox(new HitBox(player.getPosX(), player.getPosY(), player.getWidth(), player.getHeight()));
 
         enemies = area.getEnemies();
         List<IWorldObject> tempList = new ArrayList<>();
@@ -72,8 +70,10 @@ public class Adlez {
 
         obstacles = area.getObstacles();
         worldObjects.addAll(obstacles);
-    
-        collisionHandler = new CollisionHandler2();
+
+        chests = area.getChests();
+        worldObjects.addAll(chests);
+        
     }
 
     public IPlayer getPlayer() {
@@ -101,10 +101,18 @@ public class Adlez {
     public List<IObstacle> getObstacles() {
         return obstacles;
     }
+
+    public List<IChest> getChests() {
+        return chests;
+    }
     
     public void removeEnemyFromWorld(INPC enemy){
         enemies.remove(enemy);
         worldObjects.remove(enemy);
+    }
+
+    public void removeChestFromWorld(IChest chest) {
+        worldObjects.remove(chest);
     }
     
     public CollisionHandler2 getCollisionHandler(){
