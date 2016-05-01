@@ -41,6 +41,7 @@ public class GameScreen extends AbstractScreen {
     private TiledMap tileMap;
 
     private ObstaclesView obstaclesView;
+    private ChestView chestView;
     
     private CollisionHandler2 collisionHandler;
     
@@ -52,6 +53,8 @@ public class GameScreen extends AbstractScreen {
         super();
         batch = new SpriteBatch();
         obstaclesView = new ObstaclesView(batch, AssetStrings.BOX_OBSTACLE_IMAGE);
+        chestView = new ChestView(batch, AssetStrings.CHEST_IMAGE);
+
     }
 
     @Override
@@ -114,6 +117,7 @@ public class GameScreen extends AbstractScreen {
         
         // Generate obstacles
         obstaclesView.generateObstacles();
+        chestView.generateChests();
 
         batch.end();
 

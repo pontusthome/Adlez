@@ -25,6 +25,7 @@ public class Adlez {
     private List<IWorldObject> stationaryObjects;
     private List<IWall> walls;
     private List<IObstacle> obstacles;
+    private List<IChest> chests;
     private CollisionHandler2 collisionHandler;
 
     private Adlez() {
@@ -66,6 +67,10 @@ public class Adlez {
         obstacles = area.getObstacles();
         worldObjects.addAll(obstacles);
         collisionHandler.addAll(obstacles);
+
+        chests = area.getChests();
+        worldObjects.addAll(chests);
+        collisionHandler.addAll(chests);
         
     }
 
@@ -93,6 +98,10 @@ public class Adlez {
 
     public List<IObstacle> getObstacles() {
         return obstacles;
+    }
+
+    public List<IChest> getChests() {
+        return chests;
     }
     
     public void removeEnemyFromWorld(INPC enemy){
