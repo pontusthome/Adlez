@@ -40,10 +40,11 @@ public class Adlez {
         // Reset the world and then set it up for the new area
         worldObjects = new ArrayList<IWorldObject>();
     
-        
+        collisionHandler = new CollisionHandler2();
 
         // add the player and set him to the new position
         worldObjects.add(player);
+        collisionHandler.add((Collidable) player);
         player.setPosX(area.getPlayerXposition());
         player.setPosY(area.getPlayerYposition());
 
@@ -64,12 +65,15 @@ public class Adlez {
 
         stationaryObjects = area.getStationaryObjects();
         worldObjects.addAll(stationaryObjects);
+        collisionHandler.addAll(stationaryObjects);
 
         walls = area.getWalls();
         worldObjects.addAll(walls);
+        collisionHandler.addAll(walls);
 
         obstacles = area.getObstacles();
         worldObjects.addAll(obstacles);
+        collisionHandler.addAll(obstacles);
 
         chests = area.getChests();
         worldObjects.addAll(chests);

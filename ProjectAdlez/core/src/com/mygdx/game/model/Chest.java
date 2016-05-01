@@ -16,7 +16,6 @@ public class Chest extends WorldObject implements IChest {
     public Chest(float posX, float posY, int width, int height, int chestSize) {
         super(posX, posY, width, height);
         this.chestSize = chestSize;
-        slots = new ArrayList<IItem>(chestSize);
     }
 
     public void addItems(IItem type) {

@@ -128,7 +128,7 @@ public class CharacterTest {
         IEnemy stationaryEnemy = new Enemy(Direction.NORTH, objectSpeed,
                 objectWidth, objectHeight,
                 objectXpostion, objectYposition,
-                0, 0, 0,0 );
+                0, 0, 0, 0);
         enemies.add(stationaryEnemy);
 
         Area area = new Area(playerXposition, playerYposition,

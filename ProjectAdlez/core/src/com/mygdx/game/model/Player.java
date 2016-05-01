@@ -10,9 +10,6 @@ import java.util.List;
 public class Player extends Character implements IPlayer {
     private int experience;
 
-    private Weapon weapon;
-    private Armor armor;
-
     private IItem swordEquipped;
     private IItem armorEquipped;
     private boolean isWepSlotEmpty = true;
