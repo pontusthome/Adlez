@@ -94,6 +94,10 @@ public class Player extends Character implements IPlayer {
     
     @Override
     public void onCollide(Collidable other){
+        if(other instanceof Wall){
+            setOldPos();
+        }
         
+//        else if(other instanceof NPC)
     }
 }

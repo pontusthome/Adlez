@@ -5,7 +5,6 @@ package com.mygdx.game.model;
  */
 public class NPC extends Character implements INPC{
 	
-	private boolean isEnemy;
 	private boolean isAlive = true;
 	
 	public NPC(int direction, float speed, int width, 

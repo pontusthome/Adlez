@@ -4,6 +4,8 @@ public abstract class WorldObject implements IWorldObject, Collidable {
 
     private float posX;
     private float posY;
+    private float oldPosX;
+    private float oldPosY;
     private int width;
     private int height;
     private HitBox hitBox;
@@ -16,8 +18,11 @@ public abstract class WorldObject implements IWorldObject, Collidable {
     public WorldObject(float posX, float posY, int width, int height){
         this.posX = posX;
         this.posY = posY;
+        this.oldPosX = posX;
+        this.oldPosY = posY;
         this.width = width;
         this.height = height;
+        hitBox = new HitBox(posX, posY, width, height);
     }
     
     @Override
@@ -82,5 +87,26 @@ public abstract class WorldObject implements IWorldObject, Collidable {
     
     public void setHitBox(HitBox hitBox){
         this.hitBox = hitBox;
+    }
+    
+    public float getOldPosX(){
+        return oldPosX;
+    }
+    
+    public void setOldPosX(float oldPosX){
+        this.oldPosX = oldPosX;
+    }
+    
+    public float getOldPosY(){
+        return oldPosY;
+    }
+    
+    public void setOldPosY(float oldPosY){
+        this.oldPosY = oldPosY;
+    }
+    
+    public void setOldPos(){
+        setOldPosX(oldPosX);
+        setOldPosY(oldPosY);
     }
 }

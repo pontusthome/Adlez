@@ -44,39 +44,27 @@ public abstract class Character extends WorldObject implements ICharacter {
 
 	@Override
 	public void moveNorth() {
-		float oldYpos = this.getPosY();
-		this.setPosY(this.getPosY() + this.getSpeed());
+		setOldPosY(getPosY());
+		setPosY(getPosY() + getSpeed());
 		setDirection(Direction.NORTH);
-		if (CollisionHandler.checkCollision(this)) {
-			this.setPosY(oldYpos);
-		}
 	}
 	@Override
 	public void moveSouth() {
-		float oldYpos = this.getPosY();
-		this.setPosY(this.getPosY() - this.getSpeed());
+		setOldPosY(getPosY());
+		setPosY(getPosY() - getSpeed());
 		setDirection(Direction.SOUTH);
-		if (CollisionHandler.checkCollision(this)) {
-			this.setPosY(oldYpos);
-		}
 	}
 	@Override
 	public void moveWest() {
-		float oldXpos = this.getPosX();
-		this.setPosX(this.getPosX() - this.getSpeed());
+		setOldPosX(getPosX());
+		setPosX(getPosX() - getSpeed());
 		setDirection(Direction.WEST);
-		if (CollisionHandler.checkCollision(this)) {
-			this.setPosX(oldXpos);
-		}
 	}
 	@Override
 	public void moveEast() {
-		float oldXpos = this.getPosX();
-		this.setPosX(this.getPosX() + this.getSpeed());
+		setOldPosX(getPosX());
+		setPosX(getPosX() + getSpeed());
 		setDirection(Direction.EAST);
-		if (CollisionHandler.checkCollision(this)) {
-			this.setPosX(oldXpos);
-		}
 	}
 
 
