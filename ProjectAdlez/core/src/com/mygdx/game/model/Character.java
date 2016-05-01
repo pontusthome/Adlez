@@ -192,15 +192,15 @@ public abstract class Character extends WorldObject implements ICharacter {
 	@Override
 	public void onCollide(Collidable other){
 		if(other instanceof ICharacter && this != other){
-			undoMove();
+			undoCharacterMove();
 		}else if(other instanceof IWall){
-			undoMove();
+			undoCharacterMove();
 		}else if(other instanceof IObstacle){
-			undoMove();
+			undoCharacterMove();
 		}
 	}
 	
-	public void undoMove(){
+	public void undoCharacterMove(){
 		if(movingNorth){
 			setPosY(getPosY() - getSpeed());
 		}

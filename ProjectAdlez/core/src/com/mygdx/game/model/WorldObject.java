@@ -6,7 +6,6 @@ public abstract class WorldObject implements IWorldObject, Collidable {
     private float posY;
     private int width;
     private int height;
-    private HitBox hitBox;
     
     public WorldObject(){
         
@@ -74,13 +73,5 @@ public abstract class WorldObject implements IWorldObject, Collidable {
 
     public void setHeight(int height) {
         this.height = height;
-    }
-    
-    public HitBox getHitBox(){
-        return hitBox;
-    }
-    
-    public void setHitBox(HitBox hitBox){
-        this.hitBox = hitBox;
     }
 }

@@ -14,4 +14,9 @@ public class FriendlyNPC extends NPC implements IFriendlyNPC{
 				posX, posY, maxHealth, attackDamage,
 				gold, mana);
 	}
+	
+	@Override
+	public void onCollide(Collidable other){
+		super.onCollide(other);
+	}
 }

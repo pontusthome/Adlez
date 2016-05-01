@@ -44,7 +44,6 @@ public class Adlez {
 
         // add the player and set him to the new position
         worldObjects.add(player);
-        collisionHandler.add((Collidable) player);
         player.setPosX(area.getPlayerXposition());
         player.setPosY(area.getPlayerYposition());
 
@@ -65,15 +64,12 @@ public class Adlez {
 
         stationaryObjects = area.getStationaryObjects();
         worldObjects.addAll(stationaryObjects);
-        collisionHandler.addAll(stationaryObjects);
 
         walls = area.getWalls();
         worldObjects.addAll(walls);
-        collisionHandler.addAll(walls);
 
         obstacles = area.getObstacles();
         worldObjects.addAll(obstacles);
-        collisionHandler.addAll(obstacles);
 
         chests = area.getChests();
         worldObjects.addAll(chests);
@@ -116,6 +112,7 @@ public class Adlez {
     }
 
     public void removeChestFromWorld(IChest chest) {
+        chests.remove(chest);
         worldObjects.remove(chest);
     }
     

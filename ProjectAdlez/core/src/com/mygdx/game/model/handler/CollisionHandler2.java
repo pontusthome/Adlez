@@ -10,22 +10,17 @@ import java.util.List;
  */
 public class CollisionHandler2{
 	
-	private List<Collidable> objects;
-	private boolean firstUpdate;
-	private int temp = 0;
 	private List<IWorldObject> worldObjects;
-	private WorldObject worldObject1;
-	private WorldObject worldObject2;
+	private WorldObject mainWorldObject;
+	private WorldObject otherWorldObject;
 	private IPlayer player;
 	
 	public CollisionHandler2(){
-		objects = new ArrayList<>();
-		firstUpdate = true;
 		player = Adlez.getInstance().getPlayer();
 		worldObjects = Adlez.getInstance().getWorldObjects();
 	}
 	
-	public void update(){		
+	public void updateWorld(){		
 		for(IWorldObject mainObject : worldObjects){
 			for(IWorldObject otherObject : worldObjects){
 				if(mainObject != otherObject && mainObject != player){
@@ -42,25 +37,25 @@ public class CollisionHandler2{
 		}
 	}
 	
-	private void checkCollision(Collidable object1, Collidable object2){
-		worldObject1 = (WorldObject) object1; 
-		worldObject2 = (WorldObject) object2;
+	private void checkCollision(Collidable primaryObject, Collidable otherObject){
+		mainWorldObject = (WorldObject) primaryObject; 
+		otherWorldObject = (WorldObject) otherObject;
 				
-		if(collide2(worldObject1, worldObject2)){
-			object1.onCollide(object2);
+		if(collide(mainWorldObject, otherWorldObject)){
+			mainWorldObject.onCollide(otherWorldObject);
 		}
 	}
 	
-	public boolean collide2(IWorldObject o1, IWorldObject other) {
-		float width = o1.getWidth();
-		float height = o1.getHeight();
+	public boolean collide(IWorldObject primaryObject, IWorldObject other) {
+		float width = primaryObject.getWidth();
+		float height = primaryObject.getHeight();
 		float otherWidth = other.getWidth();
 		float otherHeight = other.getHeight();
 		if (otherWidth <= 0 || otherHeight <= 0 || width <= 0 || height <= 0) {
 			return false;
 		}
-		float x = o1.getPosX();
-		float y = o1.getPosY();
+		float x = primaryObject.getPosX();
+		float y = primaryObject.getPosY();
 		float otherX = other.getPosX();
 		float otherY = other.getPosY();
 		otherWidth += otherX;

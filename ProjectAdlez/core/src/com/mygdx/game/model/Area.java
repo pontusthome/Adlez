@@ -19,8 +19,8 @@ public final class Area {
     private List<IChest> chests;
 
     public Area(float playerXposition, float playerYposition,
-                List<INPC> enemies, List<INPC> friendlyNPCs, List<IWorldObject> stationaryObjects,
-                List<IWall> walls, List<IObstacle> obstacles) {
+                List<IEnemy> enemies, List<IFriendlyNPC> friendlyNPCs, List<IWorldObject> stationaryObjects,
+                List<IWall> walls, List<IObstacle> obstacles, List<IChest> chests) {
         this.playerXposition = playerXposition;
         this.playerYposition = playerYposition;
 
