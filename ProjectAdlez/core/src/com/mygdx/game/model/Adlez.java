@@ -48,6 +48,7 @@ public class Adlez {
         player.setPosY(area.getPlayerYposition());
         ((WorldObject)player).setOldPosX(area.getPlayerXposition());
         ((WorldObject)player).setOldPosY(area.getPlayerYposition());
+        ((WorldObject)player).setHitBox(new HitBox(player.getPosX(), player.getPosY(), player.getWidth(), player.getHeight()));
 
         enemies = area.getEnemies();
         List<IWorldObject> tempList = new ArrayList<>();

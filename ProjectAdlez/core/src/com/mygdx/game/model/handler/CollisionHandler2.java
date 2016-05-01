@@ -13,6 +13,9 @@ public class CollisionHandler2{
 	private List<Collidable> objects;
 	private boolean firstUpdate;
 	private int temp = 0;
+	private WorldObject worldObject1;
+	private WorldObject worldObject2;
+	private Collidable[] objectsArray;
 	
 	public CollisionHandler2(){
 		objects = new ArrayList<>();
@@ -34,68 +37,45 @@ public class CollisionHandler2{
 	}
 	
 	public void update(){
-//		if(temp < 100){
-//			temp++;
-//			return;
-//		}
-		
 		/** Array used for better performance while iterating */
-		Collidable[] objectsArray = new Collidable[objects.size()];
+		objectsArray = new Collidable[objects.size()];
 		for(int i = 0; i < objectsArray.length; i++){
 			objectsArray[i] = objects.get(i);
 		}
 		
-		int index = 0;
-		
-//		for(Collidable object : objectsArray){
-//			for(int i = index; index < objectsArray.length; index++)
-//				checkCollision(object, objectsArray[index]);
-//			index++;
-//		}
+		IPlayer player = Adlez.getInstance().getPlayer();
 		
 		for(Collidable object : objectsArray){
 			for(Collidable otherObject : objectsArray){
-				if(otherObject != object && object != Adlez.getInstance().getPlayer()){
+				if(object != otherObject && object != player){
 					checkCollision(object, otherObject);
 				}
 			}
-			index++;
 		}
 	}
 	
 	public void updatePlayer(){
-//		if(temp < 100){
-//			temp++;
-//			return;
-//		}
-		
 		/** Array used for better performance while iterating */
 		Collidable[] objectsArray = new Collidable[objects.size()];
 		for(int i = 0; i < objectsArray.length; i++){
 			objectsArray[i] = objects.get(i);
 		}
 		
+		IPlayer player = Adlez.getInstance().getPlayer();
+		
 		for(Collidable otherObject : objectsArray){
-			checkCollision((Collidable) Adlez.getInstance().getPlayer(), otherObject);
+			if(Adlez.getInstance().getPlayer() != otherObject)
+				checkCollision((Collidable) player, otherObject);
 		}
 	}
 	
 	private void checkCollision(Collidable object1, Collidable object2){
-		WorldObject worldObject1 = (WorldObject) object1; 
-		WorldObject worldObject2 = (WorldObject) object2;
-		
+		worldObject1 = (WorldObject) object1; 
+		worldObject2 = (WorldObject) object2;
+				
 		if(collide2(worldObject1, worldObject2)){
 			object1.onCollide(object2);
 		}
-		
-		
-//		HitBox hitBox1 = ((WorldObject) object1).getHitBox();
-//		HitBox hitBox2 = ((WorldObject) object1).getHitBox();
-//		
-//		if(hitBox1.overlaps(hitBox2)){
-//			object1.onCollide(object2);
-//			object2.onCollide(object1);
-//		}
 	}
 	
 	public boolean collide2(IWorldObject o1, IWorldObject other) {

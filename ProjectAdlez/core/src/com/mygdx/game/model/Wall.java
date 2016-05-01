@@ -14,6 +14,7 @@ public class Wall extends WorldObject implements IWall {
         // Temporary size.
         setHeight(64/2);
         setWidth(64/2);
+        setHitBox(new HitBox(getPosX(), getPosY(), getWidth(), getHeight()));
     }
 
     // Temporary parameter: size

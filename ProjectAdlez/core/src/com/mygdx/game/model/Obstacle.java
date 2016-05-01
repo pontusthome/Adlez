@@ -14,6 +14,7 @@ public class Obstacle extends WorldObject implements IObstacle{
     public Obstacle(float posX, float posY, int width, int height, int health) {
         super(posX, posY, width, height);
         this.health = player.getAttackDamage()*health;
+        setHitBox(new HitBox(getPosX(), getPosY(), getWidth(), getHeight()));
     }
 
     public int getHealth() {
