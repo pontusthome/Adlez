@@ -4,6 +4,7 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
+import com.mygdx.game.model.Character;
 import com.mygdx.game.model.IPlayer;
 
 /**
@@ -28,6 +29,7 @@ public class PlayerController implements IController {
      */
     @Override
     public void update() {
+        ((Character)player).clearMoveFlags();
         if (Gdx.input.isKeyPressed(Input.Keys.W)) {
             player.moveNorth();
         }

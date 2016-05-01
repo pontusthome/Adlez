@@ -18,6 +18,10 @@ public abstract class Character extends WorldObject implements ICharacter {
 	private String characterType;
 	private int direction;
 	private float speed;
+	private boolean movingNorth;
+	private boolean movingSouth;
+	private boolean movingEast;
+	private boolean movingWest;
 	
 	public Character() {
 		this(Direction.NORTH, 2f,
@@ -40,35 +44,41 @@ public abstract class Character extends WorldObject implements ICharacter {
 		setAttackDamage(attackDamage);
 		setGold(gold);
 		setMana(mana);
+		
+		movingNorth = false;
+		movingSouth = false;
+		movingEast = false;
+		movingWest = false;
 	}
 
 	@Override
 	public void moveNorth() {
-		setOldPosY(getPosY());
 		setPosY(getPosY() + getSpeed());
 		setDirection(Direction.NORTH);
+		movingNorth = true;
 	}
+	
 	@Override
 	public void moveSouth() {
-		setOldPosY(getPosY());
 		setPosY(getPosY() - getSpeed());
 		setDirection(Direction.SOUTH);
+		movingSouth = true;
 	}
-	@Override
-	public void moveWest() {
-		setOldPosX(getPosX());
-		setPosX(getPosX() - getSpeed());
-		setDirection(Direction.WEST);
-	}
+	
 	@Override
 	public void moveEast() {
-		setOldPosX(getPosX());
 		setPosX(getPosX() + getSpeed());
 		setDirection(Direction.EAST);
+		movingEast = true;
 	}
-
-
-
+	
+	@Override
+	public void moveWest() {
+		setPosX(getPosX() - getSpeed());
+		setDirection(Direction.WEST);
+		movingWest = true;
+	}
+	
 	@Override
 	public int getAttackDamage() {
 		return attackDamage;
@@ -181,35 +191,34 @@ public abstract class Character extends WorldObject implements ICharacter {
 	
 	@Override
 	public void onCollide(Collidable other){
-		if(equals(other)){
-			return;
-		}else if(other instanceof ICharacter){
-			setToOldPos();
+		if(other instanceof ICharacter && this != other){
+			undoMove();
 		}else if(other instanceof IWall){
-			setToOldPos();
+			undoMove();
+		}else if(other instanceof IObstacle){
+			undoMove();
 		}
-		
-		
-//		if(equals(other)){
-//			return;
-//		}else if(other instanceof ICharacter){
-//			if(direction == Direction.NORTH)
-//				setPosY(getOldPosY());
-//			else if(direction == Direction.SOUTH)
-//				setPosY(getOldPosY());
-//			else if(direction == Direction.EAST)
-//				setPosX(getOldPosX());
-//			else if(direction == Direction.WEST)
-//				setPosX(getOldPosX());
-//		}else if(other instanceof IWall){
-//			if(direction == Direction.NORTH)
-//				setPosY(getOldPosY());
-//			else if(direction == Direction.SOUTH)
-//				setPosY(getOldPosY());
-//			else if(direction == Direction.EAST)
-//				setPosX(getOldPosX());
-//			else if(direction == Direction.WEST)
-//				setPosX(getOldPosX());
-//		}
+	}
+	
+	public void undoMove(){
+		if(movingNorth){
+			setPosY(getPosY() - getSpeed());
+		}
+		if(movingSouth){
+			setPosY(getPosY() + getSpeed());
+		}
+		if(movingEast){
+			setPosX(getPosX() - getSpeed());
+		}
+		if(movingWest){
+			setPosX(getPosX() + getSpeed());
+		}
+	}
+	
+	public void clearMoveFlags(){
+		movingNorth = false;
+		movingSouth = false;
+		movingEast = false;
+		movingWest = false;
 	}
 }

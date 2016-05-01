@@ -2,6 +2,7 @@ package com.mygdx.game.controller;
 
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
+import com.mygdx.game.model.Character;
 import com.mygdx.game.model.INPC;
 import com.mygdx.game.model.IPlayer;
 import com.mygdx.game.utils.Utils;
@@ -23,6 +24,7 @@ public class EnemyController implements IController {
 
     @Override
     public void update() {
+        ((Character) enemy).clearMoveFlags();
         float playerX = player.getPosX();
         float playerY = player.getPosY();
         float x = enemy.getPosX();

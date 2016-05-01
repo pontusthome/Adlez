@@ -39,11 +39,10 @@ public class Adlez {
         // Reset the world and then set it up for the new area
         worldObjects = new ArrayList<IWorldObject>();
     
-        collisionHandler = new CollisionHandler2();
+        
 
         // add the player and set him to the new position
         worldObjects.add(player);
-        collisionHandler.add((Collidable) player);
         player.setPosX(area.getPlayerXposition());
         player.setPosY(area.getPlayerYposition());
         ((WorldObject)player).setOldPosX(area.getPlayerXposition());
@@ -56,7 +55,6 @@ public class Adlez {
             tempList.add((IWorldObject) enemy);
         }
         worldObjects.addAll(tempList);
-        collisionHandler.addAll(enemies);
         
         tempList.clear();
         
@@ -65,20 +63,17 @@ public class Adlez {
             tempList.add((IWorldObject) friendlyNPC);
         }
         worldObjects.addAll(tempList);
-        collisionHandler.addAll(friendlyNPCs);
 
         stationaryObjects = area.getStationaryObjects();
         worldObjects.addAll(stationaryObjects);
-        collisionHandler.addAll(stationaryObjects);
 
         walls = area.getWalls();
         worldObjects.addAll(walls);
-        collisionHandler.addAll(walls);
 
         obstacles = area.getObstacles();
         worldObjects.addAll(obstacles);
-        collisionHandler.addAll(obstacles);
-        
+    
+        collisionHandler = new CollisionHandler2();
     }
 
     public IPlayer getPlayer() {
@@ -110,7 +105,6 @@ public class Adlez {
     public void removeEnemyFromWorld(INPC enemy){
         enemies.remove(enemy);
         worldObjects.remove(enemy);
-        collisionHandler.remove((Collidable) enemy);
     }
     
     public CollisionHandler2 getCollisionHandler(){

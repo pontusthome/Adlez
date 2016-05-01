@@ -13,59 +13,32 @@ public class CollisionHandler2{
 	private List<Collidable> objects;
 	private boolean firstUpdate;
 	private int temp = 0;
+	private List<IWorldObject> worldObjects;
 	private WorldObject worldObject1;
 	private WorldObject worldObject2;
-	private Collidable[] objectsArray;
+	private IPlayer player;
 	
 	public CollisionHandler2(){
 		objects = new ArrayList<>();
 		firstUpdate = true;
+		player = Adlez.getInstance().getPlayer();
+		worldObjects = Adlez.getInstance().getWorldObjects();
 	}
 	
-	public void add(Collidable object){
-		objects.add(object);
-	}
-	
-	public void addAll(List<?> objects){
-		
-		for(Object object : objects)
-			this.objects.add((Collidable) object);
-	}
-	
-	public void remove(Collidable object){
-		objects.remove(object);
-	}
-	
-	public void update(){
-		/** Array used for better performance while iterating */
-		objectsArray = new Collidable[objects.size()];
-		for(int i = 0; i < objectsArray.length; i++){
-			objectsArray[i] = objects.get(i);
-		}
-		
-		IPlayer player = Adlez.getInstance().getPlayer();
-		
-		for(Collidable object : objectsArray){
-			for(Collidable otherObject : objectsArray){
-				if(object != otherObject && object != player){
-					checkCollision(object, otherObject);
+	public void update(){		
+		for(IWorldObject mainObject : worldObjects){
+			for(IWorldObject otherObject : worldObjects){
+				if(mainObject != otherObject && mainObject != player){
+					checkCollision((Collidable) mainObject, (Collidable) otherObject);
 				}
 			}
 		}
 	}
 	
 	public void updatePlayer(){
-		/** Array used for better performance while iterating */
-		Collidable[] objectsArray = new Collidable[objects.size()];
-		for(int i = 0; i < objectsArray.length; i++){
-			objectsArray[i] = objects.get(i);
-		}
-		
-		IPlayer player = Adlez.getInstance().getPlayer();
-		
-		for(Collidable otherObject : objectsArray){
-			if(Adlez.getInstance().getPlayer() != otherObject)
-				checkCollision((Collidable) player, otherObject);
+		for(IWorldObject otherObject : worldObjects){
+			if(player != otherObject)
+				checkCollision((Collidable) player, (Collidable) otherObject);
 		}
 	}
 	
