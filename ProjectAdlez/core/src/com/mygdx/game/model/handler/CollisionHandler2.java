@@ -35,7 +35,10 @@ public class CollisionHandler2{
 	
 	public void update(){
 		/** Array used for better performance while iterating */
-		Collidable[] objectsArray = (Collidable[]) objects.toArray();
+		Collidable[] objectsArray = new Collidable[objects.size()];
+		for(int i = 0; i < objectsArray.length; i++){
+			objectsArray[i] = objects.get(i);
+		}
 		
 		int index = 0;
 		

@@ -105,7 +105,7 @@ public abstract class WorldObject implements IWorldObject, Collidable {
         this.oldPosY = oldPosY;
     }
     
-    public void setOldPos(){
+    public void setToOldPos(){
         setOldPosX(oldPosX);
         setOldPosY(oldPosY);
     }

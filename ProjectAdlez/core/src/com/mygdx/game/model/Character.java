@@ -178,4 +178,11 @@ public abstract class Character extends WorldObject implements ICharacter {
 	public void setSpeed(float speed) {
 		this.speed = speed;
 	}
+	
+	@Override
+	public void onCollide(Collidable other){
+		if(other instanceof Wall){
+			setToOldPos();
+		}
+	}
 }

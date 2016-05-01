@@ -17,8 +17,8 @@ public final class AreaHandler {
     private static float playerXposition;
     private static float playerYposition;
 
-    private static List<INPC> enemies;
-    private static List<INPC> friendlyNPCs;
+    private static List<IEnemy> enemies;
+    private static List<IFriendlyNPC> friendlyNPCs;
     private static List<IWorldObject> stationaryObjects;
     private static List<IWall> walls;
     private static List<IObstacle> obstacles;
@@ -32,8 +32,8 @@ public final class AreaHandler {
         playerXposition = 64;
         playerYposition = 64;
 
-        enemies = new ArrayList<INPC>();
-        friendlyNPCs = new ArrayList<INPC>();
+        enemies = new ArrayList<>();
+        friendlyNPCs = new ArrayList<>();
         stationaryObjects = new ArrayList<IWorldObject>();
         walls = new ArrayList<IWall>();
         obstacles = new ArrayList<IObstacle>();
@@ -45,7 +45,7 @@ public final class AreaHandler {
             float yPos = random.nextInt(250) + 35;
 
             /** Set NPC's width & height to size of texture for debugging purposes */
-            NPC enemy = new NPC(Direction.NORTH, speed,
+            IEnemy enemy = new Enemy(Direction.NORTH, speed,
                                 17, 17,
                                 xPos, yPos,
                                 100, 5, 0, 100);

@@ -68,9 +68,9 @@ public class GameScreen extends AbstractScreen {
 
         // Spawning enemies.
         enemies = new HashMap<INPC, IController>();
-        for (INPC enemy: adlez.getEnemies()) {
-            EnemyController enemyController = new EnemyController(enemy, AssetStrings.MOVE_SPRITES_IMAGE, player);
-            enemies.put(enemy, enemyController);
+        for (IEnemy enemy: adlez.getEnemies()) {
+            EnemyController enemyController = new EnemyController((INPC) enemy, AssetStrings.MOVE_SPRITES_IMAGE, player);
+            enemies.put((INPC) enemy, enemyController);
         }
 
         // temporary things, just testing
@@ -147,6 +147,8 @@ public class GameScreen extends AbstractScreen {
         for (INPC deadEnemy: killedEnemies) {
             enemies.remove(deadEnemy);
         }
+        
+        collisionHandler.update();
         
         //TODO: Update collisionHandler
     }

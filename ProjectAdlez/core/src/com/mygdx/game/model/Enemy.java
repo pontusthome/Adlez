@@ -5,7 +5,6 @@ package com.mygdx.game.model;
  */
 public class Enemy extends NPC implements IEnemy{
 	
-	
 	public Enemy(int direction, float speed, int width, 
 				 int height, float posX, float posY, 
 				 int maxHealth, int attackDamage, 

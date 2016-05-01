@@ -20,8 +20,8 @@ public class Adlez {
     private List<IWorldObject> worldObjects;
 
     private IPlayer player;
-    private List<INPC> enemies;
-    private List<INPC> friendlyNPCs;
+    private List<IEnemy> enemies;
+    private List<IFriendlyNPC> friendlyNPCs;
     private List<IWorldObject> stationaryObjects;
     private List<IWall> walls;
     private List<IObstacle> obstacles;
@@ -48,11 +48,20 @@ public class Adlez {
         player.setPosY(area.getPlayerYposition());
 
         enemies = area.getEnemies();
-        worldObjects.addAll(enemies);
+        List<IWorldObject> tempList = new ArrayList<>();
+        for(IEnemy enemy : enemies){
+            tempList.add((IWorldObject) enemy);
+        }
+        worldObjects.addAll(tempList);
         collisionHandler.addAll(enemies);
-
+        
+        tempList.clear();
+        
         friendlyNPCs = area.getFriendlyNPCs();
-        worldObjects.addAll(friendlyNPCs);
+        for(IFriendlyNPC friendlyNPC : friendlyNPCs){
+            tempList.add((IWorldObject) friendlyNPC);
+        }
+        worldObjects.addAll(tempList);
         collisionHandler.addAll(friendlyNPCs);
 
         stationaryObjects = area.getStationaryObjects();
@@ -73,9 +82,9 @@ public class Adlez {
         return player;
     }
 
-    public List<INPC> getEnemies() { return enemies; }
+    public List<IEnemy> getEnemies() { return enemies; }
 
-    public List<INPC> getFriendlyNPCs() {
+    public List<IFriendlyNPC> getFriendlyNPCs() {
         return friendlyNPCs;
     }
 

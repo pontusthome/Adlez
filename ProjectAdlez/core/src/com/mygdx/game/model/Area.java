@@ -11,14 +11,14 @@ public final class Area {
     private float playerXposition;
     private float playerYposition;
 
-    private List<INPC> enemies;
-    private List<INPC> friendlyNPCs;
+    private List<IEnemy> enemies;
+    private List<IFriendlyNPC> friendlyNPCs;
     private List<IWorldObject> stationaryObjects;
     private List<IWall> walls;
     private List<IObstacle> obstacles;
 
     public Area(float playerXposition, float playerYposition,
-                List<INPC> enemies, List<INPC> friendlyNPCs, List<IWorldObject> stationaryObjects,
+                List<IEnemy> enemies, List<IFriendlyNPC> friendlyNPCs, List<IWorldObject> stationaryObjects,
                 List<IWall> walls, List<IObstacle> obstacles) {
         this.playerXposition = playerXposition;
         this.playerYposition = playerYposition;
@@ -38,11 +38,11 @@ public final class Area {
         return playerYposition;
     }
 
-    public List<INPC> getEnemies() {
+    public List<IEnemy> getEnemies() {
         return enemies;
     }
 
-    public List<INPC> getFriendlyNPCs() {
+    public List<IFriendlyNPC> getFriendlyNPCs() {
         return friendlyNPCs;
     }
 
