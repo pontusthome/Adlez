@@ -46,6 +46,8 @@ public class Adlez {
         collisionHandler.add((Collidable) player);
         player.setPosX(area.getPlayerXposition());
         player.setPosY(area.getPlayerYposition());
+        ((WorldObject)player).setOldPosX(area.getPlayerXposition());
+        ((WorldObject)player).setOldPosY(area.getPlayerYposition());
 
         enemies = area.getEnemies();
         List<IWorldObject> tempList = new ArrayList<>();

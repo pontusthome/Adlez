@@ -181,8 +181,35 @@ public abstract class Character extends WorldObject implements ICharacter {
 	
 	@Override
 	public void onCollide(Collidable other){
-		if(other instanceof Wall){
+		if(equals(other)){
+			return;
+		}else if(other instanceof ICharacter){
+			setToOldPos();
+		}else if(other instanceof IWall){
 			setToOldPos();
 		}
+		
+		
+//		if(equals(other)){
+//			return;
+//		}else if(other instanceof ICharacter){
+//			if(direction == Direction.NORTH)
+//				setPosY(getOldPosY());
+//			else if(direction == Direction.SOUTH)
+//				setPosY(getOldPosY());
+//			else if(direction == Direction.EAST)
+//				setPosX(getOldPosX());
+//			else if(direction == Direction.WEST)
+//				setPosX(getOldPosX());
+//		}else if(other instanceof IWall){
+//			if(direction == Direction.NORTH)
+//				setPosY(getOldPosY());
+//			else if(direction == Direction.SOUTH)
+//				setPosY(getOldPosY());
+//			else if(direction == Direction.EAST)
+//				setPosX(getOldPosX());
+//			else if(direction == Direction.WEST)
+//				setPosX(getOldPosX());
+//		}
 	}
 }

@@ -39,7 +39,7 @@ public final class AreaHandler {
         obstacles = new ArrayList<IObstacle>();
         areaConnections = new ArrayList<AreaConnection>();
 
-        for (int i = 0; i < 10; i++) {
+        for (int i = 0; i < 1; i++) {
             float speed = random.nextFloat() * (1.5f - 1f) + 1;
             float xPos = random.nextInt(250) + 35;
             float yPos = random.nextInt(250) + 35;

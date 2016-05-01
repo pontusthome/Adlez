@@ -27,6 +27,6 @@ public abstract class NPC extends Character implements INPC{
 	
 	@Override
 	public void onCollide(Collidable other){
-		
+		super.onCollide(other);
 	}
 }

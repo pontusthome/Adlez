@@ -124,12 +124,21 @@ public class GameScreen extends AbstractScreen {
         shapeRenderer.setColor(1, 1, 0, 1);
         shapeRenderer.rect(CombatHandler.playerWeaponHitbox.getX(), CombatHandler.playerWeaponHitbox.getY(), CombatHandler.playerWeaponHitbox.getWidth(), CombatHandler.playerWeaponHitbox.getHeight());
         shapeRenderer.rect(player.getPosX(), player.getPosY(), player.getWidth(), player.getHeight());
+    
+        List <IWall> listt = adlez.getWalls();
+        for(IWall wall : listt){
+            shapeRenderer.rect(wall.getPosX(), wall.getPosY(), wall.getWidth(), wall.getHeight());
+        }
+            
         shapeRenderer.end();
+        
+        
     }
 
     public void updateGame() {
         // Updating player
         playerController.update();
+        collisionHandler.updatePlayer();
 
         // Updating enemies
         List<INPC> killedEnemies = new ArrayList<INPC>();

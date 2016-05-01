@@ -14,4 +14,9 @@ public class Enemy extends NPC implements IEnemy{
 				posX, posY, maxHealth, attackDamage, 
 				gold, mana);
 	}
+	
+	@Override
+	public void onCollide(Collidable other){
+		super.onCollide(other);
+	}
 }
