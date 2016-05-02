@@ -9,6 +9,10 @@ import com.mygdx.game.model.Weapon;
 public final class CompleteItems {
 
     /**
+     * final class holding all items and their stats.
+     */
+
+    /**
      * WEAPONS
      */
 

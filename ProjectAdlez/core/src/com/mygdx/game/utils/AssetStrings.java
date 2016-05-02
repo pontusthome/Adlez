@@ -20,6 +20,15 @@ public final class AssetStrings{
 	public static final String BOX_OBSTACLE_IMAGE = "boxObstacle.jpeg";
 	public static final String MOVE_SPRITES_IMAGE = "moveSpriteV2.png";
 	public static final String CHEST_IMAGE = "chest.png";
+
+	/** Item Images */
+	public static final String WOOD_SWORD = "wood_sword_32x32.png";
+	public static final String IRON_SWORD = "iron_sword_32x32.png";
+	public static final String FINAL_SWORD = "final_sword_32x32.png";
+
+	public static final String CLOTH_BODY_ARMOR = "cloth_body_armor_32x32.png";
+	public static final String IRON_BODY_ARMOR = "iron_body_armor_32x32.png";
+	public static final String FINAL_BODY_ARMOR = "final_body_armor_32x32.png";
 	
 	/** Other */
 	public static final String TEST_LEVEL_TMX = "testLevel1.tmx";
