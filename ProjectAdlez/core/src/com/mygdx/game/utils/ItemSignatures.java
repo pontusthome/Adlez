@@ -19,14 +19,14 @@ public final class ItemSignatures {
     /**
      * Swords
      */
-    public static final String WOODEN_SWORD = "wooden_sword";
+    public static final String WOOD_SWORD = "wood_sword";
     public static final String IRON_SWORD = "iron_sword";
     public static final String FINAL_SWORD = "final_sword";
 
     /**
      * Armor
      */
-    public static final String WOODEN_BODY_ARMOR = "wooden_body_armor";
+    public static final String CLOTH_BODY_ARMOR = "cloth_body_armor";
     public static final String IRON_BODY_ARMOR = "iron_body_armor";
     public static final String FINAL_BODY_ARMOR = "final_body_armor";
 }

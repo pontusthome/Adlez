@@ -17,8 +17,8 @@ public final class CompleteItems {
      * 20 bonus damage
      * 50 gold
      */
-    static Weapon woodenSword = new Weapon(ItemSignatures.WOODEN_SWORD, ItemSignatures.TYPE_WEAPON_SWORD, 20, 50);
-    public static final IItem WOODEN_SWORD = woodenSword;
+    static Weapon woodSword = new Weapon(ItemSignatures.WOOD_SWORD, ItemSignatures.TYPE_WEAPON_SWORD, 20, 50);
+    public static final IItem WOOD_SWORD = woodSword;
 
     /**
      * Iron sword:
@@ -41,12 +41,12 @@ public final class CompleteItems {
      */
 
     /**
-     * Wooden body armor:
+     * Cloth body armor:
      * 20 bonus health
      * 50 gold
      */
-    static Weapon woodenBody = new Weapon(ItemSignatures.WOODEN_BODY_ARMOR, ItemSignatures.TYPE_ARMOR_BODY, 20, 50);
-    public static final IItem WOODEN_BODY_ARMOR = woodenBody;
+    static Weapon clothBody = new Weapon(ItemSignatures.CLOTH_BODY_ARMOR, ItemSignatures.TYPE_ARMOR_BODY, 20, 50);
+    public static final IItem CLOTH_BODY_ARMOR = clothBody;
 
     /**
      * Iron body armor:
@@ -62,6 +62,6 @@ public final class CompleteItems {
      * 500 gold
      */
     static Weapon finalBody = new Weapon(ItemSignatures.FINAL_BODY_ARMOR, ItemSignatures.TYPE_ARMOR_BODY, 100, 500);
-    public static final IItem FINAL_BODY_ARMOR = woodenBody;
+    public static final IItem FINAL_BODY_ARMOR = finalBody;
 
 }
