@@ -23,6 +23,11 @@ public abstract class Character extends WorldObject implements ICharacter {
 	private boolean movingEast;
 	private boolean movingWest;
 	
+	private boolean collidedNorth;
+	private boolean collidedSouth;
+	private boolean collidedEast;
+	private boolean collidedWest;
+	
 	public Character() {
 		this(Direction.NORTH, 2f,
 				17, 17,
@@ -49,6 +54,11 @@ public abstract class Character extends WorldObject implements ICharacter {
 		movingSouth = false;
 		movingEast = false;
 		movingWest = false;
+		
+		collidedNorth = false;
+		collidedSouth = false;
+		collidedEast = false;
+		collidedWest = false;
 	}
 
 	@Override
@@ -201,24 +211,74 @@ public abstract class Character extends WorldObject implements ICharacter {
 	}
 	
 	public void undoCharacterMove(){
-		if(movingNorth){
+//		if(movingNorth){
+//			setPosY(getPosY() - getSpeed());
+//		}
+//		if(movingSouth){
+//			setPosY(getPosY() + getSpeed());
+//		}
+//		if(movingEast){
+//			setPosX(getPosX() - getSpeed());
+//		}
+//		if(movingWest){
+//			setPosX(getPosX() + getSpeed());
+//		}
+		
+		if(movingNorth && collidedNorth){
 			setPosY(getPosY() - getSpeed());
 		}
-		if(movingSouth){
+		if(movingSouth && collidedSouth){
 			setPosY(getPosY() + getSpeed());
 		}
-		if(movingEast){
+		if(movingEast && collidedEast){
 			setPosX(getPosX() - getSpeed());
 		}
-		if(movingWest){
+		if(movingWest && collidedWest){
 			setPosX(getPosX() + getSpeed());
 		}
 	}
 	
-	public void clearMoveFlags(){
+	public void clearMoveAndCollisionFlags(){
 		movingNorth = false;
 		movingSouth = false;
 		movingEast = false;
 		movingWest = false;
+		
+		collidedNorth = false;
+		collidedSouth = false;
+		collidedEast = false;
+		collidedWest = false;
+	}
+	
+	public boolean isCollidedNorth(){
+		return collidedNorth;
+	}
+	
+	public void setCollidedNorth(boolean collidedNorth){
+		this.collidedNorth = collidedNorth;
+	}
+	
+	public boolean isCollidedSouth(){
+		return collidedSouth;
+	}
+	
+	public void setCollidedSouth(boolean collidedSouth){
+		this.collidedSouth = collidedSouth;
+	}
+	
+	public boolean isCollidedEast(){
+		return collidedEast;
+	}
+	
+	public void setCollidedEast(boolean collidedEast){
+		this.collidedEast = collidedEast;
+	}
+	
+	public boolean isCollidedWest(){
+		return collidedWest;
+	}
+	
+	public void setCollidedWest(boolean collidedWest){
+		this.collidedWest = collidedWest;
 	}
 }

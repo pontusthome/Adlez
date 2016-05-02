@@ -24,7 +24,7 @@ public class EnemyController implements IController {
 
     @Override
     public void update() {
-        ((Character) enemy).clearMoveFlags();
+        ((Character) enemy).clearMoveAndCollisionFlags();
         float playerX = player.getPosX();
         float playerY = player.getPosY();
         float x = enemy.getPosX();

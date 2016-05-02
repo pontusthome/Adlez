@@ -29,7 +29,7 @@ public class PlayerController implements IController {
      */
     @Override
     public void update() {
-        ((Character)player).clearMoveFlags();
+        ((Character)player).clearMoveAndCollisionFlags();
         if (Gdx.input.isKeyPressed(Input.Keys.W)) {
             player.moveNorth();
         }
