@@ -29,18 +29,19 @@ public class PlayerController implements IController {
      */
     @Override
     public void update() {
-        ((Character)player).clearMoveAndCollisionFlags();
+        Character character = (Character) player;
+        character.clearMoveAndCollisionFlags();
         if (Gdx.input.isKeyPressed(Input.Keys.W)) {
-            player.moveNorth();
+            character.setMovingNorth(true);
         }
         if (Gdx.input.isKeyPressed(Input.Keys.S)) {
-            player.moveSouth();
-        }
-        if (Gdx.input.isKeyPressed(Input.Keys.A)) {
-            player.moveWest();
+            character.setMovingSouth(true);
         }
         if (Gdx.input.isKeyPressed(Input.Keys.D)) {
-            player.moveEast();
+            character.setMovingEast(true);
+        }
+        if (Gdx.input.isKeyPressed(Input.Keys.A)) {
+            character.setMovingWest(true);
         }
         if (Gdx.input.isKeyJustPressed(Input.Keys.SPACE)) {
             CombatHandler.handleMeleeAttack();

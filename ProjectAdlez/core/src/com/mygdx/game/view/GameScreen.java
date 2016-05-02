@@ -32,7 +32,7 @@ public class GameScreen extends AbstractScreen {
 
     private IPlayer player = adlez.getPlayer();
     private IController playerController;
-    private OrthographicCamera playerCam;
+    public static OrthographicCamera playerCam;
 
     private HashMap<INPC, IController> enemies;
 
@@ -96,7 +96,7 @@ public class GameScreen extends AbstractScreen {
         // Render Tiled map
         renderer.setView(playerCam);
         renderer.render();
-
+    
         batch.setProjectionMatrix((playerCam.combined));
         batch.begin();
 
@@ -127,11 +127,16 @@ public class GameScreen extends AbstractScreen {
         shapeRenderer.begin(ShapeRenderer.ShapeType.Line);
         shapeRenderer.setColor(1, 1, 0, 1);
         shapeRenderer.rect(CombatHandler.playerWeaponHitbox.getX(), CombatHandler.playerWeaponHitbox.getY(), CombatHandler.playerWeaponHitbox.getWidth(), CombatHandler.playerWeaponHitbox.getHeight());
-        shapeRenderer.rect(player.getPosX(), player.getPosY(), player.getWidth(), player.getHeight());
-        List <IWall> tempList = adlez.getWalls();
-        for(IWall wall : tempList){
-            shapeRenderer.rect(wall.getPosX(), wall.getPosY(), wall.getWidth(), wall.getHeight());
-        }
+//        shapeRenderer.rect(player.getPosX(), player.getPosY(), player.getWidth(), player.getHeight());
+    
+    
+        shapeRenderer.rect((float) CollisionHandler2.mainHitbox.getX(), (float) CollisionHandler2.mainHitbox.getY(),
+                (float) CollisionHandler2.mainHitbox.getWidth(), (float) CollisionHandler2.mainHitbox.getHeight());
+        
+//        List <IWall> tempList = adlez.getWalls();
+//        for(IWall wall : tempList){
+//            shapeRenderer.rect(wall.getPosX(), wall.getPosY(), wall.getWidth(), wall.getHeight());
+//        }
         shapeRenderer.end();
     }
 

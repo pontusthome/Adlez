@@ -1,8 +1,13 @@
 package com.mygdx.game.model.handler;
 
+import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
+import com.mygdx.game.controller.CombatHandler;
 import com.mygdx.game.model.*;
 import com.mygdx.game.model.Character;
+import com.mygdx.game.view.GameScreen;
 
+import java.awt.*;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -15,15 +20,19 @@ public class CollisionHandler2{
 	private WorldObject mainWorldObject;
 	private WorldObject otherWorldObject;
 	private IPlayer player;
-	private HitBox otherHitbox;
-	private HitBox mainHitbox;
+	public static Rectangle otherHitbox = new Rectangle();
+	public static Rectangle mainHitbox = new Rectangle();
+	private boolean movePlayerNorth = true;
+	private boolean movePlayerSouth = true;
+	private boolean movePlayerEast = true;
+	private boolean movePlayerWest = true;
 	
 	public CollisionHandler2(){
 		player = Adlez.getInstance().getPlayer();
 		worldObjects = Adlez.getInstance().getWorldObjects();
 	}
 	
-	public void updateWorld(){		
+	public void updateWorld(){
 		for(IWorldObject mainObject : worldObjects){
 			for(IWorldObject otherObject : worldObjects){
 				if(mainObject != otherObject && mainObject != player){
@@ -34,9 +43,21 @@ public class CollisionHandler2{
 	}
 	
 	public void updatePlayer(){
+				
 		for(IWorldObject otherObject : worldObjects){
-			if(player != otherObject)
+			if(player != otherObject){
 				checkCollision((Collidable) player, (Collidable) otherObject);
+			}
+		}
+		
+		if(movePlayerNorth){
+			player.moveNorth();
+		}else if(movePlayerSouth){
+			player.moveSouth();
+		}else if(movePlayerEast){
+			player.moveEast();
+		}else if(movePlayerWest){
+			player.moveWest();
 		}
 	}
 	
@@ -44,9 +65,7 @@ public class CollisionHandler2{
 		mainWorldObject = (WorldObject) mainObject; 
 		otherWorldObject = (WorldObject) otherObject;
 				
-		if(collide(mainWorldObject, otherWorldObject)){
-			mainWorldObject.onCollide(otherWorldObject);
-		}
+		collide(mainWorldObject, otherWorldObject);
 	}
 	
 //	public boolean collide(IWorldObject primaryObject, IWorldObject other) {
@@ -89,39 +108,51 @@ public class CollisionHandler2{
 		width += x;
 		height += y;
 		
-		if(main instanceof Character){
-			otherHitbox = new HitBox(other.getPosX(), other.getPosY(),
-					other.getWidth(), other.getHeight());
-			
-			/** North */
-			mainHitbox = new HitBox(main.getPosX(), main.getPosY() + main.getHeight(),
-					main.getWidth(), 0);
-			if(mainHitbox.overlaps(otherHitbox)){
-				((Character) main).setCollidedNorth(true);
+		if(main instanceof Player){
+			Character character = (Character) main;
+						
+			Rectangle otherHitbox = new Rectangle((int) other.getPosX(), (int) other.getPosY(),
+					(int) other.getWidth(), (int) other.getHeight());
+						
+			if(character.isMovingNorth()){
+				movePlayerNorth = true;
+				mainHitbox = new Rectangle((int) character.getPosX(), (int) character.getPosY() + (int) character.getSpeed(),
+						(int) character.getWidth(), (int) character.getHeight());
+				Rectangle temp = mainHitbox.intersection(otherHitbox);
+				if(temp.getWidth() > 0 && temp.getHeight() > 0){
+					movePlayerNorth = false;
+				}
 			}
 			
-			/** South */
-			mainHitbox = new HitBox(main.getPosX(), main.getPosY(),
-					main.getWidth(), 0);
-			if(mainHitbox.overlaps(otherHitbox)){
-				((Character) main).setCollidedSouth(true);
+			if(character.isMovingSouth()){
+				movePlayerSouth = true;
+				mainHitbox = new Rectangle((int) character.getPosX(), (int) character.getPosY() - (int) character.getSpeed(),
+						(int) character.getWidth(), (int) character.getHeight());
+				Rectangle temp = mainHitbox.intersection(otherHitbox);
+				if(temp.getWidth() > 0 && temp.getHeight() > 0){
+					movePlayerSouth = false;
+				}
 			}
 			
-			/** East */
-			mainHitbox = new HitBox(main.getPosX() + main.getWidth(), main.getPosY(),
-					0, main.getHeight());
-			if(mainHitbox.overlaps(otherHitbox)){
-				((Character) main).setCollidedEast(true);
+			if(character.isMovingEast()){
+				movePlayerEast = true;
+				mainHitbox = new Rectangle((int) character.getPosX() + (int) character.getSpeed(), (int) character.getPosY(),
+						(int) character.getWidth(), (int) character.getHeight());
+				Rectangle temp = mainHitbox.intersection(otherHitbox);
+				if(temp.getWidth() > 0 && temp.getHeight() > 0){
+					movePlayerEast = false;
+				}
 			}
 			
-			/** West */
-			mainHitbox = new HitBox(main.getPosX(), main.getPosY(),
-					0, main.getHeight());
-			if(mainHitbox.overlaps(otherHitbox)){
-				((Character) main).setCollidedWest(true);
+			if(character.isMovingWest()){
+				movePlayerWest = true;
+				mainHitbox = new Rectangle((int) character.getPosX() - (int) character.getSpeed(), (int) character.getPosY(),
+						(int) character.getWidth(), (int) character.getHeight());
+				Rectangle temp = mainHitbox.intersection(otherHitbox);
+				if(temp.getWidth() > 0 && temp.getHeight() > 0){
+					movePlayerWest = false;
+				}
 			}
-			
-			
 		}
 		
 		//      overflow || intersect

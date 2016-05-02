@@ -24,23 +24,24 @@ public class EnemyController implements IController {
 
     @Override
     public void update() {
-        ((Character) enemy).clearMoveAndCollisionFlags();
+        Character character = (Character) enemy;
+        character.clearMoveAndCollisionFlags();
         float playerX = player.getPosX();
         float playerY = player.getPosY();
         float x = enemy.getPosX();
         float y = enemy.getPosY();
         boolean inRange = Utils.inRange(playerX, x, playerY, y, 200);
         if (playerY > y && Math.abs(playerY - y) > 1 && inRange) {
-            enemy.moveNorth();
+            character.setMovingNorth(true);
         }
         if (playerY < y && Math.abs(playerY - y) > 1 && inRange) {
-            enemy.moveSouth();
+            character.setMovingSouth(true);
         }
         if (playerX < x && Math.abs(playerX - x) > 1 && inRange) {
-            enemy.moveWest();
+            character.setMovingWest(true);
         }
         if (playerX > x && Math.abs(playerX - x) > 1 && inRange) {
-            enemy.moveEast();
+            character.setMovingEast(true);
         }
         enemyView.viewUpdate(enemy.getDirection());
     }

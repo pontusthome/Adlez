@@ -65,28 +65,28 @@ public abstract class Character extends WorldObject implements ICharacter {
 	public void moveNorth() {
 		setPosY(getPosY() + getSpeed());
 		setDirection(Direction.NORTH);
-		movingNorth = true;
+		movingNorth = false;
 	}
 	
 	@Override
 	public void moveSouth() {
 		setPosY(getPosY() - getSpeed());
 		setDirection(Direction.SOUTH);
-		movingSouth = true;
+		movingSouth = false;
 	}
 	
 	@Override
 	public void moveEast() {
 		setPosX(getPosX() + getSpeed());
 		setDirection(Direction.EAST);
-		movingEast = true;
+		movingEast = false;
 	}
 	
 	@Override
 	public void moveWest() {
 		setPosX(getPosX() - getSpeed());
 		setDirection(Direction.WEST);
-		movingWest = true;
+		movingWest = false;
 	}
 	
 	@Override
@@ -201,13 +201,13 @@ public abstract class Character extends WorldObject implements ICharacter {
 	
 	@Override
 	public void onCollide(Collidable other){
-		if(other instanceof ICharacter && this != other){
-			undoCharacterMove();
-		}else if(other instanceof IWall){
-			undoCharacterMove();
-		}else if(other instanceof IObstacle){
-			undoCharacterMove();
-		}
+//		if(other instanceof ICharacter && this != other){
+//			undoCharacterMove();
+//		}else if(other instanceof IWall){
+//			undoCharacterMove();
+//		}else if(other instanceof IObstacle){
+//			undoCharacterMove();
+//		}
 	}
 	
 	public void undoCharacterMove(){
@@ -280,5 +280,37 @@ public abstract class Character extends WorldObject implements ICharacter {
 	
 	public void setCollidedWest(boolean collidedWest){
 		this.collidedWest = collidedWest;
+	}
+	
+	public boolean isMovingNorth(){
+		return movingNorth;
+	}
+	
+	public boolean isMovingSouth(){
+		return movingSouth;
+	}
+	
+	public boolean isMovingEast(){
+		return movingEast;
+	}
+	
+	public boolean isMovingWest(){
+		return movingWest;
+	}
+	
+	public void setMovingNorth(boolean movingNorth){
+		this.movingNorth = movingNorth;
+	}
+	
+	public void setMovingSouth(boolean movingSouth){
+		this.movingSouth = movingSouth;
+	}
+	
+	public void setMovingEast(boolean movingEast){
+		this.movingEast = movingEast;
+	}
+	
+	public void setMovingWest(boolean movingWest){
+		this.movingWest = movingWest;
 	}
 }
