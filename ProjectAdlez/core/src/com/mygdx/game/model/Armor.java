@@ -8,11 +8,14 @@ public class Armor implements IItem {
     private String type;
     private String name;
     private int bonusHealth;
+    private int goldValue;
 
-    public Armor(String name, String type, int bonusHealth) {
+
+    public Armor(String name, String type, int bonusHealth, int goldValue) {
         this.type = type;
         this.name = name;
         this.bonusHealth = bonusHealth;
+        this.goldValue = goldValue;
     }
 
     @Override
@@ -41,5 +44,15 @@ public class Armor implements IItem {
 
     public void setStats(int bonusHealth) {
         this.bonusHealth = bonusHealth;
+    }
+
+    @Override
+    public int getGoldValue() {
+        return goldValue;
+    }
+
+    @Override
+    public void setGoldValue(int goldValue) {
+        this.goldValue = goldValue;
     }
 }

@@ -14,10 +14,7 @@ public final class ItemSignatures {
      * Types
      */
     public static final String TYPE_WEAPON_SWORD = "type_weapon_sword";
-
-    public static final String TYPE_ARMOR_SHIELD = "type_armor_shield";
     public static final String TYPE_ARMOR_BODY = "type_armor_body";
-    public static final String TYPE_ARMOR_HEAD = "type_armor_head";
 
     /**
      * Swords
@@ -30,7 +27,6 @@ public final class ItemSignatures {
      * Armor
      */
     public static final String WOODEN_BODY_ARMOR = "wooden_body_armor";
-
-    // add more...
-
+    public static final String IRON_BODY_ARMOR = "iron_body_armor";
+    public static final String FINAL_BODY_ARMOR = "final_body_armor";
 }

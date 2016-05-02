@@ -5,9 +5,18 @@ package com.mygdx.game.model;
  */
 public interface IItem {
     public String getType();
+
     public void setType(String type);
+
     public String getName();
+
     public void setName(String name);
+
     public int getStats();
+
     public void setStats(int stats);
+
+    public int getGoldValue();
+
+    public void setGoldValue(int goldValue);
 }
