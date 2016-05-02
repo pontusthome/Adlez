@@ -43,20 +43,27 @@ public class CollisionHandler2{
 	}
 	
 	public void updatePlayer(){
-				
+		
+		movePlayerNorth = true;
+		movePlayerSouth = true;
+		movePlayerEast = true;
+		movePlayerWest = true;
+		
 		for(IWorldObject otherObject : worldObjects){
 			if(player != otherObject){
 				checkCollision((Collidable) player, (Collidable) otherObject);
 			}
 		}
 		
-		if(movePlayerNorth){
+		Character character = (Character) player;
+		
+		if(movePlayerNorth && character.isMovingNorth()){
 			player.moveNorth();
-		}else if(movePlayerSouth){
+		}else if(movePlayerSouth && character.isMovingSouth()){
 			player.moveSouth();
-		}else if(movePlayerEast){
+		}else if(movePlayerEast && character.isMovingEast()){
 			player.moveEast();
-		}else if(movePlayerWest){
+		}else if(movePlayerWest && character.isMovingWest()){
 			player.moveWest();
 		}
 	}
@@ -115,7 +122,6 @@ public class CollisionHandler2{
 					(int) other.getWidth(), (int) other.getHeight());
 						
 			if(character.isMovingNorth()){
-				movePlayerNorth = true;
 				mainHitbox = new Rectangle((int) character.getPosX(), (int) character.getPosY() + (int) character.getSpeed(),
 						(int) character.getWidth(), (int) character.getHeight());
 				Rectangle temp = mainHitbox.intersection(otherHitbox);
@@ -125,7 +131,6 @@ public class CollisionHandler2{
 			}
 			
 			if(character.isMovingSouth()){
-				movePlayerSouth = true;
 				mainHitbox = new Rectangle((int) character.getPosX(), (int) character.getPosY() - (int) character.getSpeed(),
 						(int) character.getWidth(), (int) character.getHeight());
 				Rectangle temp = mainHitbox.intersection(otherHitbox);
@@ -135,7 +140,6 @@ public class CollisionHandler2{
 			}
 			
 			if(character.isMovingEast()){
-				movePlayerEast = true;
 				mainHitbox = new Rectangle((int) character.getPosX() + (int) character.getSpeed(), (int) character.getPosY(),
 						(int) character.getWidth(), (int) character.getHeight());
 				Rectangle temp = mainHitbox.intersection(otherHitbox);
@@ -145,7 +149,6 @@ public class CollisionHandler2{
 			}
 			
 			if(character.isMovingWest()){
-				movePlayerWest = true;
 				mainHitbox = new Rectangle((int) character.getPosX() - (int) character.getSpeed(), (int) character.getPosY(),
 						(int) character.getWidth(), (int) character.getHeight());
 				Rectangle temp = mainHitbox.intersection(otherHitbox);
