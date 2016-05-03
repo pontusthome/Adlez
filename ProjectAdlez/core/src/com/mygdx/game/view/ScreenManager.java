@@ -36,7 +36,7 @@ public class ScreenManager {
         // Initiate the area
         Adlez adlez = Adlez.getInstance();
         adlez.initiateArea(AreaHandler.testLevel());
-        showScreen(ScreenEnum.INTRO);
+        showScreen(ScreenEnum.GAME);
     }
 
     // Show in the game the screen which enum type is received

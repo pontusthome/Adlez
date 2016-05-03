@@ -16,9 +16,10 @@ public final class AssetStrings{
 	public static final String NEW_GAME_BUTTON_IMAGE = "newGameButton.png";
 	public static final String LOAD_GAME_BUTTON_IMAGE = "loadGameButton.png";
 	public static final String EXIT_GAME_BUTTON_IMAGE = "exitGameButton.png";
-	public static final String INTRO_SCREEN_BACKGROUND_IMAGE = "ZeldaIntro.png";
+	public static final String INTRO_SCREEN_BACKGROUND_IMAGE = "zeldaIntro.png";
 	public static final String BOX_OBSTACLE_IMAGE = "boxObstacle.jpeg";
 	public static final String MOVE_SPRITES_IMAGE = "moveSpriteV2.png";
+	public static final String BAR_DIVIDER = "barDivider.png";
 	
 	/** Other */
 	public static final String TEST_LEVEL_TMX = "testLevel1.tmx";

@@ -45,10 +45,14 @@ public class GameScreen extends AbstractScreen {
     private static final float WIDTH_SCALE = 2/3f;
     private static final float HEIGHT_SCALE = 2/3f;
 
+    private Hud hud;
+
+
     public GameScreen() {
         super();
         batch = new SpriteBatch();
         obstaclesView = new ObstaclesView(batch, AssetStrings.BOX_OBSTACLE_IMAGE);
+        this.hud = new Hud(this);
     }
 
     @Override
@@ -68,7 +72,7 @@ public class GameScreen extends AbstractScreen {
             enemies.put(enemy, enemyController);
         }
 
-        // temporary things, just testing
+
         tileMap = new TmxMapLoader().load(AssetStrings.TEST_LEVEL_TMX);
         float unitScale = UNIT_SCALE;
 
@@ -88,6 +92,10 @@ public class GameScreen extends AbstractScreen {
         // Render Tiled map
         renderer.setView(playerCam);
         renderer.render();
+
+        //Renders the HUD
+        batch.setProjectionMatrix(hud.stage.getCamera().combined);
+        hud.stage.draw();
 
         batch.setProjectionMatrix((playerCam.combined));
         batch.begin();
