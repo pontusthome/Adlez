@@ -55,10 +55,10 @@ public class PlayerController implements IController {
         }
 
         // TEST for reloading the area
-        if (Gdx.input.isKeyJustPressed(Input.Keys.U)) {
+        if (Gdx.input.isKeyJustPressed(Input.Keys.NUM_1)) {
             ScreenManager.getInstance().switchArea(AreaHandler.getInstance().loadLevel1());
         }
-        if (Gdx.input.isKeyJustPressed(Input.Keys.Y)) {
+        if (Gdx.input.isKeyJustPressed(Input.Keys.NUM_2)) {
             ScreenManager.getInstance().switchArea(AreaHandler.getInstance().loadLevel2());
         }
 

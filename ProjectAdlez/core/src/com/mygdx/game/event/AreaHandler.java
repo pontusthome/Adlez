@@ -38,18 +38,19 @@ public class AreaHandler {
     private void createLevel1() {
         float playerXposition = 40f;
         float playerYposition = 40f;
-
+        float xPos;
+        float yPos;
         List<INPC> enemies = new ArrayList<INPC>();
-
         List<INPC>friendlyNPCs = new ArrayList<INPC>();
-
         List<IWorldObject>stationaryObjects = new ArrayList<IWorldObject>();
-
         List<IWall>walls = new ArrayList<IWall>();
+        List<IObstacle>obstacles = new ArrayList<IObstacle>();
+        List<IChest>chests = new ArrayList<IChest>();
+        List<AreaConnection>areaConnections = new ArrayList<AreaConnection>();
+
         Wall wall = new Wall();
         walls.addAll(wall.createAreaBounds(10, 10, 64 / 2));
 
-        List<IObstacle>obstacles = new ArrayList<IObstacle>();
         Obstacle obst1 = new Obstacle(180, 32, 32, 32, 0);
         obstacles.add(obst1);
         Obstacle obst2 = new Obstacle(180, 64, 32, 32, 0);
@@ -57,11 +58,10 @@ public class AreaHandler {
         Obstacle obst3 = new Obstacle(32, 140, 32, 32, 0);
         obstacles.add(obst3);
 
-        List<IChest>chests = new ArrayList<IChest>();
         Chest ch1 = new Chest(120, 270, 16, 16, 2);
         chests.add(ch1);
-        float xPos = 120f;
-        float yPos = 250f;
+        xPos = 120f;
+        yPos = 250f;
         enemies.add(regularEnemy(xPos, yPos));
         xPos = 140f;
         yPos = 265f;
@@ -78,7 +78,8 @@ public class AreaHandler {
         xPos = 260f;
         yPos = 80f;
         enemies.add(regularEnemy(xPos, yPos));
-        List<AreaConnection>areaConnections = new ArrayList<AreaConnection>();
+
+        areaConnections.add(new AreaConnection(260f, 260f));
 
         level1 = new Area(playerXposition, playerYposition,
                 enemies, friendlyNPCs, stationaryObjects, walls, obstacles, chests);
@@ -87,10 +88,18 @@ public class AreaHandler {
     private void createLevel2() {
         float playerXposition = 260;
         float playerYposition = 260;
+        float xPos;
+        float yPos;
+        List<INPC> enemies = new ArrayList<INPC>();
+        List<INPC>friendlyNPCs = new ArrayList<INPC>();
+        List<IWorldObject>stationaryObjects = new ArrayList<IWorldObject>();
+        List<IWall>walls = new ArrayList<IWall>();
+        List<IObstacle>obstacles = new ArrayList<IObstacle>();
+        List<IChest>chests = new ArrayList<IChest>();
+        List<AreaConnection>areaConnections = new ArrayList<AreaConnection>();
 
-        List<INPC>enemies = new ArrayList<INPC>();
-        float xPos = 40f;
-        float yPos = 200f;
+        xPos = 40f;
+        yPos = 200f;
         enemies.add(regularEnemy(xPos, yPos));
         xPos = 40f;
         yPos = 40f;
@@ -99,27 +108,20 @@ public class AreaHandler {
         yPos = 40f;
         enemies.add(regularEnemy(xPos, yPos));
 
-        List<INPC>friendlyNPCs = new ArrayList<INPC>();
-
-        List<IWorldObject>stationaryObjects = new ArrayList<IWorldObject>();
-
-        List<IWall>walls = new ArrayList<IWall>();
         Wall wall = new Wall();
         walls.addAll(wall.createAreaBounds(10, 10, 64 / 2));
 
-        List<IObstacle>obstacles = new ArrayList<IObstacle>();
         Obstacle obst1 = new Obstacle(32 * 5, 32 * 5, 32, 32, 0);
         Obstacle obst2 = new Obstacle(32 * 7, 32 * 7, 32, 32, 0);
         obstacles.add(obst1);
         obstacles.add(obst2);
 
-        List<IChest>chests = new ArrayList<IChest>();
         Chest ch1 = new Chest(32 * 4 + 8, 32 * 2 + 8, 16, 16, 2);
         Chest ch2 = new Chest(32 * 7 + 8, 32 * 2 + 8, 16, 16, 2);
         chests.add(ch1);
         chests.add(ch2);
 
-        List<AreaConnection>areaConnections = new ArrayList<AreaConnection>();
+        areaConnections.add(new AreaConnection(40f, 40f));
 
         level2 = new Area(playerXposition, playerYposition,
                 enemies, friendlyNPCs, stationaryObjects, walls, obstacles, chests);
