@@ -38,8 +38,8 @@ public class Adlez {
 
     public void initiateArea(Area area) {
         // Reset the world and then set it up for the new area
-        worldObjects = new ArrayList<IWorldObject>();
-    
+        worldObjects = new ArrayList<>();
+
         collisionHandler = new CollisionHandler2();
 
         // add the player and set him to the new position
@@ -71,7 +71,6 @@ public class Adlez {
         chests = area.getChests();
         worldObjects.addAll(chests);
         collisionHandler.addAll(chests);
-        
     }
 
     public IPlayer getPlayer() {
@@ -111,10 +110,11 @@ public class Adlez {
     }
 
     public void removeChestFromWorld(IChest chest) {
+        chests.remove(chest);
         worldObjects.remove(chest);
         collisionHandler.remove((Collidable) chest);
     }
-    
+
     public CollisionHandler2 getCollisionHandler(){
         return collisionHandler;
     }

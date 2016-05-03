@@ -54,7 +54,6 @@ public class GameScreen extends AbstractScreen {
         batch = new SpriteBatch();
         obstaclesView = new ObstaclesView(batch, AssetStrings.BOX_OBSTACLE_IMAGE);
         chestView = new ChestView(batch, AssetStrings.CHEST_IMAGE);
-
     }
 
     @Override

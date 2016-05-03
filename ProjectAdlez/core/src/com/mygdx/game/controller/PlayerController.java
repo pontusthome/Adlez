@@ -4,7 +4,11 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
+import com.mygdx.game.event.AreaHandler;
+import com.mygdx.game.model.Adlez;
 import com.mygdx.game.model.IPlayer;
+import com.mygdx.game.view.GameScreen;
+import com.mygdx.game.view.ScreenManager;
 
 /**
  * Created by martinso on 27/03/16.
@@ -48,6 +52,14 @@ public class PlayerController implements IController {
         }
         if (Gdx.input.isKeyJustPressed(Input.Keys.F)) {
             CombatHandler.handleAOEMagicAttack();
+        }
+
+        // TEST for reloading the area
+        if (Gdx.input.isKeyJustPressed(Input.Keys.U)) {
+            ScreenManager.getInstance().switchArea(AreaHandler.getInstance().loadLevel1());
+        }
+        if (Gdx.input.isKeyJustPressed(Input.Keys.Y)) {
+            ScreenManager.getInstance().switchArea(AreaHandler.getInstance().loadLevel2());
         }
 
         playerView.viewUpdate(player.getDirection());

@@ -27,7 +27,7 @@ public class EnemyController implements IController {
         float playerY = player.getPosY();
         float x = enemy.getPosX();
         float y = enemy.getPosY();
-        boolean inRange = Utils.inRange(playerX, x, playerY, y, 200);
+        boolean inRange = Utils.inRange(playerX, x, playerY, y, 70);
         if (playerY > y && Math.abs(playerY - y) > 1 && inRange) {
             enemy.moveNorth();
         }
