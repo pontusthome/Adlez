@@ -2,6 +2,7 @@ package com.mygdx.game.controller;
 
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
+import com.mygdx.game.model.Adlez;
 import com.mygdx.game.model.Character;
 import com.mygdx.game.model.INPC;
 import com.mygdx.game.model.IPlayer;
@@ -15,6 +16,7 @@ public class EnemyController implements IController {
     private INPC enemy;
     private IPlayer player;
     private CharacterView enemyView;
+    private Adlez adlez = Adlez.getInstance();
 
     public EnemyController(INPC enemy, String characterImg, IPlayer player) {
         this.enemy = enemy;
@@ -24,6 +26,11 @@ public class EnemyController implements IController {
 
     @Override
     public void update() {
+        
+        if(!enemy.isAlive()){
+            adlez.removeEnemyFromWorld(enemy);
+        }
+        
         ((Character) enemy).clearMoveFlags();
         float playerX = player.getPosX();
         float playerY = player.getPosY();

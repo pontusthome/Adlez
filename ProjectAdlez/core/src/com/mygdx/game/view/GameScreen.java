@@ -11,12 +11,13 @@ import com.badlogic.gdx.maps.tiled.TmxMapLoader;
 import com.badlogic.gdx.maps.tiled.renderers.OrthoCachedTiledMapRenderer;
 
 import com.mygdx.game.controller.IController;
-import com.mygdx.game.controller.CombatHandler;
+//import com.mygdx.game.controller.CombatHandler;
 import com.mygdx.game.controller.PlayerController;
 import com.mygdx.game.controller.EnemyController;
 import com.mygdx.game.model.*;
 import com.mygdx.game.model.handler.CollisionHandler2;
 import com.mygdx.game.utils.AssetStrings;
+import com.sun.org.apache.bcel.internal.generic.IADD;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -44,6 +45,7 @@ public class GameScreen extends AbstractScreen {
     private ChestView chestView;
     
     private CollisionHandler2 collisionHandler;
+    private List<IAttack> attacks;
     
     private static final float UNIT_SCALE = 1/2f;
     private static final float WIDTH_SCALE = 2/3f;
@@ -75,6 +77,8 @@ public class GameScreen extends AbstractScreen {
             EnemyController enemyController = new EnemyController((INPC) enemy, AssetStrings.MOVE_SPRITES_IMAGE, player);
             enemies.put((INPC) enemy, enemyController);
         }
+    
+        attacks = adlez.getAttacks();
 
         // temporary things, just testing
         tileMap = new TmxMapLoader().load(AssetStrings.TEST_LEVEL_TMX);
@@ -126,7 +130,8 @@ public class GameScreen extends AbstractScreen {
         shapeRenderer.setProjectionMatrix(playerCam.combined);
         shapeRenderer.begin(ShapeRenderer.ShapeType.Line);
         shapeRenderer.setColor(1, 1, 0, 1);
-        shapeRenderer.rect(CombatHandler.playerWeaponHitbox.getX(), CombatHandler.playerWeaponHitbox.getY(), CombatHandler.playerWeaponHitbox.getWidth(), CombatHandler.playerWeaponHitbox.getHeight());
+        HitBox hitBox = PlayerController.meleeAttack.getHitBox();
+        shapeRenderer.rect(hitBox.getX(), hitBox.getY(), hitBox.getWidth(), hitBox.getHeight());
         shapeRenderer.rect(player.getPosX(), player.getPosY(), player.getWidth(), player.getHeight());
         List <IWall> tempList = adlez.getWalls();
         for(IWall wall : tempList){
@@ -136,6 +141,19 @@ public class GameScreen extends AbstractScreen {
     }
 
     public void updateGame() {
+        /** Remove all attacks for now. If they hit something then the collision handler handled it in previous loop. */
+        if(!attacks.isEmpty()){
+            List<IAttack> attacksToRemove = new ArrayList<>();
+            for(IAttack attack : attacks){
+                if(attack.isDone()){
+                    attacksToRemove.add(attack);
+                }
+            }
+            for(IAttack attack : attacksToRemove){
+                adlez.removeAttackFromWorld(attack);
+            }
+        }
+        
         // Updating player
         playerController.update();
         collisionHandler.updatePlayer();

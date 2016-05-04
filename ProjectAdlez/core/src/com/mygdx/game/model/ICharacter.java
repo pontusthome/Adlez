@@ -36,4 +36,5 @@ public interface ICharacter extends IWorldObject{
 	boolean isMovingSouth();
 	boolean isMovingEast();
 	boolean isMovingWest();
+	boolean isAlive();
 }

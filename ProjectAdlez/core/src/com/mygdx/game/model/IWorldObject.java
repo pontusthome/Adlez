@@ -13,4 +13,5 @@ public interface IWorldObject extends Collidable{
     public void setWidth(int width);
     public int getHeight();
     public void setHeight(int height);
+    public void setPos(float x, float y);
 }

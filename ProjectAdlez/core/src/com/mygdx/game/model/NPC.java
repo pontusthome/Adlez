@@ -17,14 +17,6 @@ public abstract class NPC extends Character implements INPC{
 				attackDamage, gold, mana);
 	}
 	
-	public boolean isAlive(){
-		return isAlive;
-	}
-	
-	public void setAliveStatus(boolean bool){
-		isAlive = bool;
-	}
-	
 	@Override
 	public void onCollide(Collidable other){
 		super.onCollide(other);
