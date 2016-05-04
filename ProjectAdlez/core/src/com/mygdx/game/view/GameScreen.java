@@ -71,9 +71,9 @@ public class GameScreen extends AbstractScreen {
 
         // Spawning enemies.
         enemies = new HashMap<INPC, IController>();
-        for (INPC enemy: adlez.getEnemies()) {
-            EnemyController enemyController = new EnemyController(enemy, AssetStrings.MOVE_SPRITES_IMAGE, player);
-            enemies.put(enemy, enemyController);
+        for (IEnemy enemy: adlez.getEnemies()) {
+            EnemyController enemyController = new EnemyController((INPC) enemy, AssetStrings.MOVE_SPRITES_IMAGE, player);
+            enemies.put((INPC) enemy, enemyController);
         }
 
         // temporary things, just testing
@@ -121,19 +121,24 @@ public class GameScreen extends AbstractScreen {
 
         batch.end();
 
-        // For debugging attack hitbox
+        // Render shapes for debugging purposes
         ShapeRenderer shapeRenderer = new ShapeRenderer();
         shapeRenderer.setProjectionMatrix(playerCam.combined);
         shapeRenderer.begin(ShapeRenderer.ShapeType.Line);
         shapeRenderer.setColor(1, 1, 0, 1);
         shapeRenderer.rect(CombatHandler.playerWeaponHitbox.getX(), CombatHandler.playerWeaponHitbox.getY(), CombatHandler.playerWeaponHitbox.getWidth(), CombatHandler.playerWeaponHitbox.getHeight());
         shapeRenderer.rect(player.getPosX(), player.getPosY(), player.getWidth(), player.getHeight());
+        List <IWall> tempList = adlez.getWalls();
+        for(IWall wall : tempList){
+            shapeRenderer.rect(wall.getPosX(), wall.getPosY(), wall.getWidth(), wall.getHeight());
+        }
         shapeRenderer.end();
     }
 
     public void updateGame() {
         // Updating player
         playerController.update();
+        collisionHandler.updatePlayer();
 
         // Updating enemies
         List<INPC> killedEnemies = new ArrayList<INPC>();
@@ -152,6 +157,6 @@ public class GameScreen extends AbstractScreen {
             enemies.remove(deadEnemy);
         }
         
-        //TODO: Update collisionHandler
+        collisionHandler.updateWorld();
     }
 }

@@ -1,11 +1,7 @@
 package com.mygdx.game.model.handler;
 
-import com.mygdx.game.model.Collidable;
-import com.mygdx.game.model.HitBox;
-import com.mygdx.game.model.IWorldObject;
-import com.mygdx.game.model.WorldObject;
+import com.mygdx.game.model.*;
 
-import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -13,49 +9,57 @@ import java.util.List;
  */
 public class CollisionHandler2{
 	
-	private List<Collidable> objects;
+	private List<IWorldObject> worldObjects;
+	private IPlayer player;
 	
 	public CollisionHandler2(){
-		objects = new ArrayList<>();
+		player = Adlez.getInstance().getPlayer();
+		worldObjects = Adlez.getInstance().getWorldObjects();
 	}
 	
-	public void add(Collidable object){
-		objects.add(object);
-	}
-	
-	public void addAll(List<?> objects){
-		
-		for(Object object : objects)
-			this.objects.add((Collidable) object);
-	}
-	
-	public void remove(Collidable object){
-		objects.remove(object);
-	}
-	
-	public void update(){
-		/** Array used for better performance while iterating */
-		Collidable[] objectsArray = (Collidable[]) objects.toArray();
-		
-		int index = 0;
-		
-		for(Collidable object : objectsArray){
-			for(int i = index; index < objectsArray.length; index++)
-				checkCollision(object, objectsArray[index]);
-			index++;
+	public void updateWorld(){		
+		for(IWorldObject primary : worldObjects){
+			for(IWorldObject other : worldObjects){
+				if(primary != other && primary != player){
+					checkCollision(primary, other);
+				}
+			}
 		}
 	}
 	
-	private void checkCollision(Collidable object1, Collidable object2){
-		WorldObject worldObject1 = (WorldObject) object1; 
-		WorldObject worldObject2 = (WorldObject) object2;
-		
-		HitBox hitBox1 = ((WorldObject) object1).getHitBox();
-		HitBox hitBox2 = ((WorldObject) object1).getHitBox();
-		
-		if(hitBox1.overlaps(hitBox2)){
-			object1.onCollide(object2);
-			object2.onCollide(object1);
+	public void updatePlayer(){
+		for(IWorldObject other : worldObjects){
+			if(player != other)
+				checkCollision(player, other);
 		}
+	}
+	
+	private void checkCollision(IWorldObject primary, IWorldObject other){
+		if(collide(primary, other)){
+			primary.onCollide(other);
+		}
+	}
+	
+	private boolean collide(IWorldObject primary, IWorldObject other) {
+		float width = primary.getWidth();
+		float height = primary.getHeight();
+		float otherWidth = other.getWidth();
+		float otherHeight = other.getHeight();
+		if (otherWidth <= 0 || otherHeight <= 0 || width <= 0 || height <= 0) {
+			return false;
+		}
+		float x = primary.getPosX();
+		float y = primary.getPosY();
+		float otherX = other.getPosX();
+		float otherY = other.getPosY();
+		otherWidth += otherX;
+		otherHeight += otherY;
+		width += x;
+		height += y;
+		//      overflow || intersect
+		return ((otherWidth < otherX || otherWidth > x) &&
+				(otherHeight < otherY || otherHeight > y) &&
+				(width < x || width > otherX) &&
+				(height < y || height > otherY));
 	}
 }
