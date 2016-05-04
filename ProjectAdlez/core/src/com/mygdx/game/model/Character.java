@@ -197,6 +197,8 @@ public abstract class Character extends WorldObject implements ICharacter {
 			undoCharacterMove();
 		}else if(other instanceof IObstacle){
 			undoCharacterMove();
+		}else if(other instanceof IChest){
+			undoCharacterMove();
 		}
 	}
 	
@@ -220,5 +222,25 @@ public abstract class Character extends WorldObject implements ICharacter {
 		movingSouth = false;
 		movingEast = false;
 		movingWest = false;
+	}
+	
+	@Override
+	public boolean isMovingNorth(){
+		return movingNorth;
+	}
+	
+	@Override
+	public boolean isMovingSouth(){
+		return movingSouth;
+	}
+	
+	@Override
+	public boolean isMovingEast(){
+		return movingEast;
+	}
+	
+	@Override
+	public boolean isMovingWest(){
+		return movingWest;
 	}
 }

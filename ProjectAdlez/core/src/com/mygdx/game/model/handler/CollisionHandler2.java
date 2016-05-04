@@ -2,7 +2,6 @@ package com.mygdx.game.model.handler;
 
 import com.mygdx.game.model.*;
 
-import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -11,8 +10,6 @@ import java.util.List;
 public class CollisionHandler2{
 	
 	private List<IWorldObject> worldObjects;
-	private WorldObject mainWorldObject;
-	private WorldObject otherWorldObject;
 	private IPlayer player;
 	
 	public CollisionHandler2(){
@@ -21,41 +18,38 @@ public class CollisionHandler2{
 	}
 	
 	public void updateWorld(){		
-		for(IWorldObject mainObject : worldObjects){
-			for(IWorldObject otherObject : worldObjects){
-				if(mainObject != otherObject && mainObject != player){
-					checkCollision((Collidable) mainObject, (Collidable) otherObject);
+		for(IWorldObject primary : worldObjects){
+			for(IWorldObject other : worldObjects){
+				if(primary != other && primary != player){
+					checkCollision(primary, other);
 				}
 			}
 		}
 	}
 	
 	public void updatePlayer(){
-		for(IWorldObject otherObject : worldObjects){
-			if(player != otherObject)
-				checkCollision((Collidable) player, (Collidable) otherObject);
+		for(IWorldObject other : worldObjects){
+			if(player != other)
+				checkCollision(player, other);
 		}
 	}
 	
-	private void checkCollision(Collidable primaryObject, Collidable otherObject){
-		mainWorldObject = (WorldObject) primaryObject; 
-		otherWorldObject = (WorldObject) otherObject;
-				
-		if(collide(mainWorldObject, otherWorldObject)){
-			mainWorldObject.onCollide(otherWorldObject);
+	private void checkCollision(IWorldObject primary, IWorldObject other){
+		if(collide(primary, other)){
+			primary.onCollide(other);
 		}
 	}
 	
-	public boolean collide(IWorldObject primaryObject, IWorldObject other) {
-		float width = primaryObject.getWidth();
-		float height = primaryObject.getHeight();
+	private boolean collide(IWorldObject primary, IWorldObject other) {
+		float width = primary.getWidth();
+		float height = primary.getHeight();
 		float otherWidth = other.getWidth();
 		float otherHeight = other.getHeight();
 		if (otherWidth <= 0 || otherHeight <= 0 || width <= 0 || height <= 0) {
 			return false;
 		}
-		float x = primaryObject.getPosX();
-		float y = primaryObject.getPosY();
+		float x = primary.getPosX();
+		float y = primary.getPosY();
 		float otherX = other.getPosX();
 		float otherY = other.getPosY();
 		otherWidth += otherX;

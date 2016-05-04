@@ -32,4 +32,8 @@ public interface ICharacter extends IWorldObject{
 	float getSpeed();
 	void setSpeed(float speed);
 	void undoCharacterMove();
+	boolean isMovingNorth();
+	boolean isMovingSouth();
+	boolean isMovingEast();
+	boolean isMovingWest();
 }

@@ -1,6 +1,6 @@
 package com.mygdx.game.model;
 
-public abstract class WorldObject implements IWorldObject, Collidable {
+public abstract class WorldObject implements IWorldObject{
 
     private float posX;
     private float posY;
