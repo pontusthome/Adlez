@@ -57,6 +57,8 @@ public class PlayerController implements IController {
             meleeAttack.playAttackSound(0.1f);
             adlez.getWorldObjects().add(meleeAttack);
             adlez.getAttacks().add(meleeAttack);
+//            AttackController attackController = new AttackController(meleeAttack);
+//            attackControllers.put(meleeAttack, attackController);
         }
         if (Gdx.input.isKeyJustPressed(Input.Keys.E)) {
 //            CombatHandler.handleRangeMagicAttack();

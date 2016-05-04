@@ -10,6 +10,7 @@ import com.badlogic.gdx.maps.tiled.TiledMap;
 import com.badlogic.gdx.maps.tiled.TmxMapLoader;
 import com.badlogic.gdx.maps.tiled.renderers.OrthoCachedTiledMapRenderer;
 
+import com.mygdx.game.controller.AttackController;
 import com.mygdx.game.controller.IController;
 //import com.mygdx.game.controller.CombatHandler;
 import com.mygdx.game.controller.PlayerController;
@@ -47,6 +48,8 @@ public class GameScreen extends AbstractScreen {
     private CollisionHandler2 collisionHandler;
     private List<IAttack> attacks;
     
+    private HashMap<IAttack, IController> attackControllers;
+    
     private static final float UNIT_SCALE = 1/2f;
     private static final float WIDTH_SCALE = 2/3f;
     private static final float HEIGHT_SCALE = 2/3f;
@@ -76,6 +79,12 @@ public class GameScreen extends AbstractScreen {
         for (IEnemy enemy: adlez.getEnemies()) {
             EnemyController enemyController = new EnemyController((INPC) enemy, AssetStrings.MOVE_SPRITES_IMAGE, player);
             enemies.put((INPC) enemy, enemyController);
+        }
+        
+        attackControllers = new HashMap<>();
+        for (IAttack attack: adlez.getAttacks()) {
+            AttackController attackController = new AttackController(attack);
+            attackControllers.put(attack, attackController);
         }
     
         attacks = adlez.getAttacks();
@@ -145,7 +154,7 @@ public class GameScreen extends AbstractScreen {
         if(!attacks.isEmpty()){
             List<IAttack> attacksToRemove = new ArrayList<>();
             for(IAttack attack : attacks){
-                if(attack.isDone()){
+                if(attack.isFinished()){
                     attacksToRemove.add(attack);
                 }
             }
@@ -163,17 +172,32 @@ public class GameScreen extends AbstractScreen {
         for(Map.Entry<INPC, IController> entry : enemies.entrySet()) {
             INPC enemy = entry.getKey();
             IController enemyController = entry.getValue();
-
+    
+            enemyController.update();
             if (!enemy.isAlive()) {
                 killedEnemies.add(enemy);
-            }
-            else {
-                enemyController.update();
             }
         }
         for (INPC deadEnemy: killedEnemies) {
             enemies.remove(deadEnemy);
         }
+    
+//        // Update attacks
+//        List<IAttack> finishedAttacks = new ArrayList<IAttack>();
+//        for(Map.Entry<IAttack, IController> entry : attackControllers.entrySet()){
+//            IAttack attack = entry.getKey();
+//            IController attackController = entry.getValue();
+//        
+//            if (attack.isFinished()) {
+//                finishedAttacks.add(attack);
+//            }
+//            else {
+//                attackController.update();
+//            }
+//        }
+//        for (IAttack finishedAttack: finishedAttacks) {
+//            attackControllers.remove(finishedAttack);
+//        }
         
         collisionHandler.updateWorld();
     }

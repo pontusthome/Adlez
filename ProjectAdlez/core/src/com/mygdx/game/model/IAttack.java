@@ -8,7 +8,8 @@ public interface IAttack extends IWorldObject{
 	void setDamage(int damage);
 	int getDamage();
 	HitBox getHitBox();
-	boolean isDone();
+	boolean isFinished();
+	void setFinished();
 	void setAttackSound(GameSound attackSound);
 	GameSound getAttackSound();
 	void playAttackSound(float volume);

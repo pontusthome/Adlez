@@ -29,6 +29,7 @@ public class EnemyController implements IController {
         
         if(!enemy.isAlive()){
             adlez.removeEnemyFromWorld(enemy);
+            return;
         }
         
         ((Character) enemy).clearMoveFlags();

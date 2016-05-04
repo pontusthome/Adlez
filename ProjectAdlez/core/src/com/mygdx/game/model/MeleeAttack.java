@@ -8,6 +8,7 @@ public class MeleeAttack extends WorldObject implements IAttack{
 	private int damage;
 	private HitBox hitBox = new HitBox();
 	private GameSound attackSound;
+	private boolean isFinished;
 	
 	public MeleeAttack(){
 		
@@ -20,6 +21,7 @@ public class MeleeAttack extends WorldObject implements IAttack{
 		
 		setPos(character);
 		hitBox = new HitBox(getPosX(), getPosY(), getWidth(), getHeight());
+		setFinished();
 	}
 	
 	public MeleeAttack(int width, int height, int damage){
@@ -77,8 +79,13 @@ public class MeleeAttack extends WorldObject implements IAttack{
 	 * @return True if attack should be removed from world, false otherwise
 	 */
 	@Override
-	public boolean isDone(){
-		return true;
+	public boolean isFinished(){
+		return isFinished;
+	}
+	
+	@Override
+	public void setFinished(){
+		isFinished = true;
 	}
 	
 	@Override
