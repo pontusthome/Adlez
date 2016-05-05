@@ -14,19 +14,15 @@ import java.util.List;
  */
 public class ObstaclesView {
 
-    private Texture obstacleTexture;
-    private Adlez adlez = Adlez.getInstance();
-    private List<IObstacle> obstacles = adlez.getObstacles();
-    private SpriteBatch spriteBatch;
+    private Texture obstacleTexture;    
 
-    public ObstaclesView(SpriteBatch spriteBatch, String obstacleImg) {
-        this.spriteBatch = spriteBatch;
+    public ObstaclesView(String obstacleImg) {
         obstacleTexture = new Texture((Gdx.files.internal((obstacleImg))));
     }
 
-    public void generateObstacles() {
+    public void generateObstacles(List<IObstacle> obstacles, SpriteBatch batch) {
         for(IObstacle obst : obstacles) {
-            spriteBatch.draw(obstacleTexture, obst.getPosX(), obst.getPosY());
+            batch.draw(obstacleTexture, obst.getPosX(), obst.getPosY());
         }
     }
 }

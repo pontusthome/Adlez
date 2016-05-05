@@ -58,6 +58,11 @@ public abstract class WorldObject implements IWorldObject{
     public void setPosY(float y) {
         this.posY = y;
     }
+    
+    public void setPos(float x, float y){
+        setPosX(x);
+        setPosY(y);
+    }
 
     public int getWidth() {
         return width;

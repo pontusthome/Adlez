@@ -7,18 +7,28 @@ import java.util.List;
  * Created by martinso on 25/04/16.
  */
 public class Wall extends WorldObject implements IWall {
-
-    private static List<Wall> walls = new ArrayList<Wall>();
-
+    
+    private int health;
+    
     public Wall() {
         // Temporary size.
         setHeight(64/2);
         setWidth(64/2);
+        setHealth(1);
+    }
+    
+    public Wall(int health) {
+        // Temporary size.
+        setHeight(64/2);
+        setWidth(64/2);
+        setHealth(health);
     }
 
     // Temporary parameter: size
     // Game should have same size for all objects.
-    public List<Wall> createAreaBounds(int height, int width, int size) {
+    public static List<Wall> createAreaBounds(int height, int width, int size) {
+        List<Wall> walls = new ArrayList<Wall>();
+        
         for (int i = 0; i < height; i++) {
             for (int j = 0; j < width; j++) {
                 if (i == 0) {
@@ -49,6 +59,24 @@ public class Wall extends WorldObject implements IWall {
     
     @Override
     public void onCollide(Collidable other){
-        
+        if(other instanceof IAttack){
+            IAttack attack = (IAttack) other;
+            setHealth(getHealth() - attack.getDamage());
+        }
+    }
+    
+    @Override
+    public void setHealth(int health){
+        this.health = health;
+    }
+    
+    @Override
+    public int getHealth(){
+        return health;
+    }
+    
+    @Override
+    public boolean isDestroyed(){
+        return getHealth() <= 0;
     }
 }

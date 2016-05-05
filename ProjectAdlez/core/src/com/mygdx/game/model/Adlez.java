@@ -27,6 +27,8 @@ public class Adlez {
     private List<IObstacle> obstacles;
     private List<IChest> chests;
     private CollisionHandler2 collisionHandler;
+    private List<IAttack> attacks = new ArrayList<>();
+    private List<IAttack> newAttacks = new ArrayList<>();
 
     private Adlez() {
         /** Set players's width & height to size of texture for debugging purposes */
@@ -73,6 +75,8 @@ public class Adlez {
 
         chests = area.getChests();
         worldObjects.addAll(chests);
+        
+        attacks = new ArrayList<>();
     }
 
     public IPlayer getPlayer() {
@@ -117,5 +121,34 @@ public class Adlez {
 
     public CollisionHandler2 getCollisionHandler(){
         return collisionHandler;
+    }
+    
+    public List<IAttack> getAttacks(){
+        return attacks;
+    }
+    
+    public void removeAttackFromWorld(IAttack attack){
+        attacks.remove(attack);
+        worldObjects.remove(attack);
+    }
+    
+    public List<IAttack> getNewAttacks(){
+        return newAttacks;
+    }
+    
+    public void addAttack(IAttack attack){
+        newAttacks.add(attack);
+        attacks.add(attack);
+        worldObjects.add(attack);
+    }
+    
+    public void removeObstacleFromWorld(IObstacle obstacle){
+        obstacles.remove(obstacle);
+        worldObjects.remove(obstacle);
+    }
+    
+    public void removeWallFromWorld(IWall wall){
+        walls.remove(wall);
+        worldObjects.remove(wall);
     }
 }

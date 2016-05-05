@@ -199,6 +199,9 @@ public abstract class Character extends WorldObject implements ICharacter {
 			undoCharacterMove();
 		}else if(other instanceof IChest){
 			undoCharacterMove();
+		}else if(other instanceof IAttack){
+			IAttack attack = (IAttack) other;
+			setHealth(getHealth() - attack.getDamage());
 		}
 	}
 	
@@ -242,5 +245,10 @@ public abstract class Character extends WorldObject implements ICharacter {
 	@Override
 	public boolean isMovingWest(){
 		return movingWest;
+	}
+	
+	@Override
+	public boolean isAlive(){
+		return getHealth() > 0;
 	}
 }

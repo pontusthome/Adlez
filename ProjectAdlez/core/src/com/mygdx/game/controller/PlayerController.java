@@ -13,16 +13,21 @@ import com.mygdx.game.view.ScreenManager;
 /**
  * Created by martinso on 27/03/16.
  */
-public class PlayerController implements IController {
+public class PlayerController implements ICharacterController{
 
     // Have a view not extend a view
 
     private IPlayer player;
     private CharacterView playerView;
+    private Adlez adlez;
+    
+    /** To be able to paint where melee attack landed for debugging purposes */
+    public static IAttack currentAttack = new MeleeAttack();
 
     public PlayerController(IPlayer player) {
         this.player = player;
         playerView = new CharacterView(AssetStrings.PLAYER_MOVE);
+        adlez = Adlez.getInstance();
     }
 
     /**
@@ -46,13 +51,22 @@ public class PlayerController implements IController {
         }
         
         if (Gdx.input.isKeyJustPressed(Input.Keys.SPACE)) {
-            CombatHandler.handleMeleeAttack();
+            currentAttack = new MeleeAttack(playerCharacter);
+            currentAttack.setAttackSound(new LibGDXSoundAdapter(AssetStrings.MELEE_ATTACK_SOUND));
+            currentAttack.playAttackSound(0.1f);
+            adlez.addAttack(currentAttack);
         }
         if (Gdx.input.isKeyJustPressed(Input.Keys.E)) {
-            CombatHandler.handleRangeMagicAttack();
+            currentAttack = new RangeMagicAttack(playerCharacter);
+            currentAttack.setAttackSound(new LibGDXSoundAdapter(AssetStrings.RANGE_MAGIC_ATTACK_SOUND));
+            currentAttack.playAttackSound(0.1f);
+            adlez.addAttack(currentAttack);
         }
         if (Gdx.input.isKeyJustPressed(Input.Keys.F)) {
-            CombatHandler.handleAOEMagicAttack();
+            currentAttack = new AOEMagicAttack(playerCharacter);
+            currentAttack.setAttackSound(new LibGDXSoundAdapter(AssetStrings.AOE_MAGIC_ATTACK_SOUND));
+            currentAttack.playAttackSound(0.1f);
+            adlez.addAttack(currentAttack);
         }
 
         // TEST for reloading the area

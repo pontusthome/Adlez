@@ -51,14 +51,14 @@ public class AreaHandler {
         Wall wall = new Wall();
         walls.addAll(wall.createAreaBounds(10, 10, 64 / 2));
 
-        Obstacle obst1 = new Obstacle(180, 32, 32, 32, 0);
+        Obstacle obst1 = new Obstacle(180, 32, 32, 32, 1);
         obstacles.add(obst1);
-        Obstacle obst2 = new Obstacle(180, 64, 32, 32, 0);
+        Obstacle obst2 = new Obstacle(180, 64, 32, 32, 1);
         obstacles.add(obst2);
-        Obstacle obst3 = new Obstacle(32, 140, 32, 32, 0);
+        Obstacle obst3 = new Obstacle(32, 140, 32, 32, 1);
         obstacles.add(obst3);
 
-        Chest ch1 = new Chest(120, 270, 16, 16, 2);
+        Chest ch1 = new Chest(120, 270, 16, 16, 2, 1);
         chests.add(ch1);
         xPos = 120f;
         yPos = 250f;
@@ -70,7 +70,7 @@ public class AreaHandler {
         yPos = 265f;
         enemies.add(EnemyFactory.createEnemy(Enemy.REGULAR_LEVEL_ONE, xPos, yPos));
 
-        Chest ch2 = new Chest(196+16, 64+16, 16, 16, 2);
+        Chest ch2 = new Chest(196+16, 64+16, 16, 16, 2, 1);
         chests.add(ch2);
         xPos = 240f;
         yPos = 80f;
@@ -111,13 +111,13 @@ public class AreaHandler {
         Wall wall = new Wall();
         walls.addAll(wall.createAreaBounds(10, 10, 64 / 2));
 
-        Obstacle obst1 = new Obstacle(32 * 5, 32 * 5, 32, 32, 0);
-        Obstacle obst2 = new Obstacle(32 * 7, 32 * 7, 32, 32, 0);
+        Obstacle obst1 = new Obstacle(32 * 5, 32 * 5, 32, 32, 1);
+        Obstacle obst2 = new Obstacle(32 * 7, 32 * 7, 32, 32, 1);
         obstacles.add(obst1);
         obstacles.add(obst2);
 
-        Chest ch1 = new Chest(32 * 4 + 8, 32 * 2 + 8, 16, 16, 2);
-        Chest ch2 = new Chest(32 * 7 + 8, 32 * 2 + 8, 16, 16, 2);
+        Chest ch1 = new Chest(32 * 4 + 8, 32 * 2 + 8, 16, 16, 2, 1);
+        Chest ch2 = new Chest(32 * 7 + 8, 32 * 2 + 8, 16, 16, 2, 1);
         chests.add(ch1);
         chests.add(ch2);
 

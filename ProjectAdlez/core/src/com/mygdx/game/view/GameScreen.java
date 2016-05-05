@@ -31,7 +31,7 @@ public class GameScreen extends AbstractScreen {
     private Adlez adlez = Adlez.getInstance();
 
     private IPlayer player = adlez.getPlayer();
-    private IController playerController;
+    private ICharacterController playerController;
     private OrthographicCamera playerCam;
 
     private HashMap<IEnemy, IController> enemies;
@@ -44,6 +44,15 @@ public class GameScreen extends AbstractScreen {
     private ChestView chestView;
     
     private CollisionHandler2 collisionHandler;
+    private List<IAttack> attacks;
+    
+    private HashMap<IAttack, IController> attackControllers;
+    private ShapeRenderer debugRenderer = new ShapeRenderer();
+    private List<IAttack> newAttacks;
+    
+    private IController obstaclesController;
+    private IController chestsController;
+    private IController wallsController;
     
     private static final float UNIT_SCALE = 1/2f;
     private static final float WIDTH_SCALE = 2/3f;
@@ -52,8 +61,6 @@ public class GameScreen extends AbstractScreen {
     public GameScreen() {
         super();
         batch = new SpriteBatch();
-        obstaclesView = new ObstaclesView(batch, AssetStrings.BOX_OBSTACLE_IMAGE);
-        chestView = new ChestView(batch, AssetStrings.CHEST_IMAGE);
     }
 
     @Override
@@ -74,6 +81,19 @@ public class GameScreen extends AbstractScreen {
             EnemyController enemyController = new EnemyController(enemy);
             enemies.put(enemy, enemyController);
         }
+        
+        attackControllers = new HashMap<>();
+        for (IAttack attack : adlez.getAttacks()) {
+            AttackController attackController = new AttackController(attack);
+            attackControllers.put(attack, attackController);
+        }
+    
+        attacks = adlez.getAttacks();
+        newAttacks = adlez.getNewAttacks();
+    
+        obstaclesController = new ObstaclesController(adlez.getObstacles(), AssetStrings.BOX_OBSTACLE_IMAGE);
+        chestsController = new ChestsController(adlez.getChests(), AssetStrings.CHEST_IMAGE);
+        wallsController = new WallsController(adlez.getWalls());
 
         // temporary things, just testing
         tileMap = new TmxMapLoader().load(AssetStrings.TEST_LEVEL_TMX);
@@ -114,24 +134,13 @@ public class GameScreen extends AbstractScreen {
             enemyController.render(batch);
         }
         
-        // Generate obstacles
-        obstaclesView.generateObstacles();
-        chestView.generateChests();
+        // Render obstacles & chests
+        obstaclesController.render(batch);
+        chestsController.render(batch);
 
         batch.end();
-
-        // Render shapes for debugging purposes
-        ShapeRenderer shapeRenderer = new ShapeRenderer();
-        shapeRenderer.setProjectionMatrix(playerCam.combined);
-        shapeRenderer.begin(ShapeRenderer.ShapeType.Line);
-        shapeRenderer.setColor(1, 1, 0, 1);
-        shapeRenderer.rect(CombatHandler.playerWeaponHitbox.getX(), CombatHandler.playerWeaponHitbox.getY(), CombatHandler.playerWeaponHitbox.getWidth(), CombatHandler.playerWeaponHitbox.getHeight());
-        shapeRenderer.rect(player.getPosX(), player.getPosY(), player.getWidth(), player.getHeight());
-        List <IWall> tempList = adlez.getWalls();
-        for(IWall wall : tempList){
-            shapeRenderer.rect(wall.getPosX(), wall.getPosY(), wall.getWidth(), wall.getHeight());
-        }
-        shapeRenderer.end();
+    
+        debugRender();
     }
 
     public void updateGame() {
@@ -143,19 +152,60 @@ public class GameScreen extends AbstractScreen {
         List<INPC> killedEnemies = new ArrayList<INPC>();
         for(Map.Entry<IEnemy, IController> entry : enemies.entrySet()) {
             INPC enemy = entry.getKey();
-            IController enemyController = entry.getValue();
-
+            ICharacterController enemyController = entry.getValue();
+    
+            enemyController.update();
             if (!enemy.isAlive()) {
                 killedEnemies.add(enemy);
-            }
-            else {
-                enemyController.update();
             }
         }
         for (INPC deadEnemy: killedEnemies) {
             enemies.remove(deadEnemy);
         }
+    
+        // Update attacks
+        if(!newAttacks.isEmpty()){
+            for(IAttack attack : newAttacks){
+                AttackController attackController = new AttackController(attack);
+                attackControllers.put(attack, attackController);
+            }
+            newAttacks.clear();
+        }
+        List<IAttack> finishedAttacks = new ArrayList<>();
+        for(Map.Entry<IAttack, IController> entry : attackControllers.entrySet()){
+            IAttack attack = entry.getKey();
+            IController attackController = entry.getValue();
+        
+            if (attack.isFinished()) {
+                finishedAttacks.add(attack);
+            }
+            else {
+                attackController.update();
+            }
+        }
+        for (IAttack finishedAttack: finishedAttacks) {
+            attackControllers.remove(finishedAttack);
+            adlez.removeAttackFromWorld(finishedAttack);
+        }
+    
+        // Update stationary objects 
+        obstaclesController.update();
+        chestsController.update();
         
         collisionHandler.updateWorld();
+    }
+    
+    private void debugRender(){
+        debugRenderer.setProjectionMatrix(playerCam.combined);
+        debugRenderer.begin(ShapeRenderer.ShapeType.Line);
+        debugRenderer.setColor(1, 1, 0, 1);
+        HitBox hitBox = PlayerController.currentAttack.getHitBox();
+        debugRenderer.rect(hitBox.getX(), hitBox.getY(), hitBox.getWidth(), hitBox.getHeight());
+        debugRenderer.rect(player.getPosX(), player.getPosY(), player.getWidth(), player.getHeight());
+        List <IWall> tempList = adlez.getWalls();
+        for(IWall wall : tempList){
+            debugRenderer.rect(wall.getPosX(), wall.getPosY(), wall.getWidth(), wall.getHeight());
+        }
+        debugRenderer.end();
     }
 }

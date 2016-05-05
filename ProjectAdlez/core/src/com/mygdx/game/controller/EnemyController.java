@@ -10,15 +10,16 @@ import com.mygdx.game.utils.Utils;
 /**
  * @author Pontus
  */
-public class EnemyController implements IController {
+public class EnemyController implements ICharacterController{
 
     private IEnemy enemy;
     private IPlayer player;
     private CharacterView enemyView;
+    private Adlez adlez = Adlez.getInstance();
 
     public EnemyController(IEnemy enemy) {
         this.enemy = enemy;
-        this.player = Adlez.getInstance().getPlayer();
+        this.player = adlez.getPlayer();
         switch (enemy.getType()) {
             case Enemy.REGULAR_LEVEL_ONE:
                 enemyView = new CharacterView(AssetStrings.RED_PLAYER_MOVE);
@@ -40,6 +41,12 @@ public class EnemyController implements IController {
 
     @Override
     public void update() {
+        
+        if(!enemy.isAlive()){
+            adlez.removeEnemyFromWorld(enemy);
+            return;
+        }
+        
         ((Character) enemy).clearMoveFlags();
         float playerX = player.getPosX();
         float playerY = player.getPosY();
