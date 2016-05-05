@@ -7,6 +7,7 @@ import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.mygdx.game.event.AreaHandler;
 import com.mygdx.game.model.Character;
 import com.mygdx.game.model.IPlayer;
+import com.mygdx.game.utils.AssetStrings;
 import com.mygdx.game.view.ScreenManager;
 
 /**
@@ -19,9 +20,9 @@ public class PlayerController implements IController {
     private IPlayer player;
     private CharacterView playerView;
 
-    public PlayerController(IPlayer player, String characterImg) {
+    public PlayerController(IPlayer player) {
         this.player = player;
-        playerView = new CharacterView(characterImg);
+        playerView = new CharacterView(AssetStrings.PLAYER_MOVE);
     }
 
     /**

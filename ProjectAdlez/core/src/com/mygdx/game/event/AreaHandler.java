@@ -62,22 +62,22 @@ public class AreaHandler {
         chests.add(ch1);
         xPos = 120f;
         yPos = 250f;
-        enemies.add(regularEnemy(xPos, yPos));
+        enemies.add(darkOneLevel1(xPos, yPos));
         xPos = 140f;
         yPos = 265f;
-        enemies.add(regularEnemy(xPos, yPos));
+        enemies.add(regularLevel1(xPos, yPos));
         xPos = 100f;
         yPos = 265f;
-        enemies.add(regularEnemy(xPos, yPos));
+        enemies.add(regularLevel1(xPos, yPos));
 
         Chest ch2 = new Chest(196+16, 64+16, 16, 16, 2);
         chests.add(ch2);
         xPos = 240f;
         yPos = 80f;
-        enemies.add(regularEnemy(xPos, yPos));
+        enemies.add(regularLevel1(xPos, yPos));
         xPos = 260f;
         yPos = 80f;
-        enemies.add(regularEnemy(xPos, yPos));
+        enemies.add(regularLevel2(xPos, yPos));
 
         areaConnections.add(new AreaConnection(260f, 260f));
 
@@ -100,13 +100,13 @@ public class AreaHandler {
 
         xPos = 40f;
         yPos = 200f;
-        enemies.add(regularEnemy(xPos, yPos));
+        enemies.add(regularLevel2(xPos, yPos));
         xPos = 40f;
         yPos = 40f;
-        enemies.add(regularEnemy(xPos, yPos));
+        enemies.add(regularLevel1(xPos, yPos));
         xPos = 230f;
         yPos = 40f;
-        enemies.add(regularEnemy(xPos, yPos));
+        enemies.add(regularLevel1(xPos, yPos));
 
         Wall wall = new Wall();
         walls.addAll(wall.createAreaBounds(10, 10, 64 / 2));
@@ -127,7 +127,7 @@ public class AreaHandler {
                 enemies, friendlyNPCs, stationaryObjects, walls, obstacles, chests);
     }
 
-    public Enemy regularEnemy(float xPos, float yPos) {
+    public Enemy regularLevel1(float xPos, float yPos) {
         float speed = 1.2f;
         int width = 17;
         int height = 17;
@@ -135,10 +135,43 @@ public class AreaHandler {
         int damage = 5;
         int gold = 10;
         int mana = 100;
+        int type = Enemy.REGULAR_LEVEL_ONE;
 
         return new Enemy(Direction.NORTH, speed,
                 width, height,
                 xPos, yPos,
-                health, damage, gold, mana);
+                health, damage, gold, mana, type);
+    }
+
+    public Enemy regularLevel2(float xPos, float yPos) {
+        float speed = 1.3f;
+        int width = 17;
+        int height = 17;
+        int health = 110;
+        int damage = 6;
+        int gold = 15;
+        int mana = 100;
+        int type = Enemy.REGULAR_LEVEL_TWO;
+
+        return new Enemy(Direction.NORTH, speed,
+                width, height,
+                xPos, yPos,
+                health, damage, gold, mana, type);
+    }
+
+    public Enemy darkOneLevel1(float xPos, float yPos) {
+        float speed = 1.7f;
+        int width = 17;
+        int height = 17;
+        int health = 110;
+        int damage = 6;
+        int gold = 15;
+        int mana = 100;
+        int type = Enemy.DARK_ONE_LEVEL_ONE;
+
+        return new Enemy(Direction.NORTH, speed,
+                width, height,
+                xPos, yPos,
+                health, damage, gold, mana, type);
     }
 }

@@ -34,7 +34,7 @@ public class GameScreen extends AbstractScreen {
     private IController playerController;
     private OrthographicCamera playerCam;
 
-    private HashMap<INPC, IController> enemies;
+    private HashMap<IEnemy, IController> enemies;
 
     private SpriteBatch batch;
     private OrthoCachedTiledMapRenderer renderer;
@@ -66,13 +66,13 @@ public class GameScreen extends AbstractScreen {
         getViewport().update(Gdx.graphics.getWidth(), Gdx.graphics.getHeight(), false);
 
         // Spawning player.
-        playerController = new PlayerController(player, AssetStrings.MOVE_SPRITES_IMAGE);
+        playerController = new PlayerController(player);
 
         // Spawning enemies.
-        enemies = new HashMap<INPC, IController>();
+        enemies = new HashMap<IEnemy, IController>();
         for (IEnemy enemy: adlez.getEnemies()) {
-            EnemyController enemyController = new EnemyController((INPC) enemy, AssetStrings.MOVE_SPRITES_IMAGE, player);
-            enemies.put((INPC) enemy, enemyController);
+            EnemyController enemyController = new EnemyController(enemy);
+            enemies.put(enemy, enemyController);
         }
 
         // temporary things, just testing
@@ -109,7 +109,7 @@ public class GameScreen extends AbstractScreen {
         playerController.render(batch);
         
         //Render enemies
-        for(Map.Entry<INPC, IController> entry : enemies.entrySet()) {
+        for(Map.Entry<IEnemy, IController> entry : enemies.entrySet()) {
             IController enemyController = entry.getValue();
             enemyController.render(batch);
         }
@@ -141,7 +141,7 @@ public class GameScreen extends AbstractScreen {
 
         // Updating enemies
         List<INPC> killedEnemies = new ArrayList<INPC>();
-        for(Map.Entry<INPC, IController> entry : enemies.entrySet()) {
+        for(Map.Entry<IEnemy, IController> entry : enemies.entrySet()) {
             INPC enemy = entry.getKey();
             IController enemyController = entry.getValue();
 
