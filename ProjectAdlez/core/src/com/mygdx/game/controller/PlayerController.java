@@ -5,8 +5,8 @@ import com.badlogic.gdx.Input;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.mygdx.game.event.AreaHandler;
+import com.mygdx.game.model.*;
 import com.mygdx.game.model.Character;
-import com.mygdx.game.model.IPlayer;
 import com.mygdx.game.utils.AssetStrings;
 import com.mygdx.game.view.ScreenManager;
 
@@ -37,7 +37,8 @@ public class PlayerController implements ICharacterController{
      */
     @Override
     public void update() {
-        ((Character)player).clearMoveFlags();
+        Character playerCharacter = (Character) player;
+        playerCharacter.clearMoveFlags();
         
         /** Movement only in 1 direction at a time */
         if (Gdx.input.isKeyPressed(Input.Keys.W)) {

@@ -10,10 +10,7 @@ import com.badlogic.gdx.maps.tiled.TiledMap;
 import com.badlogic.gdx.maps.tiled.TmxMapLoader;
 import com.badlogic.gdx.maps.tiled.renderers.OrthoCachedTiledMapRenderer;
 
-import com.mygdx.game.controller.IController;
-import com.mygdx.game.controller.CombatHandler;
-import com.mygdx.game.controller.PlayerController;
-import com.mygdx.game.controller.EnemyController;
+import com.mygdx.game.controller.*;
 import com.mygdx.game.model.*;
 import com.mygdx.game.model.handler.CollisionHandler2;
 import com.mygdx.game.utils.AssetStrings;
@@ -34,7 +31,7 @@ public class GameScreen extends AbstractScreen {
     private ICharacterController playerController;
     private OrthographicCamera playerCam;
 
-    private HashMap<IEnemy, IController> enemies;
+    private HashMap<IEnemy, ICharacterController> enemies;
 
     private SpriteBatch batch;
     private OrthoCachedTiledMapRenderer renderer;
@@ -76,7 +73,7 @@ public class GameScreen extends AbstractScreen {
         playerController = new PlayerController(player);
 
         // Spawning enemies.
-        enemies = new HashMap<IEnemy, IController>();
+        enemies = new HashMap<>();
         for (IEnemy enemy: adlez.getEnemies()) {
             EnemyController enemyController = new EnemyController(enemy);
             enemies.put(enemy, enemyController);
@@ -129,7 +126,7 @@ public class GameScreen extends AbstractScreen {
         playerController.render(batch);
         
         //Render enemies
-        for(Map.Entry<IEnemy, IController> entry : enemies.entrySet()) {
+        for(Map.Entry<IEnemy, ICharacterController> entry : enemies.entrySet()) {
             IController enemyController = entry.getValue();
             enemyController.render(batch);
         }
@@ -143,14 +140,14 @@ public class GameScreen extends AbstractScreen {
         debugRender();
     }
 
-    public void updateGame() {
+    private void updateGame() {
         // Updating player
         playerController.update();
         collisionHandler.updatePlayer();
 
         // Updating enemies
-        List<INPC> killedEnemies = new ArrayList<INPC>();
-        for(Map.Entry<IEnemy, IController> entry : enemies.entrySet()) {
+        List<INPC> killedEnemies = new ArrayList<>();
+        for(Map.Entry<IEnemy, ICharacterController> entry : enemies.entrySet()) {
             INPC enemy = entry.getKey();
             ICharacterController enemyController = entry.getValue();
     
@@ -191,6 +188,7 @@ public class GameScreen extends AbstractScreen {
         // Update stationary objects 
         obstaclesController.update();
         chestsController.update();
+        wallsController.update();
         
         collisionHandler.updateWorld();
     }
