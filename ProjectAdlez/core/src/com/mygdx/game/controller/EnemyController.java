@@ -11,7 +11,7 @@ import com.mygdx.game.utils.Utils;
 /**
  * @author Pontus
  */
-public class EnemyController implements IController {
+public class EnemyController implements ICharacterController{
 
     private INPC enemy;
     private IPlayer player;

@@ -53,8 +53,7 @@ public final class AreaHandler {
                                 100, 5, 0, 100);
             enemies.add(enemy);
         }
-        Wall wall = new Wall();
-        walls.addAll(wall.createAreaBounds(10, 10, 64 / 2));
+        walls.addAll(Wall.createAreaBounds(10, 10, 64 / 2));
 
         Obstacle obst1 = new Obstacle(32 * 5, 32 * 5, 32, 32, 1);
         Obstacle obst2 = new Obstacle(32 * 7, 32 * 7, 32, 32, 1);

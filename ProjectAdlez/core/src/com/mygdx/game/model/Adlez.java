@@ -146,4 +146,9 @@ public class Adlez {
         obstacles.remove(obstacle);
         worldObjects.remove(obstacle);
     }
+    
+    public void removeWallFromWorld(IWall wall){
+        walls.remove(wall);
+        worldObjects.remove(wall);
+    }
 }

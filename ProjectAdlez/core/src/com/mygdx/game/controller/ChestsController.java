@@ -3,7 +3,6 @@ package com.mygdx.game.controller;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.mygdx.game.model.Adlez;
 import com.mygdx.game.model.IChest;
-import com.mygdx.game.model.IObstacle;
 import com.mygdx.game.view.ChestView;
 
 import java.util.ArrayList;
@@ -40,10 +39,5 @@ public class ChestsController implements IController{
 	@Override
 	public void render(SpriteBatch batch){
 		chestView.generateChests(chests, batch);
-	}
-	
-	@Override
-	public ICharacterView getView(){
-		return null;
 	}
 }

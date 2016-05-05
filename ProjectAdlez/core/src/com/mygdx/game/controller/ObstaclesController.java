@@ -40,9 +40,4 @@ public class ObstaclesController implements IController{
 	public void render(SpriteBatch batch){
 		obstaclesView.generateObstacles(obstacles, batch);
 	}
-	
-	@Override
-	public ICharacterView getView(){
-		return null;
-	}
 }

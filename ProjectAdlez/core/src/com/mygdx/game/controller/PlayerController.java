@@ -11,7 +11,7 @@ import com.mygdx.game.utils.AssetStrings;
 /**
  * Created by martinso on 27/03/16.
  */
-public class PlayerController implements IController {
+public class PlayerController implements ICharacterController{
 
     // Have a view not extend a view
 

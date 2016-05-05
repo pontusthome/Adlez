@@ -42,11 +42,6 @@ public class AttackController implements IController{
 		
 	}
 	
-	@Override
-	public ICharacterView getView(){
-		return null;
-	}
-	
 	public IAttack getAttack(){
 		return attack;
 	}
