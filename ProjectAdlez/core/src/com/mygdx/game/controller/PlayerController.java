@@ -65,7 +65,10 @@ public class PlayerController implements IController {
             adlez.addAttack(currentAttack);
         }
         if (Gdx.input.isKeyJustPressed(Input.Keys.F)) {
-            
+            currentAttack = new AOEMagicAttack(playerCharacter);
+            currentAttack.setAttackSound(new LibGDXSoundAdapter(AssetStrings.AOE_MAGIC_ATTACK_SOUND));
+            currentAttack.playAttackSound(0.1f);
+            adlez.addAttack(currentAttack);
         }
         
         playerView.viewUpdate(player.getDirection());

@@ -32,7 +32,7 @@ public class AttackController implements IController{
 		 * 
 		 * Other attacks though, such as projectiles, could survive several game loops.
 		 * */
-		if(attack instanceof MeleeAttack || attack instanceof RangeMagicAttack){
+		if(attack instanceof MeleeAttack || attack instanceof RangeMagicAttack || attack instanceof AOEMagicAttack){
 			attack.setFinished();
 		}
 	}
