@@ -50,6 +50,16 @@ public final class EnemyFactory {
                 mana = 100;
                 break;
 
+            case Enemy.DOG_LEVEL_ONE:
+                speed = 0.7f;
+                width = 20;
+                height = 20;
+                health = 530;
+                damage = 18;
+                gold = random.nextInt(50) + 20;
+                mana = 100;
+                break;
+
             default:
                 return null;
         }

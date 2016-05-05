@@ -77,7 +77,7 @@ public class AreaHandler {
         enemies.add(EnemyFactory.createEnemy(Enemy.REGULAR_LEVEL_ONE, xPos, yPos));
         xPos = 260f;
         yPos = 80f;
-        enemies.add(EnemyFactory.createEnemy(Enemy.REGULAR_LEVEL_TWO, xPos, yPos));
+        enemies.add(EnemyFactory.createEnemy(Enemy.DOG_LEVEL_ONE, xPos, yPos));
 
         areaConnections.add(new AreaConnection(260f, 260f));
 

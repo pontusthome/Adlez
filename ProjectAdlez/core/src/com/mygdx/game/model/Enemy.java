@@ -8,6 +8,7 @@ public class Enemy extends NPC implements IEnemy{
 	public static final int REGULAR_LEVEL_ONE = 1;
 	public static final int REGULAR_LEVEL_TWO = 2;
 	public static final int DARK_ONE_LEVEL_ONE = 3;
+	public static final int DOG_LEVEL_ONE = 4;
 
 	private int type;
 

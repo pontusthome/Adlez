@@ -29,6 +29,9 @@ public class EnemyController implements IController {
             case Enemy.DARK_ONE_LEVEL_ONE:
                 enemyView = new CharacterView(AssetStrings.DARK_BLUE_PLAYER_MOVE);
                 break;
+            case Enemy.DOG_LEVEL_ONE:
+                enemyView = new CharacterView(AssetStrings.BLUE_DOG_MOVE);
+                break;
             default:
                 enemyView = new CharacterView(AssetStrings.RED_PLAYER_MOVE);
                 break;
