@@ -40,13 +40,13 @@ public class AreaHandler {
         float playerYposition = 40f;
         float xPos;
         float yPos;
-        List<INPC> enemies = new ArrayList<INPC>();
-        List<INPC>friendlyNPCs = new ArrayList<INPC>();
-        List<IWorldObject>stationaryObjects = new ArrayList<IWorldObject>();
-        List<IWall>walls = new ArrayList<IWall>();
-        List<IObstacle>obstacles = new ArrayList<IObstacle>();
-        List<IChest>chests = new ArrayList<IChest>();
-        List<AreaConnection>areaConnections = new ArrayList<AreaConnection>();
+        List<IEnemy> enemies = new ArrayList<>();
+        List<IFriendlyNPC>friendlyNPCs = new ArrayList<>();
+        List<IWorldObject>stationaryObjects = new ArrayList<>();
+        List<IWall>walls = new ArrayList<>();
+        List<IObstacle>obstacles = new ArrayList<>();
+        List<IChest>chests = new ArrayList<>();
+        List<AreaConnection>areaConnections = new ArrayList<>();
 
         Wall wall = new Wall();
         walls.addAll(wall.createAreaBounds(10, 10, 64 / 2));
@@ -90,13 +90,13 @@ public class AreaHandler {
         float playerYposition = 260;
         float xPos;
         float yPos;
-        List<INPC> enemies = new ArrayList<INPC>();
-        List<INPC>friendlyNPCs = new ArrayList<INPC>();
-        List<IWorldObject>stationaryObjects = new ArrayList<IWorldObject>();
-        List<IWall>walls = new ArrayList<IWall>();
-        List<IObstacle>obstacles = new ArrayList<IObstacle>();
-        List<IChest>chests = new ArrayList<IChest>();
-        List<AreaConnection>areaConnections = new ArrayList<AreaConnection>();
+        List<IEnemy> enemies = new ArrayList<>();
+        List<IFriendlyNPC>friendlyNPCs = new ArrayList<>();
+        List<IWorldObject>stationaryObjects = new ArrayList<>();
+        List<IWall>walls = new ArrayList<>();
+        List<IObstacle>obstacles = new ArrayList<>();
+        List<IChest>chests = new ArrayList<>();
+        List<AreaConnection>areaConnections = new ArrayList<>();
 
         xPos = 40f;
         yPos = 200f;
@@ -127,7 +127,7 @@ public class AreaHandler {
                 enemies, friendlyNPCs, stationaryObjects, walls, obstacles, chests);
     }
 
-    public NPC regularEnemy(float xPos, float yPos) {
+    public Enemy regularEnemy(float xPos, float yPos) {
         float speed = 1.2f;
         int width = 17;
         int height = 17;
@@ -136,7 +136,7 @@ public class AreaHandler {
         int gold = 10;
         int mana = 100;
 
-        return new NPC(Direction.NORTH, speed,
+        return new Enemy(Direction.NORTH, speed,
                 width, height,
                 xPos, yPos,
                 health, damage, gold, mana);

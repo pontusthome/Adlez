@@ -20,8 +20,8 @@ public class Adlez {
     private List<IWorldObject> worldObjects;
 
     private IPlayer player;
-    private List<INPC> enemies;
-    private List<INPC> friendlyNPCs;
+    private List<IEnemy> enemies;
+    private List<IFriendlyNPC> friendlyNPCs;
     private List<IWorldObject> stationaryObjects;
     private List<IWall> walls;
     private List<IObstacle> obstacles;
@@ -44,42 +44,44 @@ public class Adlez {
 
         // add the player and set him to the new position
         worldObjects.add(player);
-        collisionHandler.add((Collidable) player);
         player.setPosX(area.getPlayerXposition());
         player.setPosY(area.getPlayerYposition());
 
         enemies = area.getEnemies();
-        worldObjects.addAll(enemies);
-        collisionHandler.addAll(enemies);
-
+        List<IWorldObject> tempList = new ArrayList<>();
+        for(IEnemy enemy : enemies){
+            tempList.add((IWorldObject) enemy);
+        }
+        worldObjects.addAll(tempList);
+        
+        tempList.clear();
+        
         friendlyNPCs = area.getFriendlyNPCs();
-        worldObjects.addAll(friendlyNPCs);
-        collisionHandler.addAll(friendlyNPCs);
+        for(IFriendlyNPC friendlyNPC : friendlyNPCs){
+            tempList.add((IWorldObject) friendlyNPC);
+        }
+        worldObjects.addAll(tempList);
 
         stationaryObjects = area.getStationaryObjects();
         worldObjects.addAll(stationaryObjects);
-        collisionHandler.addAll(stationaryObjects);
 
         walls = area.getWalls();
         worldObjects.addAll(walls);
-        collisionHandler.addAll(walls);
 
         obstacles = area.getObstacles();
         worldObjects.addAll(obstacles);
-        collisionHandler.addAll(obstacles);
 
         chests = area.getChests();
         worldObjects.addAll(chests);
-        collisionHandler.addAll(chests);
     }
 
     public IPlayer getPlayer() {
         return player;
     }
 
-    public List<INPC> getEnemies() { return enemies; }
+    public List<IEnemy> getEnemies() { return enemies; }
 
-    public List<INPC> getFriendlyNPCs() {
+    public List<IFriendlyNPC> getFriendlyNPCs() {
         return friendlyNPCs;
     }
 
@@ -106,13 +108,11 @@ public class Adlez {
     public void removeEnemyFromWorld(INPC enemy){
         enemies.remove(enemy);
         worldObjects.remove(enemy);
-        collisionHandler.remove((Collidable) enemy);
     }
 
     public void removeChestFromWorld(IChest chest) {
         chests.remove(chest);
         worldObjects.remove(chest);
-        collisionHandler.remove((Collidable) chest);
     }
 
     public CollisionHandler2 getCollisionHandler(){

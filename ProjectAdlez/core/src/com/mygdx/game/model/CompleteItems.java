@@ -1,7 +1,8 @@
-package com.mygdx.game.utils;
+package com.mygdx.game.model;
 
 import com.mygdx.game.model.IItem;
 import com.mygdx.game.model.Weapon;
+import com.mygdx.game.utils.ItemSignatures;
 
 /**
  * Created by martinso on 01/05/16.

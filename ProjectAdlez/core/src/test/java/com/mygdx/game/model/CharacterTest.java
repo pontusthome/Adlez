@@ -12,8 +12,8 @@ public class CharacterTest {
 
     Adlez adlez = Adlez.getInstance();
     IPlayer player;
-    List<INPC> enemies;
-    List<INPC> friendlyNPCs;
+    List<IEnemy> enemies;
+    List<IFriendlyNPC> friendlyNPCs;
     List<IWorldObject> stationaryObjects;
     List<IWall> walls;
     List<IObstacle> obstacles;
@@ -21,8 +21,8 @@ public class CharacterTest {
 
     @org.junit.Before
     public void setUp() throws Exception {
-        enemies = new ArrayList<INPC>();
-        friendlyNPCs = new ArrayList<INPC>();
+        enemies = new ArrayList<IEnemy>();
+        friendlyNPCs = new ArrayList<IFriendlyNPC>();
         stationaryObjects = new ArrayList<IWorldObject>();
         walls = new ArrayList<IWall>();
         obstacles = new ArrayList<IObstacle>();
@@ -75,10 +75,10 @@ public class CharacterTest {
         int objectWidth = 10;
         int objectHeight = 10;
 
-        NPC stationaryEnemy = new NPC(Direction.NORTH, objectSpeed,
-                objectWidth, objectHeight,
-                objectXpostion, objectYposition,
-                0, 0, 0, 0);
+        IEnemy stationaryEnemy = new Enemy(Direction.NORTH, objectSpeed,
+                                       objectWidth, objectHeight,
+                                       objectXpostion, objectYposition,
+                                       0, 0, 0, 0);
         enemies.add(stationaryEnemy);
 
         Area area = new Area(playerXposition, playerYposition,
@@ -125,7 +125,7 @@ public class CharacterTest {
         int objectWidth = 10;
         int objectHeight = 10;
 
-        NPC stationaryEnemy = new NPC(Direction.NORTH, objectSpeed,
+        IEnemy stationaryEnemy = new Enemy(Direction.NORTH, objectSpeed,
                 objectWidth, objectHeight,
                 objectXpostion, objectYposition,
                 0, 0, 0, 0);
