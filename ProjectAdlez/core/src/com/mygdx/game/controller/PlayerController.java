@@ -41,32 +41,30 @@ public class PlayerController implements IController {
         /** Movement only in 1 direction at a time */
         if (Gdx.input.isKeyPressed(Input.Keys.W)) {
             player.moveNorth();
-        }else if (Gdx.input.isKeyPressed(Input.Keys.S)) {
+        }
+        else if (Gdx.input.isKeyPressed(Input.Keys.S)) {
             player.moveSouth();
-        }else if (Gdx.input.isKeyPressed(Input.Keys.A)) {
+        }
+        else if (Gdx.input.isKeyPressed(Input.Keys.A)) {
             player.moveWest();
-        }else if (Gdx.input.isKeyPressed(Input.Keys.D)) {
+        }
+        else if (Gdx.input.isKeyPressed(Input.Keys.D)) {
             player.moveEast();
         }
         
         if (Gdx.input.isKeyJustPressed(Input.Keys.SPACE)) {
-//            CombatHandler.handleMeleeAttack();
-            
             meleeAttack = new MeleeAttack(playerCharacter);
             meleeAttack.setAttackSound(new LibGDXSoundAdapter(AssetStrings.MELEE_ATTACK_SOUND));
             meleeAttack.playAttackSound(0.1f);
-            adlez.getWorldObjects().add(meleeAttack);
-            adlez.getAttacks().add(meleeAttack);
-//            AttackController attackController = new AttackController(meleeAttack);
-//            attackControllers.put(meleeAttack, attackController);
+            adlez.addAttack(meleeAttack);
         }
         if (Gdx.input.isKeyJustPressed(Input.Keys.E)) {
-//            CombatHandler.handleRangeMagicAttack();
+            
         }
         if (Gdx.input.isKeyJustPressed(Input.Keys.F)) {
-//            CombatHandler.handleAOEMagicAttack();
+            
         }
-
+        
         playerView.viewUpdate(player.getDirection());
     }
     

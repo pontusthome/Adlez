@@ -28,6 +28,7 @@ public class Adlez {
     private List<IChest> chests;
     private CollisionHandler2 collisionHandler;
     private List<IAttack> attacks = new ArrayList<>();
+    private List<IAttack> newAttacks = new ArrayList<>();
 
     private Adlez() {
         /** Set players's width & height to size of texture for debugging purposes */
@@ -129,5 +130,15 @@ public class Adlez {
     public void removeAttackFromWorld(IAttack attack){
         attacks.remove(attack);
         worldObjects.remove(attack);
+    }
+    
+    public List<IAttack> getNewAttacks(){
+        return newAttacks;
+    }
+    
+    public void addAttack(IAttack attack){
+        newAttacks.add(attack);
+        attacks.add(attack);
+        worldObjects.add(attack);
     }
 }

@@ -30,6 +30,11 @@ public class AttackController implements IController{
 			adlez.removeAttackFromWorld(attack);
 		}
 		
+		/** 
+		 * Melee attack should be in only one game loop, so set as finished immediately.
+		 * 
+		 * Other attacks though, such as projectiles, could survive several game loops.
+		 * */
 		if(attack instanceof MeleeAttack){
 			attack.setFinished();
 		}

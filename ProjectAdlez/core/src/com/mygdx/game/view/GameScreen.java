@@ -49,6 +49,8 @@ public class GameScreen extends AbstractScreen {
     private List<IAttack> attacks;
     
     private HashMap<IAttack, IController> attackControllers;
+    private ShapeRenderer debugRenderer = new ShapeRenderer();
+    private List<IAttack> newAttacks;
     
     private static final float UNIT_SCALE = 1/2f;
     private static final float WIDTH_SCALE = 2/3f;
@@ -88,6 +90,7 @@ public class GameScreen extends AbstractScreen {
         }
     
         attacks = adlez.getAttacks();
+        newAttacks = adlez.getNewAttacks();
 
         // temporary things, just testing
         tileMap = new TmxMapLoader().load(AssetStrings.TEST_LEVEL_TMX);
@@ -133,34 +136,48 @@ public class GameScreen extends AbstractScreen {
         chestView.generateChests();
 
         batch.end();
-
-        // Render shapes for debugging purposes
-        ShapeRenderer shapeRenderer = new ShapeRenderer();
-        shapeRenderer.setProjectionMatrix(playerCam.combined);
-        shapeRenderer.begin(ShapeRenderer.ShapeType.Line);
-        shapeRenderer.setColor(1, 1, 0, 1);
-        HitBox hitBox = PlayerController.meleeAttack.getHitBox();
-        shapeRenderer.rect(hitBox.getX(), hitBox.getY(), hitBox.getWidth(), hitBox.getHeight());
-        shapeRenderer.rect(player.getPosX(), player.getPosY(), player.getWidth(), player.getHeight());
-        List <IWall> tempList = adlez.getWalls();
-        for(IWall wall : tempList){
-            shapeRenderer.rect(wall.getPosX(), wall.getPosY(), wall.getWidth(), wall.getHeight());
-        }
-        shapeRenderer.end();
+    
+        debugRender();
     }
 
     public void updateGame() {
-        /** Remove all attacks for now. If they hit something then the collision handler handled it in previous loop. */
-        if(!attacks.isEmpty()){
-            List<IAttack> attacksToRemove = new ArrayList<>();
-            for(IAttack attack : attacks){
-                if(attack.isFinished()){
-                    attacksToRemove.add(attack);
-                }
+//        /** Remove all attacks for now. If they hit something then the collision handler handled it in previous loop. */
+//        if(!attacks.isEmpty()){
+//            List<IAttack> attacksToRemove = new ArrayList<>();
+//            for(IAttack attack : attacks){
+//                if(attack.isFinished()){
+//                    attacksToRemove.add(attack);
+//                }
+//            }
+//            for(IAttack attack : attacksToRemove){
+//                adlez.removeAttackFromWorld(attack);
+//            }
+//        }
+    
+        // Update attacks
+        if(!newAttacks.isEmpty()){
+            for(IAttack attack : newAttacks){
+                AttackController attackController = new AttackController(attack);
+                attackControllers.put(attack, attackController);
             }
-            for(IAttack attack : attacksToRemove){
-                adlez.removeAttackFromWorld(attack);
+            newAttacks.clear();
+        }
+        
+        List<IAttack> finishedAttacks = new ArrayList<IAttack>();
+        for(Map.Entry<IAttack, IController> entry : attackControllers.entrySet()){
+            IAttack attack = entry.getKey();
+            IController attackController = entry.getValue();
+        
+            if (attack.isFinished()) {
+                finishedAttacks.add(attack);
             }
+            else {
+                attackController.update();
+            }
+        }
+        for (IAttack finishedAttack: finishedAttacks) {
+            attackControllers.remove(finishedAttack);
+            adlez.removeAttackFromWorld(finishedAttack);
         }
         
         // Updating player
@@ -181,24 +198,21 @@ public class GameScreen extends AbstractScreen {
         for (INPC deadEnemy: killedEnemies) {
             enemies.remove(deadEnemy);
         }
-    
-//        // Update attacks
-//        List<IAttack> finishedAttacks = new ArrayList<IAttack>();
-//        for(Map.Entry<IAttack, IController> entry : attackControllers.entrySet()){
-//            IAttack attack = entry.getKey();
-//            IController attackController = entry.getValue();
-//        
-//            if (attack.isFinished()) {
-//                finishedAttacks.add(attack);
-//            }
-//            else {
-//                attackController.update();
-//            }
-//        }
-//        for (IAttack finishedAttack: finishedAttacks) {
-//            attackControllers.remove(finishedAttack);
-//        }
         
         collisionHandler.updateWorld();
+    }
+    
+    private void debugRender(){
+        debugRenderer.setProjectionMatrix(playerCam.combined);
+        debugRenderer.begin(ShapeRenderer.ShapeType.Line);
+        debugRenderer.setColor(1, 1, 0, 1);
+        HitBox hitBox = PlayerController.meleeAttack.getHitBox();
+        debugRenderer.rect(hitBox.getX(), hitBox.getY(), hitBox.getWidth(), hitBox.getHeight());
+        debugRenderer.rect(player.getPosX(), player.getPosY(), player.getWidth(), player.getHeight());
+        List <IWall> tempList = adlez.getWalls();
+        for(IWall wall : tempList){
+            debugRenderer.rect(wall.getPosX(), wall.getPosY(), wall.getWidth(), wall.getHeight());
+        }
+        debugRenderer.end();
     }
 }
