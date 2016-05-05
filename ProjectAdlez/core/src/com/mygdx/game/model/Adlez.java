@@ -141,4 +141,9 @@ public class Adlez {
         attacks.add(attack);
         worldObjects.add(attack);
     }
+    
+    public void removeObstacleFromWorld(IObstacle obstacle){
+        obstacles.remove(obstacle);
+        worldObjects.remove(obstacle);
+    }
 }

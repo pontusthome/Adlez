@@ -10,11 +10,8 @@ import com.badlogic.gdx.maps.tiled.TiledMap;
 import com.badlogic.gdx.maps.tiled.TmxMapLoader;
 import com.badlogic.gdx.maps.tiled.renderers.OrthoCachedTiledMapRenderer;
 
-import com.mygdx.game.controller.AttackController;
-import com.mygdx.game.controller.IController;
+import com.mygdx.game.controller.*;
 //import com.mygdx.game.controller.CombatHandler;
-import com.mygdx.game.controller.PlayerController;
-import com.mygdx.game.controller.EnemyController;
 import com.mygdx.game.model.*;
 import com.mygdx.game.model.handler.CollisionHandler2;
 import com.mygdx.game.utils.AssetStrings;
@@ -52,6 +49,9 @@ public class GameScreen extends AbstractScreen {
     private ShapeRenderer debugRenderer = new ShapeRenderer();
     private List<IAttack> newAttacks;
     
+    private ObstaclesController obstaclesController;
+    private ChestsController chestsController;
+    
     private static final float UNIT_SCALE = 1/2f;
     private static final float WIDTH_SCALE = 2/3f;
     private static final float HEIGHT_SCALE = 2/3f;
@@ -59,9 +59,7 @@ public class GameScreen extends AbstractScreen {
     public GameScreen() {
         super();
         batch = new SpriteBatch();
-        obstaclesView = new ObstaclesView(batch, AssetStrings.BOX_OBSTACLE_IMAGE);
-        chestView = new ChestView(batch, AssetStrings.CHEST_IMAGE);
-
+        chestView = new ChestView(AssetStrings.CHEST_IMAGE);
     }
 
     @Override
@@ -84,13 +82,16 @@ public class GameScreen extends AbstractScreen {
         }
         
         attackControllers = new HashMap<>();
-        for (IAttack attack: adlez.getAttacks()) {
+        for (IAttack attack : adlez.getAttacks()) {
             AttackController attackController = new AttackController(attack);
             attackControllers.put(attack, attackController);
         }
     
         attacks = adlez.getAttacks();
         newAttacks = adlez.getNewAttacks();
+    
+        obstaclesController = new ObstaclesController(adlez.getObstacles(), AssetStrings.BOX_OBSTACLE_IMAGE);
+        chestsController = new ChestsController(adlez.getChests(), AssetStrings.CHEST_IMAGE);
 
         // temporary things, just testing
         tileMap = new TmxMapLoader().load(AssetStrings.TEST_LEVEL_TMX);
@@ -131,9 +132,9 @@ public class GameScreen extends AbstractScreen {
             enemyController.render(batch);
         }
         
-        // Generate obstacles
-        obstaclesView.generateObstacles();
-        chestView.generateChests();
+        // Render obstacles & chests
+        obstaclesController.render(batch);
+        chestsController.render(batch);
 
         batch.end();
     
@@ -141,19 +142,6 @@ public class GameScreen extends AbstractScreen {
     }
 
     public void updateGame() {
-//        /** Remove all attacks for now. If they hit something then the collision handler handled it in previous loop. */
-//        if(!attacks.isEmpty()){
-//            List<IAttack> attacksToRemove = new ArrayList<>();
-//            for(IAttack attack : attacks){
-//                if(attack.isFinished()){
-//                    attacksToRemove.add(attack);
-//                }
-//            }
-//            for(IAttack attack : attacksToRemove){
-//                adlez.removeAttackFromWorld(attack);
-//            }
-//        }
-        
         // Updating player
         playerController.update();
         collisionHandler.updatePlayer();
@@ -181,7 +169,7 @@ public class GameScreen extends AbstractScreen {
             }
             newAttacks.clear();
         }
-        List<IAttack> finishedAttacks = new ArrayList<IAttack>();
+        List<IAttack> finishedAttacks = new ArrayList<>();
         for(Map.Entry<IAttack, IController> entry : attackControllers.entrySet()){
             IAttack attack = entry.getKey();
             IController attackController = entry.getValue();
@@ -197,6 +185,10 @@ public class GameScreen extends AbstractScreen {
             attackControllers.remove(finishedAttack);
             adlez.removeAttackFromWorld(finishedAttack);
         }
+    
+        // Update obstacles & chests
+        obstaclesController.update();
+        chestsController.update();
         
         collisionHandler.updateWorld();
     }

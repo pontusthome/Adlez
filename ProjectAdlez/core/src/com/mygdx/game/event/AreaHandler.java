@@ -56,13 +56,13 @@ public final class AreaHandler {
         Wall wall = new Wall();
         walls.addAll(wall.createAreaBounds(10, 10, 64 / 2));
 
-        Obstacle obst1 = new Obstacle(32 * 5, 32 * 5, 32, 32, 0);
-        Obstacle obst2 = new Obstacle(32 * 7, 32 * 7, 32, 32, 0);
+        Obstacle obst1 = new Obstacle(32 * 5, 32 * 5, 32, 32, 1);
+        Obstacle obst2 = new Obstacle(32 * 7, 32 * 7, 32, 32, 1);
         obstacles.add(obst1);
         obstacles.add(obst2);
 
-        Chest ch1 = new Chest(32 * 4 + 8, 32 * 2 + 8, 16, 16, 2);
-        Chest ch2 = new Chest(32 * 7 + 8, 32 * 2 + 8, 16, 16, 2);
+        Chest ch1 = new Chest(32 * 4 + 8, 32 * 2 + 8, 16, 16, 2, 1);
+        Chest ch2 = new Chest(32 * 7 + 8, 32 * 2 + 8, 16, 16, 2, 1);
         chests.add(ch1);
         chests.add(ch2);
 
