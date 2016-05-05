@@ -20,7 +20,7 @@ public class PlayerController implements IController {
     private Adlez adlez;
     
     /** To be able to paint where melee attack landed for debugging purposes */
-    public static IAttack meleeAttack = new MeleeAttack(0,0,0,0,0);
+    public static IAttack currentAttack = new MeleeAttack();
 
     public PlayerController(IPlayer player, String characterImg) {
         this.player = player;
@@ -53,13 +53,16 @@ public class PlayerController implements IController {
         }
         
         if (Gdx.input.isKeyJustPressed(Input.Keys.SPACE)) {
-            meleeAttack = new MeleeAttack(playerCharacter);
-            meleeAttack.setAttackSound(new LibGDXSoundAdapter(AssetStrings.MELEE_ATTACK_SOUND));
-            meleeAttack.playAttackSound(0.1f);
-            adlez.addAttack(meleeAttack);
+            currentAttack = new MeleeAttack(playerCharacter);
+            currentAttack.setAttackSound(new LibGDXSoundAdapter(AssetStrings.MELEE_ATTACK_SOUND));
+            currentAttack.playAttackSound(0.1f);
+            adlez.addAttack(currentAttack);
         }
         if (Gdx.input.isKeyJustPressed(Input.Keys.E)) {
-            
+            currentAttack = new RangeMagicAttack(playerCharacter);
+            currentAttack.setAttackSound(new LibGDXSoundAdapter(AssetStrings.RANGE_MAGIC_ATTACK_SOUND));
+            currentAttack.playAttackSound(0.1f);
+            adlez.addAttack(currentAttack);
         }
         if (Gdx.input.isKeyJustPressed(Input.Keys.F)) {
             

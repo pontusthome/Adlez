@@ -1,10 +1,7 @@
 package com.mygdx.game.controller;
 
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
-import com.mygdx.game.model.Adlez;
-import com.mygdx.game.model.IAttack;
-import com.mygdx.game.model.ICharacter;
-import com.mygdx.game.model.MeleeAttack;
+import com.mygdx.game.model.*;
 
 /**
  * Created by Michel on 4.5.2016.
@@ -35,7 +32,7 @@ public class AttackController implements IController{
 		 * 
 		 * Other attacks though, such as projectiles, could survive several game loops.
 		 * */
-		if(attack instanceof MeleeAttack){
+		if(attack instanceof MeleeAttack || attack instanceof RangeMagicAttack){
 			attack.setFinished();
 		}
 	}

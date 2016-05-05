@@ -3,46 +3,14 @@ package com.mygdx.game.model;
 /**
  * Created by Michel on 4.5.2016.
  */
-public class MeleeAttack extends WorldObject implements IAttack{
-	
-	private int damage;
-	private HitBox hitBox = new HitBox();
-	private GameSound attackSound;
-	private boolean isFinished;
+public class MeleeAttack extends Attack{
 	
 	public MeleeAttack(){
-		
+		super();
 	}
 	
-	/** Set position of attack in front of character. For now also set size the same as character's size */
 	public MeleeAttack(ICharacter character){
-		this(character.getWidth(), character.getHeight(), 
-				character.getAttackDamage());
-		
-		setPos(character);
-		hitBox = new HitBox(getPosX(), getPosY(), getWidth(), getHeight());
-		setFinished();
-	}
-	
-	public MeleeAttack(int width, int height, int damage){
-		setWidth(width);
-		setHeight(height);
-		this.damage = damage;
-	}
-	
-	public MeleeAttack(float posX, float posY, int width, int height, int damage){
-		super(posX, posY, width, height);
-		this.damage = damage;
-	}
-	
-	@Override
-	public void setDamage(int damage){
-		this.damage = damage;
-	}
-	
-	@Override
-	public int getDamage(){
-		return damage;
+		super(character);
 	}
 	
 	@Override
@@ -50,7 +18,21 @@ public class MeleeAttack extends WorldObject implements IAttack{
 		
 	}
 	
-	private void setPos(ICharacter character){
+	/**
+	 * Temporarily set to the character's attack damage.
+	 *
+	 * Should depend on something like "character.getWeaponEquipped.getDamage()".
+	 */
+	@Override
+	public void setDamage(ICharacter character){
+		setDamage(character.getAttackDamage());
+	}
+	
+	@Override
+	public void setInitLocation(ICharacter character){
+		setWidth(character.getWidth());
+		setHeight(character.getHeight());
+		
 		switch(character.getDirection()){
 			case Direction.NORTH:
 				setPos(character.getPosX(), character.getPosY() + character.getHeight());
@@ -65,40 +47,5 @@ public class MeleeAttack extends WorldObject implements IAttack{
 				setPos(character.getPosX() - character.getWidth(), character.getPosY());
 				break;
 		}
-	}
-	
-	@Override
-	public HitBox getHitBox(){
-		return hitBox;
-	}
-	
-	/** 
-	 * When an attack is done it should be removed from the world. Returns true for a melee attack because a melee
-	 * attack only should be valid during a single game loop.
-	 * 
-	 * @return True if attack should be removed from world, false otherwise
-	 */
-	@Override
-	public boolean isFinished(){
-		return isFinished;
-	}
-	
-	@Override
-	public void setFinished(){
-		isFinished = true;
-	}
-	
-	@Override
-	public void setAttackSound(GameSound attackSound){
-		this.attackSound = attackSound;
-	}
-	
-	@Override
-	public GameSound getAttackSound(){
-		return null;
-	}
-	
-	public void playAttackSound(float volume){
-		attackSound.play(volume);
 	}
 }

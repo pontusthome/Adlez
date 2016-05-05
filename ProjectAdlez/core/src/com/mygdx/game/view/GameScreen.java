@@ -153,32 +153,6 @@ public class GameScreen extends AbstractScreen {
 //                adlez.removeAttackFromWorld(attack);
 //            }
 //        }
-    
-        // Update attacks
-        if(!newAttacks.isEmpty()){
-            for(IAttack attack : newAttacks){
-                AttackController attackController = new AttackController(attack);
-                attackControllers.put(attack, attackController);
-            }
-            newAttacks.clear();
-        }
-        
-        List<IAttack> finishedAttacks = new ArrayList<IAttack>();
-        for(Map.Entry<IAttack, IController> entry : attackControllers.entrySet()){
-            IAttack attack = entry.getKey();
-            IController attackController = entry.getValue();
-        
-            if (attack.isFinished()) {
-                finishedAttacks.add(attack);
-            }
-            else {
-                attackController.update();
-            }
-        }
-        for (IAttack finishedAttack: finishedAttacks) {
-            attackControllers.remove(finishedAttack);
-            adlez.removeAttackFromWorld(finishedAttack);
-        }
         
         // Updating player
         playerController.update();
@@ -198,6 +172,31 @@ public class GameScreen extends AbstractScreen {
         for (INPC deadEnemy: killedEnemies) {
             enemies.remove(deadEnemy);
         }
+    
+        // Update attacks
+        if(!newAttacks.isEmpty()){
+            for(IAttack attack : newAttacks){
+                AttackController attackController = new AttackController(attack);
+                attackControllers.put(attack, attackController);
+            }
+            newAttacks.clear();
+        }
+        List<IAttack> finishedAttacks = new ArrayList<IAttack>();
+        for(Map.Entry<IAttack, IController> entry : attackControllers.entrySet()){
+            IAttack attack = entry.getKey();
+            IController attackController = entry.getValue();
+        
+            if (attack.isFinished()) {
+                finishedAttacks.add(attack);
+            }
+            else {
+                attackController.update();
+            }
+        }
+        for (IAttack finishedAttack: finishedAttacks) {
+            attackControllers.remove(finishedAttack);
+            adlez.removeAttackFromWorld(finishedAttack);
+        }
         
         collisionHandler.updateWorld();
     }
@@ -206,7 +205,7 @@ public class GameScreen extends AbstractScreen {
         debugRenderer.setProjectionMatrix(playerCam.combined);
         debugRenderer.begin(ShapeRenderer.ShapeType.Line);
         debugRenderer.setColor(1, 1, 0, 1);
-        HitBox hitBox = PlayerController.meleeAttack.getHitBox();
+        HitBox hitBox = PlayerController.currentAttack.getHitBox();
         debugRenderer.rect(hitBox.getX(), hitBox.getY(), hitBox.getWidth(), hitBox.getHeight());
         debugRenderer.rect(player.getPosX(), player.getPosY(), player.getWidth(), player.getHeight());
         List <IWall> tempList = adlez.getWalls();
