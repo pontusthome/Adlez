@@ -44,9 +44,24 @@ public class Area1 {
 
         walls.addAll(wall.createAreaBounds(10, 20, 32));
 
-        enemies.add(EnemyFactory.createEnemy(Enemy.REGULAR_LEVEL_ONE, 32*5, 32*3));
-        enemies.add(EnemyFactory.createEnemy(Enemy.REGULAR_LEVEL_ONE, 32*6, 32*3));
-        enemies.add(EnemyFactory.createEnemy(Enemy.REGULAR_LEVEL_ONE, 32*7, 32*3));
+        //kista
+        //x18 y7
+
+        enemies.add(EnemyFactory.createEnemy(Enemy.REGULAR_LEVEL_TWO, 32*1, 32*5));
+        enemies.add(EnemyFactory.createEnemy(Enemy.REGULAR_LEVEL_ONE, 32*2, 32*5));
+        enemies.add(EnemyFactory.createEnemy(Enemy.REGULAR_LEVEL_ONE, 32*3, 32*5));
+        enemies.add(EnemyFactory.createEnemy(Enemy.REGULAR_LEVEL_ONE, 32*4, 32*5));
+
+        enemies.add(EnemyFactory.createEnemy(Enemy.DARK_ONE_LEVEL_ONE, 32*8, 32*8));
+        enemies.add(EnemyFactory.createEnemy(Enemy.DARK_ONE_LEVEL_ONE, 32*9, 32*8));
+        enemies.add(EnemyFactory.createEnemy(Enemy.DARK_ONE_LEVEL_ONE, 32*8, 32*2));
+        enemies.add(EnemyFactory.createEnemy(Enemy.DARK_ONE_LEVEL_ONE, 32*9, 32*2));
+
+        enemies.add(EnemyFactory.createEnemy(Enemy.DOG_LEVEL_ONE, 32*14, 32*2));
+        enemies.add(EnemyFactory.createEnemy(Enemy.DOG_LEVEL_ONE, 32*14, 32*7));
+
+        Chest ch1 = new Chest(32*18+8, 32*7+8, 16, 16, 2, 200);
+        chests.add(ch1);
 
         generateFriendlyNPC(Direction.SOUTH, 17, 17, 32, 32*2);
 
