@@ -2,6 +2,7 @@ package com.mygdx.game.event;
 
 import com.mygdx.game.model.*;
 import com.mygdx.game.model.completeAreas.Area1;
+import com.mygdx.game.model.completeAreas.Area2;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -23,16 +24,22 @@ public class AreaHandler {
     private Area level2;
 
     private Area1 area1;
+    private Area2 area2;
 
     // Create the setup for each level
     private AreaHandler() {
         //createLevel1();
         //createLevel2();
         area1 = new Area1();
+        area2 = new Area2();
     }
 
     public Area loadArea1() {
         return area1.generateArea();
+    }
+
+    public Area loadArea2() {
+        return area2.generateArea();
     }
 
     public Area loadLevel1() {

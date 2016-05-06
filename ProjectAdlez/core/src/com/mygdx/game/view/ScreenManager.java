@@ -37,7 +37,7 @@ public class ScreenManager {
         // Initiate the area
         Adlez adlez = Adlez.getInstance();
         AreaHandler areaHandler = AreaHandler.getInstance();
-        adlez.initiateArea(areaHandler.loadArea1());
+        adlez.initiateArea(areaHandler.loadArea2());
         showScreen(ScreenEnum.INTRO);
     }
 

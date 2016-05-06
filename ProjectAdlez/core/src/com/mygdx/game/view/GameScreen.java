@@ -94,7 +94,7 @@ public class GameScreen extends AbstractScreen {
         wallsController = new WallsController(adlez.getWalls());
 
         // temporary things, just testing
-        tileMap = new TmxMapLoader().load(AssetStrings.AREA1_TMX);
+        tileMap = new TmxMapLoader().load(AssetStrings.AREA2_TMX);
         float unitScale = UNIT_SCALE;
 
         renderer = new OrthoCachedTiledMapRenderer(tileMap, unitScale);

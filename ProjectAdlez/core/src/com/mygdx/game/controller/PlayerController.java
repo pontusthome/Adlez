@@ -72,10 +72,10 @@ public class PlayerController implements ICharacterController{
 
         // TEST for reloading the area
         if (Gdx.input.isKeyJustPressed(Input.Keys.NUM_1)) {
-            ScreenManager.getInstance().switchArea(AreaHandler.getInstance().loadLevel1());
+            ScreenManager.getInstance().switchArea(AreaHandler.getInstance().loadArea1());
         }
         if (Gdx.input.isKeyJustPressed(Input.Keys.NUM_2)) {
-            ScreenManager.getInstance().switchArea(AreaHandler.getInstance().loadLevel2());
+            ScreenManager.getInstance().switchArea(AreaHandler.getInstance().loadArea2());
         }
 
         playerView.viewUpdate(player.getDirection());
