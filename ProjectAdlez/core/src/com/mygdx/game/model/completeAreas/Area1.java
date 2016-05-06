@@ -10,33 +10,86 @@ import java.util.List;
  */
 public class Area1 {
 
-    private static Area area;
+    private Area area;
 
-    private static float playerPosX;
-    private static float playerPosY;
+    private float playerPosX;
+    private float playerPosY;
 
-    private static Wall wall;
-    private static Obstacle obstacle;
+    private Wall wall;
+    private Obstacle obstacle;
 
-    private static List<INPC> enemies;
-    private static List<INPC> friendlyNPCs;
-    private static List<IWorldObject> stationaryObjects;
-    private static List<IWall> walls;
-    private static List<IObstacle> obstacles;
-    private static List<IChest> chests;
-    private static List<AreaConnection> areaConnections;
+    private List<IEnemy> enemies;
+    private List<IFriendlyNPC> friendlyNPCs;
+    private List<IWorldObject> stationaryObjects;
+    private List<IWall> walls;
+    private List<IObstacle> obstacles;
+    private List<IChest> chests;
+    private List<AreaConnection> areaConnections;
 
-    public static Area generateArea() {
+    public Area generateArea() {
         wall = new Wall();
 
-        enemies = new ArrayList<INPC>();
-        friendlyNPCs = new ArrayList<INPC>();
+        enemies = new ArrayList<IEnemy>();
+        friendlyNPCs = new ArrayList<IFriendlyNPC>();
         stationaryObjects = new ArrayList<IWorldObject>();
         walls = new ArrayList<IWall>();
         obstacles = new ArrayList<IObstacle>();
         chests = new ArrayList<IChest>();
         areaConnections = new ArrayList<AreaConnection>();
 
+        // Spawning left bottom corner.
+        playerPosX = 32;
+        playerPosY = 32;
+
+
+        walls.addAll(wall.createAreaBounds(10, 20, 32));
+
+        enemies.add(EnemyFactory.createEnemy(Enemy.REGULAR_LEVEL_ONE, 32*5, 32*3));
+        enemies.add(EnemyFactory.createEnemy(Enemy.REGULAR_LEVEL_ONE, 32*6, 32*3));
+        enemies.add(EnemyFactory.createEnemy(Enemy.REGULAR_LEVEL_ONE, 32*7, 32*3));
+
+        generateFriendlyNPC(Direction.SOUTH, 17, 17, 32, 32*2);
+
+        generateSingleWall(32*6, 32*1, 32);
+        generateSingleWall(32*6, 32*2, 32);
+        generateSingleWall(32*6, 32*3, 32);
+        generateSingleWall(32*6, 32*4, 32);
+        generateSingleWall(32*6, 32*5, 32);
+        generateSingleWall(32*6, 32*6, 32);
+        generateSingleWall(32*6, 32*7, 32);
+
+        generateSingleWall(32*1, 32*3, 32);
+        generateSingleWall(32*2, 32*3, 32);
+        generateSingleWall(32*3, 32*3, 32);
+        generateSingleWall(32*4, 32*3, 32);
+
+        generateSingleWall(32*2, 32*7, 32);
+        generateSingleWall(32*3, 32*7, 32);
+        generateSingleWall(32*4, 32*7, 32);
+        generateSingleWall(32*5, 32*7, 32);
+
+        generateSingleWall(32*11, 32*2, 32);
+        generateSingleWall(32*11, 32*3, 32);
+        generateSingleWall(32*11, 32*4, 32);
+        generateSingleWall(32*11, 32*5, 32);
+        generateSingleWall(32*11, 32*6, 32);
+        generateSingleWall(32*11, 32*7, 32);
+        generateSingleWall(32*11, 32*8, 32);
+
+        generateSingleWall(32*17, 32*1, 32);
+        generateSingleWall(32*17, 32*2, 32);
+        generateSingleWall(32*17, 32*3, 32);
+        generateSingleWall(32*17, 32*4, 32);
+        generateSingleWall(32*17, 32*5, 32);
+        generateSingleWall(32*17, 32*6, 32);
+        generateSingleWall(32*17, 32*7, 32);
+
+        generateObstacles(32*5, 32*3);
+        generateObstacles(32*1, 32*7);
+        generateObstacles(32*11, 32*1);
+        generateObstacles(32*17, 32*8);
+
+        area = new Area(playerPosX, playerPosY, enemies,friendlyNPCs, stationaryObjects, walls, obstacles, chests);
 
         return area;
     }
@@ -45,43 +98,23 @@ public class Area1 {
      * Non-moving friendly NPC, acting like a shop for the player.
      */
     public void generateFriendlyNPC(int direction, int width, int height, float posX, float posY) {
-        NPC friendlyNPC = new NPC(direction, 0, width, height, posX, posY, 200, 10, 0, 0);
+        FriendlyNPC friendlyNPC = new FriendlyNPC(direction, 0, width, height, posX, posY, 200, 10, 0, 0);
         friendlyNPCs.add(friendlyNPC);
     }
 
     /**
-     * Spawning a group of enemies on a position.
-     * Max 4.
-     * gold is amount of gold that the player will loot.
+     * generating walls not included in area bounds.
      */
-    public void generateEnemies(int numberOfEnemies, int direction, float speed, int width, int height, float posX, float posY, int maxHealth, int attackDmg, int gold) {
-        if (numberOfEnemies <= 2 || numberOfEnemies > 0) {
-            for (int i = 1; i <= numberOfEnemies; i++) {
-                NPC enemyNPC = new NPC(direction, speed, width, height, posX * i, posY, maxHealth, attackDmg, 10, 0);
-                enemies.add(enemyNPC);
-            }
-        } else if (numberOfEnemies > 2 || numberOfEnemies < 5) {
-            for (int i = 1; i <= 2; i++) {
-                for (int j = 1; j <= numberOfEnemies; j++) {
-                    NPC enemyNPC = new NPC(direction, speed, width, height, posX, posY * i, maxHealth, attackDmg, 10, 0);
-                    enemies.add(enemyNPC);
-                }
-                numberOfEnemies--;
-            }
-        }
+    public void generateSingleWall(float posX, float posY, int size) {
+        walls.add(wall.createSingleWall(posX, posY, size));
     }
 
     /**
      * generating obstacles for this area.
      */
-    public void generateObstacles(int x, int y) {
-        // TODO: obstacles with these coordinates.
-        // x2-5 y5
-        //x5 y6-18
-        //x2-3 y12
-        //x3-4 y14
-        //x2-3 y16
-        //x3-4 y18
+    public void generateObstacles(float posX, float posY) {
+        obstacle = new Obstacle(posX, posY, 32, 32, 100);
+        obstacles.add(obstacle);
 
     }
 

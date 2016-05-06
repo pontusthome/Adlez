@@ -51,7 +51,7 @@ public class GameScreen extends AbstractScreen {
     private IController chestsController;
     private IController wallsController;
     
-    private static final float UNIT_SCALE = 1/2f;
+    private static final float UNIT_SCALE = 1f;
     private static final float WIDTH_SCALE = 2/3f;
     private static final float HEIGHT_SCALE = 2/3f;
 
@@ -88,12 +88,12 @@ public class GameScreen extends AbstractScreen {
         attacks = adlez.getAttacks();
         newAttacks = adlez.getNewAttacks();
     
-        obstaclesController = new ObstaclesController(adlez.getObstacles(), AssetStrings.BOX_OBSTACLE_IMAGE);
+        obstaclesController = new ObstaclesController(adlez.getObstacles(), AssetStrings.BOULDER_OBSTACLE_IMAGE);
         chestsController = new ChestsController(adlez.getChests(), AssetStrings.CHEST_IMAGE);
         wallsController = new WallsController(adlez.getWalls());
 
         // temporary things, just testing
-        tileMap = new TmxMapLoader().load(AssetStrings.TEST_LEVEL_TMX);
+        tileMap = new TmxMapLoader().load(AssetStrings.AREA1_TMX);
         float unitScale = UNIT_SCALE;
 
         renderer = new OrthoCachedTiledMapRenderer(tileMap, unitScale);

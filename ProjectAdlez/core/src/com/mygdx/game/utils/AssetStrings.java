@@ -28,6 +28,7 @@ public final class AssetStrings {
     /* Stationary objects */
     public static final String BOX_OBSTACLE_IMAGE = "boxObstacle.jpeg";
     public static final String CHEST_IMAGE = "chest.png";
+    public static final String BOULDER_OBSTACLE_IMAGE = "boulder_32x32.png";
 
     /* Sprites */
     public static final String PLAYER_MOVE = "moveSpriteV2.png";
@@ -52,6 +53,6 @@ public final class AssetStrings {
      */
     public static final String TEST_LEVEL_TMX = "testLevel1.tmx";
 
-    public static final String AREA1_TMX = "area1.tmx";
-    public static final String AREA2_TMX = "area2.tmx";
+    public static final String AREA1_TMX = "Areas/area1.tmx";
+    public static final String AREA2_TMX = "Areas/area2.tmx";
 }

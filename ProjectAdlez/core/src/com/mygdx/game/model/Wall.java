@@ -9,24 +9,25 @@ import java.util.List;
 public class Wall extends WorldObject implements IWall {
     
     private int health;
+    private Wall singleWall;
     
     public Wall() {
         // Temporary size.
-        setHeight(64/2);
-        setWidth(64/2);
-        setHealth(1);
-    }
-    
-    public Wall(int health) {
-        // Temporary size.
-        setHeight(64/2);
-        setWidth(64/2);
-        setHealth(health);
+        setHeight(32);
+        setWidth(32);
+        setHealth(1337);
     }
 
-    // Temporary parameter: size
-    // Game should have same size for all objects.
-    public static List<Wall> createAreaBounds(int height, int width, int size) {
+    public Wall createSingleWall(float posX, float posY, int size) {
+        singleWall = new Wall();
+        singleWall.setHeight(size);
+        singleWall.setWidth(size);
+        singleWall.setPosX(posX);
+        singleWall.setPosY(posY);
+        return singleWall;
+    }
+
+    public List<Wall> createAreaBounds(int height, int width, int size) {
         List<Wall> walls = new ArrayList<Wall>();
         
         for (int i = 0; i < height; i++) {
