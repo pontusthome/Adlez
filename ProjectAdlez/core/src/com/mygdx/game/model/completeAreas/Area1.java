@@ -24,7 +24,7 @@ public class Area1 {
     private List<IWall> walls;
     private List<IObstacle> obstacles;
     private List<IChest> chests;
-    private List<AreaConnection> areaConnections;
+    private List<IAreaConnection> areaConnections;
 
     public Area generateArea() {
         wall = new Wall();
@@ -35,7 +35,7 @@ public class Area1 {
         walls = new ArrayList<IWall>();
         obstacles = new ArrayList<IObstacle>();
         chests = new ArrayList<IChest>();
-        areaConnections = new ArrayList<AreaConnection>();
+        areaConnections = new ArrayList<IAreaConnection>();
 
         // Spawning left bottom corner.
         playerPosX = 32;
@@ -89,7 +89,9 @@ public class Area1 {
         generateObstacles(32*11, 32*1);
         generateObstacles(32*17, 32*8);
 
-        area = new Area(playerPosX, playerPosY, enemies,friendlyNPCs, stationaryObjects, walls, obstacles, chests);
+        areaConnections.add(new AreaConnection(32*18, 32, 32, 32));
+
+        area = new Area(playerPosX, playerPosY, enemies,friendlyNPCs, stationaryObjects, walls, obstacles, chests, areaConnections);
 
         return area;
     }

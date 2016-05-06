@@ -26,6 +26,7 @@ public class Adlez {
     private List<IWall> walls;
     private List<IObstacle> obstacles;
     private List<IChest> chests;
+    private List<IAreaConnection> areaConnections;
     private CollisionHandler2 collisionHandler;
     private List<IAttack> attacks = new ArrayList<>();
     private List<IAttack> newAttacks = new ArrayList<>();
@@ -77,6 +78,9 @@ public class Adlez {
         worldObjects.addAll(chests);
         
         attacks = new ArrayList<>();
+
+        areaConnections = area.getAreaConnections();
+        worldObjects.addAll(areaConnections);
     }
 
     public IPlayer getPlayer() {
@@ -107,6 +111,10 @@ public class Adlez {
 
     public List<IChest> getChests() {
         return chests;
+    }
+
+    public List<IAreaConnection> getAreaConnections() {
+        return areaConnections;
     }
     
     public void removeEnemyFromWorld(INPC enemy){

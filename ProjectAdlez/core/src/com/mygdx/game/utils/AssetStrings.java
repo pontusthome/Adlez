@@ -29,6 +29,7 @@ public final class AssetStrings {
     public static final String BOX_OBSTACLE_IMAGE = "boxObstacle.jpeg";
     public static final String CHEST_IMAGE = "chest.png";
     public static final String BOULDER_OBSTACLE_IMAGE = "boulder_32x32.png";
+    public static final String DOOR_GATE_IMAGE = "door_32x32.png";
 
     /* Sprites */
     public static final String PLAYER_MOVE = "moveSpriteV2.png";

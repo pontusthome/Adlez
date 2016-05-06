@@ -26,8 +26,8 @@ public class AreaHandler {
 
     // Create the setup for each level
     private AreaHandler() {
-        createLevel1();
-        createLevel2();
+        //createLevel1();
+        //createLevel2();
         area1 = new Area1();
     }
 
@@ -54,7 +54,7 @@ public class AreaHandler {
         List<IWall>walls = new ArrayList<>();
         List<IObstacle>obstacles = new ArrayList<>();
         List<IChest>chests = new ArrayList<>();
-        List<AreaConnection>areaConnections = new ArrayList<>();
+        List<IAreaConnection>areaConnections = new ArrayList<>();
 
         Wall wall = new Wall();
         walls.addAll(wall.createAreaBounds(10, 10, 64 / 2));
@@ -87,10 +87,10 @@ public class AreaHandler {
         yPos = 80f;
         enemies.add(EnemyFactory.createEnemy(Enemy.DOG_LEVEL_ONE, xPos, yPos));
 
-        areaConnections.add(new AreaConnection(260f, 260f));
+        areaConnections.add(new AreaConnection(260f, 260f, 32, 32));
 
         level1 = new Area(playerXposition, playerYposition,
-                enemies, friendlyNPCs, stationaryObjects, walls, obstacles, chests);
+                enemies, friendlyNPCs, stationaryObjects, walls, obstacles, chests, areaConnections);
     }
 
     private void createLevel2() {
@@ -104,7 +104,7 @@ public class AreaHandler {
         List<IWall>walls = new ArrayList<>();
         List<IObstacle>obstacles = new ArrayList<>();
         List<IChest>chests = new ArrayList<>();
-        List<AreaConnection>areaConnections = new ArrayList<>();
+        List<IAreaConnection>areaConnections = new ArrayList<>();
 
         xPos = 40f;
         yPos = 200f;
@@ -129,9 +129,9 @@ public class AreaHandler {
         chests.add(ch1);
         chests.add(ch2);
 
-        areaConnections.add(new AreaConnection(40f, 40f));
+        areaConnections.add(new AreaConnection(40f, 40f, 32, 32));
 
         level2 = new Area(playerXposition, playerYposition,
-                enemies, friendlyNPCs, stationaryObjects, walls, obstacles, chests);
+                enemies, friendlyNPCs, stationaryObjects, walls, obstacles, chests, areaConnections);
     }
 }

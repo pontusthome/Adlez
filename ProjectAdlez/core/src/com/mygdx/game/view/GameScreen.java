@@ -39,6 +39,7 @@ public class GameScreen extends AbstractScreen {
 
     private ObstaclesView obstaclesView;
     private ChestView chestView;
+    private GateView gateView;
     
     private CollisionHandler2 collisionHandler;
     private List<IAttack> attacks;
@@ -134,6 +135,9 @@ public class GameScreen extends AbstractScreen {
         // Render obstacles & chests
         obstaclesController.render(batch);
         chestsController.render(batch);
+
+        gateView = new GateView(AssetStrings.DOOR_GATE_IMAGE);
+        gateView.generateGate(adlez.getAreaConnections(), batch);
 
         batch.end();
     

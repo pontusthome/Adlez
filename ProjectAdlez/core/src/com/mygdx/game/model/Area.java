@@ -17,10 +17,11 @@ public final class Area {
     private List<IWall> walls;
     private List<IObstacle> obstacles;
     private List<IChest> chests;
+    private List<IAreaConnection> areaConnections;
 
     public Area(float playerXposition, float playerYposition,
                 List<IEnemy> enemies, List<IFriendlyNPC> friendlyNPCs, List<IWorldObject> stationaryObjects,
-                List<IWall> walls, List<IObstacle> obstacles, List<IChest> chests) {
+                List<IWall> walls, List<IObstacle> obstacles, List<IChest> chests, List<IAreaConnection> areaConnections) {
         this.playerXposition = playerXposition;
         this.playerYposition = playerYposition;
 
@@ -30,6 +31,7 @@ public final class Area {
         this.walls = walls;
         this.obstacles = obstacles;
         this.chests = chests;
+        this.areaConnections = areaConnections;
     }
 
     public float getPlayerXposition() {
@@ -62,5 +64,9 @@ public final class Area {
 
     public List<IChest> getChests() {
         return chests;
+    }
+
+    public List<IAreaConnection> getAreaConnections() {
+        return areaConnections;
     }
 }

@@ -199,6 +199,8 @@ public abstract class Character extends WorldObject implements ICharacter {
 			undoCharacterMove();
 		}else if(other instanceof IChest){
 			undoCharacterMove();
+		}else if(other instanceof IAreaConnection){
+			undoCharacterMove();
 		}else if(other instanceof IAttack){
 			IAttack attack = (IAttack) other;
 			setHealth(getHealth() - attack.getDamage());

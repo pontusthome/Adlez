@@ -14,7 +14,7 @@ import java.util.List;
  */
 public class ObstaclesView {
 
-    private Texture obstacleTexture;    
+    private Texture obstacleTexture;
 
     public ObstaclesView(String obstacleImg) {
         obstacleTexture = new Texture((Gdx.files.internal((obstacleImg))));
