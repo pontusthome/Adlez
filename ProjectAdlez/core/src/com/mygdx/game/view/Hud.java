@@ -8,15 +8,13 @@ import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.scenes.scene2d.Stage;
-import com.badlogic.gdx.scenes.scene2d.ui.Label;
-import com.badlogic.gdx.scenes.scene2d.ui.ProgressBar;
-import com.badlogic.gdx.scenes.scene2d.ui.Skin;
-import com.badlogic.gdx.scenes.scene2d.ui.Table;
+import com.badlogic.gdx.scenes.scene2d.ui.*;
 import com.badlogic.gdx.scenes.scene2d.utils.Drawable;
 import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
 import com.badlogic.gdx.utils.viewport.FitViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
 import com.mygdx.game.model.Adlez;
+import com.mygdx.game.model.ICharacter;
 import com.mygdx.game.model.IPlayer;
 import com.mygdx.game.model.Player;
 
@@ -30,21 +28,18 @@ public class Hud{
 
     private Adlez adlez = Adlez.getInstance();
     private GameScreen gameScreen;
-    private IPlayer player;
+    private ICharacter player;
     public Stage stage;
     public Viewport viewport;
 
     private Label healthLabel;
     private Label manaLabel;
-    private Label areaLabel;
+    private Label experienceLabel;
     private Label goldLabel;
 
-
-    private ProgressBar healthBar;
-    private ProgressBar.ProgressBarStyle barStyle;
-    private TextureRegionDrawable textureBar;
-    private Skin barSkin;
-    private Skin barBackgroundSkin;
+    private IStatusBar playerHealthBar;
+    private IStatusBar playerManaBar;
+    private IStatusBar playerExperienceBar;
 
     public Hud(GameScreen screen) {
 
@@ -53,33 +48,13 @@ public class Hud{
         this.viewport = new FitViewport(Gdx.graphics.getWidth(), Gdx.graphics.getHeight(), new OrthographicCamera());
         this.stage = new Stage();
 
-
-        barSkin = new Skin();
-        Pixmap pixmap = new Pixmap(10, 10, Pixmap.Format.RGBA8888);
-        pixmap.setColor(Color.RED);
-        pixmap.fill();
-        barSkin.add("red", new Texture(pixmap));
-
-        barBackgroundSkin = new Skin();
-        Pixmap pixmap2 = new Pixmap(100, 10, Pixmap.Format.RGBA8888);
-        pixmap2.setColor(Color.WHITE);
-        pixmap2.fill();
-        barBackgroundSkin.add("white", new Texture(pixmap2));
-
-        barStyle = new ProgressBar.ProgressBarStyle(barBackgroundSkin.newDrawable("white", Color.WHITE),
-                barSkin.newDrawable("red", Color.RED));
-        barStyle.knobBefore = barStyle.knob;
-
-        this.healthBar = new ProgressBar(0, 100, 0.5f, false, barStyle);
-        healthBar.setPosition(10, 10);
-        healthBar.setSize(100, 10);
-        healthBar.setAnimateDuration(1);
-        healthBar.setValue(10);
-
+        playerHealthBar = new HealthBar(this.player);
+        playerManaBar = new ManaBar(this.player);
+        playerExperienceBar = new ExperienceBar(this.player);
 
         healthLabel = new Label("Health: ", new Label.LabelStyle(new BitmapFont(), Color.WHITE));
         manaLabel = new Label("Mana: ", new Label.LabelStyle(new BitmapFont(), Color.WHITE));
-        areaLabel = new Label("Area: ", new Label.LabelStyle(new BitmapFont(), Color.WHITE));
+        experienceLabel = new Label("Experience: ", new Label.LabelStyle(new BitmapFont(), Color.WHITE));
 
 
         Table table = new Table();
@@ -88,9 +63,12 @@ public class Hud{
 
         table.add(healthLabel).expandX().padTop(10);
         table.add(manaLabel).expandX().padTop(10);
-        table.add(areaLabel).expandX().padTop(10);
+        table.add(experienceLabel).expandX().padTop(10);
         table.row();
-        table.add(healthBar);
+        table.add(playerHealthBar.getBarImage());
+        table.add(playerManaBar.getBarImage());
+        table.add(playerExperienceBar.getBarImage());
         stage.addActor(table);
+
     }
 }
