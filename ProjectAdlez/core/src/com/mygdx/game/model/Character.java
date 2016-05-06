@@ -18,6 +18,10 @@ public abstract class Character extends WorldObject implements ICharacter {
 	private String characterType;
 	private int direction;
 	private float speed;
+	private boolean movingNorth;
+	private boolean movingSouth;
+	private boolean movingEast;
+	private boolean movingWest;
 	
 	public Character() {
 		this(Direction.NORTH, 2f,
@@ -40,47 +44,41 @@ public abstract class Character extends WorldObject implements ICharacter {
 		setAttackDamage(attackDamage);
 		setGold(gold);
 		setMana(mana);
+		
+		movingNorth = false;
+		movingSouth = false;
+		movingEast = false;
+		movingWest = false;
 	}
 
 	@Override
 	public void moveNorth() {
-		float oldYpos = this.getPosY();
-		this.setPosY(this.getPosY() + this.getSpeed());
+		setPosY(getPosY() + getSpeed());
 		setDirection(Direction.NORTH);
-		if (CollisionHandler.checkCollision(this)) {
-			this.setPosY(oldYpos);
-		}
+		movingNorth = true;
 	}
+	
 	@Override
 	public void moveSouth() {
-		float oldYpos = this.getPosY();
-		this.setPosY(this.getPosY() - this.getSpeed());
+		setPosY(getPosY() - getSpeed());
 		setDirection(Direction.SOUTH);
-		if (CollisionHandler.checkCollision(this)) {
-			this.setPosY(oldYpos);
-		}
+		movingSouth = true;
 	}
-	@Override
-	public void moveWest() {
-		float oldXpos = this.getPosX();
-		this.setPosX(this.getPosX() - this.getSpeed());
-		setDirection(Direction.WEST);
-		if (CollisionHandler.checkCollision(this)) {
-			this.setPosX(oldXpos);
-		}
-	}
+	
 	@Override
 	public void moveEast() {
-		float oldXpos = this.getPosX();
-		this.setPosX(this.getPosX() + this.getSpeed());
+		setPosX(getPosX() + getSpeed());
 		setDirection(Direction.EAST);
-		if (CollisionHandler.checkCollision(this)) {
-			this.setPosX(oldXpos);
-		}
+		movingEast = true;
 	}
-
-
-
+	
+	@Override
+	public void moveWest() {
+		setPosX(getPosX() - getSpeed());
+		setDirection(Direction.WEST);
+		movingWest = true;
+	}
+	
 	@Override
 	public int getAttackDamage() {
 		return attackDamage;
@@ -189,5 +187,68 @@ public abstract class Character extends WorldObject implements ICharacter {
 	@Override
 	public void setSpeed(float speed) {
 		this.speed = speed;
+	}
+	
+	@Override
+	public void onCollide(Collidable other){
+		if(other instanceof ICharacter && this != other){
+			undoCharacterMove();
+		}else if(other instanceof IWall){
+			undoCharacterMove();
+		}else if(other instanceof IObstacle){
+			undoCharacterMove();
+		}else if(other instanceof IChest){
+			undoCharacterMove();
+		}else if(other instanceof IAttack){
+			IAttack attack = (IAttack) other;
+			setHealth(getHealth() - attack.getDamage());
+		}
+	}
+	
+	public void undoCharacterMove(){
+		if(movingNorth){
+			setPosY(getPosY() - getSpeed());
+		}
+		if(movingSouth){
+			setPosY(getPosY() + getSpeed());
+		}
+		if(movingEast){
+			setPosX(getPosX() - getSpeed());
+		}
+		if(movingWest){
+			setPosX(getPosX() + getSpeed());
+		}
+	}
+	
+	public void clearMoveFlags(){
+		movingNorth = false;
+		movingSouth = false;
+		movingEast = false;
+		movingWest = false;
+	}
+	
+	@Override
+	public boolean isMovingNorth(){
+		return movingNorth;
+	}
+	
+	@Override
+	public boolean isMovingSouth(){
+		return movingSouth;
+	}
+	
+	@Override
+	public boolean isMovingEast(){
+		return movingEast;
+	}
+	
+	@Override
+	public boolean isMovingWest(){
+		return movingWest;
+	}
+	
+	@Override
+	public boolean isAlive(){
+		return getHealth() > 0;
 	}
 }

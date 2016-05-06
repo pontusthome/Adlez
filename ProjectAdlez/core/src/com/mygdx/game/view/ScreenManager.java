@@ -4,6 +4,7 @@ import com.badlogic.gdx.Game;
 import com.badlogic.gdx.Screen;
 import com.mygdx.game.event.AreaHandler;
 import com.mygdx.game.model.Adlez;
+import com.mygdx.game.model.Area;
 
 
 /**
@@ -35,8 +36,17 @@ public class ScreenManager {
         this.game = game;
         // Initiate the area
         Adlez adlez = Adlez.getInstance();
-        adlez.initiateArea(AreaHandler.testLevel());
+        AreaHandler areaHandler = AreaHandler.getInstance();
+        adlez.initiateArea(areaHandler.loadLevel1());
         showScreen(ScreenEnum.INTRO);
+    }
+
+    // Initialization with the game class
+    public void switchArea(Area area) {
+        // Initiate the area
+        Adlez adlez = Adlez.getInstance();
+        adlez.initiateArea(area);
+        showScreen(ScreenEnum.GAME);
     }
 
     // Show in the game the screen which enum type is received

@@ -1,0 +1,41 @@
+package com.mygdx.game.controller;
+
+import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.mygdx.game.model.Adlez;
+import com.mygdx.game.model.IWall;
+
+import java.util.ArrayList;
+import java.util.List;
+
+/**
+ * Created by Michel on 6.5.2016.
+ */
+public class WallsController implements IController{
+	
+	private Adlez adlez;
+	private List<IWall> walls;
+	
+	public WallsController(List<IWall> walls) {
+		adlez = Adlez.getInstance();
+		this.walls = walls;
+	}
+	
+	@Override
+	public void update(){
+		List<IWall> destroyedWalls = new ArrayList<>();
+		for(IWall wall : walls){
+			if(wall.isDestroyed()){
+				destroyedWalls.add(wall);
+			}
+		}
+		for(IWall wall : destroyedWalls){
+			adlez.removeWallFromWorld(wall);
+		}
+	}
+	
+	//TODO: Render walls with this method?
+	@Override
+	public void render(SpriteBatch batch){
+		
+	}
+}

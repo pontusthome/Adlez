@@ -3,6 +3,7 @@ package com.mygdx.game.utils;
 /**
  * Created by Michel on 28.4.2016.
  */
+
 public final class AssetStrings {
 
     /**
@@ -14,16 +15,26 @@ public final class AssetStrings {
     public static final String OUT_OF_MANA_SOUND = "out_of_mana.wav";
 
     /**
-     * Images
+     * Buttons
      */
-    public static final String MAIN_MENU_BACKGROUND_IMAGE = "mainMenuBackground.png";
     public static final String NEW_GAME_BUTTON_IMAGE = "newGameButton.png";
     public static final String LOAD_GAME_BUTTON_IMAGE = "loadGameButton.png";
     public static final String EXIT_GAME_BUTTON_IMAGE = "exitGameButton.png";
+
+    /* Backgrounds */
+    public static final String MAIN_MENU_BACKGROUND_IMAGE = "mainMenuBackground.png";
     public static final String INTRO_SCREEN_BACKGROUND_IMAGE = "ZeldaIntro.png";
+
+    /* Stationary objects */
     public static final String BOX_OBSTACLE_IMAGE = "boxObstacle.jpeg";
-    public static final String MOVE_SPRITES_IMAGE = "moveSpriteV2.png";
     public static final String CHEST_IMAGE = "chest.png";
+
+    /* Sprites */
+    public static final String PLAYER_MOVE = "moveSpriteV2.png";
+    public static final String RED_PLAYER_MOVE = "redPlayer.png";
+    public static final String BLUE_PLAYER_MOVE = "bluePlayer.png";
+    public static final String DARK_BLUE_PLAYER_MOVE = "darkBluePlayer.png";
+    public static final String BLUE_DOG_MOVE = "Azurewalk.png";
 
     /**
      * Item Images

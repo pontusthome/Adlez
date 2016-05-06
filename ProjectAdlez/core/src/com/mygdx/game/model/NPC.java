@@ -3,9 +3,8 @@ package com.mygdx.game.model;
 /**
  * Created by Michel on 2016-04-19.
  */
-public class NPC extends Character implements INPC{
+public abstract class NPC extends Character implements INPC{
 	
-	private boolean isEnemy;
 	private boolean isAlive = true;
 	
 	public NPC(int direction, float speed, int width, 
@@ -18,16 +17,8 @@ public class NPC extends Character implements INPC{
 				attackDamage, gold, mana);
 	}
 	
-	public boolean isAlive(){
-		return isAlive;
-	}
-	
-	public void setAliveStatus(boolean bool){
-		isAlive = bool;
-	}
-	
 	@Override
 	public void onCollide(Collidable other){
-		
+		super.onCollide(other);
 	}
 }

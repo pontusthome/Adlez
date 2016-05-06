@@ -15,18 +15,14 @@ import java.util.List;
 public class ChestView {
 
     private Texture chestTexture;
-    private Adlez adlez = Adlez.getInstance();
-    private SpriteBatch spriteBatch;
-    private List<IChest> chests = adlez.getChests();
 
-    public ChestView(SpriteBatch spriteBatch, String chestImg) {
-        this.spriteBatch = spriteBatch;
+    public ChestView(String chestImg) {
         chestTexture = new Texture((Gdx.files.internal((chestImg))));
     }
 
-    public void generateChests() {
+    public void generateChests(List<IChest> chests, SpriteBatch batch) {
         for(IChest ch : chests) {
-            spriteBatch.draw(chestTexture, ch.getPosX(), ch.getPosY());
+            batch.draw(chestTexture, ch.getPosX(), ch.getPosY());
         }
     }
 }

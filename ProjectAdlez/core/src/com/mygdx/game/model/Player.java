@@ -99,6 +99,6 @@ public class Player extends Character implements IPlayer {
     
     @Override
     public void onCollide(Collidable other){
-        
+        super.onCollide(other);
     }
 }

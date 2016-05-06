@@ -4,21 +4,30 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
-import com.mygdx.game.model.IPlayer;
+import com.mygdx.game.event.AreaHandler;
+import com.mygdx.game.model.*;
+import com.mygdx.game.model.Character;
+import com.mygdx.game.utils.AssetStrings;
+import com.mygdx.game.view.ScreenManager;
 
 /**
  * Created by martinso on 27/03/16.
  */
-public class PlayerController implements IController {
+public class PlayerController implements ICharacterController{
 
     // Have a view not extend a view
 
     private IPlayer player;
     private CharacterView playerView;
+    private Adlez adlez;
+    
+    /** To be able to paint where melee attack landed for debugging purposes */
+    public static IAttack currentAttack = new MeleeAttack();
 
-    public PlayerController(IPlayer player, String characterImg) {
+    public PlayerController(IPlayer player) {
         this.player = player;
-        playerView = new CharacterView(characterImg);
+        playerView = new CharacterView(AssetStrings.PLAYER_MOVE);
+        adlez = Adlez.getInstance();
     }
 
     /**
@@ -28,26 +37,45 @@ public class PlayerController implements IController {
      */
     @Override
     public void update() {
+        Character playerCharacter = (Character) player;
+        playerCharacter.clearMoveFlags();
+        
+        /** Movement only in 1 direction at a time */
         if (Gdx.input.isKeyPressed(Input.Keys.W)) {
             player.moveNorth();
-        }
-        if (Gdx.input.isKeyPressed(Input.Keys.S)) {
+        }else if (Gdx.input.isKeyPressed(Input.Keys.S)) {
             player.moveSouth();
-        }
-        if (Gdx.input.isKeyPressed(Input.Keys.A)) {
+        }else if (Gdx.input.isKeyPressed(Input.Keys.A)) {
             player.moveWest();
-        }
-        if (Gdx.input.isKeyPressed(Input.Keys.D)) {
+        }else if (Gdx.input.isKeyPressed(Input.Keys.D)) {
             player.moveEast();
         }
+        
         if (Gdx.input.isKeyJustPressed(Input.Keys.SPACE)) {
-            CombatHandler.handleMeleeAttack();
+            currentAttack = new MeleeAttack(playerCharacter);
+            currentAttack.setAttackSound(new LibGDXSoundAdapter(AssetStrings.MELEE_ATTACK_SOUND));
+            currentAttack.playAttackSound(0.1f);
+            adlez.addAttack(currentAttack);
         }
         if (Gdx.input.isKeyJustPressed(Input.Keys.E)) {
-            CombatHandler.handleRangeMagicAttack();
+            currentAttack = new RangeMagicAttack(playerCharacter);
+            currentAttack.setAttackSound(new LibGDXSoundAdapter(AssetStrings.RANGE_MAGIC_ATTACK_SOUND));
+            currentAttack.playAttackSound(0.1f);
+            adlez.addAttack(currentAttack);
         }
         if (Gdx.input.isKeyJustPressed(Input.Keys.F)) {
-            CombatHandler.handleAOEMagicAttack();
+            currentAttack = new AOEMagicAttack(playerCharacter);
+            currentAttack.setAttackSound(new LibGDXSoundAdapter(AssetStrings.AOE_MAGIC_ATTACK_SOUND));
+            currentAttack.playAttackSound(0.1f);
+            adlez.addAttack(currentAttack);
+        }
+
+        // TEST for reloading the area
+        if (Gdx.input.isKeyJustPressed(Input.Keys.NUM_1)) {
+            ScreenManager.getInstance().switchArea(AreaHandler.getInstance().loadLevel1());
+        }
+        if (Gdx.input.isKeyJustPressed(Input.Keys.NUM_2)) {
+            ScreenManager.getInstance().switchArea(AreaHandler.getInstance().loadLevel2());
         }
 
         playerView.viewUpdate(player.getDirection());

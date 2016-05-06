@@ -20,13 +20,15 @@ public class Adlez {
     private List<IWorldObject> worldObjects;
 
     private IPlayer player;
-    private List<INPC> enemies;
-    private List<INPC> friendlyNPCs;
+    private List<IEnemy> enemies;
+    private List<IFriendlyNPC> friendlyNPCs;
     private List<IWorldObject> stationaryObjects;
     private List<IWall> walls;
     private List<IObstacle> obstacles;
     private List<IChest> chests;
     private CollisionHandler2 collisionHandler;
+    private List<IAttack> attacks = new ArrayList<>();
+    private List<IAttack> newAttacks = new ArrayList<>();
 
     private Adlez() {
         /** Set players's width & height to size of texture for debugging purposes */
@@ -38,49 +40,52 @@ public class Adlez {
 
     public void initiateArea(Area area) {
         // Reset the world and then set it up for the new area
-        worldObjects = new ArrayList<IWorldObject>();
-    
+        worldObjects = new ArrayList<>();
+
         collisionHandler = new CollisionHandler2();
 
         // add the player and set him to the new position
         worldObjects.add(player);
-        collisionHandler.add((Collidable) player);
         player.setPosX(area.getPlayerXposition());
         player.setPosY(area.getPlayerYposition());
 
         enemies = area.getEnemies();
-        worldObjects.addAll(enemies);
-        collisionHandler.addAll(enemies);
-
+        List<IWorldObject> tempList = new ArrayList<>();
+        for(IEnemy enemy : enemies){
+            tempList.add((IWorldObject) enemy);
+        }
+        worldObjects.addAll(tempList);
+        
+        tempList.clear();
+        
         friendlyNPCs = area.getFriendlyNPCs();
-        worldObjects.addAll(friendlyNPCs);
-        collisionHandler.addAll(friendlyNPCs);
+        for(IFriendlyNPC friendlyNPC : friendlyNPCs){
+            tempList.add((IWorldObject) friendlyNPC);
+        }
+        worldObjects.addAll(tempList);
 
         stationaryObjects = area.getStationaryObjects();
         worldObjects.addAll(stationaryObjects);
-        collisionHandler.addAll(stationaryObjects);
 
         walls = area.getWalls();
         worldObjects.addAll(walls);
-        collisionHandler.addAll(walls);
 
         obstacles = area.getObstacles();
         worldObjects.addAll(obstacles);
-        collisionHandler.addAll(obstacles);
 
         chests = area.getChests();
         worldObjects.addAll(chests);
-        collisionHandler.addAll(chests);
         
+        attacks = new ArrayList<>();
     }
 
     public IPlayer getPlayer() {
         return player;
     }
 
-    public List<INPC> getEnemies() { return enemies; }
+    public List<IEnemy> getEnemies() { return enemies; }
 
-    public List<INPC> getFriendlyNPCs() {
+    public List<IFriendlyNPC> getFriendlyNPCs() {
         return friendlyNPCs;
     }
 
@@ -107,15 +112,43 @@ public class Adlez {
     public void removeEnemyFromWorld(INPC enemy){
         enemies.remove(enemy);
         worldObjects.remove(enemy);
-        collisionHandler.remove((Collidable) enemy);
     }
 
     public void removeChestFromWorld(IChest chest) {
+        chests.remove(chest);
         worldObjects.remove(chest);
-        collisionHandler.remove((Collidable) chest);
     }
-    
+
     public CollisionHandler2 getCollisionHandler(){
         return collisionHandler;
+    }
+    
+    public List<IAttack> getAttacks(){
+        return attacks;
+    }
+    
+    public void removeAttackFromWorld(IAttack attack){
+        attacks.remove(attack);
+        worldObjects.remove(attack);
+    }
+    
+    public List<IAttack> getNewAttacks(){
+        return newAttacks;
+    }
+    
+    public void addAttack(IAttack attack){
+        newAttacks.add(attack);
+        attacks.add(attack);
+        worldObjects.add(attack);
+    }
+    
+    public void removeObstacleFromWorld(IObstacle obstacle){
+        obstacles.remove(obstacle);
+        worldObjects.remove(obstacle);
+    }
+    
+    public void removeWallFromWorld(IWall wall){
+        walls.remove(wall);
+        worldObjects.remove(wall);
     }
 }
