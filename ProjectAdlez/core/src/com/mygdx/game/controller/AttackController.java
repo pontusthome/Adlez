@@ -9,10 +9,6 @@ import com.mygdx.game.model.*;
 
 public class AttackController implements IController{
 	
-	/** No implementation at the moment but this class should be used to handle attacks.
-	 * Will be responsible for rendering them as well as removing them from the world when their work is done
-	 */
-	
 	private IAttack attack;
 	private Adlez adlez;
 	

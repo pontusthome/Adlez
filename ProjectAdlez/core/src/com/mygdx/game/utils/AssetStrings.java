@@ -13,6 +13,7 @@ public final class AssetStrings {
     public static final String AOE_MAGIC_ATTACK_SOUND = "fire_attack.wav";
     public static final String RANGE_MAGIC_ATTACK_SOUND = "ice_attack.wav";
     public static final String OUT_OF_MANA_SOUND = "out_of_mana.wav";
+    public static final String INTERACTION_SOUND = "interaction.wav";
 
     /**
      * Buttons

@@ -21,8 +21,9 @@ public class PlayerController implements ICharacterController{
     private CharacterView playerView;
     private Adlez adlez;
     
-    /** To be able to paint where melee attack landed for debugging purposes */
+    /** To be able to paint where actions landed for debugging purposes */
     public static IAttack currentAttack = new MeleeAttack();
+    public static IInteraction currentInteraction = new Interaction();
 
     public PlayerController(IPlayer player) {
         this.player = player;
@@ -53,21 +54,27 @@ public class PlayerController implements ICharacterController{
         
         if (Gdx.input.isKeyJustPressed(Input.Keys.SPACE)) {
             currentAttack = new MeleeAttack(playerCharacter);
-            currentAttack.setAttackSound(new LibGDXSoundAdapter(AssetStrings.MELEE_ATTACK_SOUND));
-            currentAttack.playAttackSound(0.1f);
+            currentAttack.setSound(new LibGDXSoundAdapter(AssetStrings.MELEE_ATTACK_SOUND));
+            currentAttack.playSound(0.1f);
             adlez.addAttack(currentAttack);
         }
         if (Gdx.input.isKeyJustPressed(Input.Keys.E)) {
             currentAttack = new RangeMagicAttack(playerCharacter);
-            currentAttack.setAttackSound(new LibGDXSoundAdapter(AssetStrings.RANGE_MAGIC_ATTACK_SOUND));
-            currentAttack.playAttackSound(0.1f);
+            currentAttack.setSound(new LibGDXSoundAdapter(AssetStrings.RANGE_MAGIC_ATTACK_SOUND));
+            currentAttack.playSound(0.1f);
             adlez.addAttack(currentAttack);
         }
         if (Gdx.input.isKeyJustPressed(Input.Keys.F)) {
             currentAttack = new AOEMagicAttack(playerCharacter);
-            currentAttack.setAttackSound(new LibGDXSoundAdapter(AssetStrings.AOE_MAGIC_ATTACK_SOUND));
-            currentAttack.playAttackSound(0.1f);
+            currentAttack.setSound(new LibGDXSoundAdapter(AssetStrings.AOE_MAGIC_ATTACK_SOUND));
+            currentAttack.playSound(0.1f);
             adlez.addAttack(currentAttack);
+        }
+        if (Gdx.input.isKeyJustPressed(Input.Keys.ENTER)) {
+            currentInteraction = new Interaction(playerCharacter);
+            currentInteraction.setSound(new LibGDXSoundAdapter(AssetStrings.INTERACTION_SOUND));
+            currentInteraction.playSound(0.5f);
+            adlez.addInteraction(currentInteraction);
         }
 
         // TEST for reloading the area

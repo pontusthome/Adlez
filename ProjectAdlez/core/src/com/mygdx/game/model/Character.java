@@ -2,6 +2,9 @@ package com.mygdx.game.model;
 
 import com.mygdx.game.model.handler.CollisionHandler;
 
+import java.util.ArrayList;
+import java.util.List;
+
 /**
  * Created by Michel on 2016-04-19.
  */
@@ -22,6 +25,7 @@ public abstract class Character extends WorldObject implements ICharacter {
 	private boolean movingSouth;
 	private boolean movingEast;
 	private boolean movingWest;
+	private List<IItem> inventory;
 	
 	public Character() {
 		this(Direction.NORTH, 2f,
@@ -44,6 +48,7 @@ public abstract class Character extends WorldObject implements ICharacter {
 		setAttackDamage(attackDamage);
 		setGold(gold);
 		setMana(mana);
+		inventory = new ArrayList<>();
 		
 		movingNorth = false;
 		movingSouth = false;
@@ -252,5 +257,15 @@ public abstract class Character extends WorldObject implements ICharacter {
 	@Override
 	public boolean isAlive(){
 		return getHealth() > 0;
+	}
+	
+	@Override
+	public void setInventory(List<IItem> inventory){
+		this.inventory = inventory;
+	}
+	
+	@Override
+	public List<IItem> getInventory(){
+		return inventory;
 	}
 }

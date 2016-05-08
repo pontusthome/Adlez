@@ -51,6 +51,8 @@ public class GameScreen extends AbstractScreen {
     private IController obstaclesController;
     private IController chestsController;
     private IController wallsController;
+    private HashMap<IInteraction, IController> interactionControllers;
+    private List<IInteraction> newInteractions;
     
     private static final float UNIT_SCALE = 1f;
     private static final float WIDTH_SCALE = 2/3f;
@@ -92,6 +94,9 @@ public class GameScreen extends AbstractScreen {
         obstaclesController = new ObstaclesController(adlez.getObstacles(), AssetStrings.BOULDER_OBSTACLE_IMAGE);
         chestsController = new ChestsController(adlez.getChests(), AssetStrings.CHEST_IMAGE);
         wallsController = new WallsController(adlez.getWalls());
+        
+        interactionControllers = new HashMap<>();
+        newInteractions = adlez.getNewInteractions();
 
         // temporary things, just testing
         tileMap = new TmxMapLoader().load(AssetStrings.AREA2_TMX);
@@ -189,6 +194,31 @@ public class GameScreen extends AbstractScreen {
             adlez.removeAttackFromWorld(finishedAttack);
         }
     
+        // Update interactions
+        if(!newInteractions.isEmpty()){
+            for(IInteraction interaction : newInteractions){
+                InteractionController interactionController = new InteractionController(interaction);
+                interactionControllers.put(interaction, interactionController);
+            }
+            newInteractions.clear();
+        }
+        List<IInteraction> finishedInteractions = new ArrayList<>();
+        for(Map.Entry<IInteraction, IController> entry : interactionControllers.entrySet()){
+            IInteraction interaction = entry.getKey();
+            IController interactionController = entry.getValue();
+        
+            if (interaction.isFinished()) {
+                finishedInteractions.add(interaction);
+            }
+            else {
+                interactionController.update();
+            }
+        }
+        for (IInteraction finishedInteraction : finishedInteractions) {
+            interactionControllers.remove(finishedInteraction);
+            adlez.removeInteractionFromWorld(finishedInteraction);
+        }
+    
         // Update stationary objects 
         obstaclesController.update();
         chestsController.update();
@@ -201,8 +231,11 @@ public class GameScreen extends AbstractScreen {
         debugRenderer.setProjectionMatrix(playerCam.combined);
         debugRenderer.begin(ShapeRenderer.ShapeType.Line);
         debugRenderer.setColor(1, 1, 0, 1);
-        HitBox hitBox = PlayerController.currentAttack.getHitBox();
-        debugRenderer.rect(hitBox.getX(), hitBox.getY(), hitBox.getWidth(), hitBox.getHeight());
+        HitBox attackHitBox = PlayerController.currentAttack.getHitBox();
+        HitBox interactionHitBox = PlayerController.currentInteraction.getHitBox();
+        debugRenderer.rect(attackHitBox.getX(), attackHitBox.getY(), attackHitBox.getWidth(), attackHitBox.getHeight());
+        debugRenderer.rect(interactionHitBox.getX(), interactionHitBox.getY(), 
+                interactionHitBox.getWidth(), interactionHitBox.getHeight());
         debugRenderer.rect(player.getPosX(), player.getPosY(), player.getWidth(), player.getHeight());
         List <IWall> tempList = adlez.getWalls();
         for(IWall wall : tempList){

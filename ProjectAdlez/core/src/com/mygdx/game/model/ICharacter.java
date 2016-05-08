@@ -1,5 +1,7 @@
 package com.mygdx.game.model;
 
+import java.util.List;
+
 /**
  * Created by Michel on 2016-04-19.
  */
@@ -37,4 +39,6 @@ public interface ICharacter extends IWorldObject{
 	boolean isMovingEast();
 	boolean isMovingWest();
 	boolean isAlive();
+	List<IItem> getInventory();
+	void setInventory(List<IItem> inventory);
 }

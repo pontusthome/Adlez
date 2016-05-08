@@ -1,26 +1,23 @@
 package com.mygdx.game.model;
 
 /**
- * Created by Michel on 4.5.2016.
+ * Created by Michel on 8.5.2016.
  */
-public class MeleeAttack extends Attack{
+public class Interaction extends Action implements IInteraction{
 	
-	public MeleeAttack(){
+	ICharacter interactor;
+	
+	public Interaction(){
 		super();
 	}
 	
-	public MeleeAttack(ICharacter character){
-		super(character);
+	public Interaction(ICharacter interactor){
+		super(interactor);
 	}
 	
-	/**
-	 * Temporarily set to the character's attack damage.
-	 *
-	 * Should depend on something like "character.getWeaponEquipped.getDamage()".
-	 */
 	@Override
-	public void setDamage(ICharacter character){
-		setDamage(character.getAttackDamage());
+	public void onCollide(Collidable other){
+		
 	}
 	
 	@Override
@@ -42,10 +39,5 @@ public class MeleeAttack extends Attack{
 				setPos(character.getPosX() - character.getWidth(), character.getPosY());
 				break;
 		}
-	}
-	
-	@Override
-	public void onCollide(Collidable other){
-		
 	}
 }

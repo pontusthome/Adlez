@@ -48,6 +48,12 @@ public class Chest extends WorldObject implements IChest {
             IAttack attack = (IAttack) other;
             setHealth(getHealth() - attack.getDamage());
         }
+        if(other instanceof IInteraction){
+            IInteraction interaction = (IInteraction) other;
+            ICharacter character = interaction.getCharacter();
+            character.getInventory().addAll(slots);
+            setHealth(0);
+        }
     }
     
     @Override

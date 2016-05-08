@@ -30,6 +30,8 @@ public class Adlez {
     private CollisionHandler2 collisionHandler;
     private List<IAttack> attacks = new ArrayList<>();
     private List<IAttack> newAttacks = new ArrayList<>();
+    private List<IInteraction> interactions = new ArrayList<>();
+    private List<IInteraction> newInteractions = new ArrayList<>();
 
     private Adlez() {
         /** Set players's width & height to size of texture for debugging purposes */
@@ -158,5 +160,20 @@ public class Adlez {
     public void removeWallFromWorld(IWall wall){
         walls.remove(wall);
         worldObjects.remove(wall);
+    }
+    
+    public void addInteraction(IInteraction interaction){
+        newInteractions.add(interaction);
+        interactions.add(interaction);
+        worldObjects.add(interaction);
+    }
+    
+    public void removeInteractionFromWorld(IInteraction interaction){
+        interactions.remove(interaction);
+        worldObjects.remove(interaction);
+    }
+    
+    public List<IInteraction> getNewInteractions(){
+        return newInteractions;
     }
 }
