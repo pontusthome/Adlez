@@ -35,11 +35,11 @@ public class AreaHandler {
     }
 
     public Area loadArea1() {
-        return area1.generateArea();
+        return area1.loadArea();
     }
 
     public Area loadArea2() {
-        return area2.generateArea();
+        return area2.loadArea();
     }
 
     public Area loadLevel1() {

@@ -26,7 +26,14 @@ public class Area1 implements ICompleteArea {
     private List<IChest> chests;
     private List<IAreaConnection> areaConnections;
 
-    public Area generateArea() {
+    public Area loadArea() {
+        if (area == null) {
+            return generateArea();
+        }
+        return area;
+    }
+
+    private Area generateArea() {
         wall = new Wall();
 
         enemies = new ArrayList<IEnemy>();
