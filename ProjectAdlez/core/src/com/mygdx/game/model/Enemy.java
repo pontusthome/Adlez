@@ -1,9 +1,11 @@
 package com.mygdx.game.model;
 
+import java.io.Serializable;
+
 /**
  * Created by Michel on 1.5.2016.
  */
-public class Enemy extends NPC implements IEnemy{
+public class Enemy extends NPC implements IEnemy, Serializable{
 
 	public static final int REGULAR_LEVEL_ONE = 1;
 	public static final int REGULAR_LEVEL_TWO = 2;

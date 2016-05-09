@@ -1,9 +1,11 @@
 package com.mygdx.game.model;
 
+import java.io.Serializable;
+
 /**
  * Created by martinso on 20/04/16.
  */
-public class Weapon implements IItem {
+public class Weapon implements IItem, Serializable {
 
     private String type;
     private String name;

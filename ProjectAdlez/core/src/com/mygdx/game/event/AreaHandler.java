@@ -4,6 +4,7 @@ import com.mygdx.game.model.*;
 import com.mygdx.game.model.completeAreas.Area1;
 import com.mygdx.game.model.completeAreas.Area2;
 
+import java.io.*;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -12,7 +13,7 @@ import static com.badlogic.gdx.math.MathUtils.random;
 /**
  * @author Pontus
  */
-public class AreaHandler {
+public class AreaHandler implements Serializable {
 
     private static AreaHandler areaHandler = new AreaHandler();
 
@@ -22,22 +23,47 @@ public class AreaHandler {
 
     private Area level1;
     private Area level2;
-
-    private Area1 area1;
-    private Area2 area2;
+    private Area currentArea;
 
     // Create the setup for each level
     private AreaHandler() {
         createLevel1();
         createLevel2();
+        currentArea = level1;
     }
 
     public Area loadArea1() {
+        currentArea = level1;
         return level1;
     }
 
     public Area loadArea2() {
+        currentArea = level2;
         return level2;
+    }
+
+    public Area getCurrentArea() {
+        return currentArea;
+    }
+
+    public void SaveAreaHandler(){
+        try {
+            ObjectOutputStream oos = new ObjectOutputStream(new FileOutputStream("save.dat"));
+            oos.writeObject(this);
+            oos.close();
+        } catch(Exception ex) {
+            ex.printStackTrace();
+        }
+    }
+
+    public static void LoadAreaHandler(){
+        try {
+            ObjectInputStream ois = new ObjectInputStream(new FileInputStream("save.dat"));
+            areaHandler = (AreaHandler) ois.readObject();
+            ois.close();
+        } catch(Exception ex) {
+            ex.printStackTrace();
+        }
     }
 
     private void createLevel1() {
@@ -98,7 +124,7 @@ public class AreaHandler {
         areaConnections.add(new AreaConnection(32 * 18, 32, 32, 32));
 
         level1 = new Area(playerPosX, playerPosY,
-                enemies, friendlyNPCs, stationaryObjects, walls, obstacles, chests, areaConnections);
+                enemies, friendlyNPCs, stationaryObjects, walls, obstacles, chests, areaConnections, "Level1");
     }
 
     private void createLevel2() {
@@ -193,6 +219,6 @@ public class AreaHandler {
         areaConnections.add(new AreaConnection(32 * 8, 32*18, 32, 32));
 
         level2 = new Area(playerPosX, playerPosY,
-                enemies, friendlyNPCs, stationaryObjects, walls, obstacles, chests, areaConnections);
+                enemies, friendlyNPCs, stationaryObjects, walls, obstacles, chests, areaConnections, "Level2");
     }
 }

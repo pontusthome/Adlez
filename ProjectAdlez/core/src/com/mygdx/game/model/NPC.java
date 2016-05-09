@@ -1,9 +1,11 @@
 package com.mygdx.game.model;
 
+import java.io.Serializable;
+
 /**
  * Created by Michel on 2016-04-19.
  */
-public abstract class NPC extends Character implements INPC{
+public abstract class NPC extends Character implements INPC, Serializable {
 	
 	private boolean isAlive = true;
 	

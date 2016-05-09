@@ -2,6 +2,10 @@ package com.mygdx.game.model;
 
 import com.mygdx.game.model.handler.CollisionHandler2;
 
+import java.io.FileInputStream;
+import java.io.FileOutputStream;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -175,5 +179,25 @@ public class Adlez {
     
     public List<IInteraction> getNewInteractions(){
         return newInteractions;
+    }
+
+    public void savePlayer(){
+        try {
+            ObjectOutputStream oos = new ObjectOutputStream(new FileOutputStream("player.dat"));
+            oos.writeObject(player);
+            oos.close();
+        } catch(Exception ex) {
+            ex.printStackTrace();
+        }
+    }
+
+    public void loadPlayer(){
+        try {
+            ObjectInputStream ois = new ObjectInputStream(new FileInputStream("player.dat"));
+            player = (IPlayer) ois.readObject();
+            ois.close();
+        } catch(Exception ex) {
+            ex.printStackTrace();
+        }
     }
 }

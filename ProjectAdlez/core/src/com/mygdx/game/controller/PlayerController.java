@@ -77,12 +77,29 @@ public class PlayerController implements ICharacterController{
             adlez.addInteraction(currentInteraction);
         }
 
-        // TEST for reloading the area
+        /**
+         * ===============================
+         * TEST for changing areas
+         * ===============================
+          */
         if (Gdx.input.isKeyJustPressed(Input.Keys.NUM_1)) {
             ScreenManager.getInstance().switchArea(AreaHandler.getInstance().loadArea1());
         }
         if (Gdx.input.isKeyJustPressed(Input.Keys.NUM_2)) {
             ScreenManager.getInstance().switchArea(AreaHandler.getInstance().loadArea2());
+        }
+        /**
+         * ===============================
+         * TEST for saving and loading areas
+         * ===============================
+         */
+        if (Gdx.input.isKeyJustPressed(Input.Keys.NUM_0)) {
+            AreaHandler.getInstance().SaveAreaHandler();
+            Adlez.getInstance().savePlayer();
+        }
+        if (Gdx.input.isKeyJustPressed(Input.Keys.L)) {
+            AreaHandler.getInstance().LoadAreaHandler();
+            Adlez.getInstance().loadPlayer();
         }
 
         playerView.viewUpdate(player.getDirection());

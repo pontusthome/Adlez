@@ -1,5 +1,8 @@
 package com.mygdx.game.model;
 
+import com.mygdx.game.event.AreaHandler;
+
+import java.io.*;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
@@ -7,7 +10,7 @@ import java.util.List;
 /**
  * Created by Michel on 2016-04-19.
  */
-public class Player extends Character implements IPlayer {
+public class Player extends Character implements IPlayer, Serializable {
     private int experience;
 
     private IItem swordEquipped;

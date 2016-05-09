@@ -1,12 +1,13 @@
 package com.mygdx.game.model;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
 /**
  * Created by martinso on 25/04/16.
  */
-public class Wall extends WorldObject implements IWall {
+public class Wall extends WorldObject implements IWall, Serializable {
     
     private int health;
     private Wall singleWall;

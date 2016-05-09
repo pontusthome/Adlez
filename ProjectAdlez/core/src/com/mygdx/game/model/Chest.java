@@ -1,12 +1,13 @@
 package com.mygdx.game.model;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
 /**
  * Created by martinso on 20/04/16.
  */
-public class Chest extends WorldObject implements IChest {
+public class Chest extends WorldObject implements IChest, Serializable {
 
     private int chestSize;
     private int chestSizeCount = 0;

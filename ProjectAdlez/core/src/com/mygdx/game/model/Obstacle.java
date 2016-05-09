@@ -1,9 +1,11 @@
 package com.mygdx.game.model;
 
+import java.io.Serializable;
+
 /**
  * Created by martinso on 27/04/16.
  */
-public class Obstacle extends WorldObject implements IObstacle{
+public class Obstacle extends WorldObject implements IObstacle, Serializable {
     
     private int health;
 

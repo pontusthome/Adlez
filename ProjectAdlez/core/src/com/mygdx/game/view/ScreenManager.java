@@ -34,10 +34,6 @@ public class ScreenManager {
     // Initialization with the game class
     public void initialize(Game game) {
         this.game = game;
-        // Initiate the area
-        Adlez adlez = Adlez.getInstance();
-        AreaHandler areaHandler = AreaHandler.getInstance();
-        adlez.initiateArea(areaHandler.loadArea2());
         showScreen(ScreenEnum.INTRO);
     }
 

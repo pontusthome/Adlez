@@ -1,6 +1,8 @@
 package com.mygdx.game.model;
 
-public abstract class WorldObject implements IWorldObject{
+import java.io.Serializable;
+
+public abstract class WorldObject implements IWorldObject, Serializable {
 
     private float posX;
     private float posY;

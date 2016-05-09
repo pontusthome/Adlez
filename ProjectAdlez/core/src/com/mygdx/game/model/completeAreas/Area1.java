@@ -89,7 +89,7 @@ public class Area1 implements ICompleteArea {
 
         areaConnections.add(new AreaConnection(32 * 18, 32, 32, 32));
 
-        area = new Area(playerPosX, playerPosY, enemies, friendlyNPCs, stationaryObjects, walls, obstacles, chests, areaConnections);
+        area = new Area(playerPosX, playerPosY, enemies, friendlyNPCs, stationaryObjects, walls, obstacles, chests, areaConnections, "Area1");
     }
 
     /**

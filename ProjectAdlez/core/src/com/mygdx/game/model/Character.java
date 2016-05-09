@@ -2,13 +2,14 @@ package com.mygdx.game.model;
 
 import com.mygdx.game.model.handler.CollisionHandler;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
 /**
  * Created by Michel on 2016-04-19.
  */
-public abstract class Character extends WorldObject implements ICharacter {
+public abstract class Character extends WorldObject implements ICharacter, Serializable {
 
 	private int attackDamage;
 	private int health;

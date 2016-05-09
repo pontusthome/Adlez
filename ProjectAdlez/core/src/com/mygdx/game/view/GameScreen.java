@@ -37,13 +37,11 @@ public class GameScreen extends AbstractScreen {
     private OrthoCachedTiledMapRenderer renderer;
     private TiledMap tileMap;
 
-    private ObstaclesView obstaclesView;
-    private ChestView chestView;
     private GateView gateView;
     
     private CollisionHandler2 collisionHandler;
     private List<IAttack> attacks;
-    
+
     private HashMap<IAttack, IController> attackControllers;
     private ShapeRenderer debugRenderer = new ShapeRenderer();
     private List<IAttack> newAttacks;
