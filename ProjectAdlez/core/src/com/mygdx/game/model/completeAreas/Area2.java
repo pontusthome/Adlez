@@ -27,13 +27,10 @@ public class Area2 implements ICompleteArea {
     private List<IAreaConnection> areaConnections;
 
     public Area loadArea() {
-        if (area == null) {
-            return generateArea();
-        }
         return area;
     }
 
-    private Area generateArea() {
+    public Area2() {
         wall = new Wall();
 
         enemies = new ArrayList<IEnemy>();
@@ -48,36 +45,24 @@ public class Area2 implements ICompleteArea {
         playerPosX = 32;
         playerPosY = 32;
 
-        generateSingleWall(32 * 1, 32 * 4, 32);
-        generateSingleWall(32 * 2, 32 * 4, 32);
-        generateSingleWall(32 * 3, 32 * 4, 32);
-        generateSingleWall(32 * 4, 32 * 4, 32);
-
-        generateSingleWall(32 * 4, 32 * 5, 32);
-        generateSingleWall(32 * 4, 32 * 6, 32);
-        generateSingleWall(32 * 4, 32 * 7, 32);
-        generateSingleWall(32 * 4, 32 * 8, 32);
-        generateSingleWall(32 * 4, 32 * 9, 32);
-        generateSingleWall(32 * 4, 32 * 10, 32);
-        generateSingleWall(32 * 4, 32 * 11, 32);
-        generateSingleWall(32 * 4, 32 * 12, 32);
-        generateSingleWall(32 * 4, 32 * 13, 32);
-        generateSingleWall(32 * 4, 32 * 14, 32);
-        generateSingleWall(32 * 4, 32 * 15, 32);
-        generateSingleWall(32 * 4, 32 * 16, 32);
-        generateSingleWall(32 * 4, 32 * 17, 32);
-
-        generateSingleWall(32 * 1, 32 * 11, 32);
-        generateSingleWall(32 * 2, 32 * 11, 32);
-
-        generateSingleWall(32 * 2, 32 * 13, 32);
-        generateSingleWall(32 * 3, 32 * 13, 32);
-
-        generateSingleWall(32 * 1, 32 * 15, 32);
-        generateSingleWall(32 * 2, 32 * 15, 32);
-
-        generateSingleWall(32 * 2, 32 * 17, 32);
-        generateSingleWall(32 * 3, 32 * 17, 32);
+        for (int i = 1; i < 5; i++) {
+            walls.add(wall.createSingleWall(i, 4));
+        }
+        for (int i = 5; i < 18; i++) {
+            walls.add(wall.createSingleWall(4, i));
+        }
+        for (int i = 1; i < 3; i++) {
+            walls.add(wall.createSingleWall(i, 11));
+        }
+        for (int i = 2; i < 4; i++) {
+            walls.add(wall.createSingleWall(i, 13));
+        }
+        for (int i = 1; i < 3; i++) {
+            walls.add(wall.createSingleWall(i, 15));
+        }
+        for (int i = 2; i < 4; i++) {
+            walls.add(wall.createSingleWall(i, 17));
+        }
 
         generateObstacles(32*3,32*11);
         generateObstacles(32*1,32*13);
@@ -138,8 +123,6 @@ public class Area2 implements ICompleteArea {
         areaConnections.add(new AreaConnection(32 * 8, 32*18, 32, 32));
 
         area = new Area(playerPosX, playerPosY, enemies, friendlyNPCs, stationaryObjects, walls, obstacles, chests, areaConnections);
-
-        return area;
     }
 
     /**
@@ -153,8 +136,8 @@ public class Area2 implements ICompleteArea {
     /**
      * generating walls not included in area bounds.
      */
-    public void generateSingleWall(float posX, float posY, int size) {
-        walls.add(wall.createSingleWall(posX, posY, size));
+    public void generateSingleWall(int posX, int posY, int size) {
+        walls.add(wall.createSingleWall(posX, posY));
     }
 
     /**

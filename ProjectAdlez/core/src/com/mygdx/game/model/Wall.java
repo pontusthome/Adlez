@@ -18,12 +18,12 @@ public class Wall extends WorldObject implements IWall {
         setHealth(1337);
     }
 
-    public Wall createSingleWall(float posX, float posY, int size) {
+    public Wall createSingleWall(int posX, int posY) {
         singleWall = new Wall();
-        singleWall.setHeight(size);
-        singleWall.setWidth(size);
-        singleWall.setPosX(posX);
-        singleWall.setPosY(posY);
+        singleWall.setHeight(32);
+        singleWall.setWidth(32);
+        singleWall.setPosX(posX * 32);
+        singleWall.setPosY(posY * 32);
         return singleWall;
     }
 

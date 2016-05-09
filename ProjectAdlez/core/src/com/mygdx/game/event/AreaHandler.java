@@ -28,117 +28,171 @@ public class AreaHandler {
 
     // Create the setup for each level
     private AreaHandler() {
-        //createLevel1();
-        //createLevel2();
-        area1 = new Area1();
-        area2 = new Area2();
+        createLevel1();
+        createLevel2();
     }
 
     public Area loadArea1() {
-        return area1.loadArea();
-    }
-
-    public Area loadArea2() {
-        return area2.loadArea();
-    }
-
-    public Area loadLevel1() {
         return level1;
     }
 
-    public Area loadLevel2() {
+    public Area loadArea2() {
         return level2;
     }
 
     private void createLevel1() {
-        float playerXposition = 40f;
-        float playerYposition = 40f;
-        float xPos;
-        float yPos;
         List<IEnemy> enemies = new ArrayList<>();
         List<IFriendlyNPC>friendlyNPCs = new ArrayList<>();
         List<IWorldObject>stationaryObjects = new ArrayList<>();
+        Wall wall = new Wall();
         List<IWall>walls = new ArrayList<>();
         List<IObstacle>obstacles = new ArrayList<>();
         List<IChest>chests = new ArrayList<>();
         List<IAreaConnection>areaConnections = new ArrayList<>();
 
-        Wall wall = new Wall();
-        walls.addAll(wall.createAreaBounds(10, 10, 64 / 2));
+        // Spawning left bottom corner.
+        float playerPosX = 32f;
+        float playerPosY = 32f;
 
-        Obstacle obst1 = new Obstacle(180, 32, 32, 32, 1);
-        obstacles.add(obst1);
-        Obstacle obst2 = new Obstacle(180, 64, 32, 32, 1);
-        obstacles.add(obst2);
-        Obstacle obst3 = new Obstacle(32, 140, 32, 32, 1);
-        obstacles.add(obst3);
+        walls.addAll(wall.createAreaBounds(10, 20, 32));
 
-        Chest ch1 = new Chest(120, 270, 16, 16, 2, 1);
+        enemies.add(EnemyFactory.createEnemy(Enemy.REGULAR_LEVEL_TWO, 32 * 1, 32 * 5));
+        enemies.add(EnemyFactory.createEnemy(Enemy.REGULAR_LEVEL_ONE, 32 * 2, 32 * 5));
+        enemies.add(EnemyFactory.createEnemy(Enemy.REGULAR_LEVEL_ONE, 32 * 3, 32 * 5));
+        enemies.add(EnemyFactory.createEnemy(Enemy.REGULAR_LEVEL_ONE, 32 * 4, 32 * 5));
+
+        enemies.add(EnemyFactory.createEnemy(Enemy.DARK_ONE_LEVEL_ONE, 32 * 8, 32 * 8));
+        enemies.add(EnemyFactory.createEnemy(Enemy.DARK_ONE_LEVEL_ONE, 32 * 9, 32 * 8));
+        enemies.add(EnemyFactory.createEnemy(Enemy.DARK_ONE_LEVEL_ONE, 32 * 8, 32 * 2));
+        enemies.add(EnemyFactory.createEnemy(Enemy.DARK_ONE_LEVEL_ONE, 32 * 9, 32 * 2));
+
+        enemies.add(EnemyFactory.createEnemy(Enemy.DOG_LEVEL_ONE, 32 * 14, 32 * 2));
+        enemies.add(EnemyFactory.createEnemy(Enemy.DOG_LEVEL_ONE, 32 * 14, 32 * 7));
+
+        Chest ch1 = new Chest(32 * 18 + 8, 32 * 7 + 8, 16, 16, 2, 200);
         chests.add(ch1);
-        xPos = 120f;
-        yPos = 250f;
-        enemies.add(EnemyFactory.createEnemy(Enemy.DARK_ONE_LEVEL_ONE, xPos, yPos));
-        xPos = 140f;
-        yPos = 265f;
-        enemies.add(EnemyFactory.createEnemy(Enemy.REGULAR_LEVEL_ONE, xPos, yPos));
-        xPos = 100f;
-        yPos = 265f;
-        enemies.add(EnemyFactory.createEnemy(Enemy.REGULAR_LEVEL_ONE, xPos, yPos));
 
-        Chest ch2 = new Chest(196+16, 64+16, 16, 16, 2, 1);
-        chests.add(ch2);
-        xPos = 240f;
-        yPos = 80f;
-        enemies.add(EnemyFactory.createEnemy(Enemy.REGULAR_LEVEL_ONE, xPos, yPos));
-        xPos = 260f;
-        yPos = 80f;
-        enemies.add(EnemyFactory.createEnemy(Enemy.DOG_LEVEL_ONE, xPos, yPos));
+        friendlyNPCs.add(new FriendlyNPC(Direction.SOUTH, 17, 17, 32, 32 * 2, 200, 10, 0, 0, 0));
 
-        areaConnections.add(new AreaConnection(260f, 260f, 32, 32));
+        for (int i = 1; i < 8; i++) {
+            walls.add(wall.createSingleWall(6, i));
+        }
+        for (int i = 1; i < 5; i++) {
+            walls.add(wall.createSingleWall(i, 3));
+        }
+        for (int i = 2; i < 6; i++) {
+            walls.add(wall.createSingleWall(i, 7));
+        }
+        for (int i = 2; i < 9; i++) {
+            walls.add(wall.createSingleWall(11, i));
+        }
+        for (int i = 1; i < 8; i++) {
+            walls.add(wall.createSingleWall(17, i));
+        }
 
-        level1 = new Area(playerXposition, playerYposition,
+        obstacles.add(new Obstacle(5, 3));
+        obstacles.add(new Obstacle(1, 7));
+        obstacles.add(new Obstacle(11, 1));
+        obstacles.add(new Obstacle(17, 8));
+
+        areaConnections.add(new AreaConnection(32 * 18, 32, 32, 32));
+
+        level1 = new Area(playerPosX, playerPosY,
                 enemies, friendlyNPCs, stationaryObjects, walls, obstacles, chests, areaConnections);
     }
 
     private void createLevel2() {
-        float playerXposition = 260;
-        float playerYposition = 260;
-        float xPos;
-        float yPos;
         List<IEnemy> enemies = new ArrayList<>();
         List<IFriendlyNPC>friendlyNPCs = new ArrayList<>();
         List<IWorldObject>stationaryObjects = new ArrayList<>();
+        Wall wall = new Wall();
         List<IWall>walls = new ArrayList<>();
         List<IObstacle>obstacles = new ArrayList<>();
         List<IChest>chests = new ArrayList<>();
         List<IAreaConnection>areaConnections = new ArrayList<>();
 
-        xPos = 40f;
-        yPos = 200f;
-        enemies.add(EnemyFactory.createEnemy(Enemy.REGULAR_LEVEL_TWO, xPos, yPos));
-        xPos = 40f;
-        yPos = 40f;
-        enemies.add(EnemyFactory.createEnemy(Enemy.REGULAR_LEVEL_ONE, xPos, yPos));
-        xPos = 230f;
-        yPos = 40f;
-        enemies.add(EnemyFactory.createEnemy(Enemy.DARK_ONE_LEVEL_ONE, xPos, yPos));
+        // Spawning left bottom corner.
+        float playerPosX = 32f;
+        float playerPosY = 32f;
 
-        Wall wall = new Wall();
-        walls.addAll(wall.createAreaBounds(10, 10, 64 / 2));
+        for (int i = 1; i < 5; i++) {
+            walls.add(wall.createSingleWall(i, 4));
+        }
+        for (int i = 5; i < 18; i++) {
+            walls.add(wall.createSingleWall(4, i));
+        }
+        for (int i = 1; i < 3; i++) {
+            walls.add(wall.createSingleWall(i, 11));
+        }
+        for (int i = 2; i < 4; i++) {
+            walls.add(wall.createSingleWall(i, 13));
+        }
+        for (int i = 1; i < 3; i++) {
+            walls.add(wall.createSingleWall(i, 15));
+        }
+        for (int i = 2; i < 4; i++) {
+            walls.add(wall.createSingleWall(i, 17));
+        }
 
-        Obstacle obst1 = new Obstacle(32 * 5, 32 * 5, 32, 32, 1);
-        Obstacle obst2 = new Obstacle(32 * 7, 32 * 7, 32, 32, 1);
-        obstacles.add(obst1);
-        obstacles.add(obst2);
+        obstacles.add(new Obstacle(3, 11));
+        obstacles.add(new Obstacle(1, 13));
+        obstacles.add(new Obstacle(3, 15));
+        obstacles.add(new Obstacle(1, 17));
+        obstacles.add(new Obstacle(4, 18));
 
-        Chest ch1 = new Chest(32 * 4 + 8, 32 * 2 + 8, 16, 16, 2, 1);
-        Chest ch2 = new Chest(32 * 7 + 8, 32 * 2 + 8, 16, 16, 2, 1);
+        obstacles.add(new Obstacle(5, 4));
+        obstacles.add(new Obstacle(6, 4));
+        obstacles.add(new Obstacle(7, 4));
+        obstacles.add(new Obstacle(8, 4));
+
+        obstacles.add(new Obstacle(5, 9));
+        obstacles.add(new Obstacle(6, 9));
+        obstacles.add(new Obstacle(7, 9));
+        obstacles.add(new Obstacle(8, 9));
+
+        obstacles.add(new Obstacle(5, 14));
+        obstacles.add(new Obstacle(6, 14));
+        obstacles.add(new Obstacle(7, 14));
+        obstacles.add(new Obstacle(8, 14));
+
+        obstacles.add(new Obstacle(7, 17));
+        obstacles.add(new Obstacle(8, 17));
+
+        enemies.add(EnemyFactory.createEnemy(Enemy.REGULAR_LEVEL_ONE, 32 * 5, 32 * 6));
+        enemies.add(EnemyFactory.createEnemy(Enemy.REGULAR_LEVEL_ONE, 32 * 6, 32 * 6));
+        enemies.add(EnemyFactory.createEnemy(Enemy.REGULAR_LEVEL_ONE, 32 * 7, 32 * 6));
+        enemies.add(EnemyFactory.createEnemy(Enemy.REGULAR_LEVEL_ONE, 32 * 8, 32 * 6));
+
+        enemies.add(EnemyFactory.createEnemy(Enemy.REGULAR_LEVEL_TWO, 32 * 5, 32 * 7));
+        enemies.add(EnemyFactory.createEnemy(Enemy.REGULAR_LEVEL_TWO, 32 * 6, 32 * 7));
+        enemies.add(EnemyFactory.createEnemy(Enemy.REGULAR_LEVEL_TWO, 32 * 7, 32 * 7));
+        enemies.add(EnemyFactory.createEnemy(Enemy.REGULAR_LEVEL_TWO, 32 * 8, 32 * 7));
+
+        enemies.add(EnemyFactory.createEnemy(Enemy.REGULAR_LEVEL_TWO, 32 * 5, 32 * 11));
+        enemies.add(EnemyFactory.createEnemy(Enemy.REGULAR_LEVEL_TWO, 32 * 6, 32 * 11));
+        enemies.add(EnemyFactory.createEnemy(Enemy.REGULAR_LEVEL_TWO, 32 * 7, 32 * 11));
+        enemies.add(EnemyFactory.createEnemy(Enemy.REGULAR_LEVEL_TWO, 32 * 8, 32 * 11));
+
+        enemies.add(EnemyFactory.createEnemy(Enemy.DARK_ONE_LEVEL_ONE, 32 * 5, 32 * 12));
+        enemies.add(EnemyFactory.createEnemy(Enemy.DARK_ONE_LEVEL_ONE, 32 * 6, 32 * 12));
+        enemies.add(EnemyFactory.createEnemy(Enemy.DARK_ONE_LEVEL_ONE, 32 * 7, 32 * 12));
+        enemies.add(EnemyFactory.createEnemy(Enemy.DARK_ONE_LEVEL_ONE, 32 * 8, 32 * 12));
+
+        enemies.add(EnemyFactory.createEnemy(Enemy.DOG_LEVEL_ONE, 32 * 6, 32 * 15));
+        enemies.add(EnemyFactory.createEnemy(Enemy.DOG_LEVEL_ONE, 32 * 7, 32 * 15));
+
+        enemies.add(EnemyFactory.createEnemy(Enemy.DOG_LEVEL_ONE, 32 * 2, 32 * 7));
+        enemies.add(EnemyFactory.createEnemy(Enemy.DOG_LEVEL_ONE, 32 * 2, 32 * 8));
+        enemies.add(EnemyFactory.createEnemy(Enemy.DOG_LEVEL_ONE, 32 * 2, 32 * 9));
+
+        Chest ch1 = new Chest(32 * 2 + 8, 32 * 5 + 8, 16, 16, 2, 200);
         chests.add(ch1);
-        chests.add(ch2);
 
-        areaConnections.add(new AreaConnection(40f, 40f, 32, 32));
+        walls.addAll(wall.createAreaBounds(20, 10, 32));
 
-        level2 = new Area(playerXposition, playerYposition,
+        areaConnections.add(new AreaConnection(32 * 8, 32*18, 32, 32));
+
+        level2 = new Area(playerPosX, playerPosY,
                 enemies, friendlyNPCs, stationaryObjects, walls, obstacles, chests, areaConnections);
     }
 }

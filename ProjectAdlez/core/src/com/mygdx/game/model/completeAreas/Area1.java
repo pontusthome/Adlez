@@ -27,13 +27,10 @@ public class Area1 implements ICompleteArea {
     private List<IAreaConnection> areaConnections;
 
     public Area loadArea() {
-        if (area == null) {
-            return generateArea();
-        }
         return area;
     }
 
-    private Area generateArea() {
+    public Area1() {
         wall = new Wall();
 
         enemies = new ArrayList<IEnemy>();
@@ -69,39 +66,21 @@ public class Area1 implements ICompleteArea {
 
         generateFriendlyNPC(Direction.SOUTH, 17, 17, 32, 32 * 2);
 
-        generateSingleWall(32 * 6, 32 * 1, 32);
-        generateSingleWall(32 * 6, 32 * 2, 32);
-        generateSingleWall(32 * 6, 32 * 3, 32);
-        generateSingleWall(32 * 6, 32 * 4, 32);
-        generateSingleWall(32 * 6, 32 * 5, 32);
-        generateSingleWall(32 * 6, 32 * 6, 32);
-        generateSingleWall(32 * 6, 32 * 7, 32);
-
-        generateSingleWall(32 * 1, 32 * 3, 32);
-        generateSingleWall(32 * 2, 32 * 3, 32);
-        generateSingleWall(32 * 3, 32 * 3, 32);
-        generateSingleWall(32 * 4, 32 * 3, 32);
-
-        generateSingleWall(32 * 2, 32 * 7, 32);
-        generateSingleWall(32 * 3, 32 * 7, 32);
-        generateSingleWall(32 * 4, 32 * 7, 32);
-        generateSingleWall(32 * 5, 32 * 7, 32);
-
-        generateSingleWall(32 * 11, 32 * 2, 32);
-        generateSingleWall(32 * 11, 32 * 3, 32);
-        generateSingleWall(32 * 11, 32 * 4, 32);
-        generateSingleWall(32 * 11, 32 * 5, 32);
-        generateSingleWall(32 * 11, 32 * 6, 32);
-        generateSingleWall(32 * 11, 32 * 7, 32);
-        generateSingleWall(32 * 11, 32 * 8, 32);
-
-        generateSingleWall(32 * 17, 32 * 1, 32);
-        generateSingleWall(32 * 17, 32 * 2, 32);
-        generateSingleWall(32 * 17, 32 * 3, 32);
-        generateSingleWall(32 * 17, 32 * 4, 32);
-        generateSingleWall(32 * 17, 32 * 5, 32);
-        generateSingleWall(32 * 17, 32 * 6, 32);
-        generateSingleWall(32 * 17, 32 * 7, 32);
+        for (int i = 1; i < 8; i++) {
+            walls.add(wall.createSingleWall(6, i));
+        }
+        for (int i = 1; i < 5; i++) {
+            walls.add(wall.createSingleWall(i, 3));
+        }
+        for (int i = 2; i < 6; i++) {
+            walls.add(wall.createSingleWall(i, 7));
+        }
+        for (int i = 2; i < 9; i++) {
+            walls.add(wall.createSingleWall(11, i));
+        }
+        for (int i = 1; i < 8; i++) {
+            walls.add(wall.createSingleWall(17, i));
+        }
 
         generateObstacles(32 * 5, 32 * 3);
         generateObstacles(32 * 1, 32 * 7);
@@ -111,8 +90,6 @@ public class Area1 implements ICompleteArea {
         areaConnections.add(new AreaConnection(32 * 18, 32, 32, 32));
 
         area = new Area(playerPosX, playerPosY, enemies, friendlyNPCs, stationaryObjects, walls, obstacles, chests, areaConnections);
-
-        return area;
     }
 
     /**
@@ -121,13 +98,6 @@ public class Area1 implements ICompleteArea {
     public void generateFriendlyNPC(int direction, int width, int height, float posX, float posY) {
         FriendlyNPC friendlyNPC = new FriendlyNPC(direction, 0, width, height, posX, posY, 200, 10, 0, 0);
         friendlyNPCs.add(friendlyNPC);
-    }
-
-    /**
-     * generating walls not included in area bounds.
-     */
-    public void generateSingleWall(float posX, float posY, int size) {
-        walls.add(wall.createSingleWall(posX, posY, size));
     }
 
     /**

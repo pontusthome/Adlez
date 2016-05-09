@@ -12,6 +12,10 @@ public class Obstacle extends WorldObject implements IObstacle{
         super(posX, posY, width, height);
         this.health = health;
     }
+    public Obstacle(int posX, int posY) {
+        super(posX*32, posY*32, 32, 32);
+        this.health = 100;
+    }
     
     @Override
     public int getHealth() {
