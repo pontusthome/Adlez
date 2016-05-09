@@ -38,6 +38,7 @@ public final class AssetStrings {
     public static final String BLUE_PLAYER_MOVE = "npc/bluePlayer.png";
     public static final String DARK_BLUE_PLAYER_MOVE = "npc/darkBluePlayer.png";
     public static final String BLUE_DOG_MOVE = "npc/Azurewalk.png";
+    public static final String FRIENDLY_NPC_SOUTH = "npc/friendlyNPC.png";
 
     /**
      * Item Images
