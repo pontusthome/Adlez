@@ -100,6 +100,7 @@ public class PlayerController implements ICharacterController{
         if (Gdx.input.isKeyJustPressed(Input.Keys.L)) {
             AreaHandler.getInstance().LoadAreaHandler();
             Adlez.getInstance().loadPlayer();
+            ScreenManager.getInstance().switchArea(AreaHandler.getInstance().getCurrentArea());
         }
 
         playerView.viewUpdate(player.getDirection());
