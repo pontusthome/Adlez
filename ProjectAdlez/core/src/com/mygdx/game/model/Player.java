@@ -1,5 +1,7 @@
 package com.mygdx.game.model;
 
+import com.mygdx.game.model.exceptions.InventoryFullException;
+
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
@@ -48,7 +50,7 @@ public class Player extends Character implements IPlayer {
         }
     }
 
-    public void unEquipWeapon(IItem item) {
+    public void unEquipWeapon(IItem item) throws InventoryFullException {
         if(!isWepSlotEmpty) {
             isWepSlotEmpty = true;
             swordEquipped = null;
@@ -57,7 +59,7 @@ public class Player extends Character implements IPlayer {
         }
     }
 
-    public void unEquipArmor(IItem item) {
+    public void unEquipArmor(IItem item) throws InventoryFullException {
         if(!isArmorSlotEmpty) {
             isArmorSlotEmpty = true;
             armorEquipped = null;
@@ -66,10 +68,9 @@ public class Player extends Character implements IPlayer {
         }
     }
 
-    public void lootItem(IItem item) {
+    public void lootItem(IItem item) throws InventoryFullException {
         if(inventory.size() >= INVENTORY_MAX_SIZE) {
-            // Temporary print.
-            System.out.println("Inventory full");
+            throw new InventoryFullException("Inventory Full");
         } else {
             inventory.add(item);
         }
