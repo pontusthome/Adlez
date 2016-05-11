@@ -25,15 +25,7 @@ public class ChestsController implements IController{
 	
 	@Override
 	public void update(){
-		List<IChest> destroyedChests = new ArrayList<>();
-		for(IChest chest : chests){
-			if(chest.isDestroyed()){
-				destroyedChests.add(chest);
-			}
-		}
-		for(IChest chest : destroyedChests){
-			adlez.removeChestFromWorld(chest);
-		}
+		
 	}
 	
 	@Override

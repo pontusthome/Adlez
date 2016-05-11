@@ -45,10 +45,6 @@ public class Chest extends WorldObject implements IChest, Serializable {
     
     @Override
     public void onCollide(Collidable other){
-        if(other instanceof IAttack){
-            IAttack attack = (IAttack) other;
-            setHealth(getHealth() - attack.getDamage());
-        }
         if(other instanceof IInteraction){
             IInteraction interaction = (IInteraction) other;
             ICharacter character = interaction.getCharacter();

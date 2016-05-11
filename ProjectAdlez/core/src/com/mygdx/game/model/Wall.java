@@ -61,10 +61,7 @@ public class Wall extends WorldObject implements IWall, Serializable {
     
     @Override
     public void onCollide(Collidable other){
-        if(other instanceof IAttack){
-            IAttack attack = (IAttack) other;
-            setHealth(getHealth() - attack.getDamage());
-        }
+        
     }
     
     @Override

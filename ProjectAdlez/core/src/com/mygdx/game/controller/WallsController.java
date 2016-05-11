@@ -22,15 +22,7 @@ public class WallsController implements IController{
 	
 	@Override
 	public void update(){
-		List<IWall> destroyedWalls = new ArrayList<>();
-		for(IWall wall : walls){
-			if(wall.isDestroyed()){
-				destroyedWalls.add(wall);
-			}
-		}
-		for(IWall wall : destroyedWalls){
-			adlez.removeWallFromWorld(wall);
-		}
+		
 	}
 	
 	//TODO: Render walls with this method?
