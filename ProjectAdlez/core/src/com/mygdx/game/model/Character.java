@@ -28,6 +28,18 @@ public abstract class Character extends WorldObject implements ICharacter, Seria
 	private boolean movingWest;
 	private List<IItem> inventory;
 	
+	public boolean canMoveNorth = true;
+	public boolean canMoveSouth = true;
+	public boolean canMoveEast = true;
+	public boolean canMoveWest = true;
+	
+	public void clearCanMove(){
+		canMoveNorth = true;
+		canMoveSouth = true;
+		canMoveEast = true;
+		canMoveWest = true;
+	}
+	
 	public Character() {
 		this(Direction.NORTH, 2f,
 				17, 17,
@@ -216,15 +228,19 @@ public abstract class Character extends WorldObject implements ICharacter, Seria
 	public void undoCharacterMove(){
 		if(movingNorth){
 			setPosY(getPosY() - getSpeed());
+			canMoveNorth = false;
 		}
 		if(movingSouth){
 			setPosY(getPosY() + getSpeed());
+			canMoveSouth = false;
 		}
 		if(movingEast){
 			setPosX(getPosX() - getSpeed());
+			canMoveEast = false;
 		}
 		if(movingWest){
 			setPosX(getPosX() + getSpeed());
+			canMoveWest = false;
 		}
 	}
 	

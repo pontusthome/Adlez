@@ -56,24 +56,24 @@ public class EnemyController implements ICharacterController{
     
     
         float yDistance = Math.abs(playerY - y);
-        float xDistance = Math.abs(playerY - y);
+        float xDistance = Math.abs(playerX - x);
         boolean inRange = Utils.inRange(playerX, x, playerY, y, 70);
         
         
-        if (playerY > y && yDistance > xDistance && inRange) {
+        if (playerY > y && yDistance >= xDistance && inRange && ) {
             enemy.moveNorth();
         }
-        else if (playerY < y && Math.abs(playerY - y) > 1 && inRange) {
+        else if (playerY < y && yDistance >= xDistance && inRange) {
             enemy.moveSouth();
         }
-        else if (playerX < x && Math.abs(playerX - x) > 1 && inRange) {
+        else if (playerX < x && xDistance > yDistance && inRange) {
             enemy.moveWest();
         }
-        else if (playerX > x && Math.abs(playerX - x) > 1 && inRange) {
+        else if (playerX > x && xDistance > yDistance && inRange) {
             enemy.moveEast();
         }
         
-        
+        ((Character) enemy).clearCanMove();
         
         
 //        boolean inRange = Utils.inRange(playerX, x, playerY, y, 70);
