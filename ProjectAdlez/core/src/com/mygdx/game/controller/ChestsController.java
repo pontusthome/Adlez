@@ -17,10 +17,10 @@ public class ChestsController implements IController{
 	private Adlez adlez;
 	private List<IChest> chests;
 	
-	public ChestsController(List<IChest> chests, String chestImg) {
+	public ChestsController(List<IChest> chests, String closedChestImg, String openChestImg) {
 		adlez = Adlez.getInstance();
 		this.chests = chests;
-		chestView = new ChestView(chestImg);
+		chestView = new ChestView(closedChestImg, openChestImg);
 	}
 	
 	@Override

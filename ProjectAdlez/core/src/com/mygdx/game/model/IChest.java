@@ -8,4 +8,5 @@ import java.util.List;
 public interface IChest extends IWorldObject, IStationaryObject{
     public void addItems(IItem type);
     public List<IItem> getItems(Chest chest);
+    public boolean isEmpty();
 }

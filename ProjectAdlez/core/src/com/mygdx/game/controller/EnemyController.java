@@ -4,6 +4,7 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.mygdx.game.model.*;
 import com.mygdx.game.model.Character;
+import com.mygdx.game.model.handler.CollisionHandler;
 import com.mygdx.game.utils.AssetStrings;
 import com.mygdx.game.utils.Utils;
 
@@ -52,19 +53,62 @@ public class EnemyController implements ICharacterController{
         float playerY = player.getPosY();
         float x = enemy.getPosX();
         float y = enemy.getPosY();
+    
+    
+    
+//        float yDistance = Math.abs(playerY - y);
+//        float xDistance = Math.abs(playerX - x);
+//        boolean inRange = Utils.inRange(playerX, x, playerY, y, 70);
+//        
+//        
+//        if (playerY > y && yDistance >= xDistance && inRange && ((Character) enemy).canMoveNorth) {
+//            enemy.moveNorth();
+//        }
+//        else if (playerY < y && yDistance >= xDistance && inRange && ((Character) enemy).canMoveSouth) {
+//            enemy.moveSouth();
+//        }
+//        else if (playerX < x && xDistance > yDistance && inRange && ((Character) enemy).canMoveEast) {
+//            enemy.moveWest();
+//        }
+//        else if (playerX > x && xDistance > yDistance && inRange && ((Character) enemy).canMoveWest) {
+//            enemy.moveEast();
+//        }
+//        
+//        ((Character) enemy).clearCanMove();
+        
+        
         boolean inRange = Utils.inRange(playerX, x, playerY, y, 70);
         if (playerY > y && Math.abs(playerY - y) > 1 && inRange) {
             enemy.moveNorth();
+            if(CollisionHandler.checkCollision(enemy)){
+                enemy.moveSouth();
+                enemy.setDirection(Direction.NORTH);
+            }
         }
         if (playerY < y && Math.abs(playerY - y) > 1 && inRange) {
             enemy.moveSouth();
+            if(CollisionHandler.checkCollision(enemy)){
+                enemy.moveNorth();
+                enemy.setDirection(Direction.SOUTH);
+            }
         }
         if (playerX < x && Math.abs(playerX - x) > 1 && inRange) {
             enemy.moveWest();
+            if(CollisionHandler.checkCollision(enemy)){
+                enemy.moveEast();
+                enemy.setDirection(Direction.WEST);
+            }
         }
         if (playerX > x && Math.abs(playerX - x) > 1 && inRange) {
             enemy.moveEast();
+            if(CollisionHandler.checkCollision(enemy)){
+                enemy.moveWest();
+                enemy.setDirection(Direction.EAST);
+            }
         }
+        
+        
+        
         enemyView.viewUpdate(enemy.getDirection());
     }
     

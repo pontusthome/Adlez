@@ -39,6 +39,4 @@ public interface ICharacter extends IWorldObject{
 	boolean isMovingEast();
 	boolean isMovingWest();
 	boolean isAlive();
-	List<IItem> getInventory();
-	void setInventory(List<IItem> inventory);
 }

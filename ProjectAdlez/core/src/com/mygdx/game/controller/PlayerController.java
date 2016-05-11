@@ -7,6 +7,7 @@ import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.mygdx.game.event.AreaHandler;
 import com.mygdx.game.model.*;
 import com.mygdx.game.model.Character;
+import com.mygdx.game.model.handler.CollisionHandler;
 import com.mygdx.game.utils.AssetStrings;
 import com.mygdx.game.view.ScreenManager;
 
@@ -44,12 +45,36 @@ public class PlayerController implements ICharacterController{
         /** Movement only in 1 direction at a time */
         if (Gdx.input.isKeyPressed(Input.Keys.W)) {
             player.moveNorth();
-        }else if (Gdx.input.isKeyPressed(Input.Keys.S)) {
+            
+            if(CollisionHandler.checkCollision(player)){
+                player.moveSouth();
+                player.setDirection(Direction.NORTH);
+            }
+            
+        } if (Gdx.input.isKeyPressed(Input.Keys.S)) {
             player.moveSouth();
-        }else if (Gdx.input.isKeyPressed(Input.Keys.A)) {
+            
+            if(CollisionHandler.checkCollision(player)){
+                player.moveNorth();
+                player.setDirection(Direction.SOUTH);
+            }
+            
+        } if (Gdx.input.isKeyPressed(Input.Keys.A)) {
             player.moveWest();
-        }else if (Gdx.input.isKeyPressed(Input.Keys.D)) {
+            
+            if(CollisionHandler.checkCollision(player)){
+                player.moveEast();
+                player.setDirection(Direction.WEST);
+            }
+            
+        } if (Gdx.input.isKeyPressed(Input.Keys.D)) {
             player.moveEast();
+            
+            if(CollisionHandler.checkCollision(player)){
+                player.moveWest();
+                player.setDirection(Direction.EAST);
+            }
+            
         }
         
         if (Gdx.input.isKeyJustPressed(Input.Keys.SPACE)) {

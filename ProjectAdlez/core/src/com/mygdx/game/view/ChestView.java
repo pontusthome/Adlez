@@ -14,15 +14,21 @@ import java.util.List;
  */
 public class ChestView {
 
-    private Texture chestTexture;
+    private Texture closedChestTexture;
+    private Texture openChestTexture;
 
-    public ChestView(String chestImg) {
-        chestTexture = new Texture((Gdx.files.internal((chestImg))));
+    public ChestView(String closedChestImg, String openChestImg) {
+        closedChestTexture = new Texture((Gdx.files.internal((closedChestImg))));
+        openChestTexture = new Texture((Gdx.files.internal((openChestImg))));
     }
 
     public void generateChests(List<IChest> chests, SpriteBatch batch) {
         for(IChest ch : chests) {
-            batch.draw(chestTexture, ch.getPosX(), ch.getPosY());
+            if(ch.isEmpty()){
+                batch.draw(openChestTexture, ch.getPosX(), ch.getPosY());
+            }else{
+                batch.draw(closedChestTexture, ch.getPosX(), ch.getPosY());
+            }
         }
     }
 }

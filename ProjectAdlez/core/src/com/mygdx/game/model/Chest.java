@@ -1,5 +1,7 @@
 package com.mygdx.game.model;
 
+import com.mygdx.game.model.exceptions.InventoryFullException;
+
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
@@ -47,14 +49,26 @@ public class Chest extends WorldObject implements IChest, Serializable {
     public void onCollide(Collidable other){
         if(other instanceof IInteraction){
             IInteraction interaction = (IInteraction) other;
-            ICharacter character = interaction.getCharacter();
-            character.getInventory().addAll(slots);
-            setHealth(0);
+            if(interaction.getCharacter() instanceof IPlayer){
+                IPlayer player = (IPlayer) interaction.getCharacter();
+                for(IItem item : slots){
+                    try{
+                        player.lootItem(item);
+                    } catch(InventoryFullException e){
+                        break;
+                    }
+                }
+            }
         }
     }
     
     @Override
     public boolean isDestroyed(){
         return getHealth() <= 0;
+    }
+    
+    @Override
+    public boolean isEmpty(){
+        return slots.size() <= 0;
     }
 }
