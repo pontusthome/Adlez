@@ -14,6 +14,7 @@ public final class AssetStrings {
     public static final String RANGE_MAGIC_ATTACK_SOUND = "sounds/ice_attack.wav";
     public static final String OUT_OF_MANA_SOUND = "sounds/out_of_mana.wav";
     public static final String INTERACTION_SOUND = "sounds/interaction.wav";
+    public static final String TEMP_DYING_SOUND = "sounds/temp_dying_sound.wav";
 
     /**
      * Buttons
@@ -29,8 +30,7 @@ public final class AssetStrings {
     /* Stationary objects */
     public static final String BOX_OBSTACLE_IMAGE = "objects/boxObstacle.jpeg";
     public static final String CLOSED_CHEST_IMAGE = "objects/closed_chest.png";
-    // Same as closed chest for now
-    public static final String OPEN_CHEST_IMAGE = "objects/open_chest.png";
+    public static final String OPEN_CHEST_IMAGE = "objects/open_chest.png";     // Same as closed chest for now
     public static final String BOULDER_OBSTACLE_IMAGE = "objects/boulder_32x32.png";
     public static final String DOOR_GATE_IMAGE = "objects/door_32x32.png";
 

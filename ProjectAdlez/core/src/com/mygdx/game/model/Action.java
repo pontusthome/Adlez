@@ -9,6 +9,7 @@ public abstract class Action extends WorldObject implements IAction{
 	private GameSound sound;
 	private boolean isFinished;
 	private ICharacter character;
+	private boolean byPlayer;
 	
 	public Action(){
 		
@@ -19,6 +20,12 @@ public abstract class Action extends WorldObject implements IAction{
 		this.character = character;
 		setInitLocation(character);
 		hitBox = new HitBox(getPosX(), getPosY(), getWidth(), getHeight());
+		
+		if(character instanceof Player){
+			byPlayer = true;
+		}else{
+			byPlayer = false;
+		}
 	}
 	
 	@Override
@@ -53,5 +60,10 @@ public abstract class Action extends WorldObject implements IAction{
 	@Override
 	public ICharacter getCharacter(){
 		return character;
+	}
+	
+	@Override
+	public boolean byPlayer(){
+		return byPlayer;
 	}
 }

@@ -12,4 +12,5 @@ public interface IAction extends IWorldObject{
 	GameSound getSound();
 	void setInitLocation(ICharacter character);
 	ICharacter getCharacter();
+	boolean byPlayer();
 }

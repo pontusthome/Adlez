@@ -103,5 +103,9 @@ public class Player extends Character implements IPlayer, Serializable {
     @Override
     public void onCollide(Collidable other){
         super.onCollide(other);
+        if(other instanceof IAttack && !((IAttack) other).byPlayer()){
+            IAttack attack = (IAttack) other;
+            setHealth(getHealth() - attack.getDamage());
+        }
     }
 }

@@ -40,7 +40,7 @@ public class CollisionHandler2{
 		}
 	}
 	
-	private boolean collide(IWorldObject primary, IWorldObject other) {
+	public static boolean collide(IWorldObject primary, IWorldObject other) {
 		float width = primary.getWidth();
 		float height = primary.getHeight();
 		float otherWidth = other.getWidth();

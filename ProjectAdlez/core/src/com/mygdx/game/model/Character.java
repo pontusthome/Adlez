@@ -208,10 +208,6 @@ public abstract class Character extends WorldObject implements ICharacter, Seria
 //		}else if(other instanceof IAreaConnection){
 //			undoCharacterMove();
 //		}
-		if(other instanceof IAttack){
-			IAttack attack = (IAttack) other;
-			setHealth(getHealth() - attack.getDamage());
-		}
 	}
 	
 	public void undoCharacterMove(){

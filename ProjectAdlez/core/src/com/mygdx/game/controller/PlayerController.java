@@ -39,6 +39,14 @@ public class PlayerController implements ICharacterController{
      */
     @Override
     public void update() {
+        
+        // Temporary sound to notify when player is dead
+        if(player.getHealth() < 0){
+            GameSound dyingSound = new LibGDXSoundAdapter(AssetStrings.TEMP_DYING_SOUND);
+            dyingSound.play(0.5f);
+            player.setHealth(100);
+        }
+        
         Character playerCharacter = (Character) player;
         playerCharacter.clearMoveFlags();
         
