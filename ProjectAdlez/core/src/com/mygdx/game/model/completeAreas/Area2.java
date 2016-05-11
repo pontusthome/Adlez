@@ -122,6 +122,8 @@ public class Area2 implements ICompleteArea {
 
         areaConnections.add(new AreaConnection(32 * 8, 32*18, 32, 32));
 
+        generateFriendlyNPC(Direction.SOUTH, 25, 25, 32, 32 * 3);
+
         area = new Area(playerPosX, playerPosY, enemies, friendlyNPCs, stationaryObjects, walls, obstacles, chests, areaConnections, "Area2");
     }
 

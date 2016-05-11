@@ -64,7 +64,7 @@ public class Area1 implements ICompleteArea {
         Chest ch1 = new Chest(32 * 18 + 8, 32 * 7 + 8, 16, 16, 2, 200);
         chests.add(ch1);
 
-        generateFriendlyNPC(Direction.SOUTH, 17, 17, 32, 32 * 2);
+        generateFriendlyNPC(Direction.SOUTH, 25, 25, 32, 32 * 2);
 
         for (int i = 1; i < 8; i++) {
             walls.add(wall.createSingleWall(6, i));
