@@ -91,7 +91,7 @@ public class GameScreen extends AbstractScreen {
         newAttacks = adlez.getNewAttacks();
     
         obstaclesController = new ObstaclesController(adlez.getObstacles(), AssetStrings.BOULDER_OBSTACLE_IMAGE);
-        chestsController = new ChestsController(adlez.getChests(), AssetStrings.CHEST_IMAGE);
+        chestsController = new ChestsController(adlez.getChests(), AssetStrings.CLOSED_CHEST_IMAGE, AssetStrings.OPEN_CHEST_IMAGE);
         wallsController = new WallsController(adlez.getWalls());
         friendlyNPCController = new FriendlyNPCController(adlez.getFriendlyNPCs(), AssetStrings.FRIENDLY_NPC_SOUTH);
         

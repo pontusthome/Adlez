@@ -26,7 +26,6 @@ public abstract class Character extends WorldObject implements ICharacter, Seria
 	private boolean movingSouth;
 	private boolean movingEast;
 	private boolean movingWest;
-	private List<IItem> inventory;
 	
 	public Character() {
 		this(Direction.NORTH, 2f,
@@ -49,7 +48,6 @@ public abstract class Character extends WorldObject implements ICharacter, Seria
 		setAttackDamage(attackDamage);
 		setGold(gold);
 		setMana(mana);
-		inventory = new ArrayList<>();
 		
 		movingNorth = false;
 		movingSouth = false;
@@ -197,7 +195,8 @@ public abstract class Character extends WorldObject implements ICharacter, Seria
 	
 	@Override
 	public void onCollide(Collidable other){
-		if(other instanceof ICharacter && this != other){
+		// Collisions with objects & other characters are handled directly after moving for now
+//		if(other instanceof ICharacter && this != other){
 //			undoCharacterMove();
 //		}
 // 		else if(other instanceof IWall){
@@ -208,7 +207,8 @@ public abstract class Character extends WorldObject implements ICharacter, Seria
 //			undoCharacterMove();
 //		}else if(other instanceof IAreaConnection){
 //			undoCharacterMove();
-		}else if(other instanceof IAttack){
+//		}
+		if(other instanceof IAttack){
 			IAttack attack = (IAttack) other;
 			setHealth(getHealth() - attack.getDamage());
 		}
@@ -259,15 +259,5 @@ public abstract class Character extends WorldObject implements ICharacter, Seria
 	@Override
 	public boolean isAlive(){
 		return getHealth() > 0;
-	}
-	
-	@Override
-	public void setInventory(List<IItem> inventory){
-		this.inventory = inventory;
-	}
-	
-	@Override
-	public List<IItem> getInventory(){
-		return inventory;
 	}
 }
