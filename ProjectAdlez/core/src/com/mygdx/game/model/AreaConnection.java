@@ -1,5 +1,7 @@
 package com.mygdx.game.model;
 
+import com.mygdx.game.event.AreaHandler;
+
 import java.io.Serializable;
 
 /**

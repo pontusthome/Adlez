@@ -25,6 +25,7 @@ public class AreaHandler implements Serializable {
     private Area level2;
     private Area currentArea;
 
+
     // Create the setup for each level
     private AreaHandler() {
         createLevel1();
