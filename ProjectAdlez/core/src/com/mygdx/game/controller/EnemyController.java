@@ -52,19 +52,46 @@ public class EnemyController implements ICharacterController{
         float playerY = player.getPosY();
         float x = enemy.getPosX();
         float y = enemy.getPosY();
+    
+    
+    
+        float yDistance = Math.abs(playerY - y);
+        float xDistance = Math.abs(playerY - y);
         boolean inRange = Utils.inRange(playerX, x, playerY, y, 70);
-        if (playerY > y && Math.abs(playerY - y) > 1 && inRange) {
+        
+        
+        if (playerY > y && yDistance > xDistance && inRange) {
             enemy.moveNorth();
         }
-        if (playerY < y && Math.abs(playerY - y) > 1 && inRange) {
+        else if (playerY < y && Math.abs(playerY - y) > 1 && inRange) {
             enemy.moveSouth();
         }
-        if (playerX < x && Math.abs(playerX - x) > 1 && inRange) {
+        else if (playerX < x && Math.abs(playerX - x) > 1 && inRange) {
             enemy.moveWest();
         }
-        if (playerX > x && Math.abs(playerX - x) > 1 && inRange) {
+        else if (playerX > x && Math.abs(playerX - x) > 1 && inRange) {
             enemy.moveEast();
         }
+        
+        
+        
+        
+//        boolean inRange = Utils.inRange(playerX, x, playerY, y, 70);
+//        if (playerY > y && Math.abs(playerY - y) > 1 && inRange) {
+//            enemy.moveNorth();
+//        }
+//        else if (playerY < y && Math.abs(playerY - y) > 1 && inRange) {
+//            enemy.moveSouth();
+//        }
+//        else if (playerX < x && Math.abs(playerX - x) > 1 && inRange) {
+//            enemy.moveWest();
+//        }
+//        else if (playerX > x && Math.abs(playerX - x) > 1 && inRange) {
+//            enemy.moveEast();
+//        }
+        
+        
+        
         enemyView.viewUpdate(enemy.getDirection());
     }
     
