@@ -7,21 +7,26 @@ import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.mygdx.game.event.AreaHandler;
 import com.mygdx.game.model.*;
 import com.mygdx.game.model.Character;
+import com.mygdx.game.model.handler.CollisionHandler2;
 import com.mygdx.game.utils.AssetStrings;
 import com.mygdx.game.view.ScreenManager;
+
+import java.util.List;
 
 /**
  * Created by martinso on 27/03/16.
  */
-public class PlayerController implements ICharacterController{
+public class PlayerController implements ICharacterController {
 
     // Have a view not extend a view
 
     private IPlayer player;
     private CharacterView playerView;
     private Adlez adlez;
-    
-    /** To be able to paint where actions landed for debugging purposes */
+
+    /**
+     * To be able to paint where actions landed for debugging purposes
+     */
     public static IAttack currentAttack = new MeleeAttack();
     public static IInteraction currentInteraction = new Interaction();
 
@@ -40,18 +45,18 @@ public class PlayerController implements ICharacterController{
     public void update() {
         Character playerCharacter = (Character) player;
         playerCharacter.clearMoveFlags();
-        
+
         /** Movement only in 1 direction at a time */
         if (Gdx.input.isKeyPressed(Input.Keys.W)) {
             player.moveNorth();
-        }else if (Gdx.input.isKeyPressed(Input.Keys.S)) {
+        } else if (Gdx.input.isKeyPressed(Input.Keys.S)) {
             player.moveSouth();
-        }else if (Gdx.input.isKeyPressed(Input.Keys.A)) {
+        } else if (Gdx.input.isKeyPressed(Input.Keys.A)) {
             player.moveWest();
-        }else if (Gdx.input.isKeyPressed(Input.Keys.D)) {
+        } else if (Gdx.input.isKeyPressed(Input.Keys.D)) {
             player.moveEast();
         }
-        
+
         if (Gdx.input.isKeyJustPressed(Input.Keys.SPACE)) {
             currentAttack = new MeleeAttack(playerCharacter);
             currentAttack.setSound(new LibGDXSoundAdapter(AssetStrings.MELEE_ATTACK_SOUND));
@@ -81,7 +86,7 @@ public class PlayerController implements ICharacterController{
          * ===============================
          * TEST for changing areas
          * ===============================
-          */
+         */
         if (Gdx.input.isKeyJustPressed(Input.Keys.NUM_1)) {
             ScreenManager.getInstance().switchArea(AreaHandler.getInstance().loadArea1());
         }
@@ -105,9 +110,9 @@ public class PlayerController implements ICharacterController{
 
         playerView.viewUpdate(player.getDirection());
     }
-    
+
     @Override
-    public void render(SpriteBatch batch){
+    public void render(SpriteBatch batch) {
         batch.draw(getCurrentFrame(), player.getPosX(), player.getPosY());
     }
 

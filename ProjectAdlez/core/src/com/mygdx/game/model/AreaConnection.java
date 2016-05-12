@@ -1,7 +1,5 @@
 package com.mygdx.game.model;
 
-import com.mygdx.game.event.AreaHandler;
-
 import java.io.Serializable;
 
 /**
@@ -15,6 +13,5 @@ public class AreaConnection extends WorldObject implements IAreaConnection, Seri
 
     @Override
     public void onCollide(Collidable other) {
-
     }
 }

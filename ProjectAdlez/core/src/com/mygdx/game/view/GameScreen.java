@@ -11,6 +11,7 @@ import com.badlogic.gdx.maps.tiled.TmxMapLoader;
 import com.badlogic.gdx.maps.tiled.renderers.OrthoCachedTiledMapRenderer;
 
 import com.mygdx.game.controller.*;
+import com.mygdx.game.event.AreaHandler;
 import com.mygdx.game.model.*;
 import com.mygdx.game.model.handler.CollisionHandler2;
 import com.mygdx.game.utils.AssetStrings;
@@ -27,6 +28,8 @@ public class GameScreen extends AbstractScreen {
 
     private Adlez adlez = Adlez.getInstance();
 
+    private AreaHandler areaHandler = AreaHandler.getInstance();
+
     private IPlayer player = adlez.getPlayer();
     private ICharacterController playerController;
     private OrthographicCamera playerCam;
@@ -36,8 +39,6 @@ public class GameScreen extends AbstractScreen {
     private SpriteBatch batch;
     private OrthoCachedTiledMapRenderer renderer;
     private TiledMap tileMap;
-
-    private GateView gateView;
     
     private CollisionHandler2 collisionHandler;
     private List<IAttack> attacks;
@@ -100,8 +101,11 @@ public class GameScreen extends AbstractScreen {
         interactionControllers = new HashMap<>();
         newInteractions = adlez.getNewInteractions();
 
-        // temporary things, just testing
-        tileMap = new TmxMapLoader().load(AssetStrings.AREA2_TMX);
+        if(areaHandler.getCurrentAreaInt() == AreaHandler.AREA_1) {
+            tileMap = new TmxMapLoader().load(AssetStrings.AREA1_TMX);
+        } else if(areaHandler.getCurrentAreaInt() == AreaHandler.AREA_2) {
+            tileMap = new TmxMapLoader().load(AssetStrings.AREA2_TMX);
+        }
         float unitScale = UNIT_SCALE;
 
         renderer = new OrthoCachedTiledMapRenderer(tileMap, unitScale);
