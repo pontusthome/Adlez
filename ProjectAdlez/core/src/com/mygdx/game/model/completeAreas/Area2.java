@@ -12,38 +12,23 @@ public class Area2 implements ICompleteArea {
 
     private Area area;
 
-    private float playerPosX;
-    private float playerPosY;
-
-    private Wall wall;
-    private Obstacle obstacle;
-
-    private List<IEnemy> enemies;
-    private List<IFriendlyNPC> friendlyNPCs;
-    private List<IWorldObject> stationaryObjects;
-    private List<IWall> walls;
-    private List<IObstacle> obstacles;
-    private List<IChest> chests;
-    private List<IAreaConnection> areaConnections;
-
     public Area loadArea() {
         return area;
     }
 
     public Area2() {
-        wall = new Wall();
-
-        enemies = new ArrayList<IEnemy>();
-        friendlyNPCs = new ArrayList<IFriendlyNPC>();
-        stationaryObjects = new ArrayList<IWorldObject>();
-        walls = new ArrayList<IWall>();
-        obstacles = new ArrayList<IObstacle>();
-        chests = new ArrayList<IChest>();
-        areaConnections = new ArrayList<IAreaConnection>();
+        List<IEnemy> enemies = new ArrayList<>();
+        List<IFriendlyNPC>friendlyNPCs = new ArrayList<>();
+        List<IWorldObject>stationaryObjects = new ArrayList<>();
+        Wall wall = new Wall();
+        List<IWall>walls = new ArrayList<>();
+        List<IObstacle>obstacles = new ArrayList<>();
+        List<IChest>chests = new ArrayList<>();
+        List<IAreaConnection>areaConnections = new ArrayList<>();
 
         // Spawning left bottom corner.
-        playerPosX = 32;
-        playerPosY = 32;
+        float playerPosX = 32f;
+        float playerPosY = 32f;
 
         for (int i = 1; i < 5; i++) {
             walls.add(wall.createSingleWall(i, 4));
@@ -64,29 +49,29 @@ public class Area2 implements ICompleteArea {
             walls.add(wall.createSingleWall(i, 17));
         }
 
-        generateObstacles(32*3,32*11);
-        generateObstacles(32*1,32*13);
-        generateObstacles(32*3,32*15);
-        generateObstacles(32*1,32*17);
-        generateObstacles(32*4,32*18);
+        obstacles.add(new Obstacle(3, 11));
+        obstacles.add(new Obstacle(1, 13));
+        obstacles.add(new Obstacle(3, 15));
+        obstacles.add(new Obstacle(1, 17));
+        obstacles.add(new Obstacle(4, 18));
 
-        generateObstacles(32*5, 32*4);
-        generateObstacles(32*6, 32*4);
-        generateObstacles(32*7, 32*4);
-        generateObstacles(32*8, 32*4);
+        obstacles.add(new Obstacle(5, 4));
+        obstacles.add(new Obstacle(6, 4));
+        obstacles.add(new Obstacle(7, 4));
+        obstacles.add(new Obstacle(8, 4));
 
-        generateObstacles(32*5, 32*9);
-        generateObstacles(32*6, 32*9);
-        generateObstacles(32*7, 32*9);
-        generateObstacles(32*8, 32*9);
+        obstacles.add(new Obstacle(5, 9));
+        obstacles.add(new Obstacle(6, 9));
+        obstacles.add(new Obstacle(7, 9));
+        obstacles.add(new Obstacle(8, 9));
 
-        generateObstacles(32*5, 32*14);
-        generateObstacles(32*6, 32*14);
-        generateObstacles(32*7, 32*14);
-        generateObstacles(32*8, 32*14);
+        obstacles.add(new Obstacle(5, 14));
+        obstacles.add(new Obstacle(6, 14));
+        obstacles.add(new Obstacle(7, 14));
+        obstacles.add(new Obstacle(8, 14));
 
-        generateObstacles(32*7, 32*17);
-        generateObstacles(32*8, 32*17);
+        obstacles.add(new Obstacle(7, 17));
+        obstacles.add(new Obstacle(8, 17));
 
         enemies.add(EnemyFactory.createEnemy(Enemy.REGULAR_LEVEL_ONE, 32 * 5, 32 * 6));
         enemies.add(EnemyFactory.createEnemy(Enemy.REGULAR_LEVEL_ONE, 32 * 6, 32 * 6));
@@ -122,34 +107,7 @@ public class Area2 implements ICompleteArea {
 
         areaConnections.add(new AreaConnection(32 * 8, 32*18, 32, 32));
 
-        generateFriendlyNPC(Direction.SOUTH, 25, 25, 32, 32 * 3);
-
         area = new Area(playerPosX, playerPosY, enemies, friendlyNPCs, stationaryObjects, walls, obstacles, chests, areaConnections, "Area2");
     }
-
-    /**
-     * Non-moving friendly NPC, acting like a shop for the player.
-     */
-    public void generateFriendlyNPC(int direction, int width, int height, float posX, float posY) {
-        FriendlyNPC friendlyNPC = new FriendlyNPC(direction, 0, width, height, posX, posY, 200, 10, 0, 0);
-        friendlyNPCs.add(friendlyNPC);
-    }
-
-    /**
-     * generating walls not included in area bounds.
-     */
-    public void generateSingleWall(int posX, int posY, int size) {
-        walls.add(wall.createSingleWall(posX, posY));
-    }
-
-    /**
-     * generating obstacles for this area.
-     */
-    public void generateObstacles(float posX, float posY) {
-        obstacle = new Obstacle(posX, posY, 32, 32, 100);
-        obstacles.add(obstacle);
-
-    }
-
 }
 

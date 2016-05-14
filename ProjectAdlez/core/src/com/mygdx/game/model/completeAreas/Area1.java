@@ -12,39 +12,24 @@ public class Area1 implements ICompleteArea {
 
     private Area area;
 
-    private float playerPosX;
-    private float playerPosY;
-
-    private Wall wall;
-    private Obstacle obstacle;
-
-    private List<IEnemy> enemies;
-    private List<IFriendlyNPC> friendlyNPCs;
-    private List<IWorldObject> stationaryObjects;
-    private List<IWall> walls;
-    private List<IObstacle> obstacles;
-    private List<IChest> chests;
-    private List<IAreaConnection> areaConnections;
 
     public Area loadArea() {
         return area;
     }
 
     public Area1() {
-        wall = new Wall();
-
-        enemies = new ArrayList<IEnemy>();
-        friendlyNPCs = new ArrayList<IFriendlyNPC>();
-        stationaryObjects = new ArrayList<IWorldObject>();
-        walls = new ArrayList<IWall>();
-        obstacles = new ArrayList<IObstacle>();
-        chests = new ArrayList<IChest>();
-        areaConnections = new ArrayList<IAreaConnection>();
+        List<IEnemy> enemies = new ArrayList<>();
+        List<IFriendlyNPC>friendlyNPCs = new ArrayList<>();
+        List<IWorldObject>stationaryObjects = new ArrayList<>();
+        Wall wall = new Wall();
+        List<IWall>walls = new ArrayList<>();
+        List<IObstacle>obstacles = new ArrayList<>();
+        List<IChest>chests = new ArrayList<>();
+        List<IAreaConnection>areaConnections = new ArrayList<>();
 
         // Spawning left bottom corner.
-        playerPosX = 32;
-        playerPosY = 32;
-
+        float playerPosX = 32f;
+        float playerPosY = 32f;
 
         walls.addAll(wall.createAreaBounds(10, 20, 32));
 
@@ -64,7 +49,7 @@ public class Area1 implements ICompleteArea {
         Chest ch1 = new Chest(32 * 18 + 8, 32 * 7 + 8, 16, 16, 2, 200);
         chests.add(ch1);
 
-        generateFriendlyNPC(Direction.SOUTH, 25, 25, 32, 32 * 2);
+        friendlyNPCs.add(new FriendlyNPC(Direction.SOUTH, 17, 17, 32, 32 * 2, 200, 10, 0, 0, 0));
 
         for (int i = 1; i < 8; i++) {
             walls.add(wall.createSingleWall(6, i));
@@ -82,31 +67,13 @@ public class Area1 implements ICompleteArea {
             walls.add(wall.createSingleWall(17, i));
         }
 
-        generateObstacles(32 * 5, 32 * 3);
-        generateObstacles(32 * 1, 32 * 7);
-        generateObstacles(32 * 11, 32 * 1);
-        generateObstacles(32 * 17, 32 * 8);
+        obstacles.add(new Obstacle(5, 3));
+        obstacles.add(new Obstacle(1, 7));
+        obstacles.add(new Obstacle(11, 1));
+        obstacles.add(new Obstacle(17, 8));
 
         areaConnections.add(new AreaConnection(32 * 18, 32, 32, 32));
 
         area = new Area(playerPosX, playerPosY, enemies, friendlyNPCs, stationaryObjects, walls, obstacles, chests, areaConnections, "Area1");
     }
-
-    /**
-     * Non-moving friendly NPC, acting like a shop for the player.
-     */
-    public void generateFriendlyNPC(int direction, int width, int height, float posX, float posY) {
-        FriendlyNPC friendlyNPC = new FriendlyNPC(direction, 0, width, height, posX, posY, 200, 10, 0, 0);
-        friendlyNPCs.add(friendlyNPC);
-    }
-
-    /**
-     * generating obstacles for this area.
-     */
-    public void generateObstacles(float posX, float posY) {
-        obstacle = new Obstacle(posX, posY, 32, 32, 100);
-        obstacles.add(obstacle);
-
-    }
-
 }
