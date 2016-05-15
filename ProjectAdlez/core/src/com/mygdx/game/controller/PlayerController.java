@@ -7,7 +7,6 @@ import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.mygdx.game.event.AreaHandler;
 import com.mygdx.game.model.*;
 import com.mygdx.game.model.Character;
-import com.mygdx.game.model.handler.CollisionHandler2;
 import com.mygdx.game.utils.AssetStrings;
 import com.mygdx.game.view.ScreenManager;
 
@@ -16,13 +15,15 @@ import java.util.List;
 /**
  * Created by martinso on 27/03/16.
  */
-public class PlayerController implements ICharacterController {
+public class PlayerController implements ICharacterController, GateOpenListener {
 
-    // Have a view not extend a view
+// Have a view not extend a view
 
     private IPlayer player;
     private CharacterView playerView;
     private Adlez adlez;
+    private List<IAreaConnection> areaConnections;
+    private AreaHandler areaHandler;
 
     /**
      * To be able to paint where actions landed for debugging purposes
@@ -34,6 +35,12 @@ public class PlayerController implements ICharacterController {
         this.player = player;
         playerView = new CharacterView(AssetStrings.PLAYER_MOVE);
         adlez = Adlez.getInstance();
+        areaHandler = AreaHandler.getInstance();
+
+        areaConnections = adlez.getAreaConnections();
+        for (IAreaConnection ac : areaConnections) {
+            ac.add(this);
+        }
     }
 
     /**
@@ -124,4 +131,14 @@ public class PlayerController implements ICharacterController {
     public TextureRegion getCurrentFrame() {
         return playerView.getCurrentFrame();
     }
+
+    @Override
+    public void gateOpen(Object source) {
+        if (areaHandler.getCurrentAreaInt() == AreaHandler.AREA_1) {
+            ScreenManager.getInstance().switchArea(AreaHandler.getInstance().loadArea2());
+        } else if (areaHandler.getCurrentAreaInt() == AreaHandler.AREA_2) {
+            ScreenManager.getInstance().switchArea(AreaHandler.getInstance().loadArea1());
+        }
+    }
+
 }

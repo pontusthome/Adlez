@@ -76,6 +76,7 @@ public class GameScreen extends AbstractScreen {
         // Spawning player.
         playerController = new PlayerController(player);
 
+
         // Spawning enemies.
         enemies = new HashMap<>();
         for (IEnemy enemy: adlez.getEnemies()) {
