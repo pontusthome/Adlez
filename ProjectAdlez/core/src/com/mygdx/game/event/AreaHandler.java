@@ -23,40 +23,53 @@ public class AreaHandler implements Serializable {
 
     private Area level1;
     private Area level2;
-    private Area currentArea;
+    private String currentArea;
 
     // Create the setup for each level
     private AreaHandler() {
         level1 = new Area1().loadArea();
         level2 = new Area2().loadArea();
-        currentArea = level1;
+        currentArea = level1.toString();
     }
 
     public Area loadArea1() {
-        currentArea = level1;
+        currentArea = level1.toString();
         return level1;
     }
 
+    public void setArea1(Area area1) {
+        this.level1 = area1;
+    }
+
     public Area loadArea2() {
-        currentArea = level2;
+        currentArea = level2.toString();
         return level2;
     }
 
     public Area getCurrentArea() {
-        return currentArea;
+        if (currentArea.equals("Area1")) {
+            return level1;
+        }
+        return level2;
     }
 
     public void SaveAreaHandler(){
+        AreaIO areaBuilder = new AreaBuilder();
+        areaBuilder.saveAreaHandler(this);
+        /*
         try {
             ObjectOutputStream oos = new ObjectOutputStream(new FileOutputStream("save.dat"));
             oos.writeObject(this);
             oos.close();
         } catch(Exception ex) {
             ex.printStackTrace();
-        }
+        } */
     }
 
     public static void LoadAreaHandler(){
+        AreaIO areaBuilder = new AreaBuilder();
+        areaHandler = areaBuilder.loadAreaHandler();
+        /*
         try {
             ObjectInputStream ois = new ObjectInputStream(new FileInputStream("save.dat"));
             areaHandler = (AreaHandler) ois.readObject();
@@ -64,5 +77,6 @@ public class AreaHandler implements Serializable {
         } catch(Exception ex) {
             ex.printStackTrace();
         }
+        */
     }
 }

@@ -31,22 +31,22 @@ public class Area2 implements ICompleteArea {
         float playerPosY = 32f;
 
         for (int i = 1; i < 5; i++) {
-            walls.add(wall.createSingleWall(i, 4));
+            walls.add(new Wall(i, 4));
         }
         for (int i = 5; i < 18; i++) {
-            walls.add(wall.createSingleWall(4, i));
+            walls.add(new Wall(4, i));
         }
         for (int i = 1; i < 3; i++) {
-            walls.add(wall.createSingleWall(i, 11));
+            walls.add(new Wall(i, 11));
         }
         for (int i = 2; i < 4; i++) {
-            walls.add(wall.createSingleWall(i, 13));
+            walls.add(new Wall(i, 13));
         }
         for (int i = 1; i < 3; i++) {
-            walls.add(wall.createSingleWall(i, 15));
+            walls.add(new Wall(i, 15));
         }
         for (int i = 2; i < 4; i++) {
-            walls.add(wall.createSingleWall(i, 17));
+            walls.add(new Wall(i, 17));
         }
 
         obstacles.add(new Obstacle(3, 11));

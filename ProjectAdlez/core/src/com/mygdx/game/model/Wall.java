@@ -10,8 +10,7 @@ import java.util.List;
 public class Wall extends WorldObject implements IWall, Serializable {
     
     private int health;
-    private Wall singleWall;
-    
+
     public Wall() {
         // Temporary size.
         setHeight(32);
@@ -19,14 +18,22 @@ public class Wall extends WorldObject implements IWall, Serializable {
         setHealth(1337);
     }
 
-    public Wall createSingleWall(int posX, int posY) {
-        singleWall = new Wall();
-        singleWall.setHeight(32);
-        singleWall.setWidth(32);
-        singleWall.setPosX(posX * 32);
-        singleWall.setPosY(posY * 32);
-        return singleWall;
+    public Wall(float posX, float posY) {
+        setHeight(32);
+        setWidth(32);
+        setHealth(1337);
+        setPosX(posX);
+        setPosY(posY);
     }
+
+    public Wall(int posX, int posY) {
+        setHeight(32);
+        setWidth(32);
+        setHealth(1337);
+        setPosX(posX * 32);
+        setPosY(posY * 32);
+    }
+
 
     public List<Wall> createAreaBounds(int height, int width, int size) {
         List<Wall> walls = new ArrayList<Wall>();

@@ -52,19 +52,19 @@ public class Area1 implements ICompleteArea {
         friendlyNPCs.add(new FriendlyNPC(Direction.SOUTH, 17, 17, 32, 32 * 2, 200, 10, 0, 0, 0));
 
         for (int i = 1; i < 8; i++) {
-            walls.add(wall.createSingleWall(6, i));
+            walls.add(new Wall(6, i));
         }
         for (int i = 1; i < 5; i++) {
-            walls.add(wall.createSingleWall(i, 3));
+            walls.add(new Wall(i, 3));
         }
         for (int i = 2; i < 6; i++) {
-            walls.add(wall.createSingleWall(i, 7));
+            walls.add(new Wall(i, 7));
         }
         for (int i = 2; i < 9; i++) {
-            walls.add(wall.createSingleWall(11, i));
+            walls.add(new Wall(11, i));
         }
         for (int i = 1; i < 8; i++) {
-            walls.add(wall.createSingleWall(17, i));
+            walls.add(new Wall(17, i));
         }
 
         obstacles.add(new Obstacle(5, 3));
