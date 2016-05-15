@@ -18,13 +18,14 @@ public class Area2 implements ICompleteArea {
 
     public Area2() {
         List<IEnemy> enemies = new ArrayList<>();
-        List<IFriendlyNPC>friendlyNPCs = new ArrayList<>();
-        List<IWorldObject>stationaryObjects = new ArrayList<>();
+        List<IFriendlyNPC> friendlyNPCs = new ArrayList<>();
+        List<IWorldObject> stationaryObjects = new ArrayList<>();
         Wall wall = new Wall();
-        List<IWall>walls = new ArrayList<>();
-        List<IObstacle>obstacles = new ArrayList<>();
-        List<IChest>chests = new ArrayList<>();
-        List<IAreaConnection>areaConnections = new ArrayList<>();
+        List<IWall> walls = new ArrayList<>();
+        List<IObstacle> obstacles = new ArrayList<>();
+        List<IChest> chests = new ArrayList<>();
+        List<IAreaConnection> areaConnections = new ArrayList<>();
+        List<IManaFountain> manaFountains = new ArrayList<>();
 
         // Spawning left bottom corner.
         float playerPosX = 32f;
@@ -103,11 +104,14 @@ public class Area2 implements ICompleteArea {
         Chest ch1 = new Chest(32 * 2 + 8, 32 * 5 + 8, 16, 16, 2, 200);
         chests.add(ch1);
 
+        friendlyNPCs.add(new FriendlyNPC(Direction.SOUTH, 17, 17, 32, 32, 32 * 3, 10, 0, 0, 0));
+
         walls.addAll(wall.createAreaBounds(20, 10, 32));
 
-        areaConnections.add(new AreaConnection(32 * 8, 32*18, 32, 32));
+        areaConnections.add(new AreaConnection(32 * 8, 32 * 18, 32, 32));
+        manaFountains.add(new ManaFountain(32*3, 32*3, 32, 32));
 
-        area = new Area(playerPosX, playerPosY, enemies, friendlyNPCs, stationaryObjects, walls, obstacles, chests, areaConnections, "Area2");
+        area = new Area(playerPosX, playerPosY, enemies, friendlyNPCs, stationaryObjects, walls, obstacles, chests, areaConnections, "Area2", manaFountains);
     }
 }
 

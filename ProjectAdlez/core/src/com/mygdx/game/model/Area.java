@@ -20,10 +20,11 @@ public final class Area implements Serializable {
     private List<IObstacle> obstacles;
     private List<IChest> chests;
     private List<IAreaConnection> areaConnections;
+    private List<IManaFountain> manaFountains;
 
     public Area(float playerXposition, float playerYposition,
                 List<IEnemy> enemies, List<IFriendlyNPC> friendlyNPCs, List<IWorldObject> stationaryObjects,
-                List<IWall> walls, List<IObstacle> obstacles, List<IChest> chests, List<IAreaConnection> areaConnections, String name) {
+                List<IWall> walls, List<IObstacle> obstacles, List<IChest> chests, List<IAreaConnection> areaConnections, String name, List<IManaFountain> manaFountains) {
         this.playerXposition = playerXposition;
         this.playerYposition = playerYposition;
 
@@ -34,6 +35,7 @@ public final class Area implements Serializable {
         this.obstacles = obstacles;
         this.chests = chests;
         this.areaConnections = areaConnections;
+        this.manaFountains = manaFountains;
 
         this.name = name;
     }
@@ -72,6 +74,10 @@ public final class Area implements Serializable {
 
     public List<IAreaConnection> getAreaConnections() {
         return areaConnections;
+    }
+
+    public List<IManaFountain> getManaFountains() {
+        return manaFountains;
     }
 
     @Override

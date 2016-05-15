@@ -52,6 +52,7 @@ public class GameScreen extends AbstractScreen {
     private IController wallsController;
     private IController friendlyNPCController;
     private IController areaConnectionController;
+    private IController manaFountainController;
     private HashMap<IInteraction, IController> interactionControllers;
     private List<IInteraction> newInteractions;
     
@@ -98,7 +99,8 @@ public class GameScreen extends AbstractScreen {
         wallsController = new WallsController(adlez.getWalls());
         friendlyNPCController = new FriendlyNPCController(adlez.getFriendlyNPCs(), AssetStrings.FRIENDLY_NPC_SOUTH);
         areaConnectionController = new AreaConnectionController(adlez.getAreaConnections(), AssetStrings.DOOR_GATE_IMAGE);
-        
+        manaFountainController = new ManaFountainController(adlez.getManaFountains(), AssetStrings.MANA_FOUNTAIN_IMAGE);
+
         interactionControllers = new HashMap<>();
         newInteractions = adlez.getNewInteractions();
 
@@ -149,6 +151,7 @@ public class GameScreen extends AbstractScreen {
         chestsController.render(batch);
         friendlyNPCController.render(batch);
         areaConnectionController.render(batch);
+        manaFountainController.render(batch);
 
         batch.end();
     

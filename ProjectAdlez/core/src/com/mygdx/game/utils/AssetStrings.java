@@ -33,6 +33,7 @@ public final class AssetStrings {
     public static final String OPEN_CHEST_IMAGE = "objects/open_chest.png";     // Same as closed chest for now
     public static final String BOULDER_OBSTACLE_IMAGE = "objects/boulder_32x32.png";
     public static final String DOOR_GATE_IMAGE = "objects/door_32x32.png";
+    public static final String MANA_FOUNTAIN_IMAGE = "objects/manaFountain_32x32.png";
 
     /* Sprites */
     public static final String PLAYER_MOVE = "player/moveSpriteV2.png";
