@@ -11,18 +11,24 @@ import com.mygdx.game.model.handler.CollisionHandler;
 import com.mygdx.game.utils.AssetStrings;
 import com.mygdx.game.view.ScreenManager;
 
+import java.util.List;
+
 /**
  * Created by martinso on 27/03/16.
  */
-public class PlayerController implements ICharacterController{
+public class PlayerController implements ICharacterController, GateOpenListener {
 
-    // Have a view not extend a view
+// Have a view not extend a view
 
     private IPlayer player;
     private CharacterView playerView;
     private Adlez adlez;
-    
-    /** To be able to paint where actions landed for debugging purposes */
+    private List<IAreaConnection> areaConnections;
+    private AreaHandler areaHandler;
+
+    /**
+     * To be able to paint where actions landed for debugging purposes
+     */
     public static IAttack currentAttack = new MeleeAttack();
     public static IInteraction currentInteraction = new Interaction();
 
@@ -30,6 +36,12 @@ public class PlayerController implements ICharacterController{
         this.player = player;
         playerView = new CharacterView(AssetStrings.PLAYER_MOVE);
         adlez = Adlez.getInstance();
+        areaHandler = AreaHandler.getInstance();
+
+        areaConnections = adlez.getAreaConnections();
+        for (IAreaConnection ac : areaConnections) {
+            ac.add(this);
+        }
     }
 
     /**
@@ -39,52 +51,55 @@ public class PlayerController implements ICharacterController{
      */
     @Override
     public void update() {
-        
+
         // Temporary sound to notify when player is dead
-        if(player.getHealth() < 0){
+        if (player.getHealth() < 0) {
             GameSound dyingSound = new LibGDXSoundAdapter(AssetStrings.TEMP_DYING_SOUND);
             dyingSound.play(0.5f);
             player.setHealth(100);
         }
-        
+
         Character playerCharacter = (Character) player;
         playerCharacter.clearMoveFlags();
-        
+
         /** Movement only in 1 direction at a time */
         if (Gdx.input.isKeyPressed(Input.Keys.W)) {
             player.moveNorth();
-            
-            if(CollisionHandler.checkCollision(player)){
+
+            if (CollisionHandler.checkCollision(player)) {
                 player.moveSouth();
                 player.setDirection(Direction.NORTH);
             }
-            
-        } if (Gdx.input.isKeyPressed(Input.Keys.S)) {
+
+        }
+        if (Gdx.input.isKeyPressed(Input.Keys.S)) {
             player.moveSouth();
-            
-            if(CollisionHandler.checkCollision(player)){
+
+            if (CollisionHandler.checkCollision(player)) {
                 player.moveNorth();
                 player.setDirection(Direction.SOUTH);
             }
-            
-        } if (Gdx.input.isKeyPressed(Input.Keys.A)) {
+
+        }
+        if (Gdx.input.isKeyPressed(Input.Keys.A)) {
             player.moveWest();
-            
-            if(CollisionHandler.checkCollision(player)){
+
+            if (CollisionHandler.checkCollision(player)) {
                 player.moveEast();
                 player.setDirection(Direction.WEST);
             }
-            
-        } if (Gdx.input.isKeyPressed(Input.Keys.D)) {
+
+        }
+        if (Gdx.input.isKeyPressed(Input.Keys.D)) {
             player.moveEast();
-            
-            if(CollisionHandler.checkCollision(player)){
+
+            if (CollisionHandler.checkCollision(player)) {
                 player.moveWest();
                 player.setDirection(Direction.EAST);
             }
-            
+
         }
-        
+
         if (Gdx.input.isKeyJustPressed(Input.Keys.SPACE)) {
             currentAttack = new MeleeAttack(playerCharacter);
             currentAttack.setSound(new LibGDXSoundAdapter(AssetStrings.MELEE_ATTACK_SOUND));
@@ -114,7 +129,7 @@ public class PlayerController implements ICharacterController{
          * ===============================
          * TEST for changing areas
          * ===============================
-          */
+         */
         if (Gdx.input.isKeyJustPressed(Input.Keys.NUM_1)) {
             ScreenManager.getInstance().switchArea(AreaHandler.getInstance().loadArea1());
         }
@@ -138,9 +153,9 @@ public class PlayerController implements ICharacterController{
 
         playerView.viewUpdate(player.getDirection());
     }
-    
+
     @Override
-    public void render(SpriteBatch batch){
+    public void render(SpriteBatch batch) {
         batch.draw(getCurrentFrame(), player.getPosX(), player.getPosY());
     }
 
@@ -152,4 +167,14 @@ public class PlayerController implements ICharacterController{
     public TextureRegion getCurrentFrame() {
         return playerView.getCurrentFrame();
     }
+
+    @Override
+    public void gateOpen(Object source) {
+        if (areaHandler.getCurrentAreaInt() == AreaHandler.AREA_1) {
+            ScreenManager.getInstance().switchArea(AreaHandler.getInstance().loadArea2());
+        } else if (areaHandler.getCurrentAreaInt() == AreaHandler.AREA_2) {
+            ScreenManager.getInstance().switchArea(AreaHandler.getInstance().loadArea1());
+        }
+    }
+
 }

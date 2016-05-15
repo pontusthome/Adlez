@@ -25,6 +25,9 @@ public class AreaHandler implements Serializable {
     private Area level2;
     private Area currentArea;
 
+    public static final int AREA_1 = 1;
+    public static final int AREA_2 = 2;
+
     // Create the setup for each level
     private AreaHandler() {
         level1 = new Area1().loadArea();
@@ -44,6 +47,16 @@ public class AreaHandler implements Serializable {
 
     public Area getCurrentArea() {
         return currentArea;
+    }
+
+    public int getCurrentAreaInt() {
+        if(currentArea == level1) {
+            return AREA_1;
+        } else if(currentArea == level2) {
+            return AREA_2;
+        } else {
+            return 0;
+        }
     }
 
     public void SaveAreaHandler(){
