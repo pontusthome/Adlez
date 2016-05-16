@@ -60,9 +60,12 @@ public class GameScreen extends AbstractScreen {
     private static final float WIDTH_SCALE = 2/3f;
     private static final float HEIGHT_SCALE = 2/3f;
 
+    private Hud hud;
+
     public GameScreen() {
         super();
         batch = new SpriteBatch();
+        this.hud = new Hud(this);
     }
 
     @Override
@@ -127,6 +130,10 @@ public class GameScreen extends AbstractScreen {
         // Render Tiled map
         renderer.setView(playerCam);
         renderer.render();
+
+        //Renders the HUD
+        batch.setProjectionMatrix(hud.stage.getCamera().combined);
+        hud.stage.draw();
 
         batch.setProjectionMatrix((playerCam.combined));
         batch.begin();

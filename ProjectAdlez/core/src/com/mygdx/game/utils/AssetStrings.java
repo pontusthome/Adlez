@@ -24,8 +24,9 @@ public final class AssetStrings {
     public static final String EXIT_GAME_BUTTON_IMAGE = "buttons/exitGameButton.png";
 
     /* Backgrounds */
-    public static final String MAIN_MENU_BACKGROUND_IMAGE = "backgrounds/mainMenuBackground.png";
+    public static final String MAIN_MENU_BACKGROUND_IMAGE = "backgrounds/mainMenuBackground2.png";
     public static final String INTRO_SCREEN_BACKGROUND_IMAGE = "backgrounds/ZeldaIntro.png";
+    public static final String GAME_OVER_BACKGROUND_IMAGE = "backgrounds/gameoverBackground.png";
 
     /* Stationary objects */
     public static final String BOX_OBSTACLE_IMAGE = "objects/boxObstacle.jpeg";
