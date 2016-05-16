@@ -9,7 +9,9 @@ import com.badlogic.gdx.scenes.scene2d.ui.Image;
 import com.badlogic.gdx.scenes.scene2d.ui.ImageButton;
 import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
 import com.badlogic.gdx.utils.Align;
+import com.mygdx.game.event.AreaBuilder;
 import com.mygdx.game.event.AreaHandler;
+import com.mygdx.game.event.AreaIO;
 import com.mygdx.game.model.Adlez;
 import com.mygdx.game.utils.AssetStrings;
 
@@ -69,14 +71,14 @@ public class MainMenuScreen extends AbstractScreen {
                                      float y, int pointer, int button) {
 
                 // Load areas
-                AreaHandler.LoadAreaHandler();
-                AreaHandler areaHandler = AreaHandler.getInstance();
+                AreaIO areaBuilder = new AreaBuilder();
+                AreaHandler areaHandler = areaBuilder.loadAreaHandler();
 
                 Adlez adlez = Adlez.getInstance();
 
                 // Load player
                 adlez.loadPlayer();
-
+                System.out.println(areaHandler.getCurrentArea().toString());
                 // Initiate game
                 adlez.initiateArea(areaHandler.getCurrentArea());
 

@@ -4,7 +4,9 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
+import com.mygdx.game.event.AreaBuilder;
 import com.mygdx.game.event.AreaHandler;
+import com.mygdx.game.event.AreaIO;
 import com.mygdx.game.model.*;
 import com.mygdx.game.model.Character;
 import com.mygdx.game.model.handler.CollisionHandler;
@@ -127,11 +129,13 @@ public class PlayerController implements ICharacterController{
          * ===============================
          */
         if (Gdx.input.isKeyJustPressed(Input.Keys.NUM_0)) {
-            AreaHandler.getInstance().SaveAreaHandler();
+            AreaIO areaBuilder = new AreaBuilder();
+            areaBuilder.saveAreaHandler();
             Adlez.getInstance().savePlayer();
         }
         if (Gdx.input.isKeyJustPressed(Input.Keys.L)) {
-            AreaHandler.getInstance().LoadAreaHandler();
+            AreaIO areaBuilder = new AreaBuilder();
+            areaBuilder.loadAreaHandler();
             Adlez.getInstance().loadPlayer();
             ScreenManager.getInstance().switchArea(AreaHandler.getInstance().getCurrentArea());
         }

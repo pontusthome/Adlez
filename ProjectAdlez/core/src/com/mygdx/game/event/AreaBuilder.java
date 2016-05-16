@@ -16,28 +16,28 @@ import java.util.List;
 public class AreaBuilder implements AreaIO {
 
     @Override
-    public void savePlayer(Player player) {
+    public void savePlayer() {
         Json json = new Json();
 
         // try-with-resources statement based on post comment below :)
         try (FileWriter file = new FileWriter("areaHanlder.txt")) {
-            file.write(json.prettyPrint(player));
+            file.write(json.prettyPrint(Adlez.getInstance().getPlayer()));
             System.out.println("Successfully Copied JSON Object to File...");
-            System.out.println("\nJSON Object: " + json.prettyPrint(player));
+            System.out.println("\nJSON Object: " + json.prettyPrint(Adlez.getInstance().getPlayer()));
         } catch (IOException e) {
             e.printStackTrace();
         }
     }
 
     @Override
-    public void saveAreaHandler(AreaHandler areaHandler) {
+    public void saveAreaHandler() {
         Json json = new Json();
 
         // try-with-resources statement based on post comment below :)
         try (FileWriter file = new FileWriter("areaHandler.txt")) {
-            file.write(json.toJson(areaHandler));
+            file.write(json.toJson(AreaHandler.getInstance()));
             //System.out.println("Successfully Copied JSON Object to File...");
-            //System.out.println("\nJSON Object: " + json.prettyPrint(areaHandler));
+            System.out.println("\nJSON Object: " + json.prettyPrint(AreaHandler.getInstance()));
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -63,11 +63,16 @@ public class AreaBuilder implements AreaIO {
             // the readLine method returns null when there is nothing else to read.
             while ((line = bufferedReader.readLine()) != null) {
                 JsonValue jsonAreaHandler = new JsonReader().parse(line);
-                System.out.print(jsonAreaHandler.get("currentArea").toString());
-                JsonValue jsonArea1 = jsonAreaHandler.get("level1");
-                areaHandler.setArea1(getArea(jsonArea1));
 
-                //System.out.print(enemy.toString());
+                JsonValue jsonArea1 = jsonAreaHandler.get("level1");
+                loadArea(jsonArea1, areaHandler.loadArea1());
+                JsonValue jsonArea2 = jsonAreaHandler.get("level2");
+                loadArea(jsonArea2, areaHandler.loadArea2());
+
+                areaHandler.setCurrentArea("Area1");
+                if (jsonAreaHandler.has("currentArea")) {
+                    areaHandler.setCurrentArea(jsonAreaHandler.get("currentArea").asString());
+                }
             }
 
             // close the BufferedReader when we're done
@@ -78,48 +83,29 @@ public class AreaBuilder implements AreaIO {
             e.printStackTrace();
         }
 
-
-        /*
-        try (FileReader file = new FileReader(new File("areaHandler.txt"))) {
-            char[] a = new char[1];
-            file.read(a); // reads the content to the array
-            for (char c : a)
-                System.out.print(c); //prints the characters one by one
-            file.close();
-        } catch (FileNotFoundException e) {
-            e.printStackTrace();
-        } catch (IOException e) {
-            e.printStackTrace();
-        } */
         return areaHandler;
     }
 
-    private Area getArea(JsonValue jsonArea) {
-        List<IEnemy> enemies = new ArrayList<>();
-        List<IFriendlyNPC> friendlyNPCs = new ArrayList<>();
-        List<IWorldObject> stationaryObjects = new ArrayList<>();
-        List<IWall> walls = new ArrayList<>();
-        List<IObstacle> obstacles = new ArrayList<>();
-        List<IChest> chests = new ArrayList<>();
-        List<IAreaConnection> areaConnections = new ArrayList<>();
-
+    private void loadArea(JsonValue jsonArea, Area level1) {
+        // Get the enemies, replace them with the saved enemies.
+        List<IEnemy> enemies = level1.getEnemies();
+        enemies.clear();
         JsonValue jsonEnemies = jsonArea.get("enemies");
         for (JsonValue jsonEnemy : jsonEnemies) {
             enemies.add(getEnemy(jsonEnemy));
         }
 
+        // Get the friendlyNPCs, replace them with the saved friendlyNPCs.
+        List<IFriendlyNPC> friendlyNPCs = level1.getFriendlyNPCs();
+        friendlyNPCs.clear();
         JsonValue jsonFriendlyNPCs = jsonArea.get("friendlyNPCs");
         for (JsonValue jsonFriendlyNPC : jsonFriendlyNPCs) {
             friendlyNPCs.add(getFriendlyNPC(jsonFriendlyNPC));
         }
 
-        JsonValue jsonWalls = jsonArea.get("walls");
-        for (JsonValue jsonWall : jsonWalls) {
-            stationaryObjects.add(getWall(jsonWall));
-        }
-
-        return new Area(jsonArea.get("playerXposition").asInt(), jsonArea.get("playerYposition").asInt(), enemies, friendlyNPCs, stationaryObjects, walls, obstacles, chests, areaConnections, "Area1");
-
+        List<IObstacle> obstacles = new ArrayList<>();
+        List<IChest> chests = new ArrayList<>();
+        List<IAreaConnection> areaConnections = new ArrayList<>();
     }
 
     private IEnemy getEnemy(JsonValue jsonEnemy) {
