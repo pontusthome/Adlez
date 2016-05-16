@@ -33,6 +33,8 @@ public class AreaBuilder implements AreaIO {
     public void saveAreaHandler() {
         Json json = new Json();
 
+        // Save enemies, obstacles and chests
+
         // try-with-resources statement based on post comment below :)
         try (FileWriter file = new FileWriter("areaHandler.txt")) {
             file.write(json.toJson(AreaHandler.getInstance()));
@@ -95,17 +97,8 @@ public class AreaBuilder implements AreaIO {
             enemies.add(getEnemy(jsonEnemy));
         }
 
-        // Get the friendlyNPCs, replace them with the saved friendlyNPCs.
-        List<IFriendlyNPC> friendlyNPCs = level1.getFriendlyNPCs();
-        friendlyNPCs.clear();
-        JsonValue jsonFriendlyNPCs = jsonArea.get("friendlyNPCs");
-        for (JsonValue jsonFriendlyNPC : jsonFriendlyNPCs) {
-            friendlyNPCs.add(getFriendlyNPC(jsonFriendlyNPC));
-        }
-
         List<IObstacle> obstacles = new ArrayList<>();
         List<IChest> chests = new ArrayList<>();
-        List<IAreaConnection> areaConnections = new ArrayList<>();
     }
 
     private IEnemy getEnemy(JsonValue jsonEnemy) {
@@ -117,27 +110,5 @@ public class AreaBuilder implements AreaIO {
                 jsonEnemy.get("gold").asInt(), jsonEnemy.get("mana").asInt(),
                 jsonEnemy.get("type").asInt()
         );
-    }
-
-    private IFriendlyNPC getFriendlyNPC(JsonValue jsonNPC) {
-        return new FriendlyNPC(
-                jsonNPC.get("direction").asInt(), jsonNPC.get("speed").asFloat(),
-                jsonNPC.get("width").asInt(), jsonNPC.get("height").asInt(),
-                jsonNPC.get("posX").asFloat(), jsonNPC.get("posY").asFloat(),
-                jsonNPC.get("maxHealth").asInt(), jsonNPC.get("attackDamage").asInt(),
-                jsonNPC.get("gold").asInt(), jsonNPC.get("mana").asInt()
-        );
-    }
-
-    private IWall getWall(JsonValue jsonWall) {
-        float posX = 0;
-        float posY = 0;
-        if (jsonWall.hasChild("posX")) {
-            posX = jsonWall.get("posX").asFloat();
-        }
-        if (jsonWall.hasChild("posY")) {
-            posY = jsonWall.get("posY").asFloat();
-        }
-        return new Wall(posX, posY);
     }
 }
