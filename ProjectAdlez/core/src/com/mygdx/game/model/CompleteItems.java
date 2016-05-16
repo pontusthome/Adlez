@@ -23,7 +23,7 @@ public final class CompleteItems {
      * 50 gold
      */
     static Weapon woodSword = new Weapon(ItemSignatures.WOOD_SWORD, ItemSignatures.TYPE_WEAPON_SWORD, 20, 50);
-    public static final IItem WOOD_SWORD = woodSword;
+    public static final Weapon WOOD_SWORD = woodSword;
 
     /**
      * Iron sword:
@@ -31,7 +31,7 @@ public final class CompleteItems {
      * 200 gold
      */
     static Weapon ironSword = new Weapon(ItemSignatures.IRON_SWORD, ItemSignatures.TYPE_WEAPON_SWORD, 60, 200);
-    public static final IItem IRON_SWORD = ironSword;
+    public static final Weapon IRON_SWORD = ironSword;
 
     /**
      * Final sword:
@@ -39,7 +39,7 @@ public final class CompleteItems {
      * 500 gold
      */
     static Weapon finalSword = new Weapon(ItemSignatures.FINAL_SWORD, ItemSignatures.TYPE_WEAPON_SWORD, 100, 500);
-    public static final IItem FINAL_SWORD = finalSword;
+    public static final Weapon FINAL_SWORD = finalSword;
 
     /**
      * ARMOR
@@ -50,23 +50,23 @@ public final class CompleteItems {
      * 20 bonus health
      * 50 gold
      */
-    static Weapon clothBody = new Weapon(ItemSignatures.CLOTH_BODY_ARMOR, ItemSignatures.TYPE_ARMOR_BODY, 20, 50);
-    public static final IItem CLOTH_BODY_ARMOR = clothBody;
+    static Armor clothBody = new Armor(ItemSignatures.CLOTH_BODY_ARMOR, ItemSignatures.TYPE_ARMOR_BODY, 20, 50);
+    public static final Armor CLOTH_BODY_ARMOR = clothBody;
 
     /**
      * Iron body armor:
      * 50 bonus health
      * 200 gold
      */
-    static Weapon ironBody = new Weapon(ItemSignatures.IRON_BODY_ARMOR, ItemSignatures.TYPE_ARMOR_BODY, 50, 200);
-    public static final IItem IRON_BODY_ARMOR = ironBody;
+    static Armor ironBody = new Armor(ItemSignatures.IRON_BODY_ARMOR, ItemSignatures.TYPE_ARMOR_BODY, 50, 200);
+    public static final Armor IRON_BODY_ARMOR = ironBody;
 
     /**
      * Final body armor:
      * 100 bonus health
      * 500 gold
      */
-    static Weapon finalBody = new Weapon(ItemSignatures.FINAL_BODY_ARMOR, ItemSignatures.TYPE_ARMOR_BODY, 100, 500);
-    public static final IItem FINAL_BODY_ARMOR = finalBody;
+    static Armor finalBody = new Armor(ItemSignatures.FINAL_BODY_ARMOR, ItemSignatures.TYPE_ARMOR_BODY, 100, 500);
+    public static final Armor FINAL_BODY_ARMOR = finalBody;
 
 }
