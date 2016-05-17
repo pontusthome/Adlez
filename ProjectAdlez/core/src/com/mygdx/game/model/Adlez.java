@@ -43,7 +43,7 @@ public class Adlez {
         player = new Player(Direction.NORTH, 2f,
                             17, 17,
                             0, 0,
-                            100, 20, 0, 100);
+                            100, 20, 100, 100);
     }
 
     public void initiateArea(Area area) {

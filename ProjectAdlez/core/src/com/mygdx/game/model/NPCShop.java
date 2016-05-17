@@ -18,13 +18,12 @@ public class NPCShop implements INPCShop {
      */
     public NPCShop(List<IItem> items) {
         this.items = items;
-        player = adlez.getPlayer();
     }
 
     /**
-     * The npc sells an item to the player.
+     * The npc sells an item to a player.
      */
-    public IItem sellItem(IItem item) throws InsufficientGoldException {
+    public IItem sellItem(IItem item, IPlayer player) throws InsufficientGoldException {
         int value = item.getGoldValue();
         if (value <= player.getGold()) {
             player.setGold(player.getGold() - value);
@@ -35,10 +34,10 @@ public class NPCShop implements INPCShop {
     }
 
     /**
-     * The npc buys the player's item and returns the value.
+     * The npc buys a player's item and returns the value.
      * Assuming npc has infinite amount of gold.
      */
-    public int buyItem(IItem item) {
+    public int buyItem(IItem item, IPlayer player) {
         int value = item.getGoldValue();
         player.removeItem(item);
         return value;

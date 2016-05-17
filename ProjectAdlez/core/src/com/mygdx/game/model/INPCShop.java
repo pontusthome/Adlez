@@ -9,9 +9,9 @@ import java.util.List;
  */
 public interface INPCShop {
 
-    public IItem sellItem(IItem item) throws InsufficientGoldException;
+    public IItem sellItem(IItem item, IPlayer player) throws InsufficientGoldException;
 
-    public int buyItem(IItem item);
+    public int buyItem(IItem item, IPlayer player);
 
     public List<IItem> getItems();
 
