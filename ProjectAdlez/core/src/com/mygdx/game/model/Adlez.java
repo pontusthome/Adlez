@@ -31,6 +31,7 @@ public class Adlez {
     private List<IObstacle> obstacles;
     private List<IChest> chests;
     private List<IAreaConnection> areaConnections;
+    private List<IManaFountain> manaFountains;
     private CollisionHandler2 collisionHandler;
     private List<IAttack> attacks = new ArrayList<>();
     private List<IAttack> newAttacks = new ArrayList<>();
@@ -87,6 +88,9 @@ public class Adlez {
 
         areaConnections = area.getAreaConnections();
         worldObjects.addAll(areaConnections);
+
+        manaFountains = area.getManaFountains();
+        worldObjects.addAll(manaFountains);
     }
 
     public IPlayer getPlayer() {
@@ -121,6 +125,10 @@ public class Adlez {
 
     public List<IAreaConnection> getAreaConnections() {
         return areaConnections;
+    }
+
+    public List<IManaFountain> getManaFountains() {
+        return manaFountains;
     }
     
     public void removeEnemyFromWorld(INPC enemy){

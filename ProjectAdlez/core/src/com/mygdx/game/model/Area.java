@@ -9,7 +9,7 @@ import java.util.List;
  */
 public final class Area {
 
-    private String name;
+    private int name;
     private float playerXposition;
     private float playerYposition;
 
@@ -20,10 +20,11 @@ public final class Area {
     private List<IObstacle> obstacles;
     private List<IChest> chests;
     private List<IAreaConnection> areaConnections;
+    private List<IManaFountain> manaFountains;
 
     public Area(float playerXposition, float playerYposition,
                 List<IEnemy> enemies, List<IFriendlyNPC> friendlyNPCs, List<IWorldObject> stationaryObjects,
-                List<IWall> walls, List<IObstacle> obstacles, List<IChest> chests, List<IAreaConnection> areaConnections, String name) {
+                List<IWall> walls, List<IObstacle> obstacles, List<IChest> chests, List<IAreaConnection> areaConnections, int name, List<IManaFountain> manaFountains) {
         this.playerXposition = playerXposition;
         this.playerYposition = playerYposition;
 
@@ -34,6 +35,7 @@ public final class Area {
         this.obstacles = obstacles;
         this.chests = chests;
         this.areaConnections = areaConnections;
+        this.manaFountains = manaFountains;
 
         this.name = name;
     }
@@ -74,8 +76,11 @@ public final class Area {
         return areaConnections;
     }
 
-    @Override
-    public String toString() {
+    public List<IManaFountain> getManaFountains() {
+        return manaFountains;
+    }
+
+    public int getAreaName() {
         return this.name;
     }
 }

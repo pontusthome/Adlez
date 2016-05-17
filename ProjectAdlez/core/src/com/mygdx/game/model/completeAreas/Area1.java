@@ -1,5 +1,6 @@
 package com.mygdx.game.model.completeAreas;
 
+import com.mygdx.game.event.AreaHandler;
 import com.mygdx.game.model.*;
 
 import java.util.ArrayList;
@@ -19,13 +20,14 @@ public class Area1 implements ICompleteArea {
 
     public Area1() {
         List<IEnemy> enemies = new ArrayList<>();
-        List<IFriendlyNPC>friendlyNPCs = new ArrayList<>();
-        List<IWorldObject>stationaryObjects = new ArrayList<>();
+        List<IFriendlyNPC> friendlyNPCs = new ArrayList<>();
+        List<IWorldObject> stationaryObjects = new ArrayList<>();
         Wall wall = new Wall();
-        List<IWall>walls = new ArrayList<>();
-        List<IObstacle>obstacles = new ArrayList<>();
-        List<IChest>chests = new ArrayList<>();
-        List<IAreaConnection>areaConnections = new ArrayList<>();
+        List<IWall> walls = new ArrayList<>();
+        List<IObstacle> obstacles = new ArrayList<>();
+        List<IChest> chests = new ArrayList<>();
+        List<IAreaConnection> areaConnections = new ArrayList<>();
+        List<IManaFountain> manaFountains = new ArrayList<>();
 
         // Spawning left bottom corner.
         float playerPosX = 32f;
@@ -53,7 +55,7 @@ public class Area1 implements ICompleteArea {
         ch1.addItems(armor);
         chests.add(ch1);
 
-        friendlyNPCs.add(new FriendlyNPC(Direction.SOUTH, 17, 17, 32, 32 * 2, 200, 10, 0, 0, 0));
+        friendlyNPCs.add(new FriendlyNPC(Direction.SOUTH, 17, 17, 32, 32, 32 * 2, 10, 0, 0, 0));
 
         for (int i = 1; i < 8; i++) {
             walls.add(new Wall(6, i));
@@ -77,7 +79,8 @@ public class Area1 implements ICompleteArea {
         obstacles.add(new Obstacle(17, 8));
 
         areaConnections.add(new AreaConnection(32 * 18, 32, 32, 32));
+        manaFountains.add(new ManaFountain(32*3, 32*2, 32, 32));
 
-        area = new Area(playerPosX, playerPosY, enemies, friendlyNPCs, stationaryObjects, walls, obstacles, chests, areaConnections, "Area1");
+        area = new Area(playerPosX, playerPosY, enemies, friendlyNPCs, stationaryObjects, walls, obstacles, chests, areaConnections, AreaHandler.AREA_1, manaFountains);
     }
 }

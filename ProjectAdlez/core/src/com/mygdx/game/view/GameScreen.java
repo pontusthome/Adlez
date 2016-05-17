@@ -11,6 +11,7 @@ import com.badlogic.gdx.maps.tiled.TmxMapLoader;
 import com.badlogic.gdx.maps.tiled.renderers.OrthoCachedTiledMapRenderer;
 
 import com.mygdx.game.controller.*;
+import com.mygdx.game.event.AreaHandler;
 import com.mygdx.game.model.*;
 import com.mygdx.game.model.handler.CollisionHandler2;
 import com.mygdx.game.utils.AssetStrings;
@@ -27,6 +28,8 @@ public class GameScreen extends AbstractScreen {
 
     private Adlez adlez = Adlez.getInstance();
 
+    private AreaHandler areaHandler = AreaHandler.getInstance();
+
     private IPlayer player = adlez.getPlayer();
     private ICharacterController playerController;
     private OrthographicCamera playerCam;
@@ -36,8 +39,6 @@ public class GameScreen extends AbstractScreen {
     private SpriteBatch batch;
     private OrthoCachedTiledMapRenderer renderer;
     private TiledMap tileMap;
-
-    private GateView gateView;
     
     private CollisionHandler2 collisionHandler;
     private List<IAttack> attacks;
@@ -50,6 +51,8 @@ public class GameScreen extends AbstractScreen {
     private IController chestsController;
     private IController wallsController;
     private IController friendlyNPCController;
+    private IController areaConnectionController;
+    private IController manaFountainController;
     private HashMap<IInteraction, IController> interactionControllers;
     private List<IInteraction> newInteractions;
     
@@ -57,9 +60,12 @@ public class GameScreen extends AbstractScreen {
     private static final float WIDTH_SCALE = 2/3f;
     private static final float HEIGHT_SCALE = 2/3f;
 
+    private Hud hud;
+
     public GameScreen() {
         super();
         batch = new SpriteBatch();
+        this.hud = new Hud(this);
     }
 
     @Override
@@ -73,6 +79,7 @@ public class GameScreen extends AbstractScreen {
 
         // Spawning player.
         playerController = new PlayerController(player);
+
 
         // Spawning enemies.
         enemies = new HashMap<>();
@@ -94,12 +101,17 @@ public class GameScreen extends AbstractScreen {
         chestsController = new ChestsController(adlez.getChests(), AssetStrings.CLOSED_CHEST_IMAGE, AssetStrings.OPEN_CHEST_IMAGE);
         wallsController = new WallsController(adlez.getWalls());
         friendlyNPCController = new FriendlyNPCController(adlez.getFriendlyNPCs(), AssetStrings.FRIENDLY_NPC_SOUTH);
-        
+        areaConnectionController = new AreaConnectionController(adlez.getAreaConnections(), AssetStrings.DOOR_GATE_IMAGE);
+        manaFountainController = new ManaFountainController(adlez.getManaFountains(), AssetStrings.MANA_FOUNTAIN_IMAGE);
+
         interactionControllers = new HashMap<>();
         newInteractions = adlez.getNewInteractions();
 
-        // temporary things, just testing
-        tileMap = new TmxMapLoader().load(AssetStrings.AREA2_TMX);
+        if(areaHandler.getCurrentAreaInt() == AreaHandler.AREA_1) {
+            tileMap = new TmxMapLoader().load(AssetStrings.AREA1_TMX);
+        } else if(areaHandler.getCurrentAreaInt() == AreaHandler.AREA_2) {
+            tileMap = new TmxMapLoader().load(AssetStrings.AREA2_TMX);
+        }
         float unitScale = UNIT_SCALE;
 
         renderer = new OrthoCachedTiledMapRenderer(tileMap, unitScale);
@@ -118,6 +130,10 @@ public class GameScreen extends AbstractScreen {
         // Render Tiled map
         renderer.setView(playerCam);
         renderer.render();
+
+        //Renders the HUD
+        batch.setProjectionMatrix(hud.stage.getCamera().combined);
+        hud.stage.draw();
 
         batch.setProjectionMatrix((playerCam.combined));
         batch.begin();
@@ -141,9 +157,8 @@ public class GameScreen extends AbstractScreen {
         obstaclesController.render(batch);
         chestsController.render(batch);
         friendlyNPCController.render(batch);
-
-        gateView = new GateView(AssetStrings.DOOR_GATE_IMAGE);
-        gateView.generateGate(adlez.getAreaConnections(), batch);
+        areaConnectionController.render(batch);
+        manaFountainController.render(batch);
 
         batch.end();
     

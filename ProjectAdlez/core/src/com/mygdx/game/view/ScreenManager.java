@@ -34,7 +34,7 @@ public class ScreenManager {
     // Initialization with the game class
     public void initialize(Game game) {
         this.game = game;
-        showScreen(ScreenEnum.INTRO);
+        showScreen(ScreenEnum.GAME_OVER);
     }
 
     // Initialization with the game class

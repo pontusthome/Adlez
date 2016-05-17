@@ -28,7 +28,7 @@ public class AreaBuilder implements AreaIO {
             jsonAreaHandler.append("{");
 
             // Save which area the Player is saving from
-            jsonAreaHandler.append("currentArea:" + areaHandler.getCurrentArea().toString() + ",");
+            jsonAreaHandler.append("currentArea:" + areaHandler.getCurrentArea() + ",");
 
             // Save the individual areas
             areaToJson(areaHandler.loadArea1(), jsonAreaHandler);
@@ -55,7 +55,7 @@ public class AreaBuilder implements AreaIO {
             jsonAreaHandler.append("{");
 
             // Save which area the Player is saving from
-            jsonAreaHandler.append("currentArea:" + areaHandler.getCurrentArea().toString() + ",");
+            jsonAreaHandler.append("currentArea:" + areaHandler.getCurrentArea() + ",");
 
             // Save the individual areas
             areaToJson(areaHandler.loadArea1(), jsonAreaHandler);
@@ -202,7 +202,7 @@ public class AreaBuilder implements AreaIO {
                 loadArea(jsonAreaHandler.get("area1"), areaHandler.loadArea1());
                 loadArea(jsonAreaHandler.get("area2"), areaHandler.loadArea2());
 
-                areaHandler.setCurrentArea(jsonAreaHandler.get("currentArea").asString());
+                areaHandler.setCurrentArea(jsonAreaHandler.get("currentArea").asInt());
             }
 
             // close the BufferedReader when we're done
