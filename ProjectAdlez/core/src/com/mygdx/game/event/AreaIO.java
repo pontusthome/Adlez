@@ -1,6 +1,6 @@
 package com.mygdx.game.event;
 
-import com.mygdx.game.model.Player;
+import com.mygdx.game.model.IPlayer;
 
 /**
  * Created by Pontus on 2016-05-14.
@@ -8,6 +8,6 @@ import com.mygdx.game.model.Player;
 public interface AreaIO {
     public void savePlayer();
     public void saveAreaHandler();
-    public Player loadPlayer();
+    public IPlayer loadPlayer();
     public AreaHandler loadAreaHandler();
 }

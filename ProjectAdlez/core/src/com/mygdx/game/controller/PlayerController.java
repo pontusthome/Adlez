@@ -146,12 +146,12 @@ public class PlayerController implements ICharacterController, GateOpenListener 
         if (Gdx.input.isKeyJustPressed(Input.Keys.NUM_0)) {
             AreaIO areaBuilder = new AreaBuilder();
             areaBuilder.saveAreaHandler();
-            Adlez.getInstance().savePlayer();
+            areaBuilder.savePlayer();
         }
         if (Gdx.input.isKeyJustPressed(Input.Keys.L)) {
             AreaIO areaBuilder = new AreaBuilder();
             areaBuilder.loadAreaHandler();
-            Adlez.getInstance().loadPlayer();
+            areaBuilder.loadPlayer();
             ScreenManager.getInstance().switchArea(AreaHandler.getInstance().getCurrentArea());
         }
 

@@ -4,6 +4,7 @@ import com.badlogic.gdx.utils.JsonReader;
 import com.badlogic.gdx.utils.JsonValue;
 import com.badlogic.gdx.utils.StringBuilder;
 import com.mygdx.game.model.*;
+import com.mygdx.game.model.exceptions.InventoryFullException;
 
 import java.io.*;
 import java.util.ArrayList;
@@ -17,30 +18,112 @@ public class AreaBuilder implements AreaIO {
 
     /**
      * ==============================
-     * Save game
+     * Save and Load player
      * ==============================
+     */
+
+    /**
+     * Saves all the data in JSON that the player has including the items
      */
     @Override
     public void savePlayer() {
         try (FileWriter file = new FileWriter("player.txt")) {
-            AreaHandler areaHandler = AreaHandler.getInstance();
-            StringBuilder jsonAreaHandler = new StringBuilder();
-            jsonAreaHandler.append("{");
+            IPlayer player = Adlez.getInstance().getPlayer();
+            StringBuilder jsonPlayer = new StringBuilder();
+            jsonPlayer.append("{");
 
-            // Save which area the Player is saving from
-            jsonAreaHandler.append("currentArea:" + areaHandler.getCurrentAreaInt() + ",");
+            jsonPlayer.append("name" + ":" + player.getName() + ",");
+            jsonPlayer.append("xPos" + ":" + player.getPosX() + ",");
+            jsonPlayer.append("yPos" + ":" + player.getPosY() + ",");
+            jsonPlayer.append("height" + ":" + player.getHeight() + ",");
+            jsonPlayer.append("width" + ":" + player.getWidth() + ",");
+            jsonPlayer.append("speed" + ":" + player.getSpeed() + ",");
+            jsonPlayer.append("maxHealth" + ":" + player.getMaxHealth() + ",");
+            jsonPlayer.append("health" + ":" + player.getHealth() + ",");
+            jsonPlayer.append("maxMana" + ":" + player.getMaxMana() + ",");
+            jsonPlayer.append("mana" + ":" + player.getMana() + ",");
+            jsonPlayer.append("attackDamage" + ":" + player.getAttackDamage() + ",");
+            jsonPlayer.append("direction" + ":" + player.getDirection() + ",");
+            jsonPlayer.append("gold" + ":" + player.getGold() + ",");
+            jsonPlayer.append("level" + ":" + player.getLevel() + ",");
+            if (player.getArmorEquipped() != null) {
+                jsonPlayer.append("armorEquipped" + ":" + itemToJson(player.getArmorEquipped()) + ",");
+            }
+            if (player.getSwordEquipped() != null) {
+                jsonPlayer.append("swordEquipped" + ":" + itemToJson(player.getSwordEquipped()) + ",");
+            }
+            jsonPlayer.append("inventory" + ":" + itemsToJson(player.getInventory()) + ",");
 
-            // Save the individual areas
-            areaToJson(areaHandler.loadArea1(), jsonAreaHandler);
-            areaToJson(areaHandler.loadArea2(), jsonAreaHandler);
+            jsonPlayer.append("}");
 
-            jsonAreaHandler.append("}");
-
-            file.write(jsonAreaHandler.toString());
+            file.write(jsonPlayer.toString());
         } catch (IOException e) {
             e.printStackTrace();
         }
     }
+
+    /**
+     * Loads the saved player data and sets it to the player
+     *
+     * @return the saved player
+     */
+    @Override
+    public IPlayer loadPlayer() {
+        IPlayer player = Adlez.getInstance().getPlayer();
+
+        BufferedReader bufferedReader;
+        try {
+            String areaHandlerData;
+            bufferedReader = new BufferedReader(new FileReader("player.txt"));
+
+            while ((areaHandlerData = bufferedReader.readLine()) != null) {
+                JsonValue jsonPlayer = new JsonReader().parse(areaHandlerData);
+                //System.out.println(jsonAreaHandler.toString());
+
+                player.setName(jsonPlayer.get("name").asString());
+                player.setPos(jsonPlayer.get("xPos").asFloat(), jsonPlayer.get("yPos").asFloat());
+                player.setWidth(jsonPlayer.get("width").asInt());
+                player.setHeight(jsonPlayer.get("height").asInt());
+                player.setSpeed(jsonPlayer.get("speed").asFloat());
+                player.setMaxHealth(jsonPlayer.get("maxHealth").asInt());
+                player.setHealth(jsonPlayer.get("health").asInt());
+                player.setMaxMana(jsonPlayer.get("maxMana").asInt());
+                player.setMana(jsonPlayer.get("mana").asInt());
+                player.setAttackDamage(jsonPlayer.get("attackDamage").asInt());
+                player.setDirection(jsonPlayer.get("direction").asInt());
+                player.setGold(jsonPlayer.get("gold").asInt());
+                player.setLevel(jsonPlayer.get("level").asInt());
+                if (jsonPlayer.get("armorEquipped") != null) {
+                    player.equipItem(getJsonItem(jsonPlayer.get("armorEquipped")));
+                }
+                if (jsonPlayer.get("swordEquipped") != null) {
+                    player.equipItem(getJsonItem(jsonPlayer.get("swordEquipped")));
+                }
+                for (IItem item: getJsonItems(jsonPlayer.get("inventory"))) {
+                    try {
+                        player.lootItem(item);
+                    } catch (InventoryFullException e) {
+                        e.printStackTrace();
+                    }
+                }
+            }
+
+            // close the BufferedReader when we're done
+            bufferedReader.close();
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+        return player;
+    }
+
+    /**
+     * ==================================
+     * Save the AreaHandler
+     * ==================================
+     */
 
     /**
      * Saves data from the AreaHandler
@@ -55,7 +138,7 @@ public class AreaBuilder implements AreaIO {
             jsonAreaHandler.append("{");
 
             // Save which area the Player is saving from
-            jsonAreaHandler.append("currentArea:" + areaHandler.getCurrentAreaInt() + ",");
+            jsonAreaHandler.append("currentArea" + ":" + areaHandler.getCurrentAreaInt() + ",");
 
             // Save the individual areas
             areaToJson(areaHandler.loadArea1(), jsonAreaHandler);
@@ -97,9 +180,9 @@ public class AreaBuilder implements AreaIO {
         jsonAreaHandler.append("enemies:[");
 
         for (IEnemy enemy: enemies) {
-            jsonAreaHandler.append("{type:" + enemy.getType() + "," +
-                    "xPos:" + enemy.getPosX() + "," +
-                    "yPos:" + enemy.getPosY() + "},");
+            jsonAreaHandler.append("{type" + ":" + enemy.getType() + "," +
+                    "xPos" + ":" + enemy.getPosX() + "," +
+                    "yPos" + ":" + enemy.getPosY() + "},");
         }
 
         jsonAreaHandler.append("],");
@@ -116,8 +199,8 @@ public class AreaBuilder implements AreaIO {
         jsonAreaHandler.append("obstacles:[");
 
         for (IObstacle obstacle: obstacles) {
-            jsonAreaHandler.append("{xPos:" + obstacle.getPosX() + "," +
-                    "yPos:" + obstacle.getPosY() + "},");
+            jsonAreaHandler.append("{xPos" + ":" + obstacle.getPosX() + "," +
+                    "yPos" + ":" + obstacle.getPosY() + "},");
         }
 
         jsonAreaHandler.append("],");
@@ -134,9 +217,9 @@ public class AreaBuilder implements AreaIO {
         jsonAreaHandler.append("chests:[");
 
         for (IChest chest: chests) {
-            jsonAreaHandler.append("{xPos:" + chest.getPosX() + "," +
-                    "yPos:" + chest.getPosY() + "," +
-                    "items:" + itemsToJson(chest.getItems()) + "},");
+            jsonAreaHandler.append("{xPos" + ":" + chest.getPosX() + "," +
+                    "yPos" + ":" + chest.getPosY() + "," +
+                    "items" + ":" + itemsToJson(chest.getItems()) + "},");
         }
 
         jsonAreaHandler.append("],");
@@ -153,16 +236,7 @@ public class AreaBuilder implements AreaIO {
         String jsonItems = "[";
 
         for (IItem item: items) {
-            if (item instanceof Armor) {
-                jsonItems += "{itemType:Armor,";
-            }
-            else if (item instanceof Weapon) {
-                jsonItems += "{itemType:Weapon,";
-            }
-            jsonItems += "type:" + item.getType() + "," +
-                    "name:" + item.getName() + "," +
-                    "goldValue:" + item.getGoldValue() + "," +
-                    "stats:" + item.getStats() + "},";
+            jsonItems += itemToJson(item);
         }
 
         jsonItems += "]";
@@ -170,15 +244,34 @@ public class AreaBuilder implements AreaIO {
     }
 
     /**
+     * Creates a JSON object from an item
+     *
+     * @param item the item that is turned into a JSON obeject
+     * @return item as a JSON object
+     */
+    private String itemToJson(IItem item) {
+        String jsonItem = "";
+
+        if (item != null) {
+            if (item instanceof Armor) {
+                jsonItem += "{itemType:Armor,";
+            } else if (item instanceof Weapon) {
+                jsonItem += "{itemType:Weapon,";
+            }
+            jsonItem += "type" + ":" + item.getType() + "," +
+                    "name" + ":" + item.getName() + "," +
+                    "goldValue" + ":" + item.getGoldValue() + "," +
+                    "stats" + ":" + item.getStats() + "},";
+        }
+
+        return jsonItem;
+    }
+
+    /**
      * ==============================
-     * Load game
+     * Load AreaHandler
      * ==============================
      */
-
-    @Override
-    public Player loadPlayer() {
-        return null;
-    }
 
     /**
      * Retrieves saved data in JSON format and updates the AreaHandler with the earlier game data.
@@ -285,14 +378,25 @@ public class AreaBuilder implements AreaIO {
     private List<IItem> getJsonItems(JsonValue jsonItems) {
         List items = new ArrayList();
         for (JsonValue jsonItem : jsonItems) {
-            if (jsonItem.get("itemType").asString().equals("Armor")) {
-                items.add(new Armor(jsonItem.get("name").asString(), jsonItem.get("type").asString(),
-                        jsonItem.get("stats").asInt(), jsonItem.get("goldValue").asInt()));
-            } else if (jsonItem.get("itemType").asString().equals("Weapon")) {
-                items.add(new Weapon(jsonItem.get("name").asString(), jsonItem.get("type").asString(),
-                        jsonItem.get("stats").asInt(), jsonItem.get("goldValue").asInt()));
-            }
+            items.add(getJsonItem(jsonItem));
         }
         return items;
+    }
+
+    /**
+     * Returns an item retrieved from JSON data.
+     *
+     * @param jsonItem is the saved item's data in JSON format
+     * @return An item
+     */
+    private IItem getJsonItem(JsonValue jsonItem) {
+        if (jsonItem.get("itemType").asString().equals("Armor")) {
+            return new Armor(jsonItem.get("name").asString(), jsonItem.get("type").asString(),
+                    jsonItem.get("stats").asInt(), jsonItem.get("goldValue").asInt());
+        } else if (jsonItem.get("itemType").asString().equals("Weapon")) {
+             return new Weapon(jsonItem.get("name").asString(), jsonItem.get("type").asString(),
+                    jsonItem.get("stats").asInt(), jsonItem.get("goldValue").asInt());
+        }
+        return null;
     }
 }
