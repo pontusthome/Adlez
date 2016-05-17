@@ -5,7 +5,7 @@ import java.io.Serializable;
 /**
  * Created by martinso on 20/04/16.
  */
-public class Armor implements IItem, Serializable {
+public class Armor implements IItem {
 
     private String type;
     private String name;

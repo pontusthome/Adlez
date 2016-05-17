@@ -7,7 +7,7 @@ import java.util.List;
  * @author Pontus
  * If we want to save the areas, this should not be final? /PT 24/4
  */
-public final class Area implements Serializable {
+public final class Area {
 
     private String name;
     private float playerXposition;

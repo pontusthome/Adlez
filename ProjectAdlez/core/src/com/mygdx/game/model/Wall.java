@@ -7,7 +7,7 @@ import java.util.List;
 /**
  * Created by martinso on 25/04/16.
  */
-public class Wall extends WorldObject implements IWall, Serializable {
+public class Wall extends WorldObject implements IWall {
     
     private int health;
 

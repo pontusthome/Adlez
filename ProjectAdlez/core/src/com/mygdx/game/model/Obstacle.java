@@ -5,7 +5,7 @@ import java.io.Serializable;
 /**
  * Created by martinso on 27/04/16.
  */
-public class Obstacle extends WorldObject implements IObstacle, Serializable {
+public class Obstacle extends WorldObject implements IObstacle {
     
     private int health;
 
@@ -18,7 +18,12 @@ public class Obstacle extends WorldObject implements IObstacle, Serializable {
         super(posX*32, posY*32, 32, 32);
         this.health = 100;
     }
-    
+
+    public Obstacle(float posX, float posY) {
+        super(posX, posY, 32, 32);
+        this.health = 100;
+    }
+
     @Override
     public int getHealth() {
         return health;

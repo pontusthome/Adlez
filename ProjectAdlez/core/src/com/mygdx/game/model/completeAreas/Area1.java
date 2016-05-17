@@ -46,7 +46,11 @@ public class Area1 implements ICompleteArea {
         enemies.add(EnemyFactory.createEnemy(Enemy.DOG_LEVEL_ONE, 32 * 14, 32 * 2));
         enemies.add(EnemyFactory.createEnemy(Enemy.DOG_LEVEL_ONE, 32 * 14, 32 * 7));
 
-        Chest ch1 = new Chest(32 * 18 + 8, 32 * 7 + 8, 16, 16, 2, 200);
+        Chest ch1 = new Chest(32 * 18 + 8, 32 * 7 + 8);
+        IItem weapon = new Weapon("weapon", "axe", 2, 3);
+        IItem armor = new Armor("armor", "boots", 2, 3);
+        ch1.addItems(weapon);
+        ch1.addItems(armor);
         chests.add(ch1);
 
         friendlyNPCs.add(new FriendlyNPC(Direction.SOUTH, 17, 17, 32, 32 * 2, 200, 10, 0, 0, 0));

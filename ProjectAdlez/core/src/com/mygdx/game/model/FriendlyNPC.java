@@ -6,7 +6,7 @@ import java.io.Serializable;
  * Created by Michel on 1.5.2016.
  */
 
-public class FriendlyNPC extends NPC implements IFriendlyNPC, Serializable {
+public class FriendlyNPC extends NPC implements IFriendlyNPC {
 
     public FriendlyNPC(int direction, float speed, int width,
                        int height, float posX, float posY,

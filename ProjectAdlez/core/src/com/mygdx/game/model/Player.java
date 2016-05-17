@@ -11,7 +11,7 @@ import java.util.List;
 /**
  * Created by Michel on 2016-04-19.
  */
-public class Player extends Character implements IPlayer, Serializable {
+public class Player extends Character implements IPlayer {
     private int experience;
 
     private IItem swordEquipped;
