@@ -72,16 +72,13 @@ public class GameOverScreen extends AbstractScreen{
 
                 // Load areas
                 AreaIO areaBuilder = new AreaBuilder();
-                areaBuilder.loadAreaHandler();
-                areaBuilder.loadPlayer();
-                AreaHandler areaHandler = AreaHandler.getInstance();
-
-                Adlez adlez = Adlez.getInstance();
+                AreaHandler areaHandler = areaBuilder.loadAreaHandler();
 
                 // Load player
-                adlez.loadPlayer();
+                areaBuilder.loadPlayer();
 
                 // Initiate game
+                Adlez adlez = Adlez.getInstance();
                 adlez.initiateArea(areaHandler.getCurrentArea());
 
                 ScreenManager.getInstance().showScreen(ScreenEnum.GAME);

@@ -188,24 +188,5 @@ public class Adlez {
     public List<IInteraction> getNewInteractions(){
         return newInteractions;
     }
-
-    public void savePlayer(){
-        try {
-            ObjectOutputStream oos = new ObjectOutputStream(new FileOutputStream("player.dat"));
-            oos.writeObject(player);
-            oos.close();
-        } catch(Exception ex) {
-            ex.printStackTrace();
-        }
-    }
-
-    public void loadPlayer(){
-        try {
-            ObjectInputStream ois = new ObjectInputStream(new FileInputStream("player.dat"));
-            player = (IPlayer) ois.readObject();
-            ois.close();
-        } catch(Exception ex) {
-            ex.printStackTrace();
-        }
-    }
+    
 }

@@ -57,16 +57,6 @@ public class AreaHandler implements Serializable {
         return currentArea;
     }
 
-    public void SaveAreaHandler(){
-        try {
-            ObjectOutputStream oos = new ObjectOutputStream(new FileOutputStream("save.dat"));
-            oos.writeObject(this);
-            oos.close();
-        } catch(Exception ex) {
-            ex.printStackTrace();
-        }
-    }
-
     public void setCurrentArea(int currentArea) {
         this.currentArea = currentArea;
     }

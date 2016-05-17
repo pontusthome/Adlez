@@ -70,16 +70,15 @@ public class MainMenuScreen extends AbstractScreen {
             public boolean touchDown(InputEvent event, float x,
                                      float y, int pointer, int button) {
 
-                // Load areas
+                // Load the AreaHandler
                 AreaIO areaBuilder = new AreaBuilder();
                 AreaHandler areaHandler = areaBuilder.loadAreaHandler();
 
-                Adlez adlez = Adlez.getInstance();
+                // Load the Player
+                areaBuilder.loadPlayer();
 
-                // Load player
-                adlez.loadPlayer();
-                System.out.println(areaHandler.getCurrentArea().toString());
                 // Initiate game
+                Adlez adlez = Adlez.getInstance();
                 adlez.initiateArea(areaHandler.getCurrentArea());
 
                 ScreenManager.getInstance().showScreen(ScreenEnum.GAME);
