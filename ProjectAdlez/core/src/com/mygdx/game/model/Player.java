@@ -3,7 +3,10 @@ package com.mygdx.game.model;
 import com.mygdx.game.event.AreaHandler;
 
 import java.io.*;
+
 import com.mygdx.game.model.exceptions.InventoryFullException;
+import com.mygdx.game.model.exceptions.ItemNotFoundException;
+
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
@@ -26,24 +29,24 @@ public class Player extends Character implements IPlayer, Serializable {
                   int width, int height,
                   float posX, float posY,
                   int maxHealth, int attackDamage, int gold, int mana) {
-        
-        super(direction, speed, width, height, 
-                posX, posY, maxHealth, attackDamage, 
+
+        super(direction, speed, width, height,
+                posX, posY, maxHealth, attackDamage,
                 gold, mana);
-        
+
         inventory = new ArrayList<IItem>(INVENTORY_MAX_SIZE);
     }
-    
-    public void equipItem(IItem item) {
+
+    public void equipItem(IItem item) throws ItemNotFoundException {
         if (item instanceof Weapon) {
-            if(isWepSlotEmpty) {
+            if (isWepSlotEmpty) {
                 isWepSlotEmpty = false;
                 swordEquipped = item;
                 setAttackDamage(getAttackDamage() + item.getStats());
                 removeItem(item);
             }
-        } else if(item instanceof Armor) {
-            if(isArmorSlotEmpty) {
+        } else if (item instanceof Armor) {
+            if (isArmorSlotEmpty) {
                 isArmorSlotEmpty = false;
                 armorEquipped = item;
                 setMaxHealth(getMaxHealth() + item.getStats());
@@ -53,7 +56,7 @@ public class Player extends Character implements IPlayer, Serializable {
     }
 
     public void unEquipWeapon(IItem item) throws InventoryFullException {
-        if(!isWepSlotEmpty) {
+        if (!isWepSlotEmpty) {
             isWepSlotEmpty = true;
             swordEquipped = null;
             setAttackDamage(getAttackDamage() - item.getStats());
@@ -62,7 +65,7 @@ public class Player extends Character implements IPlayer, Serializable {
     }
 
     public void unEquipArmor(IItem item) throws InventoryFullException {
-        if(!isArmorSlotEmpty) {
+        if (!isArmorSlotEmpty) {
             isArmorSlotEmpty = true;
             armorEquipped = null;
             setMaxHealth(getMaxHealth() - item.getStats());
@@ -71,7 +74,7 @@ public class Player extends Character implements IPlayer, Serializable {
     }
 
     public void lootItem(IItem item) throws InventoryFullException {
-        if(inventory.size() >= INVENTORY_MAX_SIZE) {
+        if (inventory.size() >= INVENTORY_MAX_SIZE) {
             throw new InventoryFullException("Inventory Full");
         } else {
             inventory.add(item);
@@ -82,14 +85,26 @@ public class Player extends Character implements IPlayer, Serializable {
         return inventory;
     }
 
-    public void removeItem(IItem item) {
+    public void removeItem(IItem item) throws ItemNotFoundException {
+        //Iterator<IItem> itr = inventory.iterator();
+        //while (itr.hasNext()) {
+        //    IItem element = itr.next();
+        //    if (element == item) {
+        //        itr.remove();
+        //    }
+        //}
+        inventory.remove(getItemInInventory(item));
+    }
+
+    public IItem getItemInInventory(IItem item) throws ItemNotFoundException {
         Iterator<IItem> itr = inventory.iterator();
-        while(itr.hasNext()) {
+        while (itr.hasNext()) {
             IItem element = itr.next();
-            if(element == item) {
-                itr.remove();
+            if (element == item) {
+                return element;
             }
         }
+        throw new ItemNotFoundException("No such item in your inventory");
     }
 
     public IItem getSwordEquipped() {
@@ -99,11 +114,11 @@ public class Player extends Character implements IPlayer, Serializable {
     public IItem getArmorEquipped() {
         return armorEquipped;
     }
-    
+
     @Override
-    public void onCollide(Collidable other){
+    public void onCollide(Collidable other) {
         super.onCollide(other);
-        if(other instanceof IAttack && !((IAttack) other).byPlayer()){
+        if (other instanceof IAttack && !((IAttack) other).byPlayer()) {
             IAttack attack = (IAttack) other;
             setHealth(getHealth() - attack.getDamage());
         }

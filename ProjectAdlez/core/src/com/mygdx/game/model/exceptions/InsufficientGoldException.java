@@ -6,6 +6,6 @@ package com.mygdx.game.model.exceptions;
 public class InsufficientGoldException extends Exception {
 
     public InsufficientGoldException(String message) {
-        super(message);
+        System.out.println(message);
     }
 }

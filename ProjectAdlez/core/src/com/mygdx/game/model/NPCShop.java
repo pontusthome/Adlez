@@ -1,6 +1,7 @@
 package com.mygdx.game.model;
 
 import com.mygdx.game.model.exceptions.InsufficientGoldException;
+import com.mygdx.game.model.exceptions.ItemNotFoundException;
 
 import java.util.List;
 
@@ -37,7 +38,7 @@ public class NPCShop implements INPCShop {
      * The npc buys a player's item and returns the value.
      * Assuming npc has infinite amount of gold.
      */
-    public int buyItem(IItem item, IPlayer player) {
+    public int buyItem(IItem item, IPlayer player) throws ItemNotFoundException {
         int value = item.getGoldValue();
         player.removeItem(item);
         return value;
