@@ -22,7 +22,24 @@ public class AreaBuilder implements AreaIO {
      */
     @Override
     public void savePlayer() {
+        try (FileWriter file = new FileWriter("player.txt")) {
+            AreaHandler areaHandler = AreaHandler.getInstance();
+            StringBuilder jsonAreaHandler = new StringBuilder();
+            jsonAreaHandler.append("{");
 
+            // Save which area the Player is saving from
+            jsonAreaHandler.append("currentArea:" + areaHandler.getCurrentArea().toString() + ",");
+
+            // Save the individual areas
+            areaToJson(areaHandler.loadArea1(), jsonAreaHandler);
+            areaToJson(areaHandler.loadArea2(), jsonAreaHandler);
+
+            jsonAreaHandler.append("}");
+
+            file.write(jsonAreaHandler.toString());
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 
     /**
