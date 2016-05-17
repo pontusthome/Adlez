@@ -28,7 +28,7 @@ public class AreaBuilder implements AreaIO {
             jsonAreaHandler.append("{");
 
             // Save which area the Player is saving from
-            jsonAreaHandler.append("currentArea:" + areaHandler.getCurrentArea() + ",");
+            jsonAreaHandler.append("currentArea:" + areaHandler.getCurrentAreaInt() + ",");
 
             // Save the individual areas
             areaToJson(areaHandler.loadArea1(), jsonAreaHandler);
@@ -55,7 +55,7 @@ public class AreaBuilder implements AreaIO {
             jsonAreaHandler.append("{");
 
             // Save which area the Player is saving from
-            jsonAreaHandler.append("currentArea:" + areaHandler.getCurrentArea() + ",");
+            jsonAreaHandler.append("currentArea:" + areaHandler.getCurrentAreaInt() + ",");
 
             // Save the individual areas
             areaToJson(areaHandler.loadArea1(), jsonAreaHandler);
@@ -77,7 +77,7 @@ public class AreaBuilder implements AreaIO {
      * @param jsonAreaHandler a StringBuilder that the data will be stored in, it contains the JSON file for the AreaHandler
      */
     private void areaToJson(Area area, StringBuilder jsonAreaHandler) {
-        jsonAreaHandler.append(area.toString() + ":{");
+        jsonAreaHandler.append(area.getAreaName() + ":{");
 
         EnemiesToJson(area.getEnemies(), jsonAreaHandler);
         ObstaclesToJson(area.getObstacles(), jsonAreaHandler);
@@ -199,8 +199,8 @@ public class AreaBuilder implements AreaIO {
                 JsonValue jsonAreaHandler = new JsonReader().parse(areaHandlerData);
                 //System.out.println(jsonAreaHandler.toString());
 
-                loadArea(jsonAreaHandler.get("area1"), areaHandler.loadArea1());
-                loadArea(jsonAreaHandler.get("area2"), areaHandler.loadArea2());
+                loadArea(jsonAreaHandler.get("1"), areaHandler.loadArea1());
+                loadArea(jsonAreaHandler.get("2"), areaHandler.loadArea2());
 
                 areaHandler.setCurrentArea(jsonAreaHandler.get("currentArea").asInt());
             }

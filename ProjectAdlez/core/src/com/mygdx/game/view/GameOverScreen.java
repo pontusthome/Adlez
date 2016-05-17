@@ -9,7 +9,9 @@ import com.badlogic.gdx.scenes.scene2d.ui.Image;
 import com.badlogic.gdx.scenes.scene2d.ui.ImageButton;
 import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
 import com.badlogic.gdx.utils.Align;
+import com.mygdx.game.event.AreaBuilder;
 import com.mygdx.game.event.AreaHandler;
+import com.mygdx.game.event.AreaIO;
 import com.mygdx.game.model.Adlez;
 import com.mygdx.game.utils.AssetStrings;
 
@@ -69,7 +71,8 @@ public class GameOverScreen extends AbstractScreen{
                                      float y, int pointer, int button) {
 
                 // Load areas
-                AreaHandler.LoadAreaHandler();
+                AreaIO areaBuilder = new AreaBuilder();
+                areaBuilder.loadAreaHandler();
                 AreaHandler areaHandler = AreaHandler.getInstance();
 
                 Adlez adlez = Adlez.getInstance();
