@@ -21,19 +21,49 @@ public class PlayerTest {
      * Player with 100 HP taking 5 damage from Enemy 'Dark enemy level one'.
      */
     @Test
-    public void takeDamage() {
-        Player player = new Player(Direction.NORTH, 0, 17, 17, 0, 0, 100, 10, 0, 100);
-        Enemy enemy = EnemyFactory.createEnemy(Enemy.REGULAR_LEVEL_ONE, 20, 20);
+    public void testTakeDamage() {
+        IPlayer player = new Player(Direction.NORTH, 0, 17, 17, 0, 0, 100, 10, 0, 100);
+        IEnemy enemy = EnemyFactory.createEnemy(Enemy.REGULAR_LEVEL_ONE, 20, 20);
         IAttack meleeAttack = new MeleeAttack(enemy);
         player.onCollide(meleeAttack);
         assertTrue(player.getHealth() == 95);
     }
 
     /**
+     * Player killing an enemy.
+     * Player has 50 attack damage and enemy has 100 HP.
+     */
+    @Test
+    public void testKillEnemy() {
+        IPlayer player = new Player(Direction.NORTH, 0, 17, 17, 0, 0, 100, 50, 0, 100);
+        IEnemy enemy = EnemyFactory.createEnemy(Enemy.REGULAR_LEVEL_ONE, 20, 20);
+        IAttack meleeAttack = new MeleeAttack(player);
+        enemy.onCollide(meleeAttack);
+        assertTrue(enemy.getHealth() == 50);
+        enemy.onCollide(meleeAttack);
+        assertTrue(enemy.getHealth() == 0);
+        assertFalse(enemy.isAlive());
+    }
+
+    /**
+     * Player killing an enemy and looting the gold.
+     * Player starts with 0 gold.
+     */
+    @Test
+    public void testLootGoldFromEnemy() {
+        IPlayer player = new Player(Direction.NORTH, 0, 17, 17, 0, 0, 100, 100, 0, 100);
+        IEnemy enemy = EnemyFactory.createEnemy(Enemy.REGULAR_LEVEL_ONE, 20, 20);
+        IAttack meleeAttack = new MeleeAttack(player);
+        assertTrue(player.getGold() == 0);
+        enemy.onCollide(meleeAttack);
+        assertTrue(player.getGold() == enemy.getGold());
+    }
+
+    /**
      * Player equipping weapon. Final sword with 100 bonus damage.
      */
     @Test
-    public void equipWeapon() throws ItemNotFoundException, InventoryFullException {
+    public void testEquipWeapon() throws ItemNotFoundException, InventoryFullException {
         Player player = new Player(Direction.NORTH, 0, 17, 17, 0, 0, 100, 10, 0, 100);
         try {
             player.lootItem(CompleteItems.FINAL_SWORD);
@@ -50,7 +80,7 @@ public class PlayerTest {
      * Player equipping armor. Final armor with 100 bonus HP.
      */
     @Test
-    public void equipArmor() throws ItemNotFoundException, InventoryFullException {
+    public void testEquipArmor() throws ItemNotFoundException, InventoryFullException {
         Player player = new Player(Direction.NORTH, 0, 17, 17, 0, 0, 100, 10, 0, 100);
         try {
             player.lootItem(CompleteItems.FINAL_BODY_ARMOR);
@@ -67,7 +97,7 @@ public class PlayerTest {
      * Player unequipping weapon. Final weapon with 100 bonus damage.
      */
     @Test
-    public void unEquipWeapon() throws InventoryFullException, ItemNotFoundException {
+    public void testUnEquipWeapon() throws InventoryFullException, ItemNotFoundException {
         Player player = new Player(Direction.NORTH, 0, 17, 17, 0, 0, 100, 10, 0, 100);
         try {
             player.equipItem(CompleteItems.FINAL_SWORD);
