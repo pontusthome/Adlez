@@ -34,8 +34,6 @@ public interface ICharacter extends IWorldObject{
 	void setDirection(int direction);
 	float getSpeed();
 	void setSpeed(float speed);
-	void setVx(float vX);
-	void setVy(float vY);
 	boolean isMovingNorth();
 	boolean isMovingSouth();
 	boolean isMovingEast();

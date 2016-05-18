@@ -27,8 +27,6 @@ public abstract class Character extends WorldObject implements ICharacter {
 	private boolean movingSouth;
 	private boolean movingEast;
 	private boolean movingWest;
-	private float vX;
-	private float vY;
 	private int velocityScalar = 50;
 	private float oldPosX;
 	private float oldPosY;
@@ -221,18 +219,7 @@ public abstract class Character extends WorldObject implements ICharacter {
 	
 	@Override
 	public void onCollide(Collidable other){
-		// Collisions with objects & other characters are handled directly after moving for now
-//		if(other instanceof ICharacter && this != other){
-//			undoCharacterMove(other);
-//		} else if(other instanceof IWall){
-//			undoCharacterMove(other);
-//		} else if(other instanceof IObstacle){
-//			undoCharacterMove(other);
-//		} else if(other instanceof IChest){
-//			undoCharacterMove(other);
-//		} else if(other instanceof IAreaConnection){
-//			undoCharacterMove(other);
-//		}
+		
 	}
 	
 	public void clearMoveFlags(){
@@ -265,54 +252,6 @@ public abstract class Character extends WorldObject implements ICharacter {
 	@Override
 	public boolean isAlive(){
 		return getHealth() > 0;
-	}
-	
-	private boolean collisionFromTop(IWorldObject other){
-		float otherBottom = other.getPosY();
-		float oldTop = oldPosY + getHeight();
-		float top = getPosY() + getHeight();
-		
-		return oldTop <= otherBottom &&	top > otherBottom;
-	}
-	
-	private boolean collisionFromBottom(IWorldObject other){
-		float otherTop = other.getPosY() + other.getHeight();
-		float oldBottom = oldPosY ;
-		float bottom = getPosY();
-		
-		return oldBottom >= otherTop &&	bottom < otherTop;
-	}
-	
-	private boolean collisionFromLeft(IWorldObject other){
-		float otherRight = other.getPosX() + other.getWidth();
-		float oldLeft = oldPosX;
-		float left = getPosX();
-		
-		return oldLeft >= otherRight && left < otherRight;
-	}
-	
-	private boolean collisionFromRight(IWorldObject other){
-		float otherLeft = other.getPosX();
-		float oldRight = oldPosX + getWidth();
-		float right = getPosX() + getWidth();
-		
-		return oldRight <= otherLeft && right > otherLeft;
-	}
-	
-	public float getVx(){
-		return vX;
-	}
-	
-	public void setVx(float vX){
-		this.vX = vX;
-	}
-	
-	public float getVy(){
-		return vY;
-	}
-	
-	public void setVy(float vY){
-		this.vY = vY;
 	}
 	
 	public void move(float deltaT){

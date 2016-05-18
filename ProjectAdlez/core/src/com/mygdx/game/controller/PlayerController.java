@@ -82,6 +82,7 @@ public class PlayerController implements ICharacterController, GateOpenListener 
             playerCharacter.setMovingEast();
         }
         
+        playerCharacter.update(deltaT);
         playerCharacter.move(deltaT);
 
         if (Gdx.input.isKeyJustPressed(Input.Keys.SPACE)) {

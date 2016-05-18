@@ -41,10 +41,10 @@ public class Enemy extends NPC implements IEnemy{
 				attack.getCharacter().setGold(attack.getCharacter().getGold() + getGold());
 			}
 		}
-//		if(other instanceof IPlayer && getAttackCooldown() > ATTACK_COOLDOWN_LIMIT){
-//			attackPlayer();
-//			resetAttackCooldown();
-//		}
+		if(other instanceof IPlayer && getAttackCooldown() > ATTACK_COOLDOWN_LIMIT){
+			attackPlayer();
+			resetAttackCooldown();
+		}
 	}
 
 	@Override
@@ -66,8 +66,7 @@ public class Enemy extends NPC implements IEnemy{
 			// Preliminary implementation of enemy attack
 			if(CollisionHandler2.collide(this, player) && 
 					getAttackCooldown() >= ATTACK_COOLDOWN_LIMIT){
-				attackPlayer();
-				resetAttackCooldown();
+				onCollide(player);
 			}
 			
 			switch(direction){
