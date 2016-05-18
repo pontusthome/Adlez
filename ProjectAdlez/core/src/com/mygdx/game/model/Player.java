@@ -106,10 +106,6 @@ public class Player extends Character implements IPlayer, Serializable {
         return armorEquipped;
     }
 
-    public void lootGold(IEnemy enemy) {
-        setGold(getGold() + enemy.getGold());
-    }
-
     @Override
     public void onCollide(Collidable other) {
         super.onCollide(other);
