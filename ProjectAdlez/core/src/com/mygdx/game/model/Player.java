@@ -35,6 +35,16 @@ public class Player extends Character implements IPlayer, Serializable {
         inventory = new ArrayList<IItem>(INVENTORY_MAX_SIZE);
     }
 
+    public void useMana(IAttack attack) {
+        if (attack instanceof MeleeAttack) {
+            setMana(getMana());
+        } else if (attack instanceof AOEMagicAttack) {
+            setMana(getMana() - 20);
+        } else if (attack instanceof RangeMagicAttack) {
+            setMana(getMana() - 15);
+        }
+    }
+
     public void equipItem(IItem item) throws ItemNotFoundException {
         if (item instanceof Weapon) {
             if (isWepSlotEmpty) {

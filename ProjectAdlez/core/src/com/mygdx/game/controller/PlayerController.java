@@ -107,16 +107,22 @@ public class PlayerController implements ICharacterController, GateOpenListener 
             adlez.addAttack(currentAttack);
         }
         if (Gdx.input.isKeyJustPressed(Input.Keys.E)) {
-            currentAttack = new RangeMagicAttack(playerCharacter);
-            currentAttack.setSound(new LibGDXSoundAdapter(AssetStrings.RANGE_MAGIC_ATTACK_SOUND));
-            currentAttack.playSound(0.1f);
-            adlez.addAttack(currentAttack);
+            if(player.getMana() >= 15) {
+                currentAttack = new RangeMagicAttack(playerCharacter);
+                currentAttack.setSound(new LibGDXSoundAdapter(AssetStrings.RANGE_MAGIC_ATTACK_SOUND));
+                currentAttack.playSound(0.1f);
+                player.useMana(currentAttack);
+                adlez.addAttack(currentAttack);
+            }
         }
         if (Gdx.input.isKeyJustPressed(Input.Keys.F)) {
-            currentAttack = new AOEMagicAttack(playerCharacter);
-            currentAttack.setSound(new LibGDXSoundAdapter(AssetStrings.AOE_MAGIC_ATTACK_SOUND));
-            currentAttack.playSound(0.1f);
-            adlez.addAttack(currentAttack);
+            if(player.getMana() >= 20) {
+                currentAttack = new AOEMagicAttack(playerCharacter);
+                currentAttack.setSound(new LibGDXSoundAdapter(AssetStrings.AOE_MAGIC_ATTACK_SOUND));
+                currentAttack.playSound(0.1f);
+                player.useMana(currentAttack);
+                adlez.addAttack(currentAttack);
+            }
         }
         if (Gdx.input.isKeyJustPressed(Input.Keys.ENTER)) {
             currentInteraction = new Interaction(playerCharacter);

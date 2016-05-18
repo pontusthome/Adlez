@@ -18,7 +18,7 @@ public class ManaFountain extends WorldObject implements IManaFountain, Serializ
             if (interaction.getCharacter() instanceof IPlayer) {
                 IPlayer player = (IPlayer) interaction.getCharacter();
                 // Sets players current mana to max.
-                player.setMana(player.getMaxMana());
+                player.setMana(100);
             }
         }
     }
