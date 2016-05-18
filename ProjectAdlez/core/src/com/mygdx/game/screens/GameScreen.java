@@ -121,7 +121,7 @@ public class GameScreen extends AbstractScreen {
 
     @Override
     public void render(float delta) {
-        updateGame();
+        updateGame(delta);
 
         // Clear screen
         Gdx.gl.glClearColor(0, 0, 0, 1);
@@ -165,9 +165,9 @@ public class GameScreen extends AbstractScreen {
         debugRender();
     }
 
-    private void updateGame() {
+    private void updateGame(float delta) {
         // Updating player
-        playerController.update();
+        playerController.update(delta);
         collisionHandler.updatePlayer();
 
         // Updating enemies
@@ -176,7 +176,7 @@ public class GameScreen extends AbstractScreen {
             INPC enemy = entry.getKey();
             ICharacterController enemyController = entry.getValue();
     
-            enemyController.update();
+            enemyController.update(delta);
             if (!enemy.isAlive()) {
                 killedEnemies.add(enemy);
             }
@@ -202,7 +202,7 @@ public class GameScreen extends AbstractScreen {
                 finishedAttacks.add(attack);
             }
             else {
-                attackController.update();
+                attackController.update(delta);
             }
         }
         for (IAttack finishedAttack: finishedAttacks) {
@@ -227,7 +227,7 @@ public class GameScreen extends AbstractScreen {
                 finishedInteractions.add(interaction);
             }
             else {
-                interactionController.update();
+                interactionController.update(delta);
             }
         }
         for (IInteraction finishedInteraction : finishedInteractions) {
@@ -236,9 +236,9 @@ public class GameScreen extends AbstractScreen {
         }
     
         // Update stationary objects 
-        obstaclesController.update();
-        chestsController.update();
-        wallsController.update();
+        obstaclesController.update(delta);
+        chestsController.update(delta);
+        wallsController.update(delta);
         
         collisionHandler.updateWorld();
     }

@@ -21,7 +21,7 @@ public class WallsController implements IController{
 	}
 	
 	@Override
-	public void update(){
+	public void update(float deltaT){
 		
 	}
 	

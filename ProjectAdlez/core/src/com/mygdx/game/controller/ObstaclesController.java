@@ -24,7 +24,7 @@ public class ObstaclesController implements IController{
 	}
 	
 	@Override
-	public void update(){
+	public void update(float deltaT){
 		List<IObstacle> destroyedObstacles = new ArrayList<>();
 		for(IObstacle obstacle : obstacles){
 			if(obstacle.isDestroyed()){

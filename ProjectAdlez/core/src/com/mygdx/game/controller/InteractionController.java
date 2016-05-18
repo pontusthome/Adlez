@@ -18,7 +18,7 @@ public class InteractionController implements IController{
 	}
 	
 	@Override
-	public void update(){
+	public void update(float deltaT){
 		if (interaction.isFinished()){
 			adlez.removeInteractionFromWorld(interaction);
 		}

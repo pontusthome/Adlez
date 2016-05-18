@@ -20,7 +20,7 @@ public class FriendlyNPCController implements IController {
     }
 
     @Override
-    public void update() {
+    public void update(float deltaT) {
         // Nothing for now.
     }
 

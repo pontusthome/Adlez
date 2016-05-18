@@ -49,7 +49,7 @@ public class EnemyController implements ICharacterController{
     }
 
     @Override
-    public void update() {
+    public void update(float deltaT) {
     
         // Accumulation of time to see if enemy can attack again, temporary solution
         long updateTime = System.currentTimeMillis();
@@ -92,47 +92,47 @@ public class EnemyController implements ICharacterController{
         
         boolean inRange = Utils.inRange(playerX, x, playerY, y, 70);
         if (playerY > y && Math.abs(playerY - y) > 1 && inRange) {
-            enemy.moveNorth();
+            enemy.moveNorth(deltaT);
             if(CollisionHandler.checkCollision(enemy)){
                 if(CollisionHandler2.collide(player, enemy) && timeAccumulator > attackInterval){
                     attackPlayer();
                     timeAccumulator = 0;
                 }
                 
-                enemy.moveSouth();
+                enemy.moveSouth(deltaT);
                 enemy.setDirection(Direction.NORTH);
             }
         }
         if (playerY < y && Math.abs(playerY - y) > 1 && inRange) {
-            enemy.moveSouth();
+            enemy.moveSouth(deltaT);
             if(CollisionHandler.checkCollision(enemy)){
                 if(CollisionHandler2.collide(player, enemy) && timeAccumulator > attackInterval){
                     attackPlayer();
                     timeAccumulator = 0;
                 }
-                enemy.moveNorth();
+                enemy.moveNorth(deltaT);
                 enemy.setDirection(Direction.SOUTH);
             }
         }
         if (playerX < x && Math.abs(playerX - x) > 1 && inRange) {
-            enemy.moveWest();
+            enemy.moveWest(deltaT);
             if(CollisionHandler.checkCollision(enemy)){
                 if(CollisionHandler2.collide(player, enemy) && timeAccumulator > attackInterval){
                     attackPlayer();
                     timeAccumulator = 0;
                 }
-                enemy.moveEast();
+                enemy.moveEast(deltaT);
                 enemy.setDirection(Direction.WEST);
             }
         }
         if (playerX > x && Math.abs(playerX - x) > 1 && inRange) {
-            enemy.moveEast();
+            enemy.moveEast(deltaT);
             if(CollisionHandler.checkCollision(enemy)){
                 if(CollisionHandler2.collide(player, enemy) && timeAccumulator > attackInterval){
                     attackPlayer();
                     timeAccumulator = 0;
                 }
-                enemy.moveWest();
+                enemy.moveWest(deltaT);
                 enemy.setDirection(Direction.EAST);
             }
         }

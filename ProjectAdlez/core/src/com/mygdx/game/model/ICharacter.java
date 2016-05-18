@@ -6,10 +6,11 @@ import java.util.List;
  * Created by Michel on 2016-04-19.
  */
 public interface ICharacter extends IWorldObject{
-	void moveNorth();
-	void moveSouth();
-	void moveWest();
-	void moveEast();
+	void moveNorth(float deltaT);
+	void moveSouth(float deltaT);
+	void moveWest(float deltaT);
+	void moveEast(float deltaT);
+	void move(float deltaT);
 
 	int getAttackDamage();
 	void setAttackDamage(int attackDamage);

@@ -56,7 +56,7 @@ public class PlayerController implements ICharacterController, GateOpenListener 
      * Attack with: K
      */
     @Override
-    public void update() {
+    public void update(float deltaT) {
 
         // Temporary sound to notify when player is dead
         if (player.getHealth() < 0) {
@@ -70,37 +70,37 @@ public class PlayerController implements ICharacterController, GateOpenListener 
 
         /** Movement only in 1 direction at a time */
         if (Gdx.input.isKeyPressed(Input.Keys.W)) {
-            player.moveNorth();
+            player.moveNorth(deltaT);
 
             if (CollisionHandler.checkCollision(player)) {
-                player.moveSouth();
+                player.moveSouth(deltaT);
                 player.setDirection(Direction.NORTH);
             }
 
         }
         if (Gdx.input.isKeyPressed(Input.Keys.S)) {
-            player.moveSouth();
+            player.moveSouth(deltaT);
 
             if (CollisionHandler.checkCollision(player)) {
-                player.moveNorth();
+                player.moveNorth(deltaT);
                 player.setDirection(Direction.SOUTH);
             }
 
         }
         if (Gdx.input.isKeyPressed(Input.Keys.A)) {
-            player.moveWest();
+            player.moveWest(deltaT);
 
             if (CollisionHandler.checkCollision(player)) {
-                player.moveEast();
+                player.moveEast(deltaT);
                 player.setDirection(Direction.WEST);
             }
 
         }
         if (Gdx.input.isKeyPressed(Input.Keys.D)) {
-            player.moveEast();
+            player.moveEast(deltaT);
 
             if (CollisionHandler.checkCollision(player)) {
-                player.moveWest();
+                player.moveWest(deltaT);
                 player.setDirection(Direction.EAST);
             }
 

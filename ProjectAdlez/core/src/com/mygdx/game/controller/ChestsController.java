@@ -23,7 +23,7 @@ public class ChestsController implements IController{
 	}
 	
 	@Override
-	public void update(){
+	public void update(float deltaT){
 		
 	}
 	

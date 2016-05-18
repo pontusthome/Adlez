@@ -18,7 +18,7 @@ public class AttackController implements IController{
 	}
 	
 	@Override
-	public void update(){
+	public void update(float deltaT){
 		if (attack.isFinished()){
 			adlez.removeAttackFromWorld(attack);
 		}

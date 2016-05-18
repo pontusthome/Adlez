@@ -26,6 +26,9 @@ public abstract class Character extends WorldObject implements ICharacter {
 	private boolean movingSouth;
 	private boolean movingEast;
 	private boolean movingWest;
+	private int vX;
+	private int vY;
+	private int velocityScalar = 50;
 	
 	public Character() {
 		this(Direction.NORTH, 2f,
@@ -54,31 +57,36 @@ public abstract class Character extends WorldObject implements ICharacter {
 		movingEast = false;
 		movingWest = false;
 	}
+	
+	@Override
+	public void move(float deltaT) {
+		
+	}
 
 	@Override
-	public void moveNorth() {
-		setPosY(getPosY() + getSpeed());
+	public void moveNorth(float deltaT) {
+		setPosY(getPosY() + getSpeed() * deltaT * velocityScalar);
 		setDirection(Direction.NORTH);
 		movingNorth = true;
 	}
 	
 	@Override
-	public void moveSouth() {
-		setPosY(getPosY() - getSpeed());
+	public void moveSouth(float deltaT) {
+		setPosY(getPosY() - getSpeed() * deltaT * velocityScalar);
 		setDirection(Direction.SOUTH);
 		movingSouth = true;
 	}
 	
 	@Override
-	public void moveEast() {
-		setPosX(getPosX() + getSpeed());
+	public void moveEast(float deltaT) {
+		setPosX(getPosX() + getSpeed() * deltaT * velocityScalar);
 		setDirection(Direction.EAST);
 		movingEast = true;
 	}
 	
 	@Override
-	public void moveWest() {
-		setPosX(getPosX() - getSpeed());
+	public void moveWest(float deltaT) {
+		setPosX(getPosX() - getSpeed() * deltaT * velocityScalar);
 		setDirection(Direction.WEST);
 		movingWest = true;
 	}
