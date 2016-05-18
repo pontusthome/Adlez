@@ -1,0 +1,1 @@
+{name:null,xPos:58.0,yPos:174.0,height:17,width:17,speed:2.0,maxHealth:100,health:89,maxMana:0,mana:100,attackDamage:20,direction:2,gold:0,level:0,inventory:[],}

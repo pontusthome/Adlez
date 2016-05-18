@@ -1,4 +1,4 @@
-package com.mygdx.game.event;
+package com.mygdx.game.builder;
 
 import com.badlogic.gdx.utils.JsonReader;
 import com.badlogic.gdx.utils.JsonValue;

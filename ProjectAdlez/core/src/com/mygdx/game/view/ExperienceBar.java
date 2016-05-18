@@ -9,7 +9,7 @@ import com.mygdx.game.model.ICharacter;
 /**
  * Created by Viktor on 2016-05-06.
  */
-public class ExperienceBar implements IStatusBar{
+public class ExperienceBar implements IStatusBar {
 
     private ICharacter character;
     private Pixmap background;

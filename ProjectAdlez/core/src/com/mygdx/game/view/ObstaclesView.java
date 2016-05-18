@@ -3,9 +3,7 @@ package com.mygdx.game.view;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
-import com.mygdx.game.model.Adlez;
 import com.mygdx.game.model.IObstacle;
-import com.mygdx.game.model.Obstacle;
 
 import java.util.List;
 

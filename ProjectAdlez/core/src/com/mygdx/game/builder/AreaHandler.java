@@ -1,12 +1,10 @@
-package com.mygdx.game.event;
+package com.mygdx.game.builder;
 
 import com.mygdx.game.model.*;
 import com.mygdx.game.model.completeAreas.Area1;
 import com.mygdx.game.model.completeAreas.Area2;
 
 import java.io.*;
-import java.util.ArrayList;
-import java.util.List;
 
 import static com.badlogic.gdx.math.MathUtils.random;
 

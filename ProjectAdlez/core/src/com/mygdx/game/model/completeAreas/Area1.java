@@ -1,6 +1,6 @@
 package com.mygdx.game.model.completeAreas;
 
-import com.mygdx.game.event.AreaHandler;
+import com.mygdx.game.builder.AreaHandler;
 import com.mygdx.game.model.*;
 
 import java.util.ArrayList;

@@ -8,6 +8,8 @@ import com.mygdx.game.model.handler.CollisionHandler;
 import com.mygdx.game.model.handler.CollisionHandler2;
 import com.mygdx.game.utils.AssetStrings;
 import com.mygdx.game.utils.Utils;
+import com.mygdx.game.view.CharacterView;
+import com.mygdx.game.view.ICharacterView;
 
 /**
  * @author Pontus

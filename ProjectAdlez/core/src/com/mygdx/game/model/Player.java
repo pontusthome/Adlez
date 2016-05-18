@@ -1,8 +1,5 @@
 package com.mygdx.game.model;
 
-import com.mygdx.game.event.AreaHandler;
-
-import java.io.*;
 import com.mygdx.game.model.exceptions.InventoryFullException;
 import java.util.ArrayList;
 import java.util.Iterator;

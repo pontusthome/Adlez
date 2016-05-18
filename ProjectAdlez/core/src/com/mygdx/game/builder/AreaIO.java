@@ -1,4 +1,4 @@
-package com.mygdx.game.event;
+package com.mygdx.game.builder;
 
 import com.mygdx.game.model.IPlayer;
 

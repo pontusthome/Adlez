@@ -4,14 +4,16 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
-import com.mygdx.game.event.AreaBuilder;
-import com.mygdx.game.event.AreaHandler;
-import com.mygdx.game.event.AreaIO;
+import com.mygdx.game.builder.AreaBuilder;
+import com.mygdx.game.builder.AreaHandler;
+import com.mygdx.game.builder.AreaIO;
 import com.mygdx.game.model.*;
 import com.mygdx.game.model.Character;
 import com.mygdx.game.model.handler.CollisionHandler;
 import com.mygdx.game.utils.AssetStrings;
-import com.mygdx.game.view.ScreenManager;
+import com.mygdx.game.screens.ScreenManager;
+import com.mygdx.game.view.CharacterView;
+import com.mygdx.game.view.ICharacterView;
 
 import java.util.List;
 
@@ -20,7 +22,7 @@ import java.util.List;
  */
 public class PlayerController implements ICharacterController, GateOpenListener {
 
-// Have a view not extend a view
+// Have a screens not extend a screens
 
     private IPlayer player;
     private CharacterView playerView;

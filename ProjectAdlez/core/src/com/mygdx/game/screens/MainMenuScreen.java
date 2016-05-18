@@ -1,4 +1,4 @@
-package com.mygdx.game.view;
+package com.mygdx.game.screens;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Texture;
@@ -9,9 +9,9 @@ import com.badlogic.gdx.scenes.scene2d.ui.Image;
 import com.badlogic.gdx.scenes.scene2d.ui.ImageButton;
 import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
 import com.badlogic.gdx.utils.Align;
-import com.mygdx.game.event.AreaBuilder;
-import com.mygdx.game.event.AreaHandler;
-import com.mygdx.game.event.AreaIO;
+import com.mygdx.game.builder.AreaBuilder;
+import com.mygdx.game.builder.AreaHandler;
+import com.mygdx.game.builder.AreaIO;
 import com.mygdx.game.model.Adlez;
 import com.mygdx.game.utils.AssetStrings;
 
