@@ -19,7 +19,7 @@ public class PlayerMoveTest {
     private List<IObstacle> obstacles;
     private List<IChest> chests;
     private List<IAreaConnection> areaConnections;
-    private String name;
+    private int name;
     private List<IManaFountain> manaFountains;
 
     @org.junit.Before
@@ -31,7 +31,7 @@ public class PlayerMoveTest {
         obstacles = new ArrayList<IObstacle>();
         chests = new ArrayList<IChest>();
         areaConnections = new ArrayList<IAreaConnection>();
-        name = "Name";
+        name = 1;
         manaFountains = new ArrayList<IManaFountain>();
 
     }

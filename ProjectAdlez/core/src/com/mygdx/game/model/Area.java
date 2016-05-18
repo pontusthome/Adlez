@@ -7,9 +7,9 @@ import java.util.List;
  * @author Pontus
  * If we want to save the areas, this should not be final? /PT 24/4
  */
-public final class Area implements Serializable {
+public final class Area {
 
-    private String name;
+    private int name;
     private float playerXposition;
     private float playerYposition;
 
@@ -24,7 +24,7 @@ public final class Area implements Serializable {
 
     public Area(float playerXposition, float playerYposition,
                 List<IEnemy> enemies, List<IFriendlyNPC> friendlyNPCs, List<IWorldObject> stationaryObjects,
-                List<IWall> walls, List<IObstacle> obstacles, List<IChest> chests, List<IAreaConnection> areaConnections, String name, List<IManaFountain> manaFountains) {
+                List<IWall> walls, List<IObstacle> obstacles, List<IChest> chests, List<IAreaConnection> areaConnections, int name, List<IManaFountain> manaFountains) {
         this.playerXposition = playerXposition;
         this.playerYposition = playerYposition;
 
@@ -80,8 +80,7 @@ public final class Area implements Serializable {
         return manaFountains;
     }
 
-    @Override
-    public String toString() {
+    public int getAreaName() {
         return this.name;
     }
 }

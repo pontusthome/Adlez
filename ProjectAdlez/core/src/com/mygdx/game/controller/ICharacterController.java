@@ -1,7 +1,6 @@
 package com.mygdx.game.controller;
 
-import com.badlogic.gdx.graphics.g2d.SpriteBatch;
-import com.mygdx.game.model.ICharacter;
+import com.mygdx.game.view.ICharacterView;
 
 /**
  * Created by martinso on 24/03/16.

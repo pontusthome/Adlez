@@ -9,7 +9,7 @@ import java.util.List;
  */
 public interface IChest extends IWorldObject, IStationaryObject{
     public void addItem(IItem type) throws InventoryFullException;
-    public List<IItem> getItems(IChest chest);
+    public List<IItem> getItems();
     public boolean isEmpty();
     public int getSize();
     public boolean isFull();

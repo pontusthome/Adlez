@@ -7,7 +7,7 @@ import java.util.List;
 /**
  * Created by Pontus on 2016-04-29.
  */
-public class AreaConnection extends WorldObject implements IAreaConnection, Serializable {
+public class AreaConnection extends WorldObject implements IAreaConnection {
 
     private List<GateOpenListener> listeners = new ArrayList<GateOpenListener>();
 

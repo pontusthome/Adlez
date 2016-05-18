@@ -1,4 +1,4 @@
-package com.mygdx.game.view;
+package com.mygdx.game.screens;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Color;
@@ -10,8 +10,10 @@ import com.badlogic.gdx.utils.viewport.FitViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
 import com.mygdx.game.model.Adlez;
 import com.mygdx.game.model.ICharacter;
-import com.mygdx.game.model.IPlayer;
-import com.mygdx.game.model.Player;
+import com.mygdx.game.view.ExperienceBar;
+import com.mygdx.game.view.HealthBar;
+import com.mygdx.game.view.IStatusBar;
+import com.mygdx.game.view.ManaBar;
 
 /**
  * Created by Viktor on 2016-04-26.

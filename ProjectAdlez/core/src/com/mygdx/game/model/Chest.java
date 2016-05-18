@@ -9,7 +9,7 @@ import java.util.List;
 /**
  * Created by martinso on 20/04/16.
  */
-public class Chest extends WorldObject implements IChest, Serializable {
+public class Chest extends WorldObject implements IChest {
 
     private int chestSize;
     private int chestSizeCount = 0;
@@ -21,6 +21,12 @@ public class Chest extends WorldObject implements IChest, Serializable {
         super(posX, posY, width, height);
         this.chestSize = chestSize;
         setHealth(health);
+    }
+
+    public Chest(float posX, float posY) {
+        super(posX, posY, 16, 16);
+        chestSize = 2;
+        setHealth(200);
     }
     
     @Override
@@ -50,7 +56,7 @@ public class Chest extends WorldObject implements IChest, Serializable {
     }
     
     @Override
-    public List<IItem> getItems(IChest chest) {
+    public List<IItem> getItems() {
         return slots;
     }
 

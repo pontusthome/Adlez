@@ -3,15 +3,13 @@ package com.mygdx.game.view;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.Pixmap;
 import com.badlogic.gdx.graphics.Texture;
-import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.ui.Image;
-import com.mygdx.game.model.Character;
 import com.mygdx.game.model.ICharacter;
 
 /**
  * Created by Viktor on 2016-05-03.
  */
-public class HealthBar implements IStatusBar{
+public class HealthBar implements IStatusBar {
 
     private ICharacter character;
     private Pixmap background;

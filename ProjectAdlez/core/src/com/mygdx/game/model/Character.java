@@ -9,7 +9,7 @@ import java.util.List;
 /**
  * Created by Michel on 2016-04-19.
  */
-public abstract class Character extends WorldObject implements ICharacter, Serializable {
+public abstract class Character extends WorldObject implements ICharacter {
 
 	private int attackDamage;
 	private int health;

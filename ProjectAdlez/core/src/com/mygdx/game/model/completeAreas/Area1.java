@@ -1,6 +1,8 @@
 package com.mygdx.game.model.completeAreas;
 
+import com.mygdx.game.builder.AreaHandler;
 import com.mygdx.game.model.*;
+import com.mygdx.game.model.exceptions.InventoryFullException;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -17,7 +19,7 @@ public class Area1 implements ICompleteArea {
         return area;
     }
 
-    public Area1() {
+    public Area1() throws InventoryFullException {
         List<IEnemy> enemies = new ArrayList<>();
         List<IFriendlyNPC> friendlyNPCs = new ArrayList<>();
         List<IWorldObject> stationaryObjects = new ArrayList<>();
@@ -47,25 +49,29 @@ public class Area1 implements ICompleteArea {
         enemies.add(EnemyFactory.createEnemy(Enemy.DOG_LEVEL_ONE, 32 * 14, 32 * 2));
         enemies.add(EnemyFactory.createEnemy(Enemy.DOG_LEVEL_ONE, 32 * 14, 32 * 7));
 
-        Chest ch1 = new Chest(32 * 16 + 8, 32 * 7 + 8, 16, 16, 2, 200);
+        Chest ch1 = new Chest(32 * 18 + 8, 32 * 7 + 8);
+        IItem weapon = new Weapon("weapon", "axe", 2, 3);
+        IItem armor = new Armor("armor", "boots", 2, 3);
+        ch1.addItem(weapon);
+        ch1.addItem(armor);
         chests.add(ch1);
 
         friendlyNPCs.add(new FriendlyNPC(Direction.SOUTH, 17, 17, 32, 32, 32 * 2, 10, 0, 0, 0));
 
         for (int i = 1; i < 8; i++) {
-            walls.add(wall.createSingleWall(6, i));
+            walls.add(new Wall(6, i));
         }
         for (int i = 1; i < 5; i++) {
-            walls.add(wall.createSingleWall(i, 3));
+            walls.add(new Wall(i, 3));
         }
         for (int i = 2; i < 6; i++) {
-            walls.add(wall.createSingleWall(i, 7));
+            walls.add(new Wall(i, 7));
         }
         for (int i = 2; i < 9; i++) {
-            walls.add(wall.createSingleWall(11, i));
+            walls.add(new Wall(11, i));
         }
         for (int i = 1; i < 8; i++) {
-            walls.add(wall.createSingleWall(17, i));
+            walls.add(new Wall(17, i));
         }
 
         obstacles.add(new Obstacle(5, 3));
@@ -76,6 +82,6 @@ public class Area1 implements ICompleteArea {
         areaConnections.add(new AreaConnection(32 * 18, 32, 32, 32));
         manaFountains.add(new ManaFountain(32*3, 32*2, 32, 32));
 
-        area = new Area(playerPosX, playerPosY, enemies, friendlyNPCs, stationaryObjects, walls, obstacles, chests, areaConnections, "Area1", manaFountains);
+        area = new Area(playerPosX, playerPosY, enemies, friendlyNPCs, stationaryObjects, walls, obstacles, chests, areaConnections, AreaHandler.AREA_1, manaFountains);
     }
 }

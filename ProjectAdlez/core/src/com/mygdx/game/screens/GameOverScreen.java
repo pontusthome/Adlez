@@ -1,4 +1,4 @@
-package com.mygdx.game.view;
+package com.mygdx.game.screens;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Texture;
@@ -9,23 +9,26 @@ import com.badlogic.gdx.scenes.scene2d.ui.Image;
 import com.badlogic.gdx.scenes.scene2d.ui.ImageButton;
 import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
 import com.badlogic.gdx.utils.Align;
-import com.mygdx.game.event.AreaHandler;
+import com.mygdx.game.builder.AreaBuilder;
+import com.mygdx.game.builder.AreaHandler;
+import com.mygdx.game.builder.AreaIO;
 import com.mygdx.game.model.Adlez;
+import com.mygdx.game.model.exceptions.ItemNotFoundException;
 import com.mygdx.game.utils.AssetStrings;
 
 /**
- * Created by Viktor on 2016-04-19.
+ * Created by Viktor on 2016-05-16.
  */
-public class MainMenuScreen extends AbstractScreen {
+public class GameOverScreen extends AbstractScreen{
 
     private Texture backGroundTexture;
     private Texture newGameButtonTexture;
     private Texture loadGameButtonTexture;
     private Texture exitGameButtonTexture;
 
-    public MainMenuScreen() {
+    public GameOverScreen() {
         super();
-        backGroundTexture = new Texture(Gdx.files.internal(AssetStrings.MAIN_MENU_BACKGROUND_IMAGE));
+        backGroundTexture = new Texture(Gdx.files.internal(AssetStrings.GAME_OVER_BACKGROUND_IMAGE));
         newGameButtonTexture = new Texture(Gdx.files.internal(AssetStrings.NEW_GAME_BUTTON_IMAGE));
         loadGameButtonTexture = new Texture(Gdx.files.internal(AssetStrings.LOAD_GAME_BUTTON_IMAGE));
         exitGameButtonTexture = new Texture(Gdx.files.internal(AssetStrings.EXIT_GAME_BUTTON_IMAGE));
@@ -69,15 +72,18 @@ public class MainMenuScreen extends AbstractScreen {
                                      float y, int pointer, int button) {
 
                 // Load areas
-                AreaHandler.LoadAreaHandler();
-                AreaHandler areaHandler = AreaHandler.getInstance();
-
-                Adlez adlez = Adlez.getInstance();
+                AreaIO areaBuilder = new AreaBuilder();
+                AreaHandler areaHandler = areaBuilder.loadAreaHandler();
 
                 // Load player
-                adlez.loadPlayer();
+                try {
+                    areaBuilder.loadPlayer();
+                } catch (ItemNotFoundException e) {
+                    e.getMessage();
+                }
 
                 // Initiate game
+                Adlez adlez = Adlez.getInstance();
                 adlez.initiateArea(areaHandler.getCurrentArea());
 
                 ScreenManager.getInstance().showScreen(ScreenEnum.GAME);
@@ -95,4 +101,5 @@ public class MainMenuScreen extends AbstractScreen {
         exitGameButtonTexture.dispose();
     }
 }
+
 

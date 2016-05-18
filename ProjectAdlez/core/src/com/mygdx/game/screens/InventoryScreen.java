@@ -1,4 +1,4 @@
-package com.mygdx.game.view;
+package com.mygdx.game.screens;
 
 /**
  * Created by Viktor on 2016-05-16.

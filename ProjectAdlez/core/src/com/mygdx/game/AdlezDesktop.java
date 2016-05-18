@@ -1,7 +1,7 @@
 package com.mygdx.game;
 
 import com.badlogic.gdx.Game;
-import com.mygdx.game.view.ScreenManager;
+import com.mygdx.game.screens.ScreenManager;
 
 public class AdlezDesktop extends Game {
 

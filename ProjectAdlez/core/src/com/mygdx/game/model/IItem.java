@@ -4,6 +4,7 @@ package com.mygdx.game.model;
  * Created by martinso on 20/04/16.
  */
 public interface IItem {
+
     public String getType();
 
     public void setType(String type);

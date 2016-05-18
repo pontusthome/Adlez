@@ -1,8 +1,7 @@
-package com.mygdx.game.view;
+package com.mygdx.game.screens;
 
 import com.badlogic.gdx.Game;
 import com.badlogic.gdx.Screen;
-import com.mygdx.game.event.AreaHandler;
 import com.mygdx.game.model.Adlez;
 import com.mygdx.game.model.Area;
 
