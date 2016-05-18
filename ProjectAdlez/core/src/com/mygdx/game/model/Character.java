@@ -37,8 +37,8 @@ public abstract class Character extends WorldObject implements ICharacter {
 	private float vYComponent = 0;
 	
 	// Temporary values for cooldown, should maybe be set in constructor or defined as a constant somewhere
-	private float attackCooldown;
 	public static final float ATTACK_COOLDOWN_LIMIT = 2;	//In seconds
+	private float attackCooldown = ATTACK_COOLDOWN_LIMIT;
 	
 	public Character() {
 		this(Direction.NORTH, 2f,
@@ -79,9 +79,7 @@ public abstract class Character extends WorldObject implements ICharacter {
 		setPosY(getPosY() + vYComponent * getSpeed() * deltaT * velocityScalar);
 		setDirection(Direction.NORTH);
 		movingNorth = true;
-		if (collisionHandler.characterCollided(this)){
-			setPosY(oldPosY);
-		}
+		handleMoveCollision(Direction.NORTH);
 	}
 	
 	@Override
@@ -90,9 +88,7 @@ public abstract class Character extends WorldObject implements ICharacter {
 		setPosY(getPosY() - vYComponent * getSpeed() * deltaT * velocityScalar);
 		setDirection(Direction.SOUTH);
 		movingSouth = true;
-		if (collisionHandler.characterCollided(this)){
-			setPosY(oldPosY);
-		}
+		handleMoveCollision(Direction.SOUTH);
 	}
 	
 	@Override
@@ -101,9 +97,7 @@ public abstract class Character extends WorldObject implements ICharacter {
 		setPosX(getPosX() + vXComponent * getSpeed() * deltaT * velocityScalar);
 		setDirection(Direction.EAST);
 		movingEast = true;
-		if (collisionHandler.characterCollided(this)){
-			setPosX(oldPosX);
-		}
+		handleMoveCollision(Direction.EAST);
 	}
 	
 	@Override
@@ -112,9 +106,7 @@ public abstract class Character extends WorldObject implements ICharacter {
 		setPosX(getPosX() - vXComponent * getSpeed() * deltaT * velocityScalar);
 		setDirection(Direction.WEST);
 		movingWest = true;
-		if (collisionHandler.characterCollided(this)){
-			setPosX(oldPosX);
-		}
+		handleMoveCollision(Direction.WEST);
 	}
 	
 	@Override
@@ -387,24 +379,24 @@ public abstract class Character extends WorldObject implements ICharacter {
 		attackCooldown = 0;
 	}
 	
-//	public void handleMoveCollision(int direction){
-//		if (collisionHandler.characterCollided(this)) {
-//			switch(direction){
-//				case Direction.NORTH:
-//					setPosY(oldPosY);
-//					break;
-//				case Direction.SOUTH:
-//					setPosY(oldPosY);
-//					break;
-//				case Direction.EAST:
-//					setPosX(oldPosX);
-//					break;
-//				case Direction.WEST:
-//					setPosX(oldPosX);
-//					break;
-//			}
-//		}
-//	}
+	public void handleMoveCollision(int direction){
+		if (collisionHandler.characterCollided(this)) {
+			switch(direction){
+				case Direction.NORTH:
+					setPosY(oldPosY);
+					break;
+				case Direction.SOUTH:
+					setPosY(oldPosY);
+					break;
+				case Direction.EAST:
+					setPosX(oldPosX);
+					break;
+				case Direction.WEST:
+					setPosX(oldPosX);
+					break;
+			}
+		}
+	}
 	
 	public float getOldPosX(){
 		return oldPosX;

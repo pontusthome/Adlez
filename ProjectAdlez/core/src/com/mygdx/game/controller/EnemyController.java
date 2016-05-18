@@ -80,6 +80,7 @@ public class EnemyController implements ICharacterController{
         }
         
         enemy.move(deltaT);
+        enemy.update(deltaT);
         
         enemyView.viewUpdate(enemy.getDirection());
     }

@@ -1,5 +1,6 @@
 package com.mygdx.game.model;
 
+import com.mygdx.game.model.handler.CollisionHandler2;
 import com.mygdx.game.utils.AssetStrings;
 import java.io.Serializable;
 
@@ -14,6 +15,9 @@ public class Enemy extends NPC implements IEnemy{
 	public static final int DOG_LEVEL_ONE = 4;
 
 	private int type;
+	
+	private CollisionHandler2 collisionHandler = CollisionHandler2.getInstance();
+	private IPlayer player = Adlez.getInstance().getPlayer();
 
 	public Enemy(int direction, float speed, int width, 
 				 int height, float posX, float posY, 
@@ -53,5 +57,33 @@ public class Enemy extends NPC implements IEnemy{
 		enemyAttack.setSound(new LibGDXSoundAdapter(AssetStrings.MELEE_ATTACK_SOUND));
 		enemyAttack.playSound(0.1f);
 		Adlez.getInstance().addAttack(enemyAttack);
+	}
+	
+	@Override
+	public void handleMoveCollision(int direction){
+		if (collisionHandler.characterCollided(this)) {
+			
+			// Preliminary implementation of enemy attack
+			if(CollisionHandler2.collide(this, player) && 
+					getAttackCooldown() >= ATTACK_COOLDOWN_LIMIT){
+				attackPlayer();
+				resetAttackCooldown();
+			}
+			
+			switch(direction){
+				case Direction.NORTH:
+					setPosY(getOldPosY());
+					break;
+				case Direction.SOUTH:
+					setPosY(getOldPosY());
+					break;
+				case Direction.EAST:
+					setPosX(getOldPosX());
+					break;
+				case Direction.WEST:
+					setPosX(getOldPosX());
+					break;
+			}
+		}
 	}
 }

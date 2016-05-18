@@ -49,4 +49,5 @@ public interface ICharacter extends IWorldObject{
 	void setAttackCooldown(float attackCooldown);
 	float getAttackCooldown();
 	void resetAttackCooldown();
+	void handleMoveCollision(int direction);
 }
