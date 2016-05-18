@@ -100,6 +100,7 @@ public class PlayerTest {
     public void testUnEquipWeapon() throws InventoryFullException, ItemNotFoundException {
         Player player = new Player(Direction.NORTH, 0, 17, 17, 0, 0, 100, 10, 0, 100);
         try {
+            player.lootItem(CompleteItems.FINAL_SWORD);
             player.equipItem(CompleteItems.FINAL_SWORD);
             player.unEquipWeapon(player.getSwordEquipped());
             assertTrue(player.getAttackDamage() == 10);
@@ -117,6 +118,7 @@ public class PlayerTest {
     public void unEquipArmor() throws InventoryFullException, ItemNotFoundException {
         Player player = new Player(Direction.NORTH, 0, 17, 17, 0, 0, 100, 10, 0, 100);
         try {
+            player.lootItem(CompleteItems.FINAL_BODY_ARMOR);
             player.equipItem(CompleteItems.FINAL_BODY_ARMOR);
             player.unEquipArmor(player.getArmorEquipped());
             assertTrue(player.getMaxHealth() == 100);
@@ -162,7 +164,7 @@ public class PlayerTest {
     /**
      * Buy item from shop. Creating npc shop with items.
      * Player has 100 gold.
-     * Buys Final sword (100 gold) and Wooden sword (50 gold).
+     * Buys Wood sword (50 gold)
      */
     @Test
     public void buyItem() throws InventoryFullException, InsufficientGoldException {
@@ -176,10 +178,6 @@ public class PlayerTest {
         try {
             player.lootItem(shop.sellItem(CompleteItems.WOOD_SWORD, player));
             assertTrue(player.getInventory().get(0) == CompleteItems.WOOD_SWORD);
-
-            player.lootItem(shop.sellItem(CompleteItems.FINAL_SWORD, player));
-            assertFalse(player.getInventory().get(1) == CompleteItems.FINAL_SWORD);
-
         } catch (InsufficientGoldException e) {
             e.getMessage();
         } catch (InventoryFullException e) {
