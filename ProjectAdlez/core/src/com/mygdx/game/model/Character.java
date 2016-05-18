@@ -26,9 +26,11 @@ public abstract class Character extends WorldObject implements ICharacter {
 	private boolean movingSouth;
 	private boolean movingEast;
 	private boolean movingWest;
-	private int vX;
-	private int vY;
+	private float vX;
+	private float vY;
 	private int velocityScalar = 50;
+	private float oldPosX;
+	private float oldPosY;
 	
 	public Character() {
 		this(Direction.NORTH, 2f,
@@ -56,15 +58,14 @@ public abstract class Character extends WorldObject implements ICharacter {
 		movingSouth = false;
 		movingEast = false;
 		movingWest = false;
-	}
-	
-	@Override
-	public void move(float deltaT) {
 		
+		oldPosX = getPosX();
+		oldPosY = getPosY();
 	}
 
 	@Override
 	public void moveNorth(float deltaT) {
+		oldPosY = getPosY();
 		setPosY(getPosY() + getSpeed() * deltaT * velocityScalar);
 		setDirection(Direction.NORTH);
 		movingNorth = true;
@@ -72,6 +73,7 @@ public abstract class Character extends WorldObject implements ICharacter {
 	
 	@Override
 	public void moveSouth(float deltaT) {
+		oldPosY = getPosY();
 		setPosY(getPosY() - getSpeed() * deltaT * velocityScalar);
 		setDirection(Direction.SOUTH);
 		movingSouth = true;
@@ -79,6 +81,7 @@ public abstract class Character extends WorldObject implements ICharacter {
 	
 	@Override
 	public void moveEast(float deltaT) {
+		oldPosX = getPosX();
 		setPosX(getPosX() + getSpeed() * deltaT * velocityScalar);
 		setDirection(Direction.EAST);
 		movingEast = true;
@@ -86,6 +89,7 @@ public abstract class Character extends WorldObject implements ICharacter {
 	
 	@Override
 	public void moveWest(float deltaT) {
+		oldPosX = getPosX();
 		setPosX(getPosX() - getSpeed() * deltaT * velocityScalar);
 		setDirection(Direction.WEST);
 		movingWest = true;
@@ -204,32 +208,29 @@ public abstract class Character extends WorldObject implements ICharacter {
 	@Override
 	public void onCollide(Collidable other){
 		// Collisions with objects & other characters are handled directly after moving for now
-//		if(other instanceof ICharacter && this != other){
-//			undoCharacterMove();
-//		}
-// 		else if(other instanceof IWall){
-//			undoCharacterMove();
-//		}else if(other instanceof IObstacle){
-//			undoCharacterMove();
-//		}else if(other instanceof IChest){
-//			undoCharacterMove();
-//		}else if(other instanceof IAreaConnection){
-//			undoCharacterMove();
-//		}
+		if(other instanceof ICharacter && this != other){
+			undoCharacterMove(other);
+		} else if(other instanceof IWall){
+			undoCharacterMove(other);
+		} else if(other instanceof IObstacle){
+			undoCharacterMove(other);
+		} else if(other instanceof IChest){
+			undoCharacterMove(other);
+		} else if(other instanceof IAreaConnection){
+			undoCharacterMove(other);
+		}
 	}
 	
-	public void undoCharacterMove(){
-		if(movingNorth){
-			setPosY(getPosY() - getSpeed());
+	public void undoCharacterMove(Collidable other){
+		IWorldObject otherWorldObject = (IWorldObject) other;
+		
+		if(collisionFromTop(otherWorldObject) || collisionFromBottom(otherWorldObject)){
+			setPosY(oldPosY);
+			setVy(0);
 		}
-		if(movingSouth){
-			setPosY(getPosY() + getSpeed());
-		}
-		if(movingEast){
-			setPosX(getPosX() - getSpeed());
-		}
-		if(movingWest){
-			setPosX(getPosX() + getSpeed());
+		if(collisionFromRight(otherWorldObject) || collisionFromLeft(otherWorldObject)){
+			setPosX(oldPosX);
+			setVx(0);
 		}
 	}
 	
@@ -263,5 +264,67 @@ public abstract class Character extends WorldObject implements ICharacter {
 	@Override
 	public boolean isAlive(){
 		return getHealth() > 0;
+	}
+	
+	private boolean collisionFromTop(IWorldObject other){
+		float otherBottom = other.getPosY();
+		float oldTop = oldPosY + getHeight();
+		float top = getPosY() + getHeight();
+		
+		return oldTop <= otherBottom &&	top > otherBottom;
+	}
+	
+	private boolean collisionFromBottom(IWorldObject other){
+		float otherTop = other.getPosY() + other.getHeight();
+		float oldBottom = oldPosY ;
+		float bottom = getPosY();
+		
+		return oldBottom >= otherTop &&	bottom < otherTop;
+	}
+	
+	private boolean collisionFromLeft(IWorldObject other){
+		float otherRight = other.getPosX() + other.getWidth();
+		float oldLeft = oldPosX;
+		float left = getPosX();
+		
+		return oldLeft >= otherRight && left < otherRight;
+	}
+	
+	private boolean collisionFromRight(IWorldObject other){
+		float otherLeft = other.getPosX();
+		float oldRight = oldPosX + getWidth();
+		float right = getPosX() + getWidth();
+		
+		return oldRight <= otherLeft && right > otherLeft;
+	}
+	
+	public float getVx(){
+		return vX;
+	}
+	
+	public void setVx(float vX){
+		this.vX = vX;
+	}
+	
+	public float getVy(){
+		return vY;
+	}
+	
+	public void setVy(float vY){
+		this.vY = vY;
+	}
+	
+	public void move(float deltaT){
+		if(vX > 0){
+			moveEast(deltaT);
+		}else if(vX < 0){
+			moveWest(deltaT);
+		}
+		
+		if(vY > 0){
+			moveNorth(deltaT);
+		}else if(vY < 0){
+			moveSouth(deltaT);
+		}
 	}
 }
