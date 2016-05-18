@@ -55,6 +55,7 @@ public class EnemyController implements ICharacterController{
         lastUpdateTime = updateTime;
         
         if(!enemy.isAlive()){
+            player.lootGold(enemy);
             adlez.removeEnemyFromWorld(enemy);
             return;
         }

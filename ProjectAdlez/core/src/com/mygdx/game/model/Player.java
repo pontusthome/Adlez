@@ -1,7 +1,5 @@
 package com.mygdx.game.model;
 
-import com.mygdx.game.event.AreaHandler;
-
 import java.io.*;
 
 import com.mygdx.game.model.exceptions.InventoryFullException;
@@ -86,13 +84,6 @@ public class Player extends Character implements IPlayer, Serializable {
     }
 
     public void removeItem(IItem item) throws ItemNotFoundException {
-        //Iterator<IItem> itr = inventory.iterator();
-        //while (itr.hasNext()) {
-        //    IItem element = itr.next();
-        //    if (element == item) {
-        //        itr.remove();
-        //    }
-        //}
         inventory.remove(getItemInInventory(item));
     }
 
@@ -113,6 +104,10 @@ public class Player extends Character implements IPlayer, Serializable {
 
     public IItem getArmorEquipped() {
         return armorEquipped;
+    }
+
+    public void lootGold(IEnemy enemy) {
+        setGold(getGold() + enemy.getGold());
     }
 
     @Override

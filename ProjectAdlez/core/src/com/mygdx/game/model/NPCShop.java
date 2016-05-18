@@ -10,8 +10,6 @@ import java.util.List;
  */
 public class NPCShop implements INPCShop {
 
-    private Adlez adlez = Adlez.getInstance();
-    private IPlayer player;
     private List<IItem> items;
 
     /**
