@@ -34,15 +34,33 @@ public class Chest extends WorldObject implements IChest, Serializable {
     }
     
     @Override
-    public void addItems(IItem type) {
+    public void addItem(IItem type) throws InventoryFullException {
         if (chestSizeCount < chestSize) {
             slots.add(type);
+            chestSizeCount++;
+        } else {
+            throw new InventoryFullException("Chest is full");
         }
+    }
+
+    @Override
+    public int getSize() {
+        return chestSize;
+
     }
     
     @Override
-    public List<IItem> getItems(Chest chest) {
+    public List<IItem> getItems(IChest chest) {
         return slots;
+    }
+
+    public boolean isFull() {
+        return chestSizeCount == chestSize;
+    }
+
+    public void removeItem(IItem item) {
+        slots.remove(item);
+        chestSizeCount--;
     }
     
     @Override
@@ -69,6 +87,6 @@ public class Chest extends WorldObject implements IChest, Serializable {
     
     @Override
     public boolean isEmpty(){
-        return slots.size() <= 0;
+        return chestSizeCount <= 0;
     }
 }
