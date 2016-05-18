@@ -69,47 +69,17 @@ public class PlayerController implements ICharacterController, GateOpenListener 
     
 //        System.out.println("Vx: " + playerCharacter.getVx());
 //        System.out.println("Vy: " + playerCharacter.getVy());
-
-        /** Movement only in 1 direction at a time */
-        if (Gdx.input.isKeyJustPressed(Input.Keys.W)) {
-            playerCharacter.setVy(1);
-
-//            if (CollisionHandler.checkCollision(player)) {
-//                player.moveSouth(deltaT);
-//                player.setDirection(Direction.NORTH);
-//            }
-
-        }else if (Gdx.input.isKeyJustPressed(Input.Keys.S)) {
-            playerCharacter.setVy(-1);
-
-//            if (CollisionHandler.checkCollision(player)) {
-//                player.moveNorth(deltaT);
-//                player.setDirection(Direction.SOUTH);
-//            }
-
-        }else if(!Gdx.input.isKeyPressed(Input.Keys.W) && !Gdx.input.isKeyPressed(Input.Keys.S)){
-            playerCharacter.setVy(0);
+        
+        if (Gdx.input.isKeyPressed(Input.Keys.W)) {
+            playerCharacter.setMovingNorth();
+        }else if (Gdx.input.isKeyPressed(Input.Keys.S)) {
+            playerCharacter.setMovingSouth();
         }
-        if (Gdx.input.isKeyJustPressed(Input.Keys.A)) {
-            System.out.println("Test");
-            
-            playerCharacter.setVx(-1);
-
-//            if (CollisionHandler.checkCollision(player)) {
-//                player.moveEast(deltaT);
-//                player.setDirection(Direction.WEST);
-//            }
-
-        }else if (Gdx.input.isKeyJustPressed(Input.Keys.D)) {
-            playerCharacter.setVx(1);
-
-//            if (CollisionHandler.checkCollision(player)) {
-//                player.moveWest(deltaT);
-//                player.setDirection(Direction.EAST);
-//            }
-    
-        }else if(!Gdx.input.isKeyPressed(Input.Keys.A) && !Gdx.input.isKeyPressed(Input.Keys.D)){
-            playerCharacter.setVx(0);
+        
+        if (Gdx.input.isKeyPressed(Input.Keys.A)) {
+            playerCharacter.setMovingWest();
+        }else if (Gdx.input.isKeyPressed(Input.Keys.D)) {
+            playerCharacter.setMovingEast();
         }
         
         playerCharacter.move(deltaT);

@@ -11,10 +11,19 @@ public class CollisionHandler2{
 	
 	private List<IWorldObject> worldObjects;
 	private IPlayer player;
+	private static CollisionHandler2 collisionHandler = new CollisionHandler2();
 	
-	public CollisionHandler2(){
-		player = Adlez.getInstance().getPlayer();
-		worldObjects = Adlez.getInstance().getWorldObjects();
+	public static CollisionHandler2 getInstance() {
+		return collisionHandler;
+	}
+	
+	private CollisionHandler2(){
+		
+	}
+	
+	public void initiate(IPlayer player, List<IWorldObject> worldObjects){
+		this.player = player;
+		this.worldObjects = worldObjects;
 	}
 	
 	public void updateWorld(){		
@@ -61,5 +70,15 @@ public class CollisionHandler2{
 				(otherHeight < otherY || otherHeight > y) &&
 				(width < x || width > otherX) &&
 				(height < y || height > otherY));
+	}
+	
+	public boolean characterCollided(ICharacter character){
+		
+		for (IWorldObject otherObject: worldObjects) {
+			if (!otherObject.equals(character) && character.collide(otherObject)) {
+				return true;
+			}
+		}
+		return false;
 	}
 }

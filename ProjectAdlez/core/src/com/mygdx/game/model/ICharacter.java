@@ -36,10 +36,17 @@ public interface ICharacter extends IWorldObject{
 	void setSpeed(float speed);
 	void setVx(float vX);
 	void setVy(float vY);
-	void undoCharacterMove(Collidable other);
 	boolean isMovingNorth();
 	boolean isMovingSouth();
 	boolean isMovingEast();
 	boolean isMovingWest();
+	void setMovingNorth();
+	void setMovingSouth();
+	void setMovingEast();
+	void setMovingWest();
 	boolean isAlive();
+	void update(float deltaT);
+	void setAttackCooldown(float attackCooldown);
+	float getAttackCooldown();
+	void resetAttackCooldown();
 }

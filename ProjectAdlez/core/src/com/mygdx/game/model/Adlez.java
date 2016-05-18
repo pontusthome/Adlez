@@ -50,7 +50,8 @@ public class Adlez {
         // Reset the world and then set it up for the new area
         worldObjects = new ArrayList<>();
 
-        collisionHandler = new CollisionHandler2();
+        collisionHandler = CollisionHandler2.getInstance();
+        collisionHandler.initiate(player, worldObjects);
 
         // add the player and set him to the new position
         player.setPosX(area.getPlayerXposition());

@@ -1,5 +1,6 @@
 package com.mygdx.game.model;
 
+import com.mygdx.game.utils.AssetStrings;
 import java.io.Serializable;
 
 /**
@@ -36,10 +37,21 @@ public class Enemy extends NPC implements IEnemy{
 				attack.getCharacter().setGold(attack.getCharacter().getGold() + getGold());
 			}
 		}
+//		if(other instanceof IPlayer && getAttackCooldown() > ATTACK_COOLDOWN_LIMIT){
+//			attackPlayer();
+//			resetAttackCooldown();
+//		}
 	}
 
 	@Override
 	public int getType() {
 		return type;
+	}
+	
+	private void attackPlayer(){
+		IAttack enemyAttack = new EnemyAOEAttack(this);
+		enemyAttack.setSound(new LibGDXSoundAdapter(AssetStrings.MELEE_ATTACK_SOUND));
+		enemyAttack.playSound(0.1f);
+		Adlez.getInstance().addAttack(enemyAttack);
 	}
 }

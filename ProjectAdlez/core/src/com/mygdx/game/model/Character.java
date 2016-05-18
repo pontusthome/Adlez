@@ -1,6 +1,7 @@
 package com.mygdx.game.model;
 
 import com.mygdx.game.model.handler.CollisionHandler;
+import com.mygdx.game.model.handler.CollisionHandler2;
 
 import java.io.Serializable;
 import java.util.ArrayList;
@@ -31,6 +32,13 @@ public abstract class Character extends WorldObject implements ICharacter {
 	private int velocityScalar = 50;
 	private float oldPosX;
 	private float oldPosY;
+	private CollisionHandler2 collisionHandler;
+	private float vXComponent = 0;
+	private float vYComponent = 0;
+	
+	// Temporary values for cooldown, should maybe be set in constructor or defined as a constant somewhere
+	private float attackCooldown;
+	public static final float ATTACK_COOLDOWN_LIMIT = 2;	//In seconds
 	
 	public Character() {
 		this(Direction.NORTH, 2f,
@@ -61,38 +69,52 @@ public abstract class Character extends WorldObject implements ICharacter {
 		
 		oldPosX = getPosX();
 		oldPosY = getPosY();
+		
+		collisionHandler = CollisionHandler2.getInstance();
 	}
 
 	@Override
 	public void moveNorth(float deltaT) {
 		oldPosY = getPosY();
-		setPosY(getPosY() + getSpeed() * deltaT * velocityScalar);
+		setPosY(getPosY() + vYComponent * getSpeed() * deltaT * velocityScalar);
 		setDirection(Direction.NORTH);
 		movingNorth = true;
+		if (collisionHandler.characterCollided(this)){
+			setPosY(oldPosY);
+		}
 	}
 	
 	@Override
 	public void moveSouth(float deltaT) {
 		oldPosY = getPosY();
-		setPosY(getPosY() - getSpeed() * deltaT * velocityScalar);
+		setPosY(getPosY() - vYComponent * getSpeed() * deltaT * velocityScalar);
 		setDirection(Direction.SOUTH);
 		movingSouth = true;
+		if (collisionHandler.characterCollided(this)){
+			setPosY(oldPosY);
+		}
 	}
 	
 	@Override
 	public void moveEast(float deltaT) {
 		oldPosX = getPosX();
-		setPosX(getPosX() + getSpeed() * deltaT * velocityScalar);
+		setPosX(getPosX() + vXComponent * getSpeed() * deltaT * velocityScalar);
 		setDirection(Direction.EAST);
 		movingEast = true;
+		if (collisionHandler.characterCollided(this)){
+			setPosX(oldPosX);
+		}
 	}
 	
 	@Override
 	public void moveWest(float deltaT) {
 		oldPosX = getPosX();
-		setPosX(getPosX() - getSpeed() * deltaT * velocityScalar);
+		setPosX(getPosX() - vXComponent * getSpeed() * deltaT * velocityScalar);
 		setDirection(Direction.WEST);
 		movingWest = true;
+		if (collisionHandler.characterCollided(this)){
+			setPosX(oldPosX);
+		}
 	}
 	
 	@Override
@@ -208,30 +230,17 @@ public abstract class Character extends WorldObject implements ICharacter {
 	@Override
 	public void onCollide(Collidable other){
 		// Collisions with objects & other characters are handled directly after moving for now
-		if(other instanceof ICharacter && this != other){
-			undoCharacterMove(other);
-		} else if(other instanceof IWall){
-			undoCharacterMove(other);
-		} else if(other instanceof IObstacle){
-			undoCharacterMove(other);
-		} else if(other instanceof IChest){
-			undoCharacterMove(other);
-		} else if(other instanceof IAreaConnection){
-			undoCharacterMove(other);
-		}
-	}
-	
-	public void undoCharacterMove(Collidable other){
-		IWorldObject otherWorldObject = (IWorldObject) other;
-		
-		if(collisionFromTop(otherWorldObject) || collisionFromBottom(otherWorldObject)){
-			setPosY(oldPosY);
-			setVy(0);
-		}
-		if(collisionFromRight(otherWorldObject) || collisionFromLeft(otherWorldObject)){
-			setPosX(oldPosX);
-			setVx(0);
-		}
+//		if(other instanceof ICharacter && this != other){
+//			undoCharacterMove(other);
+//		} else if(other instanceof IWall){
+//			undoCharacterMove(other);
+//		} else if(other instanceof IObstacle){
+//			undoCharacterMove(other);
+//		} else if(other instanceof IChest){
+//			undoCharacterMove(other);
+//		} else if(other instanceof IAreaConnection){
+//			undoCharacterMove(other);
+//		}
 	}
 	
 	public void clearMoveFlags(){
@@ -315,16 +324,101 @@ public abstract class Character extends WorldObject implements ICharacter {
 	}
 	
 	public void move(float deltaT){
-		if(vX > 0){
+		// Check if moving in two directions. If so, modify x & y speed components.
+		if((isMovingWest() || isMovingEast()) && (isMovingNorth() || isMovingSouth())){
+			vXComponent = (float) Math.cos(Math.toRadians(45));
+			vYComponent = (float) Math.cos(Math.toRadians(45));
+		}else{
+			vXComponent = 1;
+			vYComponent = 1;
+		}
+		
+		if(isMovingNorth()){
+			moveNorth(deltaT);
+		}else if(isMovingSouth()){
+			moveSouth(deltaT);
+		}
+		
+		if(isMovingEast()){
 			moveEast(deltaT);
-		}else if(vX < 0){
+		}else if(isMovingWest()){
 			moveWest(deltaT);
 		}
 		
-		if(vY > 0){
-			moveNorth(deltaT);
-		}else if(vY < 0){
-			moveSouth(deltaT);
-		}
+		clearMoveFlags();
+	}
+	
+	@Override
+	public void setMovingNorth(){
+		movingNorth = true;
+	}
+	
+	@Override
+	public void setMovingSouth(){
+		movingSouth = true;
+	}
+	
+	@Override
+	public void setMovingEast(){
+		movingEast = true;
+	}
+	
+	@Override
+	public void setMovingWest(){
+		movingWest = true;
+	}
+	
+	@Override
+	public void update(float deltaT){
+		attackCooldown += deltaT;
+	}
+		
+	@Override
+	public void setAttackCooldown(float attackCooldown){
+		this.attackCooldown = attackCooldown;
+	}
+	
+	@Override
+	public float getAttackCooldown(){
+		return attackCooldown;
+	}
+	
+	public void resetAttackCooldown(){
+		attackCooldown = 0;
+	}
+	
+//	public void handleMoveCollision(int direction){
+//		if (collisionHandler.characterCollided(this)) {
+//			switch(direction){
+//				case Direction.NORTH:
+//					setPosY(oldPosY);
+//					break;
+//				case Direction.SOUTH:
+//					setPosY(oldPosY);
+//					break;
+//				case Direction.EAST:
+//					setPosX(oldPosX);
+//					break;
+//				case Direction.WEST:
+//					setPosX(oldPosX);
+//					break;
+//			}
+//		}
+//	}
+	
+	public float getOldPosX(){
+		return oldPosX;
+	}
+	
+	public void setOldPosX(float oldPosX){
+		this.oldPosX = oldPosX;
+	}
+	
+	public float getOldPosY(){
+		return oldPosY;
+	}
+	
+	public void setOldPosY(float oldPosY){
+		this.oldPosY = oldPosY;
 	}
 }

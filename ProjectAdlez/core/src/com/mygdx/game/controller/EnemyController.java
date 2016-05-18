@@ -66,78 +66,20 @@ public class EnemyController implements ICharacterController{
         float playerY = player.getPosY();
         float x = enemy.getPosX();
         float y = enemy.getPosY();
-    
-    
-    
-//        float yDistance = Math.abs(playerY - y);
-//        float xDistance = Math.abs(playerX - x);
-//        boolean inRange = Utils.inRange(playerX, x, playerY, y, 70);
-//        
-//        
-//        if (playerY > y && yDistance >= xDistance && inRange && ((Character) enemy).canMoveNorth) {
-//            enemy.moveNorth();
-//        }
-//        else if (playerY < y && yDistance >= xDistance && inRange && ((Character) enemy).canMoveSouth) {
-//            enemy.moveSouth();
-//        }
-//        else if (playerX < x && xDistance > yDistance && inRange && ((Character) enemy).canMoveEast) {
-//            enemy.moveWest();
-//        }
-//        else if (playerX > x && xDistance > yDistance && inRange && ((Character) enemy).canMoveWest) {
-//            enemy.moveEast();
-//        }
-//        
-//        ((Character) enemy).clearCanMove();
-        
         
         boolean inRange = Utils.inRange(playerX, x, playerY, y, 70);
         if (playerY > y && Math.abs(playerY - y) > 1 && inRange) {
-            enemy.moveNorth(deltaT);
-            if(CollisionHandler.checkCollision(enemy)){
-                if(CollisionHandler2.collide(player, enemy) && timeAccumulator > attackInterval){
-                    attackPlayer();
-                    timeAccumulator = 0;
-                }
-                
-                enemy.moveSouth(deltaT);
-                enemy.setDirection(Direction.NORTH);
-            }
-        }
-        if (playerY < y && Math.abs(playerY - y) > 1 && inRange) {
-            enemy.moveSouth(deltaT);
-            if(CollisionHandler.checkCollision(enemy)){
-                if(CollisionHandler2.collide(player, enemy) && timeAccumulator > attackInterval){
-                    attackPlayer();
-                    timeAccumulator = 0;
-                }
-                enemy.moveNorth(deltaT);
-                enemy.setDirection(Direction.SOUTH);
-            }
+            enemy.setMovingNorth();
+        }else if (playerY < y && Math.abs(playerY - y) > 1 && inRange) {
+            enemy.setMovingSouth();
         }
         if (playerX < x && Math.abs(playerX - x) > 1 && inRange) {
-            enemy.moveWest(deltaT);
-            if(CollisionHandler.checkCollision(enemy)){
-                if(CollisionHandler2.collide(player, enemy) && timeAccumulator > attackInterval){
-                    attackPlayer();
-                    timeAccumulator = 0;
-                }
-                enemy.moveEast(deltaT);
-                enemy.setDirection(Direction.WEST);
-            }
-        }
-        if (playerX > x && Math.abs(playerX - x) > 1 && inRange) {
-            enemy.moveEast(deltaT);
-            if(CollisionHandler.checkCollision(enemy)){
-                if(CollisionHandler2.collide(player, enemy) && timeAccumulator > attackInterval){
-                    attackPlayer();
-                    timeAccumulator = 0;
-                }
-                enemy.moveWest(deltaT);
-                enemy.setDirection(Direction.EAST);
-            }
+            enemy.setMovingWest();
+        }else if (playerX > x && Math.abs(playerX - x) > 1 && inRange) {
+            enemy.setMovingEast();
         }
         
-        
+        enemy.move(deltaT);
         
         enemyView.viewUpdate(enemy.getDirection());
     }
@@ -154,12 +96,5 @@ public class EnemyController implements ICharacterController{
 
     public TextureRegion getCurrentFrame() {
         return enemyView.getCurrentFrame();
-    }
-    
-    private void attackPlayer(){
-        IAttack meleeAttack = new MeleeAttack(enemy);
-        meleeAttack.setSound(new LibGDXSoundAdapter(AssetStrings.MELEE_ATTACK_SOUND));
-        meleeAttack.playSound(0.1f);
-        adlez.addAttack(meleeAttack);
     }
 }
