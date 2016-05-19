@@ -31,10 +31,10 @@ public class AreaHandler implements Serializable{
         currentArea = AREA_1;
         try {
             level1 = new Area1().loadArea();
+            level2 = new Area2().loadArea();
         } catch (InventoryFullException e) {
             e.getMessage();
         }
-        level2 = new Area2().loadArea();
     }
 
     public Area loadArea1() {

@@ -2,6 +2,7 @@ package com.mygdx.game.model.completeAreas;
 
 import com.mygdx.game.builder.AreaHandler;
 import com.mygdx.game.model.*;
+import com.mygdx.game.model.exceptions.InventoryFullException;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -17,7 +18,7 @@ public class Area2 implements ICompleteArea {
         return area;
     }
 
-    public Area2() {
+    public Area2() throws InventoryFullException {
         List<IEnemy> enemies = new ArrayList<>();
         List<IFriendlyNPC> friendlyNPCs = new ArrayList<>();
         List<IWorldObject> stationaryObjects = new ArrayList<>();
@@ -103,6 +104,8 @@ public class Area2 implements ICompleteArea {
         enemies.add(EnemyFactory.createEnemy(Enemy.DOG_LEVEL_ONE, 32 * 2, 32 * 9));
 
         Chest ch1 = new Chest(32 * 2 + 8, 32 * 5 + 8, 16, 16, 2, 200);
+        ch1.addItem(CompleteItems.FINAL_SWORD);
+        ch1.addItem(CompleteItems.FINAL_BODY_ARMOR);
         chests.add(ch1);
 
         friendlyNPCs.add(new FriendlyNPC(Direction.SOUTH, 17, 17, 32, 32, 32 * 3, 10, 0, 0, 0));

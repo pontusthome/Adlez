@@ -22,7 +22,7 @@ public class ChestView {
 
     public void generateChests(List<IChest> chests, SpriteBatch batch) {
         for(IChest ch : chests) {
-            if(ch.isEmpty()){
+            if(ch.isOpened()){
                 batch.draw(openChestTexture, ch.getPosX(), ch.getPosY());
             }else{
                 batch.draw(closedChestTexture, ch.getPosX(), ch.getPosY());

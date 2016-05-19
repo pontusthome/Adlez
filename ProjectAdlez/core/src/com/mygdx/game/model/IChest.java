@@ -14,4 +14,6 @@ public interface IChest extends IWorldObject, IStationaryObject{
     public int getSize();
     public boolean isFull();
     public void removeItem(IItem item);
+    public boolean isOpened();
+    public void setIsOpened(boolean isOpened);
 }

@@ -14,6 +14,7 @@ public class Chest extends WorldObject implements IChest {
     private int chestSize;
     private int chestSizeCount = 0;
     private List<IItem> slots = new ArrayList<IItem>(chestSize);
+    private boolean isOpened = false;
     
     private int health;
 
@@ -75,15 +76,26 @@ public class Chest extends WorldObject implements IChest {
             IInteraction interaction = (IInteraction) other;
             if(interaction.getCharacter() instanceof IPlayer){
                 IPlayer player = (IPlayer) interaction.getCharacter();
-                for(IItem item : slots){
-                    try{
-                        player.lootItem(item);
-                    } catch(InventoryFullException e){
-                        break;
+                if(!isOpened()) {
+                    for (IItem item : slots) {
+                        try {
+                            setIsOpened(true);
+                            player.lootItem(item);
+                        } catch (InventoryFullException e) {
+                            break;
+                        }
                     }
                 }
             }
         }
+    }
+
+    public boolean isOpened() {
+        return isOpened;
+    }
+
+    public void setIsOpened(boolean isOpened) {
+        this.isOpened = isOpened;
     }
     
     @Override
