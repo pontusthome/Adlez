@@ -183,18 +183,18 @@ public class GameScreen extends AbstractScreen {
     }
 
     private void updateEnemies(float delta) {
-        List<INPC> killedEnemies = new ArrayList<>();
-        for(Map.Entry<IEnemy, ICharacterController> entry : enemies.entrySet()) {
-            INPC enemy = entry.getKey();
-            ICharacterController enemyController = entry.getValue();
-
-            enemyController.update(delta);
-            if (!enemy.isAlive()) {
-                killedEnemies.add(enemy);
-            }
+        // Remove the old enemyControllers by saving the old list of controllers
+        // and only saving the enemyControllers for the enemies that still exist.
+        HashMap<IEnemy, ICharacterController> oldEnemies = (HashMap<IEnemy, ICharacterController>) enemies.clone();
+        enemies.clear();
+        for (IEnemy enemy: adlez.getEnemies()) {
+            ICharacterController enemyController = oldEnemies.get(enemy);
+            enemies.put(enemy, enemyController);
         }
-        for (INPC deadEnemy: killedEnemies) {
-            enemies.remove(deadEnemy);
+        // Updating the enemies.
+        for(Map.Entry<IEnemy, ICharacterController> entry : enemies.entrySet()) {
+            ICharacterController enemyController = entry.getValue();
+            enemyController.update(delta);
         }
     }
 

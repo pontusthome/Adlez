@@ -66,9 +66,6 @@ public class PlayerController implements ICharacterController, GateOpenListener 
 
         Character playerCharacter = (Character) player;
         playerCharacter.clearMoveFlags();
-    
-//        System.out.println("Vx: " + playerCharacter.getVx());
-//        System.out.println("Vy: " + playerCharacter.getVy());
         
         if (Gdx.input.isKeyPressed(Input.Keys.W)) {
             playerCharacter.setMovingNorth();
