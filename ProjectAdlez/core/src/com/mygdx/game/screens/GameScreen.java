@@ -170,12 +170,24 @@ public class GameScreen extends AbstractScreen {
         playerController.update(delta);
         collisionHandler.updatePlayer();
 
-        // Updating enemies
+        updateEnemies(delta);
+        updateAttacks(delta);
+        updateInteractions(delta);
+
+        // Update stationary objects 
+        obstaclesController.update(delta);
+        chestsController.update(delta);
+        wallsController.update(delta);
+        
+        collisionHandler.updateWorld();
+    }
+
+    private void updateEnemies(float delta) {
         List<INPC> killedEnemies = new ArrayList<>();
         for(Map.Entry<IEnemy, ICharacterController> entry : enemies.entrySet()) {
             INPC enemy = entry.getKey();
             ICharacterController enemyController = entry.getValue();
-    
+
             enemyController.update(delta);
             if (!enemy.isAlive()) {
                 killedEnemies.add(enemy);
@@ -184,8 +196,9 @@ public class GameScreen extends AbstractScreen {
         for (INPC deadEnemy: killedEnemies) {
             enemies.remove(deadEnemy);
         }
-    
-        // Update attacks
+    }
+
+    private void updateAttacks(float delta) {
         if(!newAttacks.isEmpty()){
             for(IAttack attack : newAttacks){
                 AttackController attackController = new AttackController(attack);
@@ -197,7 +210,7 @@ public class GameScreen extends AbstractScreen {
         for(Map.Entry<IAttack, IController> entry : attackControllers.entrySet()){
             IAttack attack = entry.getKey();
             IController attackController = entry.getValue();
-        
+
             if (attack.isFinished()) {
                 finishedAttacks.add(attack);
             }
@@ -209,8 +222,10 @@ public class GameScreen extends AbstractScreen {
             attackControllers.remove(finishedAttack);
             adlez.removeAttackFromWorld(finishedAttack);
         }
-    
-        // Update interactions
+
+    }
+
+    private void updateInteractions(float delta) {
         if(!newInteractions.isEmpty()){
             for(IInteraction interaction : newInteractions){
                 InteractionController interactionController = new InteractionController(interaction);
@@ -222,7 +237,7 @@ public class GameScreen extends AbstractScreen {
         for(Map.Entry<IInteraction, IController> entry : interactionControllers.entrySet()){
             IInteraction interaction = entry.getKey();
             IController interactionController = entry.getValue();
-        
+
             if (interaction.isFinished()) {
                 finishedInteractions.add(interaction);
             }
@@ -234,15 +249,8 @@ public class GameScreen extends AbstractScreen {
             interactionControllers.remove(finishedInteraction);
             adlez.removeInteractionFromWorld(finishedInteraction);
         }
-    
-        // Update stationary objects 
-        obstaclesController.update(delta);
-        chestsController.update(delta);
-        wallsController.update(delta);
-        
-        collisionHandler.updateWorld();
     }
-    
+
     private void debugRender(){
         debugRenderer.setProjectionMatrix(playerCam.combined);
         debugRenderer.begin(ShapeRenderer.ShapeType.Line);
