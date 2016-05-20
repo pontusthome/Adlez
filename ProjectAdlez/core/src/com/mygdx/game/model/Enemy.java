@@ -2,6 +2,8 @@ package com.mygdx.game.model;
 
 import com.mygdx.game.model.handler.CollisionHandler2;
 import com.mygdx.game.utils.AssetStrings;
+import com.mygdx.game.utils.Utils;
+
 import java.io.Serializable;
 
 /**
@@ -15,6 +17,7 @@ public class Enemy extends NPC implements IEnemy{
 	public static final int DOG_LEVEL_ONE = 4;
 
 	private int type;
+	private int range = 70;
 	
 	private CollisionHandler2 collisionHandler = CollisionHandler2.getInstance();
 	private IPlayer player = Adlez.getInstance().getPlayer();
@@ -45,6 +48,34 @@ public class Enemy extends NPC implements IEnemy{
 			attackPlayer();
 			resetAttackCooldown();
 		}
+	}
+
+	@Override
+	public void update(float deltaT) {
+		clearMoveFlags();
+		followPlayer(deltaT);
+		super.update(deltaT);
+	}
+
+	@Override
+	public void followPlayer(float deltaT) {
+		float playerX = player.getPosX();
+		float playerY = player.getPosY();
+
+		boolean inRange = Utils.inRange(playerX, getPosX(), playerY, getPosY(), range);
+
+		if (playerY > getPosY() && Math.abs(playerY - getPosY()) > 1 && inRange) {
+			setMovingNorth();
+		}else if (playerY < getPosY() && Math.abs(playerY - getPosY()) > 1 && inRange) {
+			setMovingSouth();
+		}
+		if (playerX < getPosX() && Math.abs(playerX - getPosX()) > 1 && inRange) {
+			setMovingWest();
+		}else if (playerX > getPosX() && Math.abs(playerX - getPosX()) > 1 && inRange) {
+			setMovingEast();
+		}
+
+		move(deltaT);
 	}
 
 	@Override
