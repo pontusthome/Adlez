@@ -58,7 +58,7 @@ public class PlayerController implements ICharacterController, GateOpenListener 
     @Override
     public void update(float deltaT) {
         // Temporary sound to notify when player is dead
-        if (player.getHealth() < 0) {
+        if (player.getHealth() == 0) {
             GameSound dyingSound = new LibGDXSoundAdapter(AssetStrings.TEMP_DYING_SOUND);
             dyingSound.play(0.5f);
             player.setHealth(100);

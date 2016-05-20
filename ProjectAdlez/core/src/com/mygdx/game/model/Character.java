@@ -124,6 +124,9 @@ public abstract class Character extends WorldObject implements ICharacter {
 	
 	@Override
 	public void setHealth(int health){
+		if (health < 0) {
+			health = 0;
+		}
 		this.health = health;
 	}
 	
