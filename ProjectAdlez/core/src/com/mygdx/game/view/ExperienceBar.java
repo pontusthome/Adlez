@@ -4,7 +4,7 @@ import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.Pixmap;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.scenes.scene2d.ui.Image;
-import com.mygdx.game.model.ICharacter;
+import com.mygdx.game.model.characters.ICharacter;
 
 /**
  * Created by Viktor on 2016-05-06.

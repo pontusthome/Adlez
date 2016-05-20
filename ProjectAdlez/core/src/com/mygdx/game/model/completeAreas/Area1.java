@@ -1,8 +1,16 @@
 package com.mygdx.game.model.completeAreas;
 
 import com.mygdx.game.builder.AreaHandler;
-import com.mygdx.game.model.*;
+import com.mygdx.game.model.Area;
+import com.mygdx.game.model.characters.*;
+import com.mygdx.game.model.core.Direction;
+import com.mygdx.game.model.factories.EnemyFactory;
+import com.mygdx.game.model.core.IWorldObject;
 import com.mygdx.game.model.exceptions.InventoryFullException;
+import com.mygdx.game.model.obstacles.*;
+import com.mygdx.game.model.obstacles.Chest;
+import com.mygdx.game.model.characters.items.CompleteItems;
+import com.mygdx.game.model.obstacles.IChest;
 
 import java.util.ArrayList;
 import java.util.List;

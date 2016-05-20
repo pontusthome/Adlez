@@ -3,7 +3,7 @@ package com.mygdx.game.view;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
-import com.mygdx.game.model.IAreaConnection;
+import com.mygdx.game.model.obstacles.IAreaConnection;
 
 import java.util.List;
 

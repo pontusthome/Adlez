@@ -1,6 +1,11 @@
 package com.mygdx.game.model;
 
-import java.io.Serializable;
+import com.mygdx.game.model.core.IWorldObject;
+import com.mygdx.game.model.characters.IEnemy;
+import com.mygdx.game.model.characters.IFriendlyNPC;
+import com.mygdx.game.model.obstacles.*;
+import com.mygdx.game.model.obstacles.IChest;
+
 import java.util.List;
 
 /**

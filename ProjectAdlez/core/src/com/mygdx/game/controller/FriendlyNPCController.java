@@ -1,7 +1,7 @@
 package com.mygdx.game.controller;
 
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
-import com.mygdx.game.model.IFriendlyNPC;
+import com.mygdx.game.model.characters.IFriendlyNPC;
 import com.mygdx.game.view.FriendlyNPCView;
 
 import java.util.List;

@@ -4,8 +4,14 @@ import com.badlogic.gdx.utils.JsonReader;
 import com.badlogic.gdx.utils.JsonValue;
 import com.badlogic.gdx.utils.StringBuilder;
 import com.mygdx.game.model.*;
+import com.mygdx.game.model.factories.EnemyFactory;
+import com.mygdx.game.model.characters.IEnemy;
+import com.mygdx.game.model.characters.IPlayer;
+import com.mygdx.game.model.Area;
 import com.mygdx.game.model.exceptions.InventoryFullException;
 import com.mygdx.game.model.exceptions.ItemNotFoundException;
+import com.mygdx.game.model.obstacles.*;
+import com.mygdx.game.model.characters.items.*;
 
 import java.io.*;
 import java.util.ArrayList;
@@ -231,7 +237,7 @@ public class AreaBuilder implements AreaIO {
      * Saving what kind of items they are and the items' type, name, goldValue and stats
      *
      * @param items the list of items that will be turned into JSON
-     * @return String containing a JSON list of Json item objects
+     * @return String containing a JSON list of Json item obstacles
      */
     private String itemsToJson(List<IItem> items) {
         String jsonItems = "[";

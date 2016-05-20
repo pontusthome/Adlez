@@ -1,6 +1,6 @@
 package com.mygdx.game.builder;
 
-import com.mygdx.game.model.IPlayer;
+import com.mygdx.game.model.characters.IPlayer;
 import com.mygdx.game.model.exceptions.ItemNotFoundException;
 
 /**

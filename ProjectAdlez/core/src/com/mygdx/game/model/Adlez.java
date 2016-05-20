@@ -1,11 +1,14 @@
 package com.mygdx.game.model;
 
-import com.mygdx.game.model.handler.CollisionHandler2;
+import com.mygdx.game.model.characters.actions.IAttack;
+import com.mygdx.game.model.characters.actions.IInteraction;
+import com.mygdx.game.model.characters.*;
+import com.mygdx.game.model.core.Direction;
+import com.mygdx.game.model.core.IWorldObject;
+import com.mygdx.game.model.collisionHandler.CollisionHandler;
+import com.mygdx.game.model.obstacles.*;
+import com.mygdx.game.model.obstacles.IChest;
 
-import java.io.FileInputStream;
-import java.io.FileOutputStream;
-import java.io.ObjectInputStream;
-import java.io.ObjectOutputStream;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -32,7 +35,7 @@ public class Adlez {
     private List<IChest> chests;
     private List<IAreaConnection> areaConnections;
     private List<IManaFountain> manaFountains;
-    private CollisionHandler2 collisionHandler;
+    private CollisionHandler collisionHandler;
     private List<IAttack> attacks = new ArrayList<>();
     private List<IAttack> newAttacks = new ArrayList<>();
     private List<IInteraction> interactions = new ArrayList<>();
@@ -50,7 +53,7 @@ public class Adlez {
         // Reset the world and then set it up for the new area
         worldObjects = new ArrayList<>();
 
-        collisionHandler = CollisionHandler2.getInstance();
+        collisionHandler = CollisionHandler.getInstance();
         collisionHandler.initiate(player, worldObjects);
 
         // add the player and set him to the new position
@@ -142,7 +145,7 @@ public class Adlez {
         worldObjects.remove(chest);
     }
 
-    public CollisionHandler2 getCollisionHandler(){
+    public CollisionHandler getCollisionHandler(){
         return collisionHandler;
     }
     

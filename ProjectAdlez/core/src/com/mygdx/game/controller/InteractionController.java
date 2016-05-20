@@ -2,7 +2,7 @@ package com.mygdx.game.controller;
 
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.mygdx.game.model.Adlez;
-import com.mygdx.game.model.IInteraction;
+import com.mygdx.game.model.characters.actions.IInteraction;
 
 /**
  * Created by Michel on 8.5.2016.

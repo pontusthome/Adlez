@@ -9,7 +9,7 @@ import com.badlogic.gdx.scenes.scene2d.ui.*;
 import com.badlogic.gdx.utils.viewport.FitViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
 import com.mygdx.game.model.Adlez;
-import com.mygdx.game.model.ICharacter;
+import com.mygdx.game.model.characters.ICharacter;
 import com.mygdx.game.view.ExperienceBar;
 import com.mygdx.game.view.HealthBar;
 import com.mygdx.game.view.IStatusBar;

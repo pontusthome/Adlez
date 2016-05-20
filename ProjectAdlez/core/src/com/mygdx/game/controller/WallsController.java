@@ -2,9 +2,8 @@ package com.mygdx.game.controller;
 
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.mygdx.game.model.Adlez;
-import com.mygdx.game.model.IWall;
+import com.mygdx.game.model.obstacles.IWall;
 
-import java.util.ArrayList;
 import java.util.List;
 
 /**

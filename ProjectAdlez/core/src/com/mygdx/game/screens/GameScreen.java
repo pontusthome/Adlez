@@ -13,7 +13,13 @@ import com.badlogic.gdx.maps.tiled.renderers.OrthoCachedTiledMapRenderer;
 import com.mygdx.game.controller.*;
 import com.mygdx.game.builder.AreaHandler;
 import com.mygdx.game.model.*;
-import com.mygdx.game.model.handler.CollisionHandler2;
+import com.mygdx.game.model.characters.actions.HitBox;
+import com.mygdx.game.model.characters.actions.IAttack;
+import com.mygdx.game.model.characters.actions.IInteraction;
+import com.mygdx.game.model.characters.IEnemy;
+import com.mygdx.game.model.characters.IPlayer;
+import com.mygdx.game.model.collisionHandler.CollisionHandler;
+import com.mygdx.game.model.obstacles.IWall;
 import com.mygdx.game.utils.AssetStrings;
 
 import java.util.ArrayList;
@@ -40,7 +46,7 @@ public class GameScreen extends AbstractScreen {
     private OrthoCachedTiledMapRenderer renderer;
     private TiledMap tileMap;
     
-    private CollisionHandler2 collisionHandler;
+    private CollisionHandler collisionHandler;
     private List<IAttack> attacks;
 
     private HashMap<IAttack, IController> attackControllers;
@@ -174,7 +180,7 @@ public class GameScreen extends AbstractScreen {
         updateAttacks(delta);
         updateInteractions(delta);
 
-        // Update stationary objects 
+        // Update stationary obstacles
         obstaclesController.update(delta);
         chestsController.update(delta);
         wallsController.update(delta);

@@ -1,6 +1,6 @@
 package com.mygdx.game.builder;
 
-import com.mygdx.game.model.*;
+import com.mygdx.game.model.Area;
 import com.mygdx.game.model.completeAreas.Area1;
 import com.mygdx.game.model.completeAreas.Area2;
 import com.mygdx.game.model.exceptions.InventoryFullException;

@@ -28,13 +28,13 @@ public final class AssetStrings {
     public static final String INTRO_SCREEN_BACKGROUND_IMAGE = "backgrounds/ZeldaIntro.png";
     public static final String GAME_OVER_BACKGROUND_IMAGE = "backgrounds/gameoverBackground.png";
 
-    /* Stationary objects */
-    public static final String BOX_OBSTACLE_IMAGE = "objects/boxObstacle.jpeg";
-    public static final String CLOSED_CHEST_IMAGE = "objects/closed_chest.png";
-    public static final String OPEN_CHEST_IMAGE = "objects/open_chest.png";     // Same as closed chest for now
-    public static final String BOULDER_OBSTACLE_IMAGE = "objects/boulder_32x32.png";
-    public static final String DOOR_GATE_IMAGE = "objects/door_32x32.png";
-    public static final String MANA_FOUNTAIN_IMAGE = "objects/manaFountain_32x32.png";
+    /* Stationary obstacles */
+    public static final String BOX_OBSTACLE_IMAGE = "obstacles/boxObstacle.jpeg";
+    public static final String CLOSED_CHEST_IMAGE = "obstacles/closed_chest.png";
+    public static final String OPEN_CHEST_IMAGE = "obstacles/open_chest.png";     // Same as closed chest for now
+    public static final String BOULDER_OBSTACLE_IMAGE = "obstacles/boulder_32x32.png";
+    public static final String DOOR_GATE_IMAGE = "obstacles/door_32x32.png";
+    public static final String MANA_FOUNTAIN_IMAGE = "obstacles/manaFountain_32x32.png";
 
     /* Sprites */
     public static final String PLAYER_MOVE = "player/moveSpriteV2.png";

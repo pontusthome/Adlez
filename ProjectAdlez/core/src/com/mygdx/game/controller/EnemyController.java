@@ -3,11 +3,9 @@ package com.mygdx.game.controller;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.mygdx.game.model.*;
-import com.mygdx.game.model.Character;
-import com.mygdx.game.model.handler.CollisionHandler;
-import com.mygdx.game.model.handler.CollisionHandler2;
+import com.mygdx.game.model.characters.Enemy;
+import com.mygdx.game.model.characters.IEnemy;
 import com.mygdx.game.utils.AssetStrings;
-import com.mygdx.game.utils.Utils;
 import com.mygdx.game.view.CharacterView;
 import com.mygdx.game.view.ICharacterView;
 

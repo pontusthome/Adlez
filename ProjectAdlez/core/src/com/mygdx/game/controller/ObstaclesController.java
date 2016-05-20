@@ -2,7 +2,7 @@ package com.mygdx.game.controller;
 
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.mygdx.game.model.Adlez;
-import com.mygdx.game.model.IObstacle;
+import com.mygdx.game.model.obstacles.IObstacle;
 import com.mygdx.game.view.ObstaclesView;
 
 import java.util.ArrayList;

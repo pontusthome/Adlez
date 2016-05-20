@@ -2,6 +2,7 @@ package com.mygdx.game.controller;
 
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.mygdx.game.model.*;
+import com.mygdx.game.model.characters.actions.*;
 
 /**
  * Created by Michel on 4.5.2016.
@@ -28,7 +29,7 @@ public class AttackController implements IController{
 		 * 
 		 * Other attacks though, such as projectiles, could survive several game loops.
 		 * */
-		if(attack instanceof MeleeAttack || attack instanceof RangeMagicAttack 
+		if(attack instanceof MeleeAttack || attack instanceof RangeMagicAttack
 				|| attack instanceof AOEMagicAttack || attack instanceof EnemyAOEAttack){
 			attack.setFinished();
 		}
