@@ -94,7 +94,7 @@ public class Player extends Character implements IPlayer {
         inventory.remove(getItemInInventory(item));
     }
 
-    private IItem getItemInInventory(IItem item) throws ItemNotFoundException {
+    public IItem getItemInInventory(IItem item) throws ItemNotFoundException {
         Iterator<IItem> itr = inventory.iterator();
         while (itr.hasNext()) {
             IItem element = itr.next();

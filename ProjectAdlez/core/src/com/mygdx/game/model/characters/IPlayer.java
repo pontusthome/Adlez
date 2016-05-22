@@ -20,4 +20,5 @@ public interface IPlayer extends ICharacter {
     void removeItem(IItem item) throws ItemNotFoundException;
     IItem getSwordEquipped();
     IItem getArmorEquipped();
+    IItem getItemInInventory(IItem item) throws ItemNotFoundException;
 }

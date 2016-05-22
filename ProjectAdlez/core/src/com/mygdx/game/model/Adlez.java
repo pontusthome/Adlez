@@ -101,6 +101,10 @@ public class Adlez {
         return player;
     }
 
+    public void setPlayer(IPlayer player) {
+        this.player = player;
+    }
+
     public List<IEnemy> getEnemies() { return enemies; }
 
     public List<IFriendlyNPC> getFriendlyNPCs() {

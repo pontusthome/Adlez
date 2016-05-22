@@ -7,8 +7,6 @@ import com.mygdx.game.model.core.Collidable;
  */
 public abstract class NPC extends Character implements INPC {
 	
-	private boolean isAlive = true;
-	
 	public NPC(int direction, float speed, int width, 
 			   int height, float posX, float posY, 
 			   int maxHealth, int attackDamage, 

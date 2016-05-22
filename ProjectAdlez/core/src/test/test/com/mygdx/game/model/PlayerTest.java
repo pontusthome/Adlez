@@ -1,8 +1,15 @@
 package com.mygdx.game.model;
 
+import com.mygdx.game.model.characters.*;
+import com.mygdx.game.model.characters.actions.IAttack;
+import com.mygdx.game.model.characters.actions.MeleeAttack;
+import com.mygdx.game.model.characters.items.CompleteItems;
+import com.mygdx.game.model.characters.items.IItem;
+import com.mygdx.game.model.core.Direction;
 import com.mygdx.game.model.exceptions.InsufficientGoldException;
 import com.mygdx.game.model.exceptions.InventoryFullException;
 import com.mygdx.game.model.exceptions.ItemNotFoundException;
+import com.mygdx.game.model.factories.EnemyFactory;
 import org.junit.Test;
 
 import java.util.ArrayList;
@@ -115,7 +122,7 @@ public class PlayerTest {
      * Player unequipping armor. Final armor with 100 bonus HP.
      */
     @Test
-    public void unEquipArmor() throws InventoryFullException, ItemNotFoundException {
+    public void testUnEquipArmor() throws InventoryFullException, ItemNotFoundException {
         Player player = new Player(Direction.NORTH, 0, 17, 17, 0, 0, 100, 10, 0, 100);
         try {
             player.lootItem(CompleteItems.FINAL_BODY_ARMOR);
@@ -133,7 +140,7 @@ public class PlayerTest {
      * Player looting item.
      */
     @Test
-    public void lootItem() throws InventoryFullException {
+    public void testLootItem() throws InventoryFullException {
         Player player = new Player(Direction.NORTH, 0, 17, 17, 0, 0, 100, 10, 0, 100);
         try {
             player.lootItem(CompleteItems.FINAL_SWORD);
@@ -147,62 +154,13 @@ public class PlayerTest {
      * Remove item from inventory.
      */
     @Test
-    public void removeItem() throws InventoryFullException, ItemNotFoundException {
+    public void testRemoveItem() throws InventoryFullException, ItemNotFoundException {
         Player player = new Player(Direction.NORTH, 0, 17, 17, 0, 0, 100, 10, 0, 100);
         try {
             player.lootItem(CompleteItems.FINAL_SWORD);
             assertTrue(player.getInventory().size() == 1);
             player.removeItem(CompleteItems.FINAL_SWORD);
             assertTrue(player.getInventory().size() == 0);
-        } catch (InventoryFullException e) {
-            e.getMessage();
-        } catch (ItemNotFoundException e) {
-            e.getMessage();
-        }
-    }
-
-    /**
-     * Buy item from shop. Creating npc shop with items.
-     * Player has 100 gold.
-     * Buys Wood sword (50 gold)
-     */
-    @Test
-    public void buyItem() throws InventoryFullException, InsufficientGoldException {
-        Player player = new Player(Direction.NORTH, 0, 17, 17, 0, 0, 100, 10, 100, 100);
-        List<IItem> items = new ArrayList<>(2);
-
-        items.add(CompleteItems.FINAL_SWORD);
-        items.add(CompleteItems.FINAL_BODY_ARMOR);
-        NPCShop shop = new NPCShop(items);
-
-        try {
-            player.lootItem(shop.sellItem(CompleteItems.WOOD_SWORD, player));
-            assertTrue(player.getInventory().get(0) == CompleteItems.WOOD_SWORD);
-        } catch (InsufficientGoldException e) {
-            e.getMessage();
-        } catch (InventoryFullException e) {
-            e.getMessage();
-        }
-    }
-
-    /**
-     * Sell an item to the shop and gain gold.
-     * Player has 0 gold and will get 500 gold by selling his sword.
-     */
-    @Test
-    public void sellItem() throws InventoryFullException, ItemNotFoundException {
-        Player player = new Player(Direction.NORTH, 0, 17, 17, 0, 0, 100, 10, 0, 100);
-        List<IItem> items = new ArrayList<>(2);
-
-        items.add(CompleteItems.FINAL_SWORD);
-        items.add(CompleteItems.FINAL_BODY_ARMOR);
-        NPCShop shop = new NPCShop(items);
-        try {
-            player.lootItem(CompleteItems.FINAL_SWORD);
-            int value = shop.buyItem(player.getItemInInventory(CompleteItems.FINAL_SWORD), player);
-            player.setGold(player.getGold() + value);
-            // Should be 500 + current gold (0) ==> 500 gold.
-            assertTrue(player.getGold() == 500);
         } catch (InventoryFullException e) {
             e.getMessage();
         } catch (ItemNotFoundException e) {

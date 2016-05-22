@@ -8,12 +8,15 @@ import com.mygdx.game.builder.AreaBuilder;
 import com.mygdx.game.builder.AreaHandler;
 import com.mygdx.game.builder.AreaIO;
 import com.mygdx.game.model.*;
+import com.mygdx.game.model.characters.IFriendlyNPC;
+import com.mygdx.game.model.characters.NPCShop;
 import com.mygdx.game.model.characters.actions.*;
 import com.mygdx.game.model.characters.Character;
 import com.mygdx.game.model.characters.IPlayer;
 import com.mygdx.game.model.core.GameSound;
 import com.mygdx.game.model.core.GateOpenListener;
 import com.mygdx.game.model.core.LibGDXSoundAdapter;
+import com.mygdx.game.model.core.ShopOpenListener;
 import com.mygdx.game.model.exceptions.ItemNotFoundException;
 import com.mygdx.game.model.obstacles.IAreaConnection;
 import com.mygdx.game.utils.AssetStrings;
@@ -26,7 +29,7 @@ import java.util.List;
 /**
  * Created by martinso on 27/03/16.
  */
-public class PlayerController implements ICharacterController, GateOpenListener {
+public class PlayerController implements ICharacterController, GateOpenListener , ShopOpenListener {
 
 // Have a screens not extend a screens
 
@@ -34,6 +37,7 @@ public class PlayerController implements ICharacterController, GateOpenListener 
     private CharacterView playerView;
     private Adlez adlez;
     private List<IAreaConnection> areaConnections;
+    private List<IFriendlyNPC> friendlyNPCs;
     private AreaHandler areaHandler;
     private GameSound outOfManaSound;
     
@@ -50,6 +54,11 @@ public class PlayerController implements ICharacterController, GateOpenListener 
         areaConnections = adlez.getAreaConnections();
         for (IAreaConnection ac : areaConnections) {
             ac.add(this);
+        }
+
+        friendlyNPCs = adlez.getFriendlyNPCs();
+        for (IFriendlyNPC fNPC : friendlyNPCs) {
+            fNPC.add(this);
         }
     
         outOfManaSound = new LibGDXSoundAdapter(AssetStrings.OUT_OF_MANA_SOUND);
@@ -171,6 +180,12 @@ public class PlayerController implements ICharacterController, GateOpenListener 
         } else if (areaHandler.getCurrentAreaInt() == AreaHandler.AREA_2) {
             ScreenManager.getInstance().switchArea(AreaHandler.getInstance().loadArea1());
         }
+    }
+
+    @Override
+    public void shopOpen(NPCShop shop) {
+        // Should open the shop view...
+        // Waiting for the inventory view to be implemented...
     }
 
 }
