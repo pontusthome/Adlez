@@ -22,8 +22,9 @@ public class AreaConnection extends WorldObject implements IAreaConnection {
     @Override
     public void onCollide(Collidable other) {
         if (other instanceof IInteraction) {
+            System.out.println("sadasd");
             for (GateOpenListener listener : listeners) {
-                listener.gateOpen(this);
+                listener.gateOpen();
             }
         }
     }

@@ -174,7 +174,7 @@ public class PlayerController implements ICharacterController, GateOpenListener 
     }
 
     @Override
-    public void gateOpen(Object source) {
+    public void gateOpen() {
         if (areaHandler.getCurrentAreaInt() == AreaHandler.AREA_1) {
             ScreenManager.getInstance().switchArea(AreaHandler.getInstance().loadArea2());
         } else if (areaHandler.getCurrentAreaInt() == AreaHandler.AREA_2) {
