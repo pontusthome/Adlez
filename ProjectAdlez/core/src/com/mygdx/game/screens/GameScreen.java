@@ -174,7 +174,6 @@ public class GameScreen extends AbstractScreen {
     private void updateGame(float delta) {
         // Updating player
         playerController.update(delta);
-        collisionHandler.updatePlayer();
 
         updateEnemies(delta);
         updateAttacks(delta);

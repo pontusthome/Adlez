@@ -31,17 +31,10 @@ public class CollisionHandler {
 	public void updateWorld(){		
 		for(IWorldObject primary : worldObjects){
 			for(IWorldObject other : worldObjects){
-				if(primary != other && primary != player){
+				if(primary != other){
 					checkCollision(primary, other);
 				}
 			}
-		}
-	}
-	
-	public void updatePlayer(){
-		for(IWorldObject other : worldObjects){
-			if(player != other)
-				checkCollision(player, other);
 		}
 	}
 	
