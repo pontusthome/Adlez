@@ -30,6 +30,10 @@ public abstract class Character extends WorldObject implements ICharacter {
 	private int velocityScalar = 50;
 	private float oldPosX;
 	private float oldPosY;
+	
+	/** Speed components in x & y. Are set to 1 if only moving in either x or y, otherwise adjusted so 
+	 * that the character doesn't move faster when moving diagonally.
+	 */
 	private float vXComponent = 0;
 	private float vYComponent = 0;
 	
@@ -259,7 +263,9 @@ public abstract class Character extends WorldObject implements ICharacter {
 	}
 	
 	public void move(float deltaT){
-		// Check if moving in two directions. If so, modify x & y speed components.
+		/** Check if moving in diagonally. If so, set x & y speed components so that the total speed is equal to the 
+		 *  characters speed.
+		 */
 		if((isMovingWest() || isMovingEast()) && (isMovingNorth() || isMovingSouth())){
 			vXComponent = (float) Math.cos(Math.toRadians(45));
 			vYComponent = (float) Math.cos(Math.toRadians(45));
@@ -306,6 +312,7 @@ public abstract class Character extends WorldObject implements ICharacter {
 	@Override
 	public void update(float deltaT){
 		attackCooldown += deltaT;
+		move(deltaT);
 	}
 		
 	@Override

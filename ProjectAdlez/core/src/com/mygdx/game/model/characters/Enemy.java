@@ -58,7 +58,6 @@ public class Enemy extends NPC implements IEnemy{
 
 	@Override
 	public void update(float deltaT) {
-		clearMoveFlags();
 		followPlayer(deltaT);
 		super.update(deltaT);
 	}
@@ -80,8 +79,6 @@ public class Enemy extends NPC implements IEnemy{
 		}else if (playerX > getPosX() && Math.abs(playerX - getPosX()) > 1 && inRange) {
 			setMovingEast();
 		}
-
-		move(deltaT);
 	}
 
 	@Override
