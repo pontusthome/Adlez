@@ -10,35 +10,22 @@ import java.util.List;
  * Created by martinso on 25/04/16.
  */
 public class Wall extends WorldObject implements IWall {
-    
-    private int health;
+
+    List<Wall> walls = new ArrayList<Wall>();
 
     public Wall() {
-        // Temporary size.
         setHeight(32);
         setWidth(32);
-        setHealth(1337);
-    }
-
-    public Wall(float posX, float posY) {
-        setHeight(32);
-        setWidth(32);
-        setHealth(1337);
-        setPosX(posX);
-        setPosY(posY);
     }
 
     public Wall(int posX, int posY) {
         setHeight(32);
         setWidth(32);
-        setHealth(1337);
         setPosX(posX * 32);
         setPosY(posY * 32);
     }
 
-
     public List<Wall> createAreaBounds(int height, int width, int size) {
-        List<Wall> walls = new ArrayList<Wall>();
         
         for (int i = 0; i < height; i++) {
             for (int j = 0; j < width; j++) {
@@ -66,25 +53,14 @@ public class Wall extends WorldObject implements IWall {
         }
         return walls;
     }
+
+    public List<Wall> getWalls() {
+        return walls;
+    }
     
     
     @Override
     public void onCollide(Collidable other){
         
-    }
-    
-    @Override
-    public void setHealth(int health){
-        this.health = health;
-    }
-    
-    @Override
-    public int getHealth(){
-        return health;
-    }
-    
-    @Override
-    public boolean isDestroyed(){
-        return getHealth() <= 0;
     }
 }
