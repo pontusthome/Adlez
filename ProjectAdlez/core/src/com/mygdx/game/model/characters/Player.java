@@ -39,19 +39,9 @@ public class Player extends Character implements IPlayer {
                 posX, posY, maxHealth, attackDamage,
                 gold, mana);
 
-        inventory = new ArrayList<IItem>(INVENTORY_MAX_SIZE);
+        inventory = new ArrayList<>(INVENTORY_MAX_SIZE);
     }
-
-    public void useMana(IAttack attack) {
-        if (attack instanceof MeleeAttack) {
-            setMana(getMana());
-        } else if (attack instanceof AOEMagicAttack) {
-            setMana(getMana() - 20);
-        } else if (attack instanceof RangeMagicAttack) {
-            setMana(getMana() - 15);
-        }
-    }
-
+    
     public void equipItem(IItem item) throws ItemNotFoundException {
         if (item instanceof Weapon) {
             if (isWepSlotEmpty) {
@@ -104,7 +94,7 @@ public class Player extends Character implements IPlayer {
         inventory.remove(getItemInInventory(item));
     }
 
-    public IItem getItemInInventory(IItem item) throws ItemNotFoundException {
+    private IItem getItemInInventory(IItem item) throws ItemNotFoundException {
         Iterator<IItem> itr = inventory.iterator();
         while (itr.hasNext()) {
             IItem element = itr.next();

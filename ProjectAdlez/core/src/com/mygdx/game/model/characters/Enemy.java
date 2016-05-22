@@ -1,7 +1,7 @@
 package com.mygdx.game.model.characters;
 
 import com.mygdx.game.model.Adlez;
-import com.mygdx.game.model.characters.actions.EnemyAOEAttack;
+import com.mygdx.game.model.characters.actions.AOEMeleeAttack;
 import com.mygdx.game.model.characters.actions.IAttack;
 import com.mygdx.game.model.core.Collidable;
 import com.mygdx.game.model.core.Direction;
@@ -90,12 +90,7 @@ public class Enemy extends NPC implements IEnemy{
 	}
 	
 	private void attackPlayer(){
-		IAttack enemyAttack = new EnemyAOEAttack(this);
-		enemyAttack.setSound(new LibGDXSoundAdapter(AssetStrings.MELEE_ATTACK_SOUND));
-		enemyAttack.playSound(0.1f);
-
-		// Ta bort referense till Adlez
-		Adlez.getInstance().addAttack(enemyAttack);
+		AOEMeleeAttack();
 	}
 	
 	@Override

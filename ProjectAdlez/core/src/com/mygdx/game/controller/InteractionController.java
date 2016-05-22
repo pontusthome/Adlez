@@ -3,6 +3,9 @@ package com.mygdx.game.controller;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.mygdx.game.model.Adlez;
 import com.mygdx.game.model.characters.actions.IInteraction;
+import com.mygdx.game.model.core.GameSound;
+import com.mygdx.game.model.core.LibGDXSoundAdapter;
+import com.mygdx.game.utils.AssetStrings;
 
 /**
  * Created by Michel on 8.5.2016.
@@ -11,10 +14,13 @@ public class InteractionController implements IController{
 	
 	private IInteraction interaction;
 	private Adlez adlez;
+	private GameSound interactionSound;
 	
 	public InteractionController(IInteraction interaction){
 		this.interaction = interaction;
 		adlez = Adlez.getInstance();
+		interactionSound = new LibGDXSoundAdapter(AssetStrings.INTERACTION_SOUND);
+		interactionSound.play(0.5f);
 	}
 	
 	@Override

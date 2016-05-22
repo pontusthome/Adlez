@@ -1,5 +1,6 @@
 package com.mygdx.game.model.characters;
 
+import com.mygdx.game.model.characters.actions.*;
 import com.mygdx.game.model.core.IWorldObject;
 
 /**
@@ -48,4 +49,14 @@ public interface ICharacter extends IWorldObject {
 	float getAttackCooldown();
 	void resetAttackCooldown();
 	void handleMoveCollision(int direction);
+	void MeleeAttack();
+	void AOEMeleeAttack();
+	void AOEMagicAttack();
+	void RangeMagicAttack();
+	void useMana(IAttack attack);
+	void interact();
+	
+	//TODO: Remove when debugging is over
+	IAttack getLatestAttack();
+	IInteraction getLatestInteraction();
 }

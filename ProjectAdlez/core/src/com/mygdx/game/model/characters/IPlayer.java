@@ -12,13 +12,12 @@ import java.util.List;
  */
 public interface IPlayer extends ICharacter {
 
-    public void equipItem(IItem item) throws ItemNotFoundException;
-    public void unEquipWeapon(IItem item) throws InventoryFullException;
-    public void unEquipArmor(IItem item) throws InventoryFullException;
-    public void lootItem(IItem item) throws InventoryFullException;
-    public List<IItem> getInventory();
-    public void removeItem(IItem item) throws ItemNotFoundException;
-    public IItem getSwordEquipped();
-    public IItem getArmorEquipped();
-    public void useMana(IAttack attack);
+    void equipItem(IItem item) throws ItemNotFoundException;
+    void unEquipWeapon(IItem item) throws InventoryFullException;
+    void unEquipArmor(IItem item) throws InventoryFullException;
+    void lootItem(IItem item) throws InventoryFullException;
+    List<IItem> getInventory();
+    void removeItem(IItem item) throws ItemNotFoundException;
+    IItem getSwordEquipped();
+    IItem getArmorEquipped();
 }

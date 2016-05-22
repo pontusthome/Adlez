@@ -3,6 +3,9 @@ package com.mygdx.game.controller;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.mygdx.game.model.*;
 import com.mygdx.game.model.characters.actions.*;
+import com.mygdx.game.model.core.GameSound;
+import com.mygdx.game.model.core.LibGDXSoundAdapter;
+import com.mygdx.game.utils.AssetStrings;
 
 /**
  * Created by Michel on 4.5.2016.
@@ -12,10 +15,22 @@ public class AttackController implements IController{
 	
 	private IAttack attack;
 	private Adlez adlez;
+	private GameSound attackSound;
 	
 	public AttackController(IAttack attack){
 		this.attack = attack;
 		adlez = Adlez.getInstance();
+				
+		if(attack instanceof MeleeAttack || attack instanceof AOEMeleeAttack){
+			attackSound = new LibGDXSoundAdapter(AssetStrings.MELEE_ATTACK_SOUND);
+			attackSound.play(0.1f);
+		}else if(attack instanceof AOEMagicAttack){
+			attackSound = new LibGDXSoundAdapter(AssetStrings.AOE_MAGIC_ATTACK_SOUND);
+			attackSound.play(0.1f);
+		}else if(attack instanceof RangeMagicAttack){
+			attackSound = new LibGDXSoundAdapter(AssetStrings.RANGE_MAGIC_ATTACK_SOUND);
+			attackSound.play(0.1f);
+		}
 	}
 	
 	@Override
@@ -25,12 +40,11 @@ public class AttackController implements IController{
 		}
 		
 		/** 
-		 * Melee attack should be in only one game loop, so set as finished immediately.
-		 * 
+		 * Attacks that should be in only one game loop are set as finished immediately.
 		 * Other attacks though, such as projectiles, could survive several game loops.
-		 * */
+		 */
 		if(attack instanceof MeleeAttack || attack instanceof RangeMagicAttack
-				|| attack instanceof AOEMagicAttack || attack instanceof EnemyAOEAttack){
+				|| attack instanceof AOEMagicAttack || attack instanceof AOEMeleeAttack){
 			attack.setFinished();
 		}
 	}

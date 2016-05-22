@@ -49,20 +49,6 @@ public abstract class Action extends WorldObject implements IAction{
 	}
 	
 	@Override
-	public void setSound(GameSound sound){
-		this.sound = sound;
-	}
-	
-	@Override
-	public GameSound getSound(){
-		return sound;
-	}
-	
-	public void playSound(float volume){
-		sound.play(volume);
-	}
-	
-	@Override
 	public ICharacter getCharacter(){
 		return character;
 	}

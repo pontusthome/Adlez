@@ -10,13 +10,13 @@ import com.mygdx.game.model.characters.ICharacter;
 /**
  * 
  */
-public class EnemyAOEAttack extends Attack{
+public class AOEMeleeAttack extends Attack{
 	
-	public EnemyAOEAttack(){
+	public AOEMeleeAttack(){
 		super();
 	}
 	
-	public EnemyAOEAttack(ICharacter character){
+	public AOEMeleeAttack(ICharacter character){
 		super(character);
 	}
 	

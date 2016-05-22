@@ -35,12 +35,11 @@ public class PlayerController implements ICharacterController, GateOpenListener 
     private Adlez adlez;
     private List<IAreaConnection> areaConnections;
     private AreaHandler areaHandler;
-
-    /**
-     * To be able to paint where actions landed for debugging purposes
-     */
-    public static IAttack currentAttack = new MeleeAttack();
-    public static IInteraction currentInteraction = new Interaction();
+    private GameSound outOfManaSound;
+    
+    //TODO: Remove when debugging is over
+    public static IAttack currentAttack;
+    public static IInteraction currentInteraction;
 
     public PlayerController(IPlayer player) {
         this.player = player;
@@ -52,6 +51,12 @@ public class PlayerController implements ICharacterController, GateOpenListener 
         for (IAreaConnection ac : areaConnections) {
             ac.add(this);
         }
+    
+        outOfManaSound = new LibGDXSoundAdapter(AssetStrings.OUT_OF_MANA_SOUND);
+    
+        //TODO: Remove when debugging is over
+        currentAttack = player.getLatestAttack();
+        currentInteraction = player.getLatestInteraction();
     }
 
     /**
@@ -61,6 +66,10 @@ public class PlayerController implements ICharacterController, GateOpenListener 
      */
     @Override
     public void update(float deltaT) {
+        //TODO: Remove when debugging is over
+        currentAttack = player.getLatestAttack();
+        currentInteraction = player.getLatestInteraction();
+        
         // Temporary sound to notify when player is dead
         if (player.getHealth() == 0) {
             GameSound dyingSound = new LibGDXSoundAdapter(AssetStrings.TEMP_DYING_SOUND);
@@ -87,34 +96,24 @@ public class PlayerController implements ICharacterController, GateOpenListener 
         playerCharacter.move(deltaT);
 
         if (Gdx.input.isKeyJustPressed(Input.Keys.SPACE)) {
-            currentAttack = new MeleeAttack(playerCharacter);
-            currentAttack.setSound(new LibGDXSoundAdapter(AssetStrings.MELEE_ATTACK_SOUND));
-            currentAttack.playSound(0.1f);
-            adlez.addAttack(currentAttack);
+            player.MeleeAttack();
         }
         if (Gdx.input.isKeyJustPressed(Input.Keys.E)) {
             if(player.getMana() >= 15) {
-                currentAttack = new RangeMagicAttack(playerCharacter);
-                currentAttack.setSound(new LibGDXSoundAdapter(AssetStrings.RANGE_MAGIC_ATTACK_SOUND));
-                currentAttack.playSound(0.1f);
-                player.useMana(currentAttack);
-                adlez.addAttack(currentAttack);
+                player.RangeMagicAttack();
+            }else{
+                outOfManaSound.play(0.5f);
             }
         }
         if (Gdx.input.isKeyJustPressed(Input.Keys.F)) {
             if(player.getMana() >= 20) {
-                currentAttack = new AOEMagicAttack(playerCharacter);
-                currentAttack.setSound(new LibGDXSoundAdapter(AssetStrings.AOE_MAGIC_ATTACK_SOUND));
-                currentAttack.playSound(0.1f);
-                player.useMana(currentAttack);
-                adlez.addAttack(currentAttack);
+                player.AOEMagicAttack();
+            }else{
+                outOfManaSound.play(0.5f);
             }
         }
         if (Gdx.input.isKeyJustPressed(Input.Keys.ENTER)) {
-            currentInteraction = new Interaction(playerCharacter);
-            currentInteraction.setSound(new LibGDXSoundAdapter(AssetStrings.INTERACTION_SOUND));
-            currentInteraction.playSound(0.5f);
-            adlez.addInteraction(currentInteraction);
+            player.interact();
         }
 
         /**
@@ -162,7 +161,7 @@ public class PlayerController implements ICharacterController, GateOpenListener 
         return playerView;
     }
 
-    public TextureRegion getCurrentFrame() {
+    private TextureRegion getCurrentFrame() {
         return playerView.getCurrentFrame();
     }
 

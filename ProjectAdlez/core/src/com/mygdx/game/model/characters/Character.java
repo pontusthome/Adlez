@@ -1,5 +1,7 @@
 package com.mygdx.game.model.characters;
 
+import com.mygdx.game.model.Adlez;
+import com.mygdx.game.model.characters.actions.*;
 import com.mygdx.game.model.core.Collidable;
 import com.mygdx.game.model.core.Direction;
 import com.mygdx.game.model.core.WorldObject;
@@ -28,9 +30,12 @@ public abstract class Character extends WorldObject implements ICharacter {
 	private int velocityScalar = 50;
 	private float oldPosX;
 	private float oldPosY;
-	private CollisionHandler collisionHandler;
 	private float vXComponent = 0;
 	private float vYComponent = 0;
+	
+	//TODO: Remove when debugging is over
+	private IAttack latestAttack = new MeleeAttack();
+	private IInteraction latestInteraction = new Interaction();
 	
 	// Temporary values for cooldown, should maybe be set in constructor or defined as a constant somewhere
 	public static final float ATTACK_COOLDOWN_LIMIT = 2;	//In seconds
@@ -65,8 +70,6 @@ public abstract class Character extends WorldObject implements ICharacter {
 		
 		oldPosX = getPosX();
 		oldPosY = getPosY();
-		
-		collisionHandler = CollisionHandler.getInstance();
 	}
 
 	@Override
@@ -320,7 +323,7 @@ public abstract class Character extends WorldObject implements ICharacter {
 	}
 	
 	public void handleMoveCollision(int direction){
-		if (collisionHandler.characterCollided(this)) {
+		if (CollisionHandler.getInstance().characterCollided(this)) {
 			switch(direction){
 				case Direction.NORTH:
 					setPosY(oldPosY);
@@ -352,5 +355,76 @@ public abstract class Character extends WorldObject implements ICharacter {
 	
 	public void setOldPosY(float oldPosY){
 		this.oldPosY = oldPosY;
+	}
+	
+	@Override
+	public void MeleeAttack(){
+		IAttack attack = new MeleeAttack(this);
+		Adlez.getInstance().addAttack(attack);
+		
+		//TODO: Remove when debugging is over
+		latestAttack = attack;
+	}
+	
+	@Override
+	public void AOEMeleeAttack(){
+		IAttack attack = new AOEMeleeAttack(this);
+		useMana(attack);
+		Adlez.getInstance().addAttack(attack);
+		
+		//TODO: Remove when debugging is over
+		latestAttack = attack;
+	}
+	
+	@Override
+	public void AOEMagicAttack(){
+		IAttack attack = new AOEMagicAttack(this);
+		useMana(attack);
+		Adlez.getInstance().addAttack(attack);
+		
+		//TODO: Remove when debugging is over
+		latestAttack = attack;
+	}
+	
+	@Override
+	public void RangeMagicAttack(){
+		IAttack attack = new RangeMagicAttack(this);
+		useMana(attack);
+		Adlez.getInstance().addAttack(attack);
+		
+		//TODO: Remove when debugging is over
+		latestAttack = attack;
+	}
+	
+	//TODO: Remove when debugging is over
+	@Override
+	public IAttack getLatestAttack(){
+		return latestAttack;
+	}
+	
+	@Override
+	public void useMana(IAttack attack) {
+		if (attack instanceof MeleeAttack) {
+			setMana(getMana());
+		} else if (attack instanceof AOEMagicAttack) {
+			setMana(getMana() - 20);
+		} else if (attack instanceof RangeMagicAttack) {
+			setMana(getMana() - 15);
+		}
+	}
+	
+	@Override
+	public void interact(){
+		IInteraction interaction = new Interaction(this);
+		Adlez.getInstance().addInteraction(interaction);
+		
+		//TODO: Remove when debugging is over
+		latestInteraction = interaction;
+	}
+	
+	//TODO: Remove when debugging is over
+	@Override
+	public IInteraction getLatestInteraction(){
+		return latestInteraction;
 	}
 }
