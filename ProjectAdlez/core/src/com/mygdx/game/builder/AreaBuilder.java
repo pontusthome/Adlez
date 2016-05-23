@@ -65,7 +65,7 @@ public class AreaBuilder implements AreaIO {
 
             file.write(jsonPlayer.toString());
         } catch (IOException e) {
-            e.printStackTrace();
+            System.out.println("Cannot save");
         }
     }
 
@@ -75,7 +75,7 @@ public class AreaBuilder implements AreaIO {
      * @return the saved player
      */
     @Override
-    public IPlayer loadPlayer() throws ItemNotFoundException {
+    public IPlayer loadPlayer() {
         IPlayer player = Adlez.getInstance().getPlayer();
 
         BufferedReader bufferedReader;
@@ -117,10 +117,8 @@ public class AreaBuilder implements AreaIO {
 
             // close the BufferedReader when we're done
             bufferedReader.close();
-        } catch (FileNotFoundException e) {
-            e.printStackTrace();
-        } catch (IOException e) {
-            e.printStackTrace();
+        } catch (Exception e) {
+            System.out.println("Cannot load saved player");
         }
 
         return player;
@@ -155,7 +153,7 @@ public class AreaBuilder implements AreaIO {
 
             file.write(jsonAreaHandler.toString());
         } catch (IOException e) {
-            e.printStackTrace();
+            System.out.println("Cannot save");
         }
     }
 
@@ -307,10 +305,8 @@ public class AreaBuilder implements AreaIO {
 
             // close the BufferedReader when we're done
             bufferedReader.close();
-        } catch (FileNotFoundException e) {
-            e.printStackTrace();
-        } catch (IOException e) {
-            e.printStackTrace();
+        } catch (Exception e) {
+            System.out.println("Cannot find saved game");
         }
 
         return areaHandler;

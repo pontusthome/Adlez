@@ -9,6 +9,6 @@ import com.mygdx.game.model.exceptions.ItemNotFoundException;
 public interface AreaIO {
     public void savePlayer();
     public void saveAreaHandler();
-    public IPlayer loadPlayer() throws ItemNotFoundException;
+    public IPlayer loadPlayer();
     public AreaHandler loadAreaHandler();
 }

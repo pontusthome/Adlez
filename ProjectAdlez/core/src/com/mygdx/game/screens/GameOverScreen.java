@@ -56,12 +56,7 @@ public class GameOverScreen extends AbstractScreen{
             @Override
             public boolean touchDown(InputEvent event, float x,
                                      float y, int pointer, int button) {
-                // Initiate the area
-                Adlez adlez = Adlez.getInstance();
-                AreaHandler areaHandler = AreaHandler.getInstance();
-                adlez.initiateArea(areaHandler.getCurrentArea());
-
-                ScreenManager.getInstance().showScreen(ScreenEnum.GAME);
+                initiateGame();
                 return false;
             }
         });
@@ -70,23 +65,8 @@ public class GameOverScreen extends AbstractScreen{
             @Override
             public boolean touchDown(InputEvent event, float x,
                                      float y, int pointer, int button) {
-
-                // Load areas
-                AreaIO areaBuilder = new AreaBuilder();
-                AreaHandler areaHandler = areaBuilder.loadAreaHandler();
-
-                // Load player
-                try {
-                    areaBuilder.loadPlayer();
-                } catch (ItemNotFoundException e) {
-                    e.getMessage();
-                }
-
-                // Initiate game
-                Adlez adlez = Adlez.getInstance();
-                adlez.initiateArea(areaHandler.getCurrentArea());
-
-                ScreenManager.getInstance().showScreen(ScreenEnum.GAME);
+                loadGame();
+                initiateGame();
                 return false;
             }
         });

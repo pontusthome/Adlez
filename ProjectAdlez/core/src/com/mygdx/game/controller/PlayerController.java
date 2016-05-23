@@ -148,11 +148,8 @@ public class PlayerController implements ICharacterController, GateOpenListener 
         if (Gdx.input.isKeyJustPressed(Input.Keys.L)) {
             AreaIO areaBuilder = new AreaBuilder();
             areaBuilder.loadAreaHandler();
-            try {
-                areaBuilder.loadPlayer();
-            } catch (ItemNotFoundException e) {
-                e.getMessage();
-            }
+            areaBuilder.loadPlayer();
+
             ScreenManager.getInstance().switchArea(AreaHandler.getInstance().getCurrentArea());
         }
 

@@ -6,6 +6,11 @@ import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.utils.viewport.StretchViewport;
+import com.mygdx.game.builder.AreaBuilder;
+import com.mygdx.game.builder.AreaHandler;
+import com.mygdx.game.builder.AreaIO;
+import com.mygdx.game.model.Adlez;
+import com.mygdx.game.model.Area;
 
 /**
  * Created by Viktor on 2016-04-19.
@@ -42,5 +47,22 @@ public abstract class AbstractScreen extends Stage implements Screen {
     @Override public void resume() {}
 
     public abstract void buildStage();
+
+    protected void loadGame() {
+        // Load the AreaHandler
+        AreaIO areaBuilder = new AreaBuilder();
+        AreaHandler areaHandler = areaBuilder.loadAreaHandler();
+
+        // Load the Player
+        areaBuilder.loadPlayer();
+    }
+
+    protected void initiateGame() {
+        // Initiate game
+        Adlez adlez = Adlez.getInstance();
+        adlez.initiateArea(AreaHandler.getInstance().getCurrentArea());
+
+        ScreenManager.getInstance().showScreen(ScreenEnum.GAME);
+    }
 }
 
