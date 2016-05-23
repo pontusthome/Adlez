@@ -367,7 +367,11 @@ public class AreaBuilder implements AreaIO {
         for (JsonValue jsonChest : jsonChests) {
             IChest chest = new Chest(jsonChest.get("xPos").asFloat(), jsonChest.get("yPos").asFloat());
             for (IItem item : getJsonItems(jsonChest.get("items"))) {
-
+                try {
+                    chest.addItem(item);
+                } catch (InventoryFullException e) {
+                    e.printStackTrace();
+                }
             }
             chest.setIsOpened(jsonChest.get("isOpened").asBoolean());
             chests.add(chest);
