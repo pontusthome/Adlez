@@ -182,8 +182,7 @@ public class GameScreen extends AbstractScreen {
         // Update stationary obstacles
         obstaclesController.update(delta);
         chestsController.update(delta);
-        wallsController.update(delta);
-        
+
         collisionHandler.updateWorld();
     }
 

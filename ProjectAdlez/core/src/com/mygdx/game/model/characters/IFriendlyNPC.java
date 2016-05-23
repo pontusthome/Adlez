@@ -1,7 +1,5 @@
 package com.mygdx.game.model.characters;
 
-import com.mygdx.game.model.core.ShopOpenListener;
-
 /**
  * Created by Michel on 1.5.2016.
  */

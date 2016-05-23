@@ -3,7 +3,6 @@ package com.mygdx.game.model.characters;
 import com.mygdx.game.model.Adlez;
 import com.mygdx.game.model.characters.actions.IInteraction;
 import com.mygdx.game.model.core.Collidable;
-import com.mygdx.game.model.core.ShopOpenListener;
 
 import java.util.ArrayList;
 import java.util.List;
