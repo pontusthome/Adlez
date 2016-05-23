@@ -10,6 +10,8 @@ import com.mygdx.game.model.collisionHandler.CollisionHandler;
 import com.mygdx.game.utils.AssetStrings;
 import com.mygdx.game.utils.Utils;
 
+import java.util.Random;
+
 /**
  * Created by Michel on 1.5.2016.
  */

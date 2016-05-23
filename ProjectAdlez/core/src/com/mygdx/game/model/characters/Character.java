@@ -30,6 +30,7 @@ public abstract class Character extends WorldObject implements ICharacter {
 	private int velocityScalar = 50;
 	private float oldPosX;
 	private float oldPosY;
+	private boolean moved;
 	
 	/** Speed components in x & y. Are set to 1 if only moving in either x or y, otherwise adjusted so 
 	 * that the character doesn't move faster when moving diagonally.
@@ -111,7 +112,16 @@ public abstract class Character extends WorldObject implements ICharacter {
 		movingWest = true;
 		handleMoveCollision(Direction.WEST);
 	}
-	
+
+	@Override
+	public void setMoved(boolean moved) {
+		this.moved = moved;
+	}
+
+	@Override
+	public boolean moved() {
+		return moved;
+	}
 	@Override
 	public int getAttackDamage() {
 		return attackDamage;
@@ -285,7 +295,15 @@ public abstract class Character extends WorldObject implements ICharacter {
 		}else if(isMovingWest()){
 			moveWest(deltaT);
 		}
-		
+
+		setMoved(false);
+		if (	isMovingSouth() ||
+				isMovingNorth() ||
+				isMovingWest() ||
+				isMovingEast()) {
+			setMoved(true);
+		}
+
 		clearMoveFlags();
 	}
 	

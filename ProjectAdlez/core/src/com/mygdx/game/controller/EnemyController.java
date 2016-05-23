@@ -49,7 +49,11 @@ public class EnemyController implements ICharacterController{
         }
 
         enemy.update(deltaT);
-        enemyView.viewUpdate(enemy.getDirection());
+
+        // If the enemy moved the sprite of the enemy should move
+        if (enemy.moved()) {
+            enemyView.viewUpdate(enemy.getDirection());
+        }
     }
     
     @Override

@@ -152,7 +152,10 @@ public class PlayerController implements ICharacterController, GateOpenListener 
             ScreenManager.getInstance().switchArea(AreaHandler.getInstance().getCurrentArea());
         }
 
-        playerView.viewUpdate(player.getDirection());
+        // If the player moved the sprite of the player should move
+        if (player.moved()) {
+            playerView.viewUpdate(player.getDirection());
+        }
     }
 
     @Override

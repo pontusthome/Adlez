@@ -55,7 +55,8 @@ public interface ICharacter extends IWorldObject {
 	void RangeMagicAttack();
 	void useMana(IAttack attack);
 	void interact();
-	
+	void setMoved(boolean moved);
+	boolean moved();
 	//TODO: Remove when debugging is over
 	IAttack getLatestAttack();
 	IInteraction getLatestInteraction();
