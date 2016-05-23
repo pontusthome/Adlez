@@ -26,7 +26,7 @@ public class Area2 implements ICompleteArea {
         return area;
     }
 
-    public Area2() throws InventoryFullException {
+    public Area2() {
         List<IEnemy> enemies = new ArrayList<>();
         List<IFriendlyNPC> friendlyNPCs = new ArrayList<>();
         List<IWorldObject> stationaryObjects = new ArrayList<>();
@@ -112,8 +112,12 @@ public class Area2 implements ICompleteArea {
         enemies.add(EnemyFactory.createEnemy(Enemy.DOG_LEVEL_ONE, 32 * 2, 32 * 9));
 
         Chest ch1 = new Chest(32 * 2 + 8, 32 * 5 + 8, 16, 16, 2, 200);
-        ch1.addItem(CompleteItems.FINAL_SWORD);
-        ch1.addItem(CompleteItems.FINAL_BODY_ARMOR);
+        try {
+            ch1.addItem(CompleteItems.FINAL_SWORD);
+            ch1.addItem(CompleteItems.FINAL_BODY_ARMOR);
+        } catch (InventoryFullException e) {
+            e.printStackTrace();
+        }
         chests.add(ch1);
 
         friendlyNPCs.add(new FriendlyNPC(Direction.SOUTH, 17, 17, 32, 32, 32 * 3, 10, 0, 0, 0));

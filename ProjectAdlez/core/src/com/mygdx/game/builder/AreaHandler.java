@@ -29,12 +29,14 @@ public class AreaHandler implements Serializable{
     // Create the setup for each level
     private AreaHandler() {
         currentArea = AREA_1;
-        try {
-            level1 = new Area1().loadArea();
-            level2 = new Area2().loadArea();
-        } catch (InventoryFullException e) {
-            e.getMessage();
-        }
+        level1 = new Area1().loadArea();
+        level2 = new Area2().loadArea();
+    }
+
+    public void resetAreaHandler() {
+        currentArea = AREA_1;
+        level1 = new Area1().loadArea();
+        level2 = new Area2().loadArea();
     }
 
     public Area loadArea1() {

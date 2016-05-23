@@ -21,4 +21,5 @@ public interface IPlayer extends ICharacter {
     IItem getSwordEquipped();
     IItem getArmorEquipped();
     IItem getItemInInventory(IItem item) throws ItemNotFoundException;
+    void resetPlayer();
 }

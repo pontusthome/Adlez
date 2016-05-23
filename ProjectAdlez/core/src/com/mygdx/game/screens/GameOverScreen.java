@@ -56,6 +56,7 @@ public class GameOverScreen extends AbstractScreen{
             @Override
             public boolean touchDown(InputEvent event, float x,
                                      float y, int pointer, int button) {
+                newGame();
                 initiateGame();
                 return false;
             }

@@ -18,6 +18,8 @@ import com.mygdx.game.model.core.GateOpenListener;
 import com.mygdx.game.model.core.LibGDXSoundAdapter;
 import com.mygdx.game.model.characters.ShopOpenListener;
 import com.mygdx.game.model.obstacles.IAreaConnection;
+import com.mygdx.game.screens.GameScreen;
+import com.mygdx.game.screens.ScreenEnum;
 import com.mygdx.game.utils.AssetStrings;
 import com.mygdx.game.screens.ScreenManager;
 import com.mygdx.game.view.CharacterView;
@@ -77,13 +79,6 @@ public class PlayerController implements ICharacterController, GateOpenListener 
         //TODO: Remove when debugging is over
         currentAttack = player.getLatestAttack();
         currentInteraction = player.getLatestInteraction();
-        
-        // Temporary sound to notify when player is dead
-        if (player.getHealth() == 0) {
-            GameSound dyingSound = new LibGDXSoundAdapter(AssetStrings.TEMP_DYING_SOUND);
-            dyingSound.play(0.5f);
-            player.setHealth(100);
-        }
 
         Character playerCharacter = (Character) player;
         playerCharacter.clearMoveFlags();

@@ -19,6 +19,8 @@ import com.mygdx.game.model.characters.actions.IInteraction;
 import com.mygdx.game.model.characters.IEnemy;
 import com.mygdx.game.model.characters.IPlayer;
 import com.mygdx.game.model.collisionHandler.CollisionHandler;
+import com.mygdx.game.model.core.GameSound;
+import com.mygdx.game.model.core.LibGDXSoundAdapter;
 import com.mygdx.game.model.obstacles.IWall;
 import com.mygdx.game.utils.AssetStrings;
 
@@ -36,7 +38,7 @@ public class GameScreen extends AbstractScreen {
 
     private AreaHandler areaHandler = AreaHandler.getInstance();
 
-    private IPlayer player = adlez.getPlayer();
+    private IPlayer player;
     private ICharacterController playerController;
     private OrthographicCamera playerCam;
 
@@ -84,6 +86,7 @@ public class GameScreen extends AbstractScreen {
         getViewport().update(Gdx.graphics.getWidth(), Gdx.graphics.getHeight(), false);
 
         // Spawning player.
+        player = adlez.getPlayer();
         playerController = new PlayerController(player);
 
 
@@ -172,7 +175,9 @@ public class GameScreen extends AbstractScreen {
     }
 
     private void updateGame(float delta) {
+
         // Updating player
+        checkIfPlayerDied();
         playerController.update(delta);
 
         updateEnemies(delta);
@@ -252,6 +257,15 @@ public class GameScreen extends AbstractScreen {
         for (IInteraction finishedInteraction : finishedInteractions) {
             interactionControllers.remove(finishedInteraction);
             adlez.removeInteractionFromWorld(finishedInteraction);
+        }
+    }
+
+    private void checkIfPlayerDied() {
+        if (player.getHealth() == 0) {
+            GameSound dyingSound = new LibGDXSoundAdapter(AssetStrings.TEMP_DYING_SOUND);
+            dyingSound.play(0.5f);
+            ScreenManager screenManager = ScreenManager.getInstance();
+            screenManager.showScreen(ScreenEnum.GAME_OVER);
         }
     }
 

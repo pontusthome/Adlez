@@ -57,6 +57,11 @@ public abstract class AbstractScreen extends Stage implements Screen {
         areaBuilder.loadPlayer();
     }
 
+    public void newGame() {
+        Adlez.getInstance().resetPlayer();
+        AreaHandler.getInstance().resetAreaHandler();
+    }
+
     protected void initiateGame() {
         // Initiate game
         Adlez adlez = Adlez.getInstance();

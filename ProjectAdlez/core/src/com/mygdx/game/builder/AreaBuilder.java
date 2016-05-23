@@ -369,7 +369,7 @@ public class AreaBuilder implements AreaIO {
             for (IItem item : getJsonItems(jsonChest.get("items"))) {
 
             }
-            chest.setIsOpened(jsonChest.get("isOpened").isBoolean());
+            chest.setIsOpened(jsonChest.get("isOpened").asBoolean());
             chests.add(chest);
         }
     }
