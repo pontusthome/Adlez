@@ -224,7 +224,8 @@ public class AreaBuilder implements AreaIO {
         for (IChest chest: chests) {
             jsonAreaHandler.append("{xPos" + ":" + chest.getPosX() + "," +
                     "yPos" + ":" + chest.getPosY() + "," +
-                    "items" + ":" + itemsToJson(chest.getItems()) + "},");
+                    "items" + ":" + itemsToJson(chest.getItems()) + "," +
+                    "isOpened" + ":" + chest.isOpened() + "}," );
         }
 
         jsonAreaHandler.append("],");
@@ -368,6 +369,7 @@ public class AreaBuilder implements AreaIO {
             for (IItem item : getJsonItems(jsonChest.get("items"))) {
 
             }
+            chest.setIsOpened(jsonChest.get("isOpened").isBoolean());
             chests.add(chest);
         }
     }
