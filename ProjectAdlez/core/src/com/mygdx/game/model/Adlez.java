@@ -94,7 +94,7 @@ public class Adlez {
         worldObjects.addAll(manaFountains);
 
         collisionHandler = CollisionHandler.getInstance();
-        collisionHandler.initiate(player, worldObjects, attacks, interactions);
+        collisionHandler.initiate(worldObjects, attacks, interactions);
     }
 
     public IPlayer getPlayer() {

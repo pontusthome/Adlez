@@ -16,7 +16,6 @@ public class CollisionHandler {
 	private List<IWorldObject> worldObjects;
 	private List<IAttack> attacks;
 	private List<IInteraction> interactions;
-	private IPlayer player;
 	private static CollisionHandler collisionHandler = new CollisionHandler();
 	
 	public static CollisionHandler getInstance() {
@@ -27,9 +26,8 @@ public class CollisionHandler {
 		
 	}
 	
-	public void initiate(IPlayer player, List<IWorldObject> worldObjects,
+	public void initiate(List<IWorldObject> worldObjects,
 						 List<IAttack> attacks, List<IInteraction> interactions){
-		this.player = player;
 		this.worldObjects = worldObjects;
 		this.attacks = attacks;
 		this.interactions = interactions;
