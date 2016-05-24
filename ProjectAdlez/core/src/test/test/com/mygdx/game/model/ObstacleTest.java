@@ -23,7 +23,9 @@ public class ObstacleTest {
      */
     @Test
     public void testDestroyObstacle() {
-        IPlayer player = new Player(Direction.NORTH, 0, 17, 17, 0, 0, 100, 5, 0, 100);
+        Player player = new Player();
+        player.resetPlayer();
+        player.setAttackDamage(5);
         IObstacle obstacle = new Obstacle(100, 100, 32, 32, 10);
         IAttack meleeAttack = new MeleeAttack(player);
         obstacle.onCollide(meleeAttack);

@@ -4,6 +4,8 @@ import com.mygdx.game.model.WorldObjectObserver;
 import com.mygdx.game.model.characters.ICharacter;
 import com.mygdx.game.model.characters.IEnemy;
 import com.mygdx.game.model.characters.IPlayer;
+import com.mygdx.game.model.characters.actions.IAttack;
+import com.mygdx.game.model.characters.actions.IInteraction;
 import com.mygdx.game.model.core.IWorldObject;
 
 import java.util.List;
@@ -14,7 +16,8 @@ import java.util.List;
 public class CollisionHandler implements WorldObjectObserver{
 	
 	private List<IWorldObject> worldObjects;
-	private IPlayer player;
+	private List<IAttack> attacks;
+	private List<IInteraction> interactions;
 	private static CollisionHandler collisionHandler = new CollisionHandler();
 	
 	public static CollisionHandler getInstance() {
@@ -25,16 +28,27 @@ public class CollisionHandler implements WorldObjectObserver{
 		
 	}
 	
-	public void initiate(IPlayer player, List<IWorldObject> worldObjects){
-		this.player = player;
+	public void initiate(List<IWorldObject> worldObjects,
+						 List<IAttack> attacks, List<IInteraction> interactions){
 		this.worldObjects = worldObjects;
+		this.attacks = attacks;
+		this.interactions = interactions;
 	}
-	
-	public void updateWorld(){		
-		for(IWorldObject primary : worldObjects){
-			for(IWorldObject other : worldObjects){
-				if(primary != other){
-					checkCollision(primary, other);
+
+	public void updateAttacks() {
+		updateWorld(attacks);
+	}
+
+	public void updateInteractions() {
+		updateWorld(interactions);
+	}
+
+	public void updateWorld(List<?> generics) {
+		for (Object generic: generics) {
+			IWorldObject object = (IWorldObject) generic;
+			for (IWorldObject other: worldObjects) {
+				if(other != object){
+					checkCollision(other, object);
 				}
 			}
 		}

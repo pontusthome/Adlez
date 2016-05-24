@@ -188,7 +188,8 @@ public class GameScreen extends AbstractScreen {
         obstaclesController.update(delta);
         chestsController.update(delta);
 
-        collisionHandler.updateWorld();
+        collisionHandler.updateAttacks();
+        collisionHandler.updateInteractions();
     }
 
     private void updateEnemies(float delta) {
