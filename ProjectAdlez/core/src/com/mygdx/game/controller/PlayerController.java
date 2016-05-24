@@ -25,6 +25,7 @@ import com.mygdx.game.screens.ScreenManager;
 import com.mygdx.game.view.CharacterView;
 import com.mygdx.game.view.ICharacterView;
 
+import java.io.IOException;
 import java.util.List;
 
 /**
@@ -136,16 +137,20 @@ public class PlayerController implements ICharacterController, GateOpenListener 
          */
         if (Gdx.input.isKeyJustPressed(Input.Keys.NUM_0)) {
             AreaIO areaBuilder = new AreaBuilder();
-            areaBuilder.saveAreaHandler();
+            try {
+                areaBuilder.saveAreaHandler();
+            } catch (IOException e) {
+                System.out.println("Could not save the game");
+            }
             areaBuilder.savePlayer();
         }
-        if (Gdx.input.isKeyJustPressed(Input.Keys.L)) {
+/*        if (Gdx.input.isKeyJustPressed(Input.Keys.L)) {
             AreaIO areaBuilder = new AreaBuilder();
             areaBuilder.loadAreaHandler();
             areaBuilder.loadPlayer();
 
             ScreenManager.getInstance().switchArea(AreaHandler.getInstance().getCurrentArea());
-        }
+        }*/
 
         // If the player moved the sprite of the player should move
         if (player.moved()) {

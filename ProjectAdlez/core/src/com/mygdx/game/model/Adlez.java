@@ -53,9 +53,6 @@ public class Adlez {
         // Reset the world and then set it up for the new area
         worldObjects = new ArrayList<>();
 
-        collisionHandler = CollisionHandler.getInstance();
-        collisionHandler.initiate(player, worldObjects);
-
         // add the player and set him to the new position
         player.setPosX(area.getPlayerXposition());
         player.setPosY(area.getPlayerYposition());
@@ -87,14 +84,17 @@ public class Adlez {
 
         chests = area.getChests();
         worldObjects.addAll(chests);
-        
-        attacks = new ArrayList<>();
+
+        attacks.clear();
 
         areaConnections = area.getAreaConnections();
         worldObjects.addAll(areaConnections);
 
         manaFountains = area.getManaFountains();
         worldObjects.addAll(manaFountains);
+
+        collisionHandler = CollisionHandler.getInstance();
+        collisionHandler.initiate(worldObjects, attacks, interactions);
     }
 
     public IPlayer getPlayer() {
@@ -159,7 +159,6 @@ public class Adlez {
     
     public void removeAttackFromWorld(IAttack attack){
         attacks.remove(attack);
-        worldObjects.remove(attack);
     }
     
     public List<IAttack> getNewAttacks(){
@@ -169,7 +168,6 @@ public class Adlez {
     public void addAttack(IAttack attack){
         newAttacks.add(attack);
         attacks.add(attack);
-        worldObjects.add(attack);
     }
     
     public void removeObstacleFromWorld(IObstacle obstacle){
@@ -177,20 +175,13 @@ public class Adlez {
         worldObjects.remove(obstacle);
     }
     
-    public void removeWallFromWorld(IWall wall){
-        walls.remove(wall);
-        worldObjects.remove(wall);
-    }
-    
     public void addInteraction(IInteraction interaction){
         newInteractions.add(interaction);
         interactions.add(interaction);
-        worldObjects.add(interaction);
     }
     
     public void removeInteractionFromWorld(IInteraction interaction){
         interactions.remove(interaction);
-        worldObjects.remove(interaction);
     }
     
     public List<IInteraction> getNewInteractions(){
