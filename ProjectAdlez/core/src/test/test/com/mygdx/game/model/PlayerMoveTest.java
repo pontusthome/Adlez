@@ -53,7 +53,7 @@ public class PlayerMoveTest {
      * Simple method for resetting the player's stats.
      */
     public void resetPlayer() {
-        player.resetPlayer();
+        adlez.resetPlayer();
         player.setSpeed(1);
         player.setPosX(0);
         player.setPosY(0);

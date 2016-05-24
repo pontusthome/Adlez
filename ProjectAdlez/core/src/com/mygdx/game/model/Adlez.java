@@ -3,7 +3,6 @@ package com.mygdx.game.model;
 import com.mygdx.game.model.characters.actions.IAttack;
 import com.mygdx.game.model.characters.actions.IInteraction;
 import com.mygdx.game.model.characters.*;
-import com.mygdx.game.model.core.Direction;
 import com.mygdx.game.model.core.IWorldObject;
 import com.mygdx.game.model.collisionHandler.CollisionHandler;
 import com.mygdx.game.model.obstacles.*;
@@ -111,14 +110,6 @@ public class Adlez {
         return friendlyNPCs;
     }
 
-    public List<IWorldObject> getStationaryObjects() {
-        return stationaryObjects;
-    }
-
-    public List<IWorldObject> getWorldObjects() {
-        return worldObjects;
-    }
-
     public List<IWall> getWalls() {
         return walls;
     }
@@ -142,11 +133,6 @@ public class Adlez {
     public void removeEnemyFromWorld(INPC enemy){
         enemies.remove(enemy);
         worldObjects.remove(enemy);
-    }
-
-    public void removeChestFromWorld(IChest chest) {
-        chests.remove(chest);
-        worldObjects.remove(chest);
     }
 
     public CollisionHandler getCollisionHandler(){
