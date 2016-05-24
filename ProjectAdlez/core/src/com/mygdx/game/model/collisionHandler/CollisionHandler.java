@@ -100,7 +100,7 @@ public class CollisionHandler implements WorldObjectObserver{
 		if(object instanceof ICharacter && arg instanceof String){
 			ICharacter character = (ICharacter) object;
 			String stringArg = (String) arg;
-			if(stringArg.equals("collision_check") && hasCharacterCollided(character)){
+			if(stringArg.equals("check_collision") && hasCharacterCollided(character)){
 				
 				// Due to lack of good AI, for now an enemy attacks the player if they have collided
 				if(character instanceof IEnemy && collide(character, Adlez.getInstance().getPlayer())){

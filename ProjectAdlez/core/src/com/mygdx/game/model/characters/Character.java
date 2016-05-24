@@ -74,10 +74,7 @@ public abstract class Character extends WorldObject implements ICharacter, Obser
 		setGold(gold);
 		setMana(mana);
 		
-		movingNorth = false;
-		movingSouth = false;
-		movingEast = false;
-		movingWest = false;
+		clearMoveFlags();
 		
 		oldPosX = getPosX();
 		oldPosY = getPosY();
@@ -90,8 +87,7 @@ public abstract class Character extends WorldObject implements ICharacter, Obser
 		oldPosY = getPosY();
 		setPosY(getPosY() + vYComponent * getSpeed() * deltaT * velocityScalar);
 		setDirection(Direction.NORTH);
-		movingNorth = true;
-		notifyObservers("collision_check");
+		notifyObservers("check_collision");
 	}
 	
 	@Override
@@ -99,8 +95,7 @@ public abstract class Character extends WorldObject implements ICharacter, Obser
 		oldPosY = getPosY();
 		setPosY(getPosY() - vYComponent * getSpeed() * deltaT * velocityScalar);
 		setDirection(Direction.SOUTH);
-		movingSouth = true;
-		notifyObservers("collision_check");
+		notifyObservers("check_collision");
 	}
 	
 	@Override
@@ -108,8 +103,7 @@ public abstract class Character extends WorldObject implements ICharacter, Obser
 		oldPosX = getPosX();
 		setPosX(getPosX() + vXComponent * getSpeed() * deltaT * velocityScalar);
 		setDirection(Direction.EAST);
-		movingEast = true;
-		notifyObservers("collision_check");
+		notifyObservers("check_collision");
 	}
 	
 	@Override
@@ -117,8 +111,7 @@ public abstract class Character extends WorldObject implements ICharacter, Obser
 		oldPosX = getPosX();
 		setPosX(getPosX() - vXComponent * getSpeed() * deltaT * velocityScalar);
 		setDirection(Direction.WEST);
-		movingWest = true;
-		notifyObservers("collision_check");
+		notifyObservers("check_collision");
 	}
 
 	@Override
@@ -281,7 +274,7 @@ public abstract class Character extends WorldObject implements ICharacter, Obser
 	}
 	
 	public void move(float deltaT){
-		/** Check if moving in diagonally. If so, set x & y speed components so that the total speed is equal to the 
+		/** Check if moving diagonally. If so, set x & y speed components so that the total speed is equal to the 
 		 *  characters speed.
 		 */
 		if((isMovingWest() || isMovingEast()) && (isMovingNorth() || isMovingSouth())){
@@ -377,16 +370,8 @@ public abstract class Character extends WorldObject implements ICharacter, Obser
 		return oldPosX;
 	}
 	
-	public void setOldPosX(float oldPosX){
-		this.oldPosX = oldPosX;
-	}
-	
 	public float getOldPosY(){
 		return oldPosY;
-	}
-	
-	public void setOldPosY(float oldPosY){
-		this.oldPosY = oldPosY;
 	}
 	
 	@Override
