@@ -31,7 +31,8 @@ public class ChestTest {
      */
     @Test
     public void testChest() throws InventoryFullException {
-        IPlayer player = new Player(Direction.NORTH, 0, 17, 17, 0, 0, 100, 50, 0, 100);
+        Player player = new Player();
+        player.resetPlayer();
         IChest chest = new Chest(100, 100, 10, 10, 2, 10);
 
         try {

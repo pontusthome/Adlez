@@ -29,7 +29,9 @@ public class NPCShopTest {
      */
     @Test
     public void testBuyItem() throws InventoryFullException, InsufficientGoldException {
-        Player player = new Player(Direction.NORTH, 0, 17, 17, 0, 0, 100, 10, 100, 100);
+        Player player = new Player();
+        player.resetPlayer();
+        player.setGold(100);
         IFriendlyNPC npc = new FriendlyNPC(Direction.NORTH, 0, 17, 17, 20, 20, 100, 0, 0, 0);
         List<IItem> items = new ArrayList<>(2);
 
@@ -54,7 +56,9 @@ public class NPCShopTest {
      */
     @Test
     public void testSellItem() throws InventoryFullException, ItemNotFoundException {
-        Player player = new Player(Direction.NORTH, 0, 17, 17, 0, 0, 100, 10, 0, 100);
+        Player player = new Player();
+        player.resetPlayer();
+        player.setGold(0);
         IFriendlyNPC npc = new FriendlyNPC(Direction.NORTH, 0, 17, 17, 20, 20, 100, 0, 0, 0);
         List<IItem> items = new ArrayList<>(2);
 
@@ -99,7 +103,9 @@ public class NPCShopTest {
      */
     @Test
     public void testOpenShop() {
-        Player player = new Player(Direction.NORTH, 0, 17, 17, 0, 0, 100, 10, 5, 100);
+        Player player = new Player();
+        player.resetPlayer();
+        player.setGold(5);
         Adlez.getInstance().setPlayer(player);
         IFriendlyNPC npc = new FriendlyNPC(Direction.NORTH, 0, 17, 17, 20, 20, 100, 0, 0, 0);
         npc.onCollide(player);
