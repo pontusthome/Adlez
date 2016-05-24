@@ -109,7 +109,7 @@ public class Area2 implements ICompleteArea {
         enemies.add(EnemyFactory.createEnemy(Enemy.DOG_LEVEL_ONE, 32 * 2, 32 * 8));
         enemies.add(EnemyFactory.createEnemy(Enemy.DOG_LEVEL_ONE, 32 * 2, 32 * 9));
 
-        Chest ch1 = new Chest(32 * 2 + 8, 32 * 5 + 8, 16, 16, 2, 200);
+        Chest ch1 = new Chest(32 * 2 + 8, 32 * 5 + 8, 16, 16, 2);
         try {
             ch1.addItem(CompleteItems.FINAL_SWORD);
             ch1.addItem(CompleteItems.FINAL_BODY_ARMOR);

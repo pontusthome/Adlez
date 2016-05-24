@@ -2,9 +2,10 @@ package com.mygdx.game.model;
 
 import com.mygdx.game.model.characters.*;
 import com.mygdx.game.model.core.Direction;
-import com.mygdx.game.model.core.IWorldObject;
 import com.mygdx.game.model.obstacles.*;
 import org.junit.Test;
+
+import static org.junit.Assert.*;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -44,7 +45,7 @@ public class AdlezTest {
     }
 
     /**
-     * Testing methods in Adlez.
+     * Testing get methods in Adlez.
      */
     @Test
     public void testGetters() {
@@ -60,8 +61,58 @@ public class AdlezTest {
         // Creating a obstacle.
         IObstacle obstacle = new Obstacle(20, 20, 32, 32, 100);
         obstacles.add(obstacle);
+        // Creating chest.
+        IChest chest = new Chest(50, 50, 5, 5, 2);
+        chests.add(chest);
+        // Creating area connection.
+        IAreaConnection areaConnection = new AreaConnection(100, 100, 20, 20);
+        areaConnections.add(areaConnection);
+        // Creating mana fountain.
+        IManaFountain manaFountain = new ManaFountain(100, 0, 20, 20);
+        manaFountains.add(manaFountain);
 
         Area area = new Area(0, 0,
                 enemies, friendlyNPCs, walls, obstacles, chests, areaConnections, name, manaFountains);
+        adlez.initiateArea(area);
+
+        assertTrue(adlez.getEnemies().get(0).equals(enemy));
+        assertTrue(adlez.getFriendlyNPCs().get(0).equals(friendlyNPC));
+        assertTrue(adlez.getWalls().get(0).equals(wall));
+        assertTrue(adlez.getObstacles().get(0).equals(obstacle));
+        assertTrue(adlez.getChests().get(0).equals(chest));
+        assertTrue(adlez.getAreaConnections().get(0).equals(areaConnection));
+        assertTrue(adlez.getManaFountains().get(0).equals(manaFountain));
     }
+
+    /**
+     * Test removing enemies from world.
+     */
+    @Test
+    public void testRemoveEnemies() {
+        // Creating an enemy.
+        IEnemy enemy = new Enemy(player, Direction.NORTH, 1, 17, 17, 50, 50, 100, 10, 5, 0, Enemy.DARK_ONE_LEVEL_ONE);
+        enemies.add(enemy);
+        Area area = new Area(0, 0,
+                enemies, friendlyNPCs, walls, obstacles, chests, areaConnections, name, manaFountains);
+        adlez.initiateArea(area);
+
+        assertTrue(adlez.getEnemies().get(0).equals(enemy));
+        adlez.removeEnemyFromWorld(enemy);
+        assertTrue(adlez.getEnemies().isEmpty());
+    }
+
+    @Test
+    public void testRemoveObstacles() {
+        // Creating a obstacle.
+        IObstacle obstacle = new Obstacle(20, 20, 32, 32, 100);
+        obstacles.add(obstacle);
+        Area area = new Area(0, 0,
+                enemies, friendlyNPCs, walls, obstacles, chests, areaConnections, name, manaFountains);
+        adlez.initiateArea(area);
+
+        assertTrue(adlez.getObstacles().get(0).equals(obstacle));
+        adlez.removeObstacleFromWorld(obstacle);
+        assertTrue(adlez.getObstacles().isEmpty());
+    }
+
 }
