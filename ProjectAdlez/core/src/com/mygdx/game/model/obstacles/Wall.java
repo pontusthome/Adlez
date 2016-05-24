@@ -26,13 +26,8 @@ public class Wall extends WorldObject implements IWall {
     }
 
     public List<Wall> createAreaBounds(int height, int width, int size) {
-        int count = 0;
-        int ifC = 0;
-        int ieC = 0;
-        int ifE = 0;
-        System.out.println("walls: " + count);
         for (int i = 0; i < height; i++) {
-            if(i > 0 && i < (height-1)){
+            if (i > 0 && i < (height - 1)) {
                 Wall newWall1 = new Wall();
                 Wall newWall2 = new Wall();
                 newWall1.setPosX(0);
@@ -41,9 +36,6 @@ public class Wall extends WorldObject implements IWall {
                 newWall2.setPosY(i * size);
                 walls.add(newWall1);
                 walls.add(newWall2);
-                count++;
-                count++;
-                ifE++;
             }
             for (int j = 0; j < width; j++) {
                 //
@@ -52,32 +44,24 @@ public class Wall extends WorldObject implements IWall {
                     newWall.setPosX(j * size);
                     newWall.setPosY(0);
                     walls.add(newWall);
-                    count++;
-                    ifC++;
                 } else if (i == height - 1) {
                     Wall newWall = new Wall();
                     newWall.setPosX(j * size);
                     newWall.setPosY((height - 1) * size);
                     walls.add(newWall);
-                    count++;
-                    ieC++;
                 }
             }
         }
-        System.out.println("walls: " + count);
-        System.out.println("ifC: " + ifC);
-        System.out.println("ieC: " + ieC);
-        System.out.println("ifE: " + ifE);
         return walls;
     }
 
     public List<Wall> getWalls() {
         return walls;
     }
-    
-    
+
+
     @Override
-    public void onCollide(Collidable other){
-        
+    public void onCollide(Collidable other) {
+
     }
 }
