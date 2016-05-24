@@ -48,7 +48,7 @@ public interface ICharacter extends IWorldObject {
 	void setAttackCooldown(float attackCooldown);
 	float getAttackCooldown();
 	void resetAttackCooldown();
-	void handleMoveCollision(int direction);
+	void handleMoveCollision();
 	void MeleeAttack();
 	void AOEMeleeAttack();
 	void AOEMagicAttack();
@@ -57,6 +57,10 @@ public interface ICharacter extends IWorldObject {
 	void interact();
 	void setMoved(boolean moved);
 	boolean moved();
+	float getOldPosX();
+	float getOldPosY();
+	
+	
 	//TODO: Remove when debugging is over
 	IAttack getLatestAttack();
 	IInteraction getLatestInteraction();

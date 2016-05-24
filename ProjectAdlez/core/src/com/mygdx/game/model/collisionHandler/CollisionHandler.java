@@ -1,6 +1,8 @@
 package com.mygdx.game.model.collisionHandler;
 
+import com.mygdx.game.model.WorldObjectObserver;
 import com.mygdx.game.model.characters.ICharacter;
+import com.mygdx.game.model.characters.IEnemy;
 import com.mygdx.game.model.characters.IPlayer;
 import com.mygdx.game.model.core.IWorldObject;
 
@@ -9,7 +11,7 @@ import java.util.List;
 /**
  * Created by Michel on 30.4.2016.
  */
-public class CollisionHandler {
+public class CollisionHandler implements WorldObjectObserver{
 	
 	private List<IWorldObject> worldObjects;
 	private IPlayer player;
@@ -67,13 +69,31 @@ public class CollisionHandler {
 				(height < y || height > otherY));
 	}
 	
-	public boolean characterCollided(ICharacter character){
-		
+	/** Method used for only when checking if a character has collided directly after a move action */
+	private boolean hasCharacterCollided(ICharacter character){
 		for (IWorldObject otherObject: worldObjects) {
 			if (!otherObject.equals(character) && character.collide(otherObject)) {
 				return true;
 			}
 		}
 		return false;
+	}
+	
+	
+	@Override
+	public void update(IWorldObject object, Object arg){
+		if(object instanceof ICharacter && arg instanceof String){
+			ICharacter character = (ICharacter) object;
+			String stringArg = (String) arg;
+			if(stringArg.equals("collision_check") && hasCharacterCollided(character)){
+				
+				// Due to lack of good AI, for now an enemy attacks the player if they have collided
+				if(character instanceof IEnemy && collide(character, player)){
+					IEnemy enemy = (IEnemy) character;
+					enemy.attackPlayer();
+				}
+				character.handleMoveCollision();
+			}
+		}
 	}
 }

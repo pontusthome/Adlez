@@ -1,16 +1,21 @@
 package com.mygdx.game.model.characters;
 
 import com.mygdx.game.model.Adlez;
+import com.mygdx.game.model.ObservableWorldObject;
+import com.mygdx.game.model.WorldObjectObserver;
 import com.mygdx.game.model.characters.actions.*;
 import com.mygdx.game.model.core.Collidable;
 import com.mygdx.game.model.core.Direction;
 import com.mygdx.game.model.core.WorldObject;
 import com.mygdx.game.model.collisionHandler.CollisionHandler;
 
+import java.util.ArrayList;
+import java.util.List;
+
 /**
  * Created by Michel on 2016-04-19.
  */
-public abstract class Character extends WorldObject implements ICharacter {
+public abstract class Character extends WorldObject implements ICharacter, ObservableWorldObject{
 
 	private int attackDamage;
 	private int health;
@@ -31,6 +36,7 @@ public abstract class Character extends WorldObject implements ICharacter {
 	private float oldPosX;
 	private float oldPosY;
 	private boolean moved;
+	private List<WorldObjectObserver> observers;
 	
 	/** Speed components in x & y. Are set to 1 if only moving in either x or y, otherwise adjusted so 
 	 * that the character doesn't move faster when moving diagonally.
@@ -75,6 +81,8 @@ public abstract class Character extends WorldObject implements ICharacter {
 		
 		oldPosX = getPosX();
 		oldPosY = getPosY();
+		
+		observers = new ArrayList<>();
 	}
 
 	@Override
@@ -83,7 +91,7 @@ public abstract class Character extends WorldObject implements ICharacter {
 		setPosY(getPosY() + vYComponent * getSpeed() * deltaT * velocityScalar);
 		setDirection(Direction.NORTH);
 		movingNorth = true;
-		handleMoveCollision(Direction.NORTH);
+		notifyObservers("collision_check");
 	}
 	
 	@Override
@@ -92,7 +100,7 @@ public abstract class Character extends WorldObject implements ICharacter {
 		setPosY(getPosY() - vYComponent * getSpeed() * deltaT * velocityScalar);
 		setDirection(Direction.SOUTH);
 		movingSouth = true;
-		handleMoveCollision(Direction.SOUTH);
+		notifyObservers("collision_check");
 	}
 	
 	@Override
@@ -101,7 +109,7 @@ public abstract class Character extends WorldObject implements ICharacter {
 		setPosX(getPosX() + vXComponent * getSpeed() * deltaT * velocityScalar);
 		setDirection(Direction.EAST);
 		movingEast = true;
-		handleMoveCollision(Direction.EAST);
+		notifyObservers("collision_check");
 	}
 	
 	@Override
@@ -110,7 +118,7 @@ public abstract class Character extends WorldObject implements ICharacter {
 		setPosX(getPosX() - vXComponent * getSpeed() * deltaT * velocityScalar);
 		setDirection(Direction.WEST);
 		movingWest = true;
-		handleMoveCollision(Direction.WEST);
+		notifyObservers("collision_check");
 	}
 
 	@Override
@@ -347,22 +355,21 @@ public abstract class Character extends WorldObject implements ICharacter {
 		attackCooldown = 0;
 	}
 	
-	public void handleMoveCollision(int direction){
-		if (CollisionHandler.getInstance().characterCollided(this)) {
-			switch(direction){
-				case Direction.NORTH:
-					setPosY(oldPosY);
-					break;
-				case Direction.SOUTH:
-					setPosY(oldPosY);
-					break;
-				case Direction.EAST:
-					setPosX(oldPosX);
-					break;
-				case Direction.WEST:
-					setPosX(oldPosX);
-					break;
-			}
+	@Override
+	public void handleMoveCollision(){
+		switch(getDirection()){
+			case Direction.NORTH:
+				setPosY(oldPosY);
+				break;
+			case Direction.SOUTH:
+				setPosY(oldPosY);
+				break;
+			case Direction.EAST:
+				setPosX(oldPosX);
+				break;
+			case Direction.WEST:
+				setPosX(oldPosX);
+				break;
 		}
 	}
 	
@@ -451,5 +458,22 @@ public abstract class Character extends WorldObject implements ICharacter {
 	@Override
 	public IInteraction getLatestInteraction(){
 		return latestInteraction;
+	}
+	
+	@Override
+	public void addObserver(WorldObjectObserver observer){
+		observers.add(observer);
+	}
+	
+	@Override
+	public void removeObserver(WorldObjectObserver observer){
+		observers.remove(observer);
+	}
+	
+	@Override
+	public void notifyObservers(Object arg){
+		for(WorldObjectObserver observer : observers){
+			observer.update(this, arg);
+		}
 	}
 }
