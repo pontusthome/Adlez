@@ -15,7 +15,7 @@ import com.mygdx.game.view.ICharacterView;
 public class EnemyController implements ICharacterController{
 
     private IEnemy enemy;
-    private CharacterView enemyView;
+    private ICharacterView enemyView;
     private Adlez adlez = Adlez.getInstance();
 
     public EnemyController(IEnemy enemy) {

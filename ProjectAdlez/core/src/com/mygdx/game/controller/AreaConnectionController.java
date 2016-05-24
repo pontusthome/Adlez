@@ -12,11 +12,9 @@ import java.util.List;
 public class AreaConnectionController implements IController {
 
     private GateView gateView;
-    private Adlez adlez;
     private List<IAreaConnection> gates;
 
     public AreaConnectionController(List<IAreaConnection> gates, String gateImg) {
-        adlez = Adlez.getInstance();
         this.gates = gates;
         gateView = new GateView(gateImg);
     }

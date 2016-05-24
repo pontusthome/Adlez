@@ -13,11 +13,9 @@ import java.util.List;
 public class ChestsController implements IController{
 	
 	private ChestView chestView;
-	private Adlez adlez;
 	private List<IChest> chests;
 	
 	public ChestsController(List<IChest> chests, String closedChestImg, String openChestImg) {
-		adlez = Adlez.getInstance();
 		this.chests = chests;
 		chestView = new ChestView(closedChestImg, openChestImg);
 	}

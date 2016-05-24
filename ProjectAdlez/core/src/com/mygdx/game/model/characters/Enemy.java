@@ -17,7 +17,6 @@ public class Enemy extends NPC implements IEnemy{
 	public static final int DOG_LEVEL_ONE = 4;
 
 	private int type;
-	private int range = 70;
 	
 	private CollisionHandler collisionHandler = CollisionHandler.getInstance();
 	private IPlayer player;
@@ -58,7 +57,8 @@ public class Enemy extends NPC implements IEnemy{
 	public void followPlayer(float deltaT) {
 		float playerX = player.getPosX();
 		float playerY = player.getPosY();
-
+		
+		int range = 70;
 		boolean inRange = Utils.inRange(playerX, getPosX(), playerY, getPosY(), range);
 
 		if (playerY > getPosY() && Math.abs(playerY - getPosY()) > 1 && inRange) {

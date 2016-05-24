@@ -15,12 +15,13 @@ public class AttackController implements IController{
 	
 	private IAttack attack;
 	private Adlez adlez;
-	private GameSound attackSound;
 	
 	public AttackController(IAttack attack){
 		this.attack = attack;
 		adlez = Adlez.getInstance();
-				
+		
+		GameSound attackSound;
+		
 		if(attack instanceof MeleeAttack || attack instanceof AOEMeleeAttack){
 			attackSound = new LibGDXSoundAdapter(AssetStrings.MELEE_ATTACK_SOUND);
 			attackSound.play(0.1f);

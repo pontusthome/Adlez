@@ -14,12 +14,11 @@ public class InteractionController implements IController{
 	
 	private IInteraction interaction;
 	private Adlez adlez;
-	private GameSound interactionSound;
 	
 	public InteractionController(IInteraction interaction){
 		this.interaction = interaction;
 		adlez = Adlez.getInstance();
-		interactionSound = new LibGDXSoundAdapter(AssetStrings.INTERACTION_SOUND);
+		GameSound interactionSound = new LibGDXSoundAdapter(AssetStrings.INTERACTION_SOUND);
 		interactionSound.play(0.5f);
 	}
 	

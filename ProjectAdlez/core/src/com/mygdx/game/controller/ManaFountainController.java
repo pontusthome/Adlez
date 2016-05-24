@@ -11,13 +11,11 @@ import java.util.List;
  * Created by martinso on 15/05/16.
  */
 public class ManaFountainController implements IController {
-
-    private Adlez adlez;
+    
     private ManaFountainView manaFountainView;
     private List<IManaFountain> manaFountains;
 
     public ManaFountainController(List<IManaFountain> manaFountains, String manaFountainImg) {
-        adlez = Adlez.getInstance();
         this.manaFountains = manaFountains;
         manaFountainView = new ManaFountainView(manaFountainImg);
     }

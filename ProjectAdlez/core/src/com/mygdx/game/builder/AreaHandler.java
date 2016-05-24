@@ -14,7 +14,8 @@ import static com.badlogic.gdx.math.MathUtils.random;
  */
 public class AreaHandler implements Serializable{
 
-    private static AreaHandler areaHandler = new AreaHandler();;
+    private static AreaHandler areaHandler = new AreaHandler();
+    
     public static AreaHandler getInstance() {
         return areaHandler;
     }

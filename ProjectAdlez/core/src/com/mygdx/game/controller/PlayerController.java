@@ -29,7 +29,7 @@ public class PlayerController implements ICharacterController{
 // Have a screens not extend a screens
 
     private IPlayer player;
-    private CharacterView playerView;
+    private ICharacterView playerView;
     private GameSound outOfManaSound;
     
     //TODO: Remove when debugging is over

@@ -28,7 +28,6 @@ public class Adlez implements WorldObjectObserver{
     private IPlayer player;
     private List<IEnemy> enemies;
     private List<IFriendlyNPC> friendlyNPCs;
-    private List<IWorldObject> stationaryObjects;
     private List<IWall> walls;
     private List<IObstacle> obstacles;
     private List<IChest> chests;
@@ -71,8 +70,8 @@ public class Adlez implements WorldObjectObserver{
             tempList.add(friendlyNPC);
         }
         worldObjects.addAll(tempList);
-
-        stationaryObjects = area.getStationaryObjects();
+    
+        List<IWorldObject> stationaryObjects = area.getStationaryObjects();
         worldObjects.addAll(stationaryObjects);
 
         walls = area.getWalls();
@@ -169,7 +168,7 @@ public class Adlez implements WorldObjectObserver{
         return newAttacks;
     }
     
-    public void addAttack(IAttack attack){
+    private void addAttack(IAttack attack){
         newAttacks.add(attack);
         attacks.add(attack);
     }
@@ -179,7 +178,7 @@ public class Adlez implements WorldObjectObserver{
         worldObjects.remove(obstacle);
     }
     
-    public void addInteraction(IInteraction interaction){
+    private void addInteraction(IInteraction interaction){
         newInteractions.add(interaction);
         interactions.add(interaction);
     }
