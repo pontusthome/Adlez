@@ -65,7 +65,7 @@ public class AreaBuilder implements AreaIO {
 
             file.write(jsonPlayer.toString());
         } catch (IOException e) {
-            System.out.println("Cannot save");
+            System.out.println("Cannot save the Player");
         }
     }
 
@@ -75,51 +75,55 @@ public class AreaBuilder implements AreaIO {
      * @return the saved player
      */
     @Override
-    public IPlayer loadPlayer() {
+    public IPlayer loadPlayer() throws IOException {
         IPlayer player = Adlez.getInstance().getPlayer();
 
         BufferedReader bufferedReader;
-        try {
-            String areaHandlerData;
-            bufferedReader = new BufferedReader(new FileReader("player.txt"));
+        String areaHandlerData;
+        bufferedReader = new BufferedReader(new FileReader("player.txt"));
 
-            while ((areaHandlerData = bufferedReader.readLine()) != null) {
-                JsonValue jsonPlayer = new JsonReader().parse(areaHandlerData);
-                //System.out.println(jsonAreaHandler.toString());
+        while ((areaHandlerData = bufferedReader.readLine()) != null) {
+            JsonValue jsonPlayer = new JsonReader().parse(areaHandlerData);
+            //System.out.println(jsonAreaHandler.toString());
 
-                player.setName(jsonPlayer.get("name").asString());
-                player.setPos(jsonPlayer.get("xPos").asFloat(), jsonPlayer.get("yPos").asFloat());
-                player.setWidth(jsonPlayer.get("width").asInt());
-                player.setHeight(jsonPlayer.get("height").asInt());
-                player.setSpeed(jsonPlayer.get("speed").asFloat());
-                player.setMaxHealth(jsonPlayer.get("maxHealth").asInt());
-                player.setHealth(jsonPlayer.get("health").asInt());
-                player.setMaxMana(jsonPlayer.get("maxMana").asInt());
-                player.setMana(jsonPlayer.get("mana").asInt());
-                player.setAttackDamage(jsonPlayer.get("attackDamage").asInt());
-                player.setDirection(jsonPlayer.get("direction").asInt());
-                player.setGold(jsonPlayer.get("gold").asInt());
-                player.setLevel(jsonPlayer.get("level").asInt());
-                if (jsonPlayer.get("armorEquipped") != null) {
+            player.setName(jsonPlayer.get("name").asString());
+            player.setPos(jsonPlayer.get("xPos").asFloat(), jsonPlayer.get("yPos").asFloat());
+            player.setWidth(jsonPlayer.get("width").asInt());
+            player.setHeight(jsonPlayer.get("height").asInt());
+            player.setSpeed(jsonPlayer.get("speed").asFloat());
+            player.setMaxHealth(jsonPlayer.get("maxHealth").asInt());
+            player.setHealth(jsonPlayer.get("health").asInt());
+            player.setMaxMana(jsonPlayer.get("maxMana").asInt());
+            player.setMana(jsonPlayer.get("mana").asInt());
+            player.setAttackDamage(jsonPlayer.get("attackDamage").asInt());
+            player.setDirection(jsonPlayer.get("direction").asInt());
+            player.setGold(jsonPlayer.get("gold").asInt());
+            player.setLevel(jsonPlayer.get("level").asInt());
+            if (jsonPlayer.get("armorEquipped") != null) {
+                try {
                     player.equipItem(getJsonItem(jsonPlayer.get("armorEquipped")));
-                }
-                if (jsonPlayer.get("swordEquipped") != null) {
-                    player.equipItem(getJsonItem(jsonPlayer.get("swordEquipped")));
-                }
-                for (IItem item: getJsonItems(jsonPlayer.get("inventory"))) {
-                    try {
-                        player.lootItem(item);
-                    } catch (InventoryFullException e) {
-                        e.printStackTrace();
-                    }
+                } catch (ItemNotFoundException e) {
+                    System.out.println("Loading player and not finding the armor that should be equipped");
                 }
             }
-
-            // close the BufferedReader when we're done
-            bufferedReader.close();
-        } catch (Exception e) {
-            System.out.println("Cannot load saved player");
+            if (jsonPlayer.get("swordEquipped") != null) {
+                try {
+                    player.equipItem(getJsonItem(jsonPlayer.get("swordEquipped")));
+                } catch (ItemNotFoundException e) {
+                    System.out.println("Loading player and not finding the sword that should be equipped");
+                }
+            }
+            for (IItem item: getJsonItems(jsonPlayer.get("inventory"))) {
+                try {
+                    player.lootItem(item);
+                } catch (InventoryFullException e) {
+                    System.out.println("Loading a player that had too many items?");
+                }
+            }
         }
+
+        // close the BufferedReader when we're done
+        bufferedReader.close();
 
         return player;
     }
@@ -153,7 +157,7 @@ public class AreaBuilder implements AreaIO {
 
             file.write(jsonAreaHandler.toString());
         } catch (IOException e) {
-            System.out.println("Cannot save");
+            System.out.println("Cannot save the AreaHandler");
         }
     }
 
@@ -286,29 +290,25 @@ public class AreaBuilder implements AreaIO {
      * @return the AreaHandler updated with the saved data.
      */
     @Override
-    public AreaHandler loadAreaHandler() {
+    public AreaHandler loadAreaHandler() throws IOException {
         AreaHandler areaHandler = AreaHandler.getInstance();
 
         BufferedReader bufferedReader;
-        try {
-            String areaHandlerData;
-            bufferedReader = new BufferedReader(new FileReader("areaHandler.txt"));
+        String areaHandlerData;
+        bufferedReader = new BufferedReader(new FileReader("areaHandler.txt"));
 
-            while ((areaHandlerData = bufferedReader.readLine()) != null) {
-                JsonValue jsonAreaHandler = new JsonReader().parse(areaHandlerData);
-                //System.out.println(jsonAreaHandler.toString());
+        while ((areaHandlerData = bufferedReader.readLine()) != null) {
+            JsonValue jsonAreaHandler = new JsonReader().parse(areaHandlerData);
+            //System.out.println(jsonAreaHandler.toString());
 
-                loadArea(jsonAreaHandler.get("1"), areaHandler.loadArea1());
-                loadArea(jsonAreaHandler.get("2"), areaHandler.loadArea2());
+            loadArea(jsonAreaHandler.get("1"), areaHandler.loadArea1());
+            loadArea(jsonAreaHandler.get("2"), areaHandler.loadArea2());
 
-                areaHandler.setCurrentArea(jsonAreaHandler.get("currentArea").asInt());
-            }
-
-            // close the BufferedReader when we're done
-            bufferedReader.close();
-        } catch (Exception e) {
-            System.out.println("Cannot find saved game");
+            areaHandler.setCurrentArea(jsonAreaHandler.get("currentArea").asInt());
         }
+
+        // close the BufferedReader when we're done
+        bufferedReader.close();
 
         return areaHandler;
     }

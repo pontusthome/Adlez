@@ -12,6 +12,8 @@ import com.mygdx.game.builder.AreaIO;
 import com.mygdx.game.model.Adlez;
 import com.mygdx.game.model.Area;
 
+import java.io.IOException;
+
 /**
  * Created by Viktor on 2016-04-19.
  */
@@ -48,7 +50,19 @@ public abstract class AbstractScreen extends Stage implements Screen {
 
     public abstract void buildStage();
 
-    protected void loadGame() {
+    protected void loadSavedGame() {
+        try {
+            loadGame();
+        } catch (IOException e) {
+            System.out.println("Could not find saved game.");
+            System.out.println("Starting new game.");
+            newGame();
+        } finally {
+            initiateGame();
+        }
+    }
+
+    protected void loadGame() throws IOException {
         // Load the AreaHandler
         AreaIO areaBuilder = new AreaBuilder();
         AreaHandler areaHandler = areaBuilder.loadAreaHandler();
