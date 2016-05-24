@@ -35,8 +35,4 @@ public class InteractionController implements IController{
 	public void render(SpriteBatch batch){
 		
 	}
-	
-	public IInteraction getInteraction(){
-		return interaction;
-	}
 }

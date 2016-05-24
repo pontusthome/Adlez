@@ -11,7 +11,7 @@ import java.util.List;
  */
 public class Wall extends WorldObject implements IWall {
 
-    List<Wall> walls = new ArrayList<Wall>();
+    private List<Wall> walls = new ArrayList<>();
 
     public Wall() {
         setHeight(32);

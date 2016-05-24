@@ -44,7 +44,7 @@ public class Area1 implements ICompleteArea {
 
         walls.addAll(wall.createAreaBounds(10, 20, 32));
 
-        enemies.add(EnemyFactory.createEnemy(Enemy.REGULAR_LEVEL_TWO, 32 * 1, 32 * 5));
+        enemies.add(EnemyFactory.createEnemy(Enemy.REGULAR_LEVEL_TWO, 32, 32 * 5));
         enemies.add(EnemyFactory.createEnemy(Enemy.REGULAR_LEVEL_ONE, 32 * 2, 32 * 5));
         enemies.add(EnemyFactory.createEnemy(Enemy.REGULAR_LEVEL_ONE, 32 * 3, 32 * 5));
         enemies.add(EnemyFactory.createEnemy(Enemy.REGULAR_LEVEL_ONE, 32 * 4, 32 * 5));

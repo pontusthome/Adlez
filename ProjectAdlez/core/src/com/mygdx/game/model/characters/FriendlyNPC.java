@@ -62,8 +62,7 @@ public class FriendlyNPC extends NPC implements IFriendlyNPC {
         listeners.remove(listener);
     }
     
-    @Override
-    public void notifyListeners(){
+    private void notifyListeners(){
         for (ShopOpenListener listener : listeners) {
             listener.shopOpen(shop);
         }

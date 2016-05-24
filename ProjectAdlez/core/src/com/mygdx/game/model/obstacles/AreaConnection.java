@@ -42,8 +42,7 @@ public class AreaConnection extends WorldObject implements IAreaConnection {
         listeners.remove(listener);
     }
     
-    @Override
-    public void notifyListeners(){
+    private void notifyListeners(){
         for (GateOpenListener listener : listeners) {
             listener.gateOpen();
         }

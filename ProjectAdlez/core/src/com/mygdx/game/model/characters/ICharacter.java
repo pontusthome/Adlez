@@ -25,8 +25,6 @@ public interface ICharacter extends IWorldObject {
 	void setLevel(int level);
 	String getName();
 	void setName(String name);
-	String getCharacterType();
-	void setCharacterType(String characterType);
 	int getMaxHealth();
 	void setMaxHealth(int maxHealth);
 	int getMaxMana();
@@ -35,10 +33,6 @@ public interface ICharacter extends IWorldObject {
 	void setDirection(int direction);
 	float getSpeed();
 	void setSpeed(float speed);
-	boolean isMovingNorth();
-	boolean isMovingSouth();
-	boolean isMovingEast();
-	boolean isMovingWest();
 	void setMovingNorth();
 	void setMovingSouth();
 	void setMovingEast();
@@ -57,8 +51,6 @@ public interface ICharacter extends IWorldObject {
 	void interact();
 	void setMoved(boolean moved);
 	boolean moved();
-	float getOldPosX();
-	float getOldPosY();
 	
 	
 	//TODO: Remove when debugging is over

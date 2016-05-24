@@ -44,7 +44,7 @@ public class CollisionHandler implements WorldObjectObserver{
 		updateWorld(interactions);
 	}
 
-	public void updateWorld(List<?> generics) {
+	private void updateWorld(List<?> generics) {
 		for (Object generic: generics) {
 			IWorldObject object = (IWorldObject) generic;
 			for (IWorldObject other: worldObjects) {
@@ -61,7 +61,7 @@ public class CollisionHandler implements WorldObjectObserver{
 		}
 	}
 	
-	public static boolean collide(IWorldObject primary, IWorldObject other) {
+	private static boolean collide(IWorldObject primary, IWorldObject other) {
 		float width = primary.getWidth();
 		float height = primary.getHeight();
 		float otherWidth = other.getWidth();

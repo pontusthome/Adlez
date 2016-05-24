@@ -23,7 +23,6 @@ public abstract class Character extends WorldObject implements ICharacter, Obser
 	private int level;
 	private int gold;
 	private String name;
-	private String characterType;
 	private int direction;
 	private float speed;
 	private boolean movingNorth;
@@ -185,16 +184,6 @@ public abstract class Character extends WorldObject implements ICharacter, Obser
 	}
 	
 	@Override
-	public String getCharacterType(){
-		return characterType;
-	}
-	
-	@Override
-	public void setCharacterType(String characterType){
-		this.characterType = characterType;
-	}
-	
-	@Override
 	public int getMaxHealth(){
 		return maxHealth;
 	}
@@ -239,7 +228,7 @@ public abstract class Character extends WorldObject implements ICharacter, Obser
 		
 	}
 	
-	public void clearMoveFlags(){
+	private void clearMoveFlags(){
 		movingNorth = false;
 		movingSouth = false;
 		movingEast = false;
@@ -247,35 +236,16 @@ public abstract class Character extends WorldObject implements ICharacter, Obser
 	}
 	
 	@Override
-	public boolean isMovingNorth(){
-		return movingNorth;
-	}
-	
-	@Override
-	public boolean isMovingSouth(){
-		return movingSouth;
-	}
-	
-	@Override
-	public boolean isMovingEast(){
-		return movingEast;
-	}
-	
-	@Override
-	public boolean isMovingWest(){
-		return movingWest;
-	}
-	
-	@Override
 	public boolean isAlive(){
 		return getHealth() > 0;
 	}
 	
+	@Override
 	public void move(float deltaT){
 		/** Check if moving diagonally. If so, set x & y speed components so that the total speed is equal to the 
 		 *  characters speed.
 		 */
-		if((isMovingWest() || isMovingEast()) && (isMovingNorth() || isMovingSouth())){
+		if((movingWest || movingEast) && (movingNorth || movingSouth)){
 			vXComponent = (float) Math.cos(Math.toRadians(45));
 			vYComponent = (float) Math.cos(Math.toRadians(45));
 		}else{
@@ -283,23 +253,23 @@ public abstract class Character extends WorldObject implements ICharacter, Obser
 			vYComponent = 1;
 		}
 		
-		if(isMovingNorth()){
+		if(movingNorth){
 			moveNorth(deltaT);
-		}else if(isMovingSouth()){
+		}else if(movingSouth){
 			moveSouth(deltaT);
 		}
 		
-		if(isMovingEast()){
+		if(movingEast){
 			moveEast(deltaT);
-		}else if(isMovingWest()){
+		}else if(movingWest){
 			moveWest(deltaT);
 		}
 
 		setMoved(false);
-		if (	isMovingSouth() ||
-				isMovingNorth() ||
-				isMovingWest() ||
-				isMovingEast()) {
+		if (	movingSouth ||
+				movingNorth ||
+				movingWest ||
+				movingEast) {
 			setMoved(true);
 		}
 
@@ -362,14 +332,6 @@ public abstract class Character extends WorldObject implements ICharacter, Obser
 				setPosX(oldPosX);
 				break;
 		}
-	}
-	
-	public float getOldPosX(){
-		return oldPosX;
-	}
-	
-	public float getOldPosY(){
-		return oldPosY;
 	}
 	
 	@Override

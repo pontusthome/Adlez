@@ -1,10 +1,7 @@
 package com.mygdx.game.model.characters;
 
 
-import com.mygdx.game.model.characters.actions.AOEMagicAttack;
 import com.mygdx.game.model.characters.actions.IAttack;
-import com.mygdx.game.model.characters.actions.MeleeAttack;
-import com.mygdx.game.model.characters.actions.RangeMagicAttack;
 import com.mygdx.game.model.core.Collidable;
 import com.mygdx.game.model.core.Direction;
 import com.mygdx.game.model.exceptions.InventoryFullException;
@@ -21,7 +18,6 @@ import java.util.List;
  * Created by Michel on 2016-04-19.
  */
 public class Player extends Character implements IPlayer {
-    private int experience;
 
     private IItem swordEquipped;
     private IItem armorEquipped;

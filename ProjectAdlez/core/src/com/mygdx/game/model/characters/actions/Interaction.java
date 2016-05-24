@@ -9,14 +9,12 @@ import com.mygdx.game.model.characters.ICharacter;
  */
 public class Interaction extends Action implements IInteraction{
 	
-	ICharacter interactor;
-	
 	public Interaction(){
 		super();
 	}
 	
-	public Interaction(ICharacter interactor){
-		super(interactor);
+	public Interaction(ICharacter character){
+		super(character);
 	}
 	
 	@Override

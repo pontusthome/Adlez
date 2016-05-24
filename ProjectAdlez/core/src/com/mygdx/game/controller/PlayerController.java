@@ -7,9 +7,7 @@ import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.mygdx.game.builder.AreaBuilder;
 import com.mygdx.game.builder.AreaHandler;
 import com.mygdx.game.builder.AreaIO;
-import com.mygdx.game.model.*;
 import com.mygdx.game.model.characters.actions.*;
-import com.mygdx.game.model.characters.Character;
 import com.mygdx.game.model.characters.IPlayer;
 import com.mygdx.game.model.core.GameSound;
 import com.mygdx.game.model.core.LibGDXSoundAdapter;
@@ -19,7 +17,6 @@ import com.mygdx.game.view.CharacterView;
 import com.mygdx.game.view.ICharacterView;
 
 import java.io.IOException;
-import java.util.List;
 
 /**
  * Created by martinso on 27/03/16.
@@ -57,23 +54,20 @@ public class PlayerController implements ICharacterController{
         //TODO: Remove when debugging is over
         currentAttack = player.getLatestAttack();
         currentInteraction = player.getLatestInteraction();
-
-        Character playerCharacter = (Character) player;
-        playerCharacter.clearMoveFlags();
         
         if (Gdx.input.isKeyPressed(Input.Keys.W)) {
-            playerCharacter.setMovingNorth();
+            player.setMovingNorth();
         }else if (Gdx.input.isKeyPressed(Input.Keys.S)) {
-            playerCharacter.setMovingSouth();
+            player.setMovingSouth();
         }
         
         if (Gdx.input.isKeyPressed(Input.Keys.A)) {
-            playerCharacter.setMovingWest();
+            player.setMovingWest();
         }else if (Gdx.input.isKeyPressed(Input.Keys.D)) {
-            playerCharacter.setMovingEast();
+            player.setMovingEast();
         }
-        
-        playerCharacter.update(deltaT);
+    
+        player.update(deltaT);
 
         if (Gdx.input.isKeyJustPressed(Input.Keys.SPACE)) {
             player.MeleeAttack();

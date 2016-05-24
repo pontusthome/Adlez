@@ -204,7 +204,7 @@ public class AreaBuilder implements AreaIO {
      * @param obstacles the list of obstacles that will be turned into JSON
      * @param jsonAreaHandler a StringBuilder that the data will be stored in, it contains the JSON file for the AreaHandler
      */
-    public void ObstaclesToJson(List<IObstacle> obstacles, StringBuilder jsonAreaHandler) {
+    private void ObstaclesToJson(List<IObstacle> obstacles, StringBuilder jsonAreaHandler) {
         jsonAreaHandler.append("obstacles:[");
 
         for (IObstacle obstacle: obstacles) {

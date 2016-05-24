@@ -54,8 +54,4 @@ public class AttackController implements IController{
 	public void render(SpriteBatch batch){
 		
 	}
-	
-	public IAttack getAttack(){
-		return attack;
-	}
 }

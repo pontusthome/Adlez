@@ -10,26 +10,26 @@ import com.badlogic.gdx.graphics.g2d.TextureRegion;
  */
 public class CharacterView implements ICharacterView {
 
-    protected Texture characterTexture;
-    protected TextureRegion[] characterFrames;
-    protected TextureRegion currentFrame;
-    protected float stateTime;
-    protected static final int col = 4;
-    protected static final int row = 2;
+    private Texture characterTexture;
+    private TextureRegion[] characterFrames;
+    private TextureRegion currentFrame;
+    private float stateTime;
+    private static final int COL = 4;
+    private static final int ROW = 2;
 
-    protected Animation animation;
+    private Animation animation;
 
     public CharacterView(String characterImg) {
         characterTexture = new Texture((Gdx.files.internal((characterImg))));
         TextureRegion[][] tmp = TextureRegion.split(characterTexture,
-                characterTexture.getWidth() / col,
-                characterTexture.getHeight() / row);
-        characterFrames = new TextureRegion[col * row];
+                characterTexture.getWidth() / COL,
+                characterTexture.getHeight() / ROW);
+        characterFrames = new TextureRegion[COL * ROW];
 
         // Setting frames from player sheet.
         int index = 0;
-        for (int i = 0; i < col; i++) {
-            for (int j = 0; j < row; j++) {
+        for (int i = 0; i < COL; i++) {
+            for (int j = 0; j < ROW; j++) {
                 characterFrames[index++] = tmp[j][i];
             }
         }

@@ -5,5 +5,4 @@ package com.mygdx.game.model.core;
  */
 public interface GameSound{
 	void play(Float volume);
-	void setSound(String soundAssetString);
 }

@@ -2,8 +2,6 @@ package com.mygdx.game.model.characters;
 
 import com.mygdx.game.model.characters.actions.IAttack;
 import com.mygdx.game.model.core.Collidable;
-import com.mygdx.game.model.core.Direction;
-import com.mygdx.game.model.collisionHandler.CollisionHandler;
 import com.mygdx.game.utils.Utils;
 
 /**
@@ -18,7 +16,6 @@ public class Enemy extends NPC implements IEnemy{
 
 	private int type;
 	
-	private CollisionHandler collisionHandler = CollisionHandler.getInstance();
 	private IPlayer player;
 
 	public Enemy(IPlayer player,
@@ -49,12 +46,12 @@ public class Enemy extends NPC implements IEnemy{
 
 	@Override
 	public void update(float deltaT) {
-		followPlayer(deltaT);
+		followPlayer();
 		super.update(deltaT);
 	}
 
 	@Override
-	public void followPlayer(float deltaT) {
+	public void followPlayer() {
 		float playerX = player.getPosX();
 		float playerY = player.getPosY();
 		

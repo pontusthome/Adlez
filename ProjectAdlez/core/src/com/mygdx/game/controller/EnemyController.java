@@ -66,7 +66,7 @@ public class EnemyController implements ICharacterController{
         return enemyView;
     }
 
-    public TextureRegion getCurrentFrame() {
+    private TextureRegion getCurrentFrame() {
         return enemyView.getCurrentFrame();
     }
 }

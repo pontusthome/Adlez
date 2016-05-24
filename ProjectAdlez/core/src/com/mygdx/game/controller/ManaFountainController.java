@@ -1,7 +1,6 @@
 package com.mygdx.game.controller;
 
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
-import com.mygdx.game.model.Adlez;
 import com.mygdx.game.model.obstacles.IManaFountain;
 import com.mygdx.game.view.ManaFountainView;
 

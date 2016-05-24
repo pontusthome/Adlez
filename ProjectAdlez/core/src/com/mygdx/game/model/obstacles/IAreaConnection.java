@@ -9,5 +9,4 @@ import com.mygdx.game.model.core.IWorldObject;
 public interface IAreaConnection extends IWorldObject {
     void add(GateOpenListener listener);
     void remove(GateOpenListener listener);
-    void notifyListeners();
 }
