@@ -28,7 +28,6 @@ public class Adlez {
     private IPlayer player;
     private List<IEnemy> enemies;
     private List<IFriendlyNPC> friendlyNPCs;
-    private List<IWorldObject> stationaryObjects;
     private List<IWall> walls;
     private List<IObstacle> obstacles;
     private List<IChest> chests;
@@ -71,9 +70,6 @@ public class Adlez {
             tempList.add((IWorldObject) friendlyNPC);
         }
         worldObjects.addAll(tempList);
-
-        stationaryObjects = area.getStationaryObjects();
-        worldObjects.addAll(stationaryObjects);
 
         walls = area.getWalls();
         worldObjects.addAll(walls);

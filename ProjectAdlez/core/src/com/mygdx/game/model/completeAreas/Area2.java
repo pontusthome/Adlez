@@ -5,7 +5,6 @@ import com.mygdx.game.model.Area;
 import com.mygdx.game.model.characters.*;
 import com.mygdx.game.model.core.Direction;
 import com.mygdx.game.model.factories.EnemyFactory;
-import com.mygdx.game.model.core.IWorldObject;
 import com.mygdx.game.model.exceptions.InventoryFullException;
 import com.mygdx.game.model.obstacles.*;
 import com.mygdx.game.model.obstacles.Chest;
@@ -29,7 +28,6 @@ public class Area2 implements ICompleteArea {
     public Area2() {
         List<IEnemy> enemies = new ArrayList<>();
         List<IFriendlyNPC> friendlyNPCs = new ArrayList<>();
-        List<IWorldObject> stationaryObjects = new ArrayList<>();
         Wall wall = new Wall();
         List<IWall> walls = new ArrayList<>();
         List<IObstacle> obstacles = new ArrayList<>();
@@ -127,7 +125,7 @@ public class Area2 implements ICompleteArea {
         areaConnections.add(new AreaConnection(32 * 8, 32 * 18, 32, 32));
         manaFountains.add(new ManaFountain(32*3, 32*3, 32, 32));
 
-        area = new Area(playerPosX, playerPosY, enemies, friendlyNPCs, stationaryObjects, walls, obstacles, chests, areaConnections, AreaHandler.AREA_2, manaFountains);
+        area = new Area(playerPosX, playerPosY, enemies, friendlyNPCs, walls, obstacles, chests, areaConnections, AreaHandler.AREA_2, manaFountains);
     }
 }
 

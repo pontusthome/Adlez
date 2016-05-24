@@ -4,10 +4,8 @@ import com.mygdx.game.builder.AreaHandler;
 import com.mygdx.game.model.characters.IEnemy;
 import com.mygdx.game.model.characters.IFriendlyNPC;
 import com.mygdx.game.model.characters.IPlayer;
-import com.mygdx.game.model.characters.Player;
 import com.mygdx.game.model.characters.actions.IInteraction;
 import com.mygdx.game.model.characters.actions.Interaction;
-import com.mygdx.game.model.core.Direction;
 import com.mygdx.game.model.core.IWorldObject;
 import com.mygdx.game.model.obstacles.*;
 import org.junit.After;
@@ -64,7 +62,7 @@ public class ManaFountainTest {
             IManaFountain manaFountain = new ManaFountain(50, 50, 32, 32);
             manaFountains.add(manaFountain);
             Area area = new Area(0, 0,
-                    enemies, friendlyNPCs, stationaryObjects, walls, obstacles, chests, areaConnections, name, manaFountains);
+                    enemies, friendlyNPCs, walls, obstacles, chests, areaConnections, name, manaFountains);
             adlez.initiateArea(area);
             player = adlez.getPlayer();
             player.setMana(player.getMana() - 100);

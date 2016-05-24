@@ -20,7 +20,6 @@ public final class Area {
 
     private List<IEnemy> enemies;
     private List<IFriendlyNPC> friendlyNPCs;
-    private List<IWorldObject> stationaryObjects;
     private List<IWall> walls;
     private List<IObstacle> obstacles;
     private List<IChest> chests;
@@ -28,14 +27,13 @@ public final class Area {
     private List<IManaFountain> manaFountains;
 
     public Area(float playerXposition, float playerYposition,
-                List<IEnemy> enemies, List<IFriendlyNPC> friendlyNPCs, List<IWorldObject> stationaryObjects,
+                List<IEnemy> enemies, List<IFriendlyNPC> friendlyNPCs,
                 List<IWall> walls, List<IObstacle> obstacles, List<IChest> chests, List<IAreaConnection> areaConnections, int name, List<IManaFountain> manaFountains) {
         this.playerXposition = playerXposition;
         this.playerYposition = playerYposition;
 
         this.enemies = enemies;
         this.friendlyNPCs = friendlyNPCs;
-        this.stationaryObjects = stationaryObjects;
         this.walls = walls;
         this.obstacles = obstacles;
         this.chests = chests;
@@ -59,10 +57,6 @@ public final class Area {
 
     public List<IFriendlyNPC> getFriendlyNPCs() {
         return friendlyNPCs;
-    }
-
-    public List<IWorldObject> getStationaryObjects() {
-        return stationaryObjects;
     }
 
     public List<IWall> getWalls() {

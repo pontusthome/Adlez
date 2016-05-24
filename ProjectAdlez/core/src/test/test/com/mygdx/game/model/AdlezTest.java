@@ -17,7 +17,6 @@ public class AdlezTest {
     private IPlayer player;
     private List<IEnemy> enemies;
     private List<IFriendlyNPC> friendlyNPCs;
-    private List<IWorldObject> stationaryObjects;
     private List<IWall> walls;
     private List<IObstacle> obstacles;
     private List<IChest> chests;
@@ -29,7 +28,6 @@ public class AdlezTest {
     public void setUp() throws Exception {
         enemies = new ArrayList<IEnemy>();
         friendlyNPCs = new ArrayList<IFriendlyNPC>();
-        stationaryObjects = new ArrayList<IWorldObject>();
         walls = new ArrayList<IWall>();
         obstacles = new ArrayList<IObstacle>();
         chests = new ArrayList<IChest>();
@@ -64,6 +62,6 @@ public class AdlezTest {
         obstacles.add(obstacle);
 
         Area area = new Area(0, 0,
-                enemies, friendlyNPCs, stationaryObjects, walls, obstacles, chests, areaConnections, name, manaFountains);
+                enemies, friendlyNPCs, walls, obstacles, chests, areaConnections, name, manaFountains);
     }
 }
