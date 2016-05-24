@@ -1,13 +1,11 @@
 package com.mygdx.game.model.characters;
 
-import com.mygdx.game.model.Adlez;
 import com.mygdx.game.model.ObservableWorldObject;
 import com.mygdx.game.model.WorldObjectObserver;
 import com.mygdx.game.model.characters.actions.*;
 import com.mygdx.game.model.core.Collidable;
 import com.mygdx.game.model.core.Direction;
 import com.mygdx.game.model.core.WorldObject;
-import com.mygdx.game.model.collisionHandler.CollisionHandler;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -377,7 +375,7 @@ public abstract class Character extends WorldObject implements ICharacter, Obser
 	@Override
 	public void MeleeAttack(){
 		IAttack attack = new MeleeAttack(this);
-		Adlez.getInstance().addAttack(attack);
+		notifyObservers(attack);
 		
 		//TODO: Remove when debugging is over
 		latestAttack = attack;
@@ -387,7 +385,7 @@ public abstract class Character extends WorldObject implements ICharacter, Obser
 	public void AOEMeleeAttack(){
 		IAttack attack = new AOEMeleeAttack(this);
 		useMana(attack);
-		Adlez.getInstance().addAttack(attack);
+		notifyObservers(attack);
 		
 		//TODO: Remove when debugging is over
 		latestAttack = attack;
@@ -397,7 +395,7 @@ public abstract class Character extends WorldObject implements ICharacter, Obser
 	public void AOEMagicAttack(){
 		IAttack attack = new AOEMagicAttack(this);
 		useMana(attack);
-		Adlez.getInstance().addAttack(attack);
+		notifyObservers(attack);
 		
 		//TODO: Remove when debugging is over
 		latestAttack = attack;
@@ -407,7 +405,7 @@ public abstract class Character extends WorldObject implements ICharacter, Obser
 	public void RangeMagicAttack(){
 		IAttack attack = new RangeMagicAttack(this);
 		useMana(attack);
-		Adlez.getInstance().addAttack(attack);
+		notifyObservers(attack);
 		
 		//TODO: Remove when debugging is over
 		latestAttack = attack;
@@ -433,7 +431,7 @@ public abstract class Character extends WorldObject implements ICharacter, Obser
 	@Override
 	public void interact(){
 		IInteraction interaction = new Interaction(this);
-		Adlez.getInstance().addInteraction(interaction);
+		notifyObservers(interaction);
 		
 		//TODO: Remove when debugging is over
 		latestInteraction = interaction;

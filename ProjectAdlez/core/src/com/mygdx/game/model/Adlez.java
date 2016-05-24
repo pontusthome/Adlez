@@ -95,13 +95,22 @@ public class Adlez implements WorldObjectObserver{
         collisionHandler = CollisionHandler.getInstance();
         collisionHandler.initiate(worldObjects, attacks, interactions);
         
-        // Add Adlez (this) & collision handler as observers to character
-        ((ObservableWorldObject) player).addObserver(this);
-        ((ObservableWorldObject) player).addObserver(collisionHandler);
+        // Add this & collision handler as observers to all characters
+        
+        ObservableWorldObject playerObservable = (ObservableWorldObject) player;
+        playerObservable.addObserver(this);
+        playerObservable.addObserver(collisionHandler);
         
         for(IEnemy enemy : enemies){
-            ((ObservableWorldObject) enemy).addObserver(this);
-            ((ObservableWorldObject) enemy).addObserver(collisionHandler);
+            ObservableWorldObject enemyObservable = ((ObservableWorldObject) enemy);
+            enemyObservable.addObserver(this);
+            enemyObservable.addObserver(collisionHandler);
+        }
+        
+        for(IFriendlyNPC friendlyNPC : friendlyNPCs){
+            ObservableWorldObject friendlyNPCObservable = ((ObservableWorldObject) friendlyNPC);
+            friendlyNPCObservable.addObserver(this);
+            friendlyNPCObservable.addObserver(collisionHandler);
         }
     }
 
@@ -186,5 +195,12 @@ public class Adlez implements WorldObjectObserver{
     @Override
     public void update(IWorldObject worldObject, Object arg){
         // To be used for adding a character's attack to the world, coming soon...
+        if(arg instanceof IAttack){
+            IAttack newAttack = (IAttack) arg; 
+            addAttack(newAttack);
+        }else if(arg instanceof IInteraction){
+            IInteraction newInteraction = (IInteraction) arg; 
+            addInteraction(newInteraction);
+        }
     }
 }
