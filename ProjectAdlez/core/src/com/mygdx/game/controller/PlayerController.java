@@ -8,18 +8,11 @@ import com.mygdx.game.builder.AreaBuilder;
 import com.mygdx.game.builder.AreaHandler;
 import com.mygdx.game.builder.AreaIO;
 import com.mygdx.game.model.*;
-import com.mygdx.game.model.characters.IFriendlyNPC;
-import com.mygdx.game.model.characters.NPCShop;
 import com.mygdx.game.model.characters.actions.*;
 import com.mygdx.game.model.characters.Character;
 import com.mygdx.game.model.characters.IPlayer;
 import com.mygdx.game.model.core.GameSound;
-import com.mygdx.game.model.core.GateOpenListener;
 import com.mygdx.game.model.core.LibGDXSoundAdapter;
-import com.mygdx.game.model.characters.ShopOpenListener;
-import com.mygdx.game.model.obstacles.IAreaConnection;
-import com.mygdx.game.screens.GameScreen;
-import com.mygdx.game.screens.ScreenEnum;
 import com.mygdx.game.utils.AssetStrings;
 import com.mygdx.game.screens.ScreenManager;
 import com.mygdx.game.view.CharacterView;
@@ -31,16 +24,12 @@ import java.util.List;
 /**
  * Created by martinso on 27/03/16.
  */
-public class PlayerController implements ICharacterController, GateOpenListener , ShopOpenListener {
+public class PlayerController implements ICharacterController{
 
 // Have a screens not extend a screens
 
     private IPlayer player;
     private CharacterView playerView;
-    private Adlez adlez;
-    private List<IAreaConnection> areaConnections;
-    private List<IFriendlyNPC> friendlyNPCs;
-    private AreaHandler areaHandler;
     private GameSound outOfManaSound;
     
     //TODO: Remove when debugging is over
@@ -50,18 +39,6 @@ public class PlayerController implements ICharacterController, GateOpenListener 
     public PlayerController(IPlayer player) {
         this.player = player;
         playerView = new CharacterView(AssetStrings.PLAYER_MOVE);
-        adlez = Adlez.getInstance();
-        areaHandler = AreaHandler.getInstance();
-
-        areaConnections = adlez.getAreaConnections();
-        for (IAreaConnection ac : areaConnections) {
-            ac.add(this);
-        }
-
-        friendlyNPCs = adlez.getFriendlyNPCs();
-        for (IFriendlyNPC fNPC : friendlyNPCs) {
-            fNPC.add(this);
-        }
     
         outOfManaSound = new LibGDXSoundAdapter(AssetStrings.OUT_OF_MANA_SOUND);
     
@@ -171,20 +148,4 @@ public class PlayerController implements ICharacterController, GateOpenListener 
     private TextureRegion getCurrentFrame() {
         return playerView.getCurrentFrame();
     }
-
-    @Override
-    public void gateOpen() {
-        if (areaHandler.getCurrentAreaInt() == AreaHandler.AREA_1) {
-            ScreenManager.getInstance().switchArea(AreaHandler.getInstance().loadArea2());
-        } else if (areaHandler.getCurrentAreaInt() == AreaHandler.AREA_2) {
-            ScreenManager.getInstance().switchArea(AreaHandler.getInstance().loadArea1());
-        }
-    }
-
-    @Override
-    public void shopOpen(NPCShop shop) {
-        // Should open the shop view...
-        // Waiting for the inventory view to be implemented...
-    }
-
 }

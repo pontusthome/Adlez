@@ -107,10 +107,10 @@ public class Adlez implements WorldObjectObserver{
             enemyObservable.addObserver(collisionHandler);
         }
         
-        for(IFriendlyNPC friendlyNPC : friendlyNPCs){
-            ObservableWorldObject friendlyNPCObservable = ((ObservableWorldObject) friendlyNPC);
-            friendlyNPCObservable.addObserver(this);
-            friendlyNPCObservable.addObserver(collisionHandler);
+        for(IFriendlyNPC fNPC : friendlyNPCs){
+            ObservableWorldObject fNPCObservable = ((ObservableWorldObject) fNPC);
+            fNPCObservable.addObserver(this);
+            fNPCObservable.addObserver(collisionHandler);
         }
     }
 

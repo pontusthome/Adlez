@@ -47,9 +47,7 @@ public class FriendlyNPC extends NPC implements IFriendlyNPC {
                 if(character.getGold() >= 5){
                     character.setGold(character.getGold() - 5);
                 }
-                for (ShopOpenListener listener : listeners) {
-                    listener.shopOpen(shop);
-                }
+                notifyListeners();
             }
         }
     }
@@ -63,5 +61,11 @@ public class FriendlyNPC extends NPC implements IFriendlyNPC {
     public void remove(ShopOpenListener listener) {
         listeners.remove(listener);
     }
-
+    
+    @Override
+    public void notifyListeners(){
+        for (ShopOpenListener listener : listeners) {
+            listener.shopOpen(shop);
+        }
+    }
 }

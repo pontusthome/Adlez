@@ -8,4 +8,5 @@ public interface IFriendlyNPC extends INPC {
     NPCShop getShop();
     void add(ShopOpenListener listener);
     void remove(ShopOpenListener listener);
+    void notifyListeners();
 }

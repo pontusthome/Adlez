@@ -7,6 +7,7 @@ import com.mygdx.game.model.core.IWorldObject;
  * Created by martinso on 06/05/16.
  */
 public interface IAreaConnection extends IWorldObject {
-    public void add(GateOpenListener listener);
-    public void remove(GateOpenListener listener);
+    void add(GateOpenListener listener);
+    void remove(GateOpenListener listener);
+    void notifyListeners();
 }
