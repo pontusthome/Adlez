@@ -16,7 +16,7 @@ import java.util.List;
  *
  * Singleton of the model Adlez
  */
-public class Adlez {
+public class Adlez implements WorldObjectObserver{
     private static Adlez adlez = new Adlez();
 
     public static Adlez getInstance() {
@@ -60,7 +60,7 @@ public class Adlez {
         enemies = area.getEnemies();
         List<IWorldObject> tempList = new ArrayList<>();
         for(IEnemy enemy : enemies){
-            tempList.add((IWorldObject) enemy);
+            tempList.add(enemy);
         }
         worldObjects.addAll(tempList);
         
@@ -68,7 +68,7 @@ public class Adlez {
         
         friendlyNPCs = area.getFriendlyNPCs();
         for(IFriendlyNPC friendlyNPC : friendlyNPCs){
-            tempList.add((IWorldObject) friendlyNPC);
+            tempList.add(friendlyNPC);
         }
         worldObjects.addAll(tempList);
 
@@ -94,6 +94,15 @@ public class Adlez {
 
         collisionHandler = CollisionHandler.getInstance();
         collisionHandler.initiate(worldObjects, attacks, interactions);
+        
+        // Add Adlez (this) & collision handler as observers to character
+        ((ObservableWorldObject) player).addObserver(this);
+        ((ObservableWorldObject) player).addObserver(collisionHandler);
+        
+        for(IEnemy enemy : enemies){
+            ((ObservableWorldObject) enemy).addObserver(this);
+            ((ObservableWorldObject) enemy).addObserver(collisionHandler);
+        }
     }
 
     public IPlayer getPlayer() {
@@ -174,4 +183,8 @@ public class Adlez {
         return newInteractions;
     }
     
+    @Override
+    public void update(IWorldObject worldObject, Object arg){
+        // To be used for adding a character's attack to the world, coming soon...
+    }
 }

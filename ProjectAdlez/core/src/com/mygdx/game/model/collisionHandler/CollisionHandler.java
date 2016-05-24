@@ -1,5 +1,6 @@
 package com.mygdx.game.model.collisionHandler;
 
+import com.mygdx.game.model.Adlez;
 import com.mygdx.game.model.WorldObjectObserver;
 import com.mygdx.game.model.characters.ICharacter;
 import com.mygdx.game.model.characters.IEnemy;
@@ -102,7 +103,7 @@ public class CollisionHandler implements WorldObjectObserver{
 			if(stringArg.equals("collision_check") && hasCharacterCollided(character)){
 				
 				// Due to lack of good AI, for now an enemy attacks the player if they have collided
-				if(character instanceof IEnemy && collide(character, player)){
+				if(character instanceof IEnemy && collide(character, Adlez.getInstance().getPlayer())){
 					IEnemy enemy = (IEnemy) character;
 					enemy.attackPlayer();
 				}
