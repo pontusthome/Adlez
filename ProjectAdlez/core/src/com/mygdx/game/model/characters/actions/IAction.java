@@ -1,6 +1,5 @@
 package com.mygdx.game.model.characters.actions;
 
-import com.mygdx.game.model.core.GameSound;
 import com.mygdx.game.model.core.IWorldObject;
 import com.mygdx.game.model.characters.ICharacter;
 

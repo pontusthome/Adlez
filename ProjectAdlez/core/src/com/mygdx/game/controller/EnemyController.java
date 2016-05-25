@@ -15,7 +15,7 @@ import com.mygdx.game.view.ICharacterView;
 public class EnemyController implements ICharacterController{
 
     private IEnemy enemy;
-    private CharacterView enemyView;
+    private ICharacterView enemyView;
     private Adlez adlez = Adlez.getInstance();
 
     public EnemyController(IEnemy enemy) {
@@ -66,7 +66,7 @@ public class EnemyController implements ICharacterController{
         return enemyView;
     }
 
-    public TextureRegion getCurrentFrame() {
+    private TextureRegion getCurrentFrame() {
         return enemyView.getCurrentFrame();
     }
 }

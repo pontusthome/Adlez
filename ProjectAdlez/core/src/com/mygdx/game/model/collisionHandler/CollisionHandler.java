@@ -1,6 +1,9 @@
 package com.mygdx.game.model.collisionHandler;
 
+import com.mygdx.game.model.Adlez;
+import com.mygdx.game.model.WorldObjectObserver;
 import com.mygdx.game.model.characters.ICharacter;
+import com.mygdx.game.model.characters.IEnemy;
 import com.mygdx.game.model.characters.IPlayer;
 import com.mygdx.game.model.characters.actions.IAttack;
 import com.mygdx.game.model.characters.actions.IInteraction;
@@ -11,7 +14,7 @@ import java.util.List;
 /**
  * Created by Michel on 30.4.2016.
  */
-public class CollisionHandler {
+public class CollisionHandler implements WorldObjectObserver{
 	
 	private List<IWorldObject> worldObjects;
 	private List<IAttack> attacks;
@@ -41,7 +44,7 @@ public class CollisionHandler {
 		updateWorld(interactions);
 	}
 
-	public void updateWorld(List<?> generics) {
+	private void updateWorld(List<?> generics) {
 		for (Object generic: generics) {
 			IWorldObject object = (IWorldObject) generic;
 			for (IWorldObject other: worldObjects) {
@@ -58,7 +61,7 @@ public class CollisionHandler {
 		}
 	}
 	
-	public static boolean collide(IWorldObject primary, IWorldObject other) {
+	private static boolean collide(IWorldObject primary, IWorldObject other) {
 		float width = primary.getWidth();
 		float height = primary.getHeight();
 		float otherWidth = other.getWidth();
@@ -81,13 +84,31 @@ public class CollisionHandler {
 				(height < y || height > otherY));
 	}
 	
-	public boolean characterCollided(ICharacter character){
-		
+	/** Method used for only when checking if a character has collided directly after a move action */
+	private boolean hasCharacterCollided(ICharacter character){
 		for (IWorldObject otherObject: worldObjects) {
 			if (!otherObject.equals(character) && character.collide(otherObject)) {
 				return true;
 			}
 		}
 		return false;
+	}
+	
+	
+	@Override
+	public void update(IWorldObject object, Object arg){
+		if(object instanceof ICharacter && arg instanceof String){
+			ICharacter character = (ICharacter) object;
+			String stringArg = (String) arg;
+			if(stringArg.equals("check_collision") && hasCharacterCollided(character)){
+				
+				// Due to lack of good AI, for now an enemy attacks the player if they have collided
+				if(character instanceof IEnemy && collide(character, Adlez.getInstance().getPlayer())){
+					IEnemy enemy = (IEnemy) character;
+					enemy.attackPlayer();
+				}
+				character.handleMoveCollision();
+			}
+		}
 	}
 }

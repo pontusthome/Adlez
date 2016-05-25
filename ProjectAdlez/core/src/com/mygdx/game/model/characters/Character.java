@@ -1,16 +1,19 @@
 package com.mygdx.game.model.characters;
 
-import com.mygdx.game.model.Adlez;
+import com.mygdx.game.model.ObservableWorldObject;
+import com.mygdx.game.model.WorldObjectObserver;
 import com.mygdx.game.model.characters.actions.*;
 import com.mygdx.game.model.core.Collidable;
 import com.mygdx.game.model.core.Direction;
 import com.mygdx.game.model.core.WorldObject;
-import com.mygdx.game.model.collisionHandler.CollisionHandler;
+
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Created by Michel on 2016-04-19.
  */
-public abstract class Character extends WorldObject implements ICharacter {
+public abstract class Character extends WorldObject implements ICharacter, ObservableWorldObject{
 
 	private int attackDamage;
 	private int health;
@@ -20,7 +23,6 @@ public abstract class Character extends WorldObject implements ICharacter {
 	private int level;
 	private int gold;
 	private String name;
-	private String characterType;
 	private int direction;
 	private float speed;
 	private boolean movingNorth;
@@ -31,6 +33,7 @@ public abstract class Character extends WorldObject implements ICharacter {
 	private float oldPosX;
 	private float oldPosY;
 	private boolean moved;
+	private List<WorldObjectObserver> observers;
 	
 	/** Speed components in x & y. Are set to 1 if only moving in either x or y, otherwise adjusted so 
 	 * that the character doesn't move faster when moving diagonally.
@@ -68,13 +71,12 @@ public abstract class Character extends WorldObject implements ICharacter {
 		setGold(gold);
 		setMana(mana);
 		
-		movingNorth = false;
-		movingSouth = false;
-		movingEast = false;
-		movingWest = false;
+		clearMoveFlags();
 		
 		oldPosX = getPosX();
 		oldPosY = getPosY();
+		
+		observers = new ArrayList<>();
 	}
 
 	@Override
@@ -82,8 +84,7 @@ public abstract class Character extends WorldObject implements ICharacter {
 		oldPosY = getPosY();
 		setPosY(getPosY() + vYComponent * getSpeed() * deltaT * velocityScalar);
 		setDirection(Direction.NORTH);
-		movingNorth = true;
-		handleMoveCollision(Direction.NORTH);
+		notifyObservers("check_collision");
 	}
 	
 	@Override
@@ -91,8 +92,7 @@ public abstract class Character extends WorldObject implements ICharacter {
 		oldPosY = getPosY();
 		setPosY(getPosY() - vYComponent * getSpeed() * deltaT * velocityScalar);
 		setDirection(Direction.SOUTH);
-		movingSouth = true;
-		handleMoveCollision(Direction.SOUTH);
+		notifyObservers("check_collision");
 	}
 	
 	@Override
@@ -100,8 +100,7 @@ public abstract class Character extends WorldObject implements ICharacter {
 		oldPosX = getPosX();
 		setPosX(getPosX() + vXComponent * getSpeed() * deltaT * velocityScalar);
 		setDirection(Direction.EAST);
-		movingEast = true;
-		handleMoveCollision(Direction.EAST);
+		notifyObservers("check_collision");
 	}
 	
 	@Override
@@ -109,8 +108,7 @@ public abstract class Character extends WorldObject implements ICharacter {
 		oldPosX = getPosX();
 		setPosX(getPosX() - vXComponent * getSpeed() * deltaT * velocityScalar);
 		setDirection(Direction.WEST);
-		movingWest = true;
-		handleMoveCollision(Direction.WEST);
+		notifyObservers("check_collision");
 	}
 
 	@Override
@@ -186,16 +184,6 @@ public abstract class Character extends WorldObject implements ICharacter {
 	}
 	
 	@Override
-	public String getCharacterType(){
-		return characterType;
-	}
-	
-	@Override
-	public void setCharacterType(String characterType){
-		this.characterType = characterType;
-	}
-	
-	@Override
 	public int getMaxHealth(){
 		return maxHealth;
 	}
@@ -240,7 +228,7 @@ public abstract class Character extends WorldObject implements ICharacter {
 		
 	}
 	
-	public void clearMoveFlags(){
+	private void clearMoveFlags(){
 		movingNorth = false;
 		movingSouth = false;
 		movingEast = false;
@@ -248,35 +236,16 @@ public abstract class Character extends WorldObject implements ICharacter {
 	}
 	
 	@Override
-	public boolean isMovingNorth(){
-		return movingNorth;
-	}
-	
-	@Override
-	public boolean isMovingSouth(){
-		return movingSouth;
-	}
-	
-	@Override
-	public boolean isMovingEast(){
-		return movingEast;
-	}
-	
-	@Override
-	public boolean isMovingWest(){
-		return movingWest;
-	}
-	
-	@Override
 	public boolean isAlive(){
 		return getHealth() > 0;
 	}
 	
+	@Override
 	public void move(float deltaT){
-		/** Check if moving in diagonally. If so, set x & y speed components so that the total speed is equal to the 
+		/** Check if moving diagonally. If so, set x & y speed components so that the total speed is equal to the 
 		 *  characters speed.
 		 */
-		if((isMovingWest() || isMovingEast()) && (isMovingNorth() || isMovingSouth())){
+		if((movingWest || movingEast) && (movingNorth || movingSouth)){
 			vXComponent = (float) Math.cos(Math.toRadians(45));
 			vYComponent = (float) Math.cos(Math.toRadians(45));
 		}else{
@@ -284,23 +253,23 @@ public abstract class Character extends WorldObject implements ICharacter {
 			vYComponent = 1;
 		}
 		
-		if(isMovingNorth()){
+		if(movingNorth){
 			moveNorth(deltaT);
-		}else if(isMovingSouth()){
+		}else if(movingSouth){
 			moveSouth(deltaT);
 		}
 		
-		if(isMovingEast()){
+		if(movingEast){
 			moveEast(deltaT);
-		}else if(isMovingWest()){
+		}else if(movingWest){
 			moveWest(deltaT);
 		}
 
 		setMoved(false);
-		if (	isMovingSouth() ||
-				isMovingNorth() ||
-				isMovingWest() ||
-				isMovingEast()) {
+		if (	movingSouth ||
+				movingNorth ||
+				movingWest ||
+				movingEast) {
 			setMoved(true);
 		}
 
@@ -347,45 +316,28 @@ public abstract class Character extends WorldObject implements ICharacter {
 		attackCooldown = 0;
 	}
 	
-	public void handleMoveCollision(int direction){
-		if (CollisionHandler.getInstance().characterCollided(this)) {
-			switch(direction){
-				case Direction.NORTH:
-					setPosY(oldPosY);
-					break;
-				case Direction.SOUTH:
-					setPosY(oldPosY);
-					break;
-				case Direction.EAST:
-					setPosX(oldPosX);
-					break;
-				case Direction.WEST:
-					setPosX(oldPosX);
-					break;
-			}
+	@Override
+	public void handleMoveCollision(){
+		switch(getDirection()){
+			case Direction.NORTH:
+				setPosY(oldPosY);
+				break;
+			case Direction.SOUTH:
+				setPosY(oldPosY);
+				break;
+			case Direction.EAST:
+				setPosX(oldPosX);
+				break;
+			case Direction.WEST:
+				setPosX(oldPosX);
+				break;
 		}
-	}
-	
-	public float getOldPosX(){
-		return oldPosX;
-	}
-	
-	public void setOldPosX(float oldPosX){
-		this.oldPosX = oldPosX;
-	}
-	
-	public float getOldPosY(){
-		return oldPosY;
-	}
-	
-	public void setOldPosY(float oldPosY){
-		this.oldPosY = oldPosY;
 	}
 	
 	@Override
 	public void MeleeAttack(){
 		IAttack attack = new MeleeAttack(this);
-		Adlez.getInstance().addAttack(attack);
+		notifyObservers(attack);
 		
 		//TODO: Remove when debugging is over
 		latestAttack = attack;
@@ -395,7 +347,7 @@ public abstract class Character extends WorldObject implements ICharacter {
 	public void AOEMeleeAttack(){
 		IAttack attack = new AOEMeleeAttack(this);
 		useMana(attack);
-		Adlez.getInstance().addAttack(attack);
+		notifyObservers(attack);
 		
 		//TODO: Remove when debugging is over
 		latestAttack = attack;
@@ -405,7 +357,7 @@ public abstract class Character extends WorldObject implements ICharacter {
 	public void AOEMagicAttack(){
 		IAttack attack = new AOEMagicAttack(this);
 		useMana(attack);
-		Adlez.getInstance().addAttack(attack);
+		notifyObservers(attack);
 		
 		//TODO: Remove when debugging is over
 		latestAttack = attack;
@@ -415,7 +367,7 @@ public abstract class Character extends WorldObject implements ICharacter {
 	public void RangeMagicAttack(){
 		IAttack attack = new RangeMagicAttack(this);
 		useMana(attack);
-		Adlez.getInstance().addAttack(attack);
+		notifyObservers(attack);
 		
 		//TODO: Remove when debugging is over
 		latestAttack = attack;
@@ -441,7 +393,7 @@ public abstract class Character extends WorldObject implements ICharacter {
 	@Override
 	public void interact(){
 		IInteraction interaction = new Interaction(this);
-		Adlez.getInstance().addInteraction(interaction);
+		notifyObservers(interaction);
 		
 		//TODO: Remove when debugging is over
 		latestInteraction = interaction;
@@ -451,5 +403,22 @@ public abstract class Character extends WorldObject implements ICharacter {
 	@Override
 	public IInteraction getLatestInteraction(){
 		return latestInteraction;
+	}
+	
+	@Override
+	public void addObserver(WorldObjectObserver observer){
+		observers.add(observer);
+	}
+	
+	@Override
+	public void removeObserver(WorldObjectObserver observer){
+		observers.remove(observer);
+	}
+	
+	@Override
+	public void notifyObservers(Object arg){
+		for(WorldObjectObserver observer : observers){
+			observer.update(this, arg);
+		}
 	}
 }

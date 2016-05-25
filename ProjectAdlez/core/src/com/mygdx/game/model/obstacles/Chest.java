@@ -17,7 +17,7 @@ public class Chest extends WorldObject implements IChest {
 
     private int chestSize;
     private int chestSizeCount = 0;
-    private List<IItem> slots = new ArrayList<IItem>(chestSize);
+    private List<IItem> slots = new ArrayList<>(chestSize);
     private boolean isOpened = false;
 
     public Chest(float posX, float posY, int width, int height, int chestSize) {

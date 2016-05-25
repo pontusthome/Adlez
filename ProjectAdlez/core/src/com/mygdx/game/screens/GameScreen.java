@@ -13,14 +13,15 @@ import com.badlogic.gdx.maps.tiled.renderers.OrthoCachedTiledMapRenderer;
 import com.mygdx.game.controller.*;
 import com.mygdx.game.builder.AreaHandler;
 import com.mygdx.game.model.*;
+import com.mygdx.game.model.characters.*;
 import com.mygdx.game.model.characters.actions.HitBox;
 import com.mygdx.game.model.characters.actions.IAttack;
 import com.mygdx.game.model.characters.actions.IInteraction;
-import com.mygdx.game.model.characters.IEnemy;
-import com.mygdx.game.model.characters.IPlayer;
 import com.mygdx.game.model.collisionHandler.CollisionHandler;
 import com.mygdx.game.model.core.GameSound;
+import com.mygdx.game.model.core.GateOpenListener;
 import com.mygdx.game.model.core.LibGDXSoundAdapter;
+import com.mygdx.game.model.obstacles.IAreaConnection;
 import com.mygdx.game.model.obstacles.IWall;
 import com.mygdx.game.utils.AssetStrings;
 
@@ -32,7 +33,7 @@ import java.util.Map;
 /**
  * Created by Viktor on 2016-04-19.
  */
-public class GameScreen extends AbstractScreen {
+public class GameScreen extends AbstractScreen implements GateOpenListener, ShopOpenListener{
 
     private Adlez adlez = Adlez.getInstance();
 
@@ -49,7 +50,6 @@ public class GameScreen extends AbstractScreen {
     private TiledMap tileMap;
     
     private CollisionHandler collisionHandler;
-    private List<IAttack> attacks;
 
     private HashMap<IAttack, IController> attackControllers;
     private ShapeRenderer debugRenderer = new ShapeRenderer();
@@ -57,7 +57,6 @@ public class GameScreen extends AbstractScreen {
     
     private IController obstaclesController;
     private IController chestsController;
-    private IController wallsController;
     private IController friendlyNPCController;
     private IController areaConnectionController;
     private IController manaFountainController;
@@ -102,17 +101,25 @@ public class GameScreen extends AbstractScreen {
             AttackController attackController = new AttackController(attack);
             attackControllers.put(attack, attackController);
         }
-    
-        attacks = adlez.getAttacks();
+        
         newAttacks = adlez.getNewAttacks();
     
         obstaclesController = new ObstaclesController(adlez.getObstacles(), AssetStrings.BOULDER_OBSTACLE_IMAGE);
         chestsController = new ChestsController(adlez.getChests(), AssetStrings.CLOSED_CHEST_IMAGE, AssetStrings.OPEN_CHEST_IMAGE);
-        wallsController = new WallsController(adlez.getWalls());
         friendlyNPCController = new FriendlyNPCController(adlez.getFriendlyNPCs(), AssetStrings.FRIENDLY_NPC_SOUTH);
         areaConnectionController = new AreaConnectionController(adlez.getAreaConnections(), AssetStrings.DOOR_GATE_IMAGE);
         manaFountainController = new ManaFountainController(adlez.getManaFountains(), AssetStrings.MANA_FOUNTAIN_IMAGE);
-
+        
+        List<IAreaConnection> areaConnections = adlez.getAreaConnections();
+        for (IAreaConnection ac : areaConnections) {
+            ac.add(this);
+        }
+    
+        List<IFriendlyNPC> friendlyNPCs = adlez.getFriendlyNPCs();
+        for (IFriendlyNPC fNPC : friendlyNPCs) {
+            fNPC.add(this);
+        }
+        
         interactionControllers = new HashMap<>();
         newInteractions = adlez.getNewInteractions();
 
@@ -285,5 +292,20 @@ public class GameScreen extends AbstractScreen {
             debugRenderer.rect(wall.getPosX(), wall.getPosY(), wall.getWidth(), wall.getHeight());
         }
         debugRenderer.end();
+    }
+    
+    @Override
+    public void gateOpen() {
+        if (areaHandler.getCurrentAreaInt() == AreaHandler.AREA_1) {
+            ScreenManager.getInstance().switchArea(AreaHandler.getInstance().loadArea2());
+        } else if (areaHandler.getCurrentAreaInt() == AreaHandler.AREA_2) {
+            ScreenManager.getInstance().switchArea(AreaHandler.getInstance().loadArea1());
+        }
+    }
+    
+    @Override
+    public void shopOpen(NPCShop shop) {
+        // Should open the shop view...
+        // Waiting for the inventory view to be implemented...
     }
 }

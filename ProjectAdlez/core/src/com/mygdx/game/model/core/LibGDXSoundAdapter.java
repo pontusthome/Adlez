@@ -18,9 +18,4 @@ public class LibGDXSoundAdapter implements GameSound{
 	public void play(Float volume){
 		sound.play(volume);
 	}
-	
-	@Override
-	public void setSound(String soundAssetString){
-		sound = Gdx.audio.newSound(Gdx.files.internal(soundAssetString));
-	}
 }

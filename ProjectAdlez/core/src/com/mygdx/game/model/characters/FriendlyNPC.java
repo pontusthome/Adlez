@@ -1,6 +1,5 @@
 package com.mygdx.game.model.characters;
 
-import com.mygdx.game.model.Adlez;
 import com.mygdx.game.model.characters.actions.IInteraction;
 import com.mygdx.game.model.core.Collidable;
 
@@ -13,10 +12,8 @@ import java.util.List;
 
 public class FriendlyNPC extends NPC implements IFriendlyNPC {
 
-    private Adlez adlez = Adlez.getInstance();
-    private IPlayer player = adlez.getPlayer();
     private NPCShop shop;
-    private List<ShopOpenListener> listeners = new ArrayList<ShopOpenListener>();
+    private List<ShopOpenListener> listeners = new ArrayList<>();
 
     public FriendlyNPC(int direction, float speed, int width,
                        int height, float posX, float posY,
@@ -43,12 +40,14 @@ public class FriendlyNPC extends NPC implements IFriendlyNPC {
      */
     @Override
     public void onCollide(Collidable other) {
-        if(player.getGold() >= 5) {
-            player.setGold(player.getGold() - 5);
-            if (other instanceof IInteraction) {
-                for (ShopOpenListener listener : listeners) {
-                    listener.shopOpen(shop);
+        if (other instanceof IInteraction) {
+            IInteraction interaction = (IInteraction) other;
+            ICharacter character = interaction.getCharacter();
+            if(character instanceof IPlayer){
+                if(character.getGold() >= 5){
+                    character.setGold(character.getGold() - 5);
                 }
+                notifyListeners();
             }
         }
     }
@@ -62,5 +61,10 @@ public class FriendlyNPC extends NPC implements IFriendlyNPC {
     public void remove(ShopOpenListener listener) {
         listeners.remove(listener);
     }
-
+    
+    private void notifyListeners(){
+        for (ShopOpenListener listener : listeners) {
+            listener.shopOpen(shop);
+        }
+    }
 }

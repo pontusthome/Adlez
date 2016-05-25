@@ -13,10 +13,10 @@ import java.util.List;
 
 /**
  * @author Pontus
- *
- * Singleton of the model Adlez
+ *         <p>
+ *         Singleton of the model Adlez
  */
-public class Adlez {
+public class Adlez implements WorldObjectObserver {
     private static Adlez adlez = new Adlez();
 
     public static Adlez getInstance() {
@@ -58,16 +58,16 @@ public class Adlez {
 
         enemies = area.getEnemies();
         List<IWorldObject> tempList = new ArrayList<>();
-        for(IEnemy enemy : enemies){
-            tempList.add((IWorldObject) enemy);
+        for (IEnemy enemy : enemies) {
+            tempList.add(enemy);
         }
         worldObjects.addAll(tempList);
-        
+
         tempList.clear();
-        
+
         friendlyNPCs = area.getFriendlyNPCs();
-        for(IFriendlyNPC friendlyNPC : friendlyNPCs){
-            tempList.add((IWorldObject) friendlyNPC);
+        for (IFriendlyNPC friendlyNPC : friendlyNPCs) {
+            tempList.add(friendlyNPC);
         }
         worldObjects.addAll(tempList);
 
@@ -90,6 +90,24 @@ public class Adlez {
 
         collisionHandler = CollisionHandler.getInstance();
         collisionHandler.initiate(worldObjects, attacks, interactions);
+
+        // Add this & collision handler as observers to all characters
+
+        ObservableWorldObject playerObservable = (ObservableWorldObject) player;
+        playerObservable.addObserver(this);
+        playerObservable.addObserver(collisionHandler);
+
+        for (IEnemy enemy : enemies) {
+            ObservableWorldObject enemyObservable = ((ObservableWorldObject) enemy);
+            enemyObservable.addObserver(this);
+            enemyObservable.addObserver(collisionHandler);
+        }
+
+        for (IFriendlyNPC fNPC : friendlyNPCs) {
+            ObservableWorldObject fNPCObservable = ((ObservableWorldObject) fNPC);
+            fNPCObservable.addObserver(this);
+            fNPCObservable.addObserver(collisionHandler);
+        }
     }
 
     public IPlayer getPlayer() {
@@ -100,7 +118,9 @@ public class Adlez {
         this.player = player;
     }
 
-    public List<IEnemy> getEnemies() { return enemies; }
+    public List<IEnemy> getEnemies() {
+        return enemies;
+    }
 
     public List<IFriendlyNPC> getFriendlyNPCs() {
         return friendlyNPCs;
@@ -125,49 +145,60 @@ public class Adlez {
     public List<IManaFountain> getManaFountains() {
         return manaFountains;
     }
-    
-    public void removeEnemyFromWorld(INPC enemy){
+
+    public void removeEnemyFromWorld(INPC enemy) {
         enemies.remove(enemy);
         worldObjects.remove(enemy);
     }
 
-    public CollisionHandler getCollisionHandler(){
+    public CollisionHandler getCollisionHandler() {
         return collisionHandler;
     }
-    
-    public List<IAttack> getAttacks(){
+
+    public List<IAttack> getAttacks() {
         return attacks;
     }
-    
-    public void removeAttackFromWorld(IAttack attack){
+
+    public void removeAttackFromWorld(IAttack attack) {
         attacks.remove(attack);
     }
-    
-    public List<IAttack> getNewAttacks(){
+
+    public List<IAttack> getNewAttacks() {
         return newAttacks;
     }
-    
-    public void addAttack(IAttack attack){
+
+    private void addAttack(IAttack attack) {
         newAttacks.add(attack);
         attacks.add(attack);
     }
-    
-    public void removeObstacleFromWorld(IObstacle obstacle){
+
+    public void removeObstacleFromWorld(IObstacle obstacle) {
         obstacles.remove(obstacle);
         worldObjects.remove(obstacle);
     }
-    
-    public void addInteraction(IInteraction interaction){
+
+    private void addInteraction(IInteraction interaction) {
         newInteractions.add(interaction);
         interactions.add(interaction);
     }
-    
-    public void removeInteractionFromWorld(IInteraction interaction){
+
+    public void removeInteractionFromWorld(IInteraction interaction) {
         interactions.remove(interaction);
     }
-    
-    public List<IInteraction> getNewInteractions(){
+
+    public List<IInteraction> getNewInteractions() {
         return newInteractions;
     }
-    
+
+    @Override
+    public void update(IWorldObject worldObject, Object arg) {
+        // To be used for adding a character's attack to the world, coming soon...
+        if (arg instanceof IAttack) {
+            IAttack newAttack = (IAttack) arg;
+            addAttack(newAttack);
+        } else if (arg instanceof IInteraction) {
+            IInteraction newInteraction = (IInteraction) arg;
+            addInteraction(newInteraction);
+        }
+    }
 }

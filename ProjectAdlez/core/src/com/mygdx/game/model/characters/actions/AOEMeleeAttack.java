@@ -12,10 +12,6 @@ import com.mygdx.game.model.characters.ICharacter;
  */
 public class AOEMeleeAttack extends Attack{
 	
-	public AOEMeleeAttack(){
-		super();
-	}
-	
 	public AOEMeleeAttack(ICharacter character){
 		super(character);
 	}

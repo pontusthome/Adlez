@@ -1,6 +1,5 @@
 package com.mygdx.game.model.characters.actions;
 
-import com.mygdx.game.model.core.GameSound;
 import com.mygdx.game.model.core.WorldObject;
 import com.mygdx.game.model.characters.ICharacter;
 import com.mygdx.game.model.characters.Player;
@@ -11,7 +10,6 @@ import com.mygdx.game.model.characters.Player;
 public abstract class Action extends WorldObject implements IAction{
 	
 	private HitBox hitBox = new HitBox();
-	private GameSound sound;
 	private boolean isFinished;
 	private ICharacter character;
 	private boolean byPlayer;
@@ -26,11 +24,7 @@ public abstract class Action extends WorldObject implements IAction{
 		setInitLocation(character);
 		hitBox = new HitBox(getPosX(), getPosY(), getWidth(), getHeight());
 		
-		if(character instanceof Player){
-			byPlayer = true;
-		}else{
-			byPlayer = false;
-		}
+		byPlayer = character instanceof Player;
 	}
 	
 	@Override

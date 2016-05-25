@@ -16,9 +16,4 @@ public abstract class NPC extends Character implements INPC {
 				posX, posY, maxHealth, 
 				attackDamage, gold, mana);
 	}
-	
-	@Override
-	public void onCollide(Collidable other){
-		super.onCollide(other);
-	}
 }
