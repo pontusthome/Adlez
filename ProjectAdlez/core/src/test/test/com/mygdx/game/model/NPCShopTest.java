@@ -92,23 +92,6 @@ public class NPCShopTest {
         items.add(CompleteItems.WOOD_SWORD);
         NPCShop shop = new NPCShop(items);
         npc.createShop(shop);
-
         assertTrue(npc.getShop().getItems().size() == 3);
-    }
-
-    /**
-     * Player interact with shop. Opening shop.
-     * Player needs to pay 5 gold to open the shop.
-     * Player has 5 gold and will have 0 gold afterwards.
-     */
-    @Test
-    public void testOpenShop() {
-        Player player = new Player();
-        player.resetPlayer();
-        player.setGold(5);
-        Adlez.getInstance().setPlayer(player);
-        IFriendlyNPC npc = new FriendlyNPC(Direction.NORTH, 0, 17, 17, 20, 20, 100, 0, 0, 0);
-        npc.onCollide(player);
-        assertTrue(player.getGold() == 0);
     }
 }

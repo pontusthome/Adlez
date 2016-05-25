@@ -4,16 +4,10 @@ import com.mygdx.game.model.characters.*;
 import com.mygdx.game.model.characters.actions.IAttack;
 import com.mygdx.game.model.characters.actions.MeleeAttack;
 import com.mygdx.game.model.characters.items.CompleteItems;
-import com.mygdx.game.model.characters.items.IItem;
-import com.mygdx.game.model.core.Direction;
-import com.mygdx.game.model.exceptions.InsufficientGoldException;
 import com.mygdx.game.model.exceptions.InventoryFullException;
 import com.mygdx.game.model.exceptions.ItemNotFoundException;
 import com.mygdx.game.model.factories.EnemyFactory;
 import org.junit.Test;
-
-import java.util.ArrayList;
-import java.util.List;
 
 import static org.junit.Assert.*;
 

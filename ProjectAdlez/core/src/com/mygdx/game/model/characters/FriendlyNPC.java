@@ -35,18 +35,12 @@ public class FriendlyNPC extends NPC implements IFriendlyNPC {
         return shop;
     }
 
-    /**
-     * Small fee of 5 gold to open the shop.
-     */
     @Override
     public void onCollide(Collidable other) {
         if (other instanceof IInteraction) {
             IInteraction interaction = (IInteraction) other;
             ICharacter character = interaction.getCharacter();
-            if(character instanceof IPlayer){
-                if(character.getGold() >= 5){
-                    character.setGold(character.getGold() - 5);
-                }
+            if (character instanceof IPlayer) {
                 notifyListeners();
             }
         }
@@ -61,8 +55,8 @@ public class FriendlyNPC extends NPC implements IFriendlyNPC {
     public void remove(ShopOpenListener listener) {
         listeners.remove(listener);
     }
-    
-    private void notifyListeners(){
+
+    private void notifyListeners() {
         for (ShopOpenListener listener : listeners) {
             listener.shopOpen(shop);
         }

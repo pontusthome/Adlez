@@ -3,6 +3,7 @@ package com.mygdx.game.model;
 import com.mygdx.game.model.characters.IEnemy;
 import com.mygdx.game.model.characters.IFriendlyNPC;
 import com.mygdx.game.model.characters.IPlayer;
+import com.mygdx.game.model.core.Direction;
 import com.mygdx.game.model.core.IWorldObject;
 import com.mygdx.game.model.obstacles.*;
 import org.junit.Test;
@@ -73,28 +74,29 @@ public class PlayerMoveTest {
 
         // Move North.
         resetPlayer();
-        player.moveNorth(deltaT);
+        //player.moveNorth(deltaT);
+        player.setMovingNorth();
         player.move(deltaT);
         assertTrue(player.getPosX() == 0);
         assertTrue(player.getPosY() > 0);
 
         // Move West.
         resetPlayer();
-        player.moveWest(deltaT);
+        player.setMovingWest();
         player.move(deltaT);
         assertTrue(player.getPosX() < 1);
         assertTrue(player.getPosY() == 0);
 
         // Move East.
         resetPlayer();
-        player.moveEast(deltaT);
+        player.setMovingEast();
         player.move(deltaT);
         assertTrue(player.getPosX() > 0);
         assertTrue(player.getPosY() == 0);
 
         // Move South.
         resetPlayer();
-        player.moveSouth(deltaT);
+        player.setMovingSouth();
         player.move(deltaT);
         assertTrue(player.getPosX() == 0);
         assertTrue(player.getPosY() < 0);
