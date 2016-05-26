@@ -10,16 +10,15 @@ import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 
 public final class AssetStrings {
 
-    public final static String STATUSUI_TEXTURE_ATLAS_PATH = "skins/statusui.atlas";
-    public final static String STATUSUI_SKIN_PATH = "skins/statusui.json";
-    public final static String ITEMS_TEXTURE_ATLAS_PATH = "skins/items.atlas";
-    public final static String ITEMS_SKIN_PATH = "skins/items.json";
+    private final static String STATUSUI_TEXTURE_ATLAS_PATH = "skins/statusui.atlas";
+    private final static String STATUSUI_SKIN_PATH = "skins/statusui.json";
+    private final static String ITEMS_TEXTURE_ATLAS_PATH = "skins/items.atlas";
+    private final static String ITEMS_SKIN_PATH = "skins/items.json";
 
     public static TextureAtlas STATUSUI_TEXTUREATLAS = new TextureAtlas(AssetStrings.STATUSUI_TEXTURE_ATLAS_PATH);
     public static TextureAtlas ITEMS_TEXTUREATLAS = new TextureAtlas(AssetStrings.ITEMS_TEXTURE_ATLAS_PATH);
 
     public static Skin STATUSUI_SKIN = new Skin(Gdx.files.internal(AssetStrings.STATUSUI_SKIN_PATH), STATUSUI_TEXTUREATLAS);
-
 
 
 
@@ -30,20 +29,6 @@ public final class AssetStrings {
     public static final String LOAD_GAME_BUTTON_IMAGE = "buttons/loadGameButton.png";
     public static final String EXIT_GAME_BUTTON_IMAGE = "buttons/exitGameButton.png";
     public static final String INVENTORY_BUTTON_IMAGE = "buttons/inventoryButton.9.png";
-
-    /**
-     * GUI Elements
-     */
-    public static final String INVENTORY_SLOT_IMAGE = "gui_elements/inventory_slot.9.png";
-    public static final String INVENTORY_BACKGROUND_IMAGE = "gui_elements/inventory_background.9.png";
-    public static final String GUI_BACKGROUND_IMAGE = "gui_elements/gui_background.9.png";
-
-    /**
-     * Status Bars
-     */
-    public static final String HP_BAR_IMAGE = "status_bars/hpBar.9.png";
-    public static final String MP_BAR_IMAGE = "status_bars/mpBar.9.png";
-    public static final String EMPTY_BAR_IMAGE = "status_bars/emptyBar.9.png";
 
     /**
      * Sounds
