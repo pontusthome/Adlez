@@ -43,10 +43,10 @@ public interface ICharacter extends IWorldObject {
 	float getAttackCooldown();
 	void resetAttackCooldown();
 	void handleMoveCollision();
-	void MeleeAttack();
-	void AOEMeleeAttack();
-	void AOEMagicAttack();
-	void RangeMagicAttack();
+	void meleeAttack();
+	void aoeMeleeAttack();
+	void aoeMagicAttack();
+	void rangeMagicAttack();
 	void useMana(IAttack attack);
 	void interact();
 	void setMoved(boolean moved);

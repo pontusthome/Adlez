@@ -65,7 +65,7 @@ public abstract class AbstractScreen extends Stage implements Screen {
     protected void loadGame() throws IOException {
         // Load the AreaHandler
         AreaIO areaBuilder = new AreaBuilder();
-        AreaHandler areaHandler = areaBuilder.loadAreaHandler();
+        areaBuilder.loadAreaHandler();
 
         // Load the Player
         areaBuilder.loadPlayer();

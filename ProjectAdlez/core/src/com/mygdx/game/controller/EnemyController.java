@@ -34,9 +34,6 @@ public class EnemyController implements ICharacterController{
             case Enemy.DOG_LEVEL_ONE:
                 enemyView = new CharacterView(AssetStrings.BLUE_DOG_MOVE);
                 break;
-            default:
-                enemyView = new CharacterView(AssetStrings.RED_PLAYER_MOVE);
-                break;
         }
     }
 

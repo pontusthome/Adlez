@@ -17,17 +17,19 @@ public class Chest extends WorldObject implements IChest {
 
     private int chestSize;
     private int chestSizeCount = 0;
-    private List<IItem> slots = new ArrayList<>(chestSize);
+    private List<IItem> slots;
     private boolean isOpened = false;
 
     public Chest(float posX, float posY, int width, int height, int chestSize) {
         super(posX, posY, width, height);
         this.chestSize = chestSize;
+        slots = new ArrayList<>(chestSize);
     }
 
     public Chest(float posX, float posY) {
         super(posX, posY, 16, 16);
         chestSize = 2;
+        slots = new ArrayList<>(chestSize);
     }
 
     @Override
@@ -43,7 +45,6 @@ public class Chest extends WorldObject implements IChest {
     @Override
     public int getSize() {
         return chestSize;
-
     }
     
     @Override
