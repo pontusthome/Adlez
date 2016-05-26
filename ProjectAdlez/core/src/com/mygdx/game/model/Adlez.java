@@ -1,7 +1,7 @@
 package com.mygdx.game.model;
 
-import com.mygdx.game.model.characters.actions.IAttack;
-import com.mygdx.game.model.characters.actions.IInteraction;
+import com.mygdx.game.model.characters.Character;
+import com.mygdx.game.model.characters.actions.*;
 import com.mygdx.game.model.characters.*;
 import com.mygdx.game.model.core.IWorldObject;
 import com.mygdx.game.model.collisionHandler.CollisionHandler;
@@ -193,14 +193,52 @@ public class Adlez implements WorldObjectObserver {
     }
 
     @Override
-    public void update(IWorldObject worldObject, Object arg) {
-        // To be used for adding a character's attack to the world, coming soon...
-        if (arg instanceof IAttack) {
-            IAttack newAttack = (IAttack) arg;
-            addAttack(newAttack);
-        } else if (arg instanceof IInteraction) {
-            IInteraction newInteraction = (IInteraction) arg;
-            addInteraction(newInteraction);
+    public void update(IWorldObject worldObject, String action) {
+        if (worldObject instanceof ICharacter) {
+            ICharacter character = (ICharacter) worldObject;
+            switch(action){
+                case "melee_attack":{
+                    IAttack attack = new MeleeAttack(character);
+                    addAttack(attack);
+            
+                    //TODO: Remove when debugging is over
+                    ((Character) character).latestAttack = attack;
+                    break;
+                }
+                case "aoe_melee_attack":{
+                    IAttack attack = new AOEMeleeAttack(character);
+                    addAttack(attack);
+            
+                    //TODO: Remove when debugging is over
+                    ((Character) character).latestAttack = attack;
+                    break;
+                }
+                case "range_magic_attack":{
+                    IAttack attack = new RangeMagicAttack(character);
+                    character.useMana(attack.getManaUsage());
+                    addAttack(attack);
+            
+                    //TODO: Remove when debugging is over
+                    ((Character) character).latestAttack = attack;
+                    break;
+                }
+                case "aoe_magic_attack":{
+                    IAttack attack = new AOEMagicAttack(character);
+                    character.useMana(attack.getManaUsage());
+                    addAttack(attack);
+            
+                    //TODO: Remove when debugging is over
+                    ((Character) character).latestAttack = attack;
+                    break;
+                }
+                case "interaction":
+                    IInteraction interaction = new Interaction(character);
+                    addInteraction(interaction);
+            
+                    //TODO: Remove when debugging is over
+                    ((Character) character).latestInteraction = interaction;
+                    break;
+            }
         }
     }
 }

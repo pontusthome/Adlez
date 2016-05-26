@@ -10,6 +10,7 @@ public class AOEMagicAttack extends Attack{
 	
 	public AOEMagicAttack(ICharacter character){
 		super(character);
+		setManaUsage(20);
 	}
 	
 	@Override

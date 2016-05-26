@@ -6,5 +6,5 @@ package com.mygdx.game.model.core;
 public interface ObservableWorldObject{
 	void addObserver(WorldObjectObserver observer);
 	void removeObserver(WorldObjectObserver observer);
-	void notifyObservers(Object arg);
+	void notifyObservers(String action);
 }

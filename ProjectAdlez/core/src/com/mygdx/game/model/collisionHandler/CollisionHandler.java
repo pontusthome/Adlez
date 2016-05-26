@@ -99,13 +99,12 @@ public class CollisionHandler implements WorldObjectObserver{
 	
 	
 	@Override
-	public void update(IWorldObject object, Object arg){
-		if(object instanceof ICharacter && arg instanceof String){
+	public void update(IWorldObject object, String action){
+		if(object instanceof ICharacter && action.equals("check_collision")){
 			ICharacter character = (ICharacter) object;
-			String stringArg = (String) arg;
-			if(stringArg.equals("check_collision") && hasCharacterCollided(character)){
+			if(hasCharacterCollided(character)){
 				
-				// Due to lack of good AI, for now an enemy attacks the player if they have collided
+				// Enemies attack player on collision with him for now
 				if(character instanceof IEnemy && collide(character, player)){
 					IEnemy enemy = (IEnemy) character;
 					enemy.attackPlayer();

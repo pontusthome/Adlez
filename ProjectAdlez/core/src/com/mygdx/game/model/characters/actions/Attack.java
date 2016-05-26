@@ -8,6 +8,7 @@ import com.mygdx.game.model.characters.ICharacter;
 public abstract class Attack extends Action implements IAttack{
 	
 	private int damage;
+	private int manaUsage;
 	
 	public Attack(){
 		super();
@@ -29,5 +30,13 @@ public abstract class Attack extends Action implements IAttack{
 		return damage;
 	}
 	
+	@Override
+	public int getManaUsage(){
+		return manaUsage;
+	}
 	
+	@Override
+	public void setManaUsage(int manaUsage){
+		this.manaUsage = manaUsage;
+	}
 }
