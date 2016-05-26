@@ -1,6 +1,7 @@
 package com.mygdx.game.screens;
 
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.InputMultiplexer;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 
@@ -66,12 +67,17 @@ public class GameScreen extends AbstractScreen {
     private static final float WIDTH_SCALE = 2/3f;
     private static final float HEIGHT_SCALE = 2/3f;
 
-    private Hud hud;
+    private OrthographicCamera hudCamera = null;
+    private HUD playerHUD;
 
     public GameScreen() {
         super();
         batch = new SpriteBatch();
-        this.hud = new Hud(this);
+
+        hudCamera = new OrthographicCamera();
+        hudCamera.setToOrtho(
+                false, Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
+        playerHUD = new HUD(hudCamera, player);
     }
 
     @Override
@@ -86,6 +92,8 @@ public class GameScreen extends AbstractScreen {
         // Spawning player.
         playerController = new PlayerController(player);
 
+        batch.setProjectionMatrix(playerHUD.getStage().getCamera().combined);
+        playerHUD.getStage().draw();
 
         // Spawning enemies.
         enemies = new HashMap<>();
@@ -128,6 +136,7 @@ public class GameScreen extends AbstractScreen {
     @Override
     public void render(float delta) {
         updateGame(delta);
+        playerHUD.update();
 
         // Clear screen
         Gdx.gl.glClearColor(0, 0, 0, 1);
@@ -136,10 +145,6 @@ public class GameScreen extends AbstractScreen {
         // Render Tiled map
         renderer.setView(playerCam);
         renderer.render();
-
-        //Renders the HUD
-        batch.setProjectionMatrix(hud.stage.getCamera().combined);
-        hud.stage.draw();
 
         batch.setProjectionMatrix((playerCam.combined));
         batch.begin();
@@ -165,7 +170,7 @@ public class GameScreen extends AbstractScreen {
         friendlyNPCController.render(batch);
         areaConnectionController.render(batch);
         manaFountainController.render(batch);
-
+        playerHUD.render(delta);
         batch.end();
     
         debugRender();
@@ -183,7 +188,7 @@ public class GameScreen extends AbstractScreen {
         obstaclesController.update(delta);
         chestsController.update(delta);
         wallsController.update(delta);
-        
+
         collisionHandler.updateWorld();
     }
 

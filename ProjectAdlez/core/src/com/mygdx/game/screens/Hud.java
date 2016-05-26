@@ -1,30 +1,37 @@
 package com.mygdx.game.screens;
 
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
+import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.*;
 import com.badlogic.gdx.utils.viewport.FitViewport;
+import com.badlogic.gdx.utils.viewport.ScreenViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
 import com.mygdx.game.model.Adlez;
 import com.mygdx.game.model.characters.ICharacter;
-import com.mygdx.game.view.ExperienceBar;
-import com.mygdx.game.view.HealthBar;
+import com.mygdx.game.model.characters.IPlayer;
+import com.mygdx.game.utils.AssetStrings;
 import com.mygdx.game.view.IStatusBar;
-import com.mygdx.game.view.ManaBar;
 
 /**
  * Created by Viktor on 2016-04-26.
  */
-public class Hud{
+public class HUD implements Screen{
 
     private Adlez adlez = Adlez.getInstance();
     private GameScreen gameScreen;
     private ICharacter player;
-    public Stage stage;
-    public Viewport viewport;
+    private OrthographicCamera hudCamera;
+    private Stage stage;
+    private Viewport viewport;
+
+    private StatusUI statusUI;
+    private InventoryUI inventoryUI;
+
 
     private Label healthLabel;
     private Label manaLabel;
@@ -35,37 +42,69 @@ public class Hud{
     private IStatusBar playerManaBar;
     private IStatusBar playerExperienceBar;
 
-    public Hud(GameScreen screen) {
 
-        this.gameScreen = screen;
-        this.player = adlez.getPlayer();
-        this.viewport = new FitViewport(Gdx.graphics.getWidth(), Gdx.graphics.getHeight(), new OrthographicCamera());
-        this.stage = new Stage();
-        buildHud();
+    public HUD(OrthographicCamera hudCamera, IPlayer player) {
+
+        this.viewport = new ScreenViewport(hudCamera);
+        this.stage = new Stage(viewport);
+        this.player = player;
+
+        this.statusUI = new StatusUI(player);
+        this.inventoryUI = new InventoryUI();
+
+
+        stage.addActor(inventoryUI);
+
+        statusUI.setVisible(true);
+        statusUI.setPosition(0, 0);
+        statusUI.setKeepWithinStage(false);
+        statusUI.setMovable(false);
+        stage.addActor(statusUI);
+        statusUI.validate();
+    }
+    @Override
+    public void show() {
+
     }
 
-    private void buildHud(){
+    @Override
+    public void render(float delta) {
+        stage.act(delta);
+        stage.draw();
 
-        playerHealthBar = new HealthBar(this.player);
-        playerManaBar = new ManaBar(this.player);
-        playerExperienceBar = new ExperienceBar(this.player);
+    }
 
-        healthLabel = new Label("Health: ", new Label.LabelStyle(new BitmapFont(), Color.WHITE));
-        manaLabel = new Label("Mana: ", new Label.LabelStyle(new BitmapFont(), Color.WHITE));
-        experienceLabel = new Label("Experience: ", new Label.LabelStyle(new BitmapFont(), Color.WHITE));
+    @Override
+    public void resize(int width, int height) {
+        stage.getViewport().update(width,height,true);
+    }
 
+    @Override
+    public void pause() {
 
-        Table table = new Table();
-        table.top();
-        table.setFillParent(true);
+    }
 
-        table.add(healthLabel).expandX().padTop(10);
-        table.add(manaLabel).expandX().padTop(10);
-        table.add(experienceLabel).expandX().padTop(10);
-        table.row();
-        table.add(playerHealthBar.getBarImage());
-        table.add(playerManaBar.getBarImage());
-        table.add(playerExperienceBar.getBarImage());
-        stage.addActor(table);
+    @Override
+    public void resume() {
+
+    }
+
+    @Override
+    public void hide() {
+
+    }
+
+    @Override
+    public void dispose() {
+        stage.dispose();
+
+    }
+
+    public void update(){
+        statusUI.update();
+    }
+
+    public Stage getStage() {
+        return stage;
     }
 }

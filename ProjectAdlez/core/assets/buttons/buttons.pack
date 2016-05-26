@@ -1,0 +1,181 @@
+
+buttons.png
+format: RGBA8888
+filter: Nearest,Nearest
+repeat: none
+buttonBackground
+  rotate: false
+  xy: 1, 157
+  size: 152, 50
+  split: 2, 2, 2, 2
+  orig: 152, 50
+  offset: 0, 0
+  index: -1
+characterButton
+  rotate: false
+  xy: 1, 105
+  size: 152, 50
+  split: 2, 2, 2, 2
+  orig: 152, 50
+  offset: 0, 0
+  index: -1
+characterButtonPressed
+  rotate: false
+  xy: 155, 157
+  size: 152, 50
+  split: 2, 2, 2, 2
+  orig: 152, 50
+  offset: 0, 0
+  index: -1
+exitGameButton
+  rotate: false
+  xy: 155, 157
+  size: 152, 50
+  split: 2, 2, 2, 2
+  orig: 152, 50
+  offset: 0, 0
+  index: -1
+exitGameButtonPressed
+  rotate: false
+  xy: 1, 53
+  size: 152, 50
+  split: 2, 0, 2, 2
+  orig: 152, 50
+  offset: 0, 0
+  index: -1
+gameMenuButton
+  rotate: false
+  xy: 155, 105
+  size: 152, 50
+  split: 2, 2, 2, 2
+  orig: 152, 50
+  offset: 0, 0
+  index: -1
+gameMenuButtonPressed
+  rotate: false
+  xy: 309, 157
+  size: 152, 50
+  split: 2, 2, 2, 2
+  orig: 152, 50
+  offset: 0, 0
+  index: -1
+inventoryButton
+  rotate: false
+  xy: 1, 1
+  size: 152, 50
+  split: 2, 0, 2, 2
+  orig: 152, 50
+  offset: 0, 0
+  index: -1
+inventoryButtonPressed
+  rotate: false
+  xy: 155, 53
+  size: 152, 50
+  split: 2, 2, 2, 2
+  orig: 152, 50
+  offset: 0, 0
+  index: -1
+loadGameButton
+  rotate: false
+  xy: 309, 105
+  size: 152, 50
+  split: 2, 2, 2, 2
+  orig: 152, 50
+  offset: 0, 0
+  index: -1
+loadGameButtonPressed
+  rotate: false
+  xy: 463, 157
+  size: 152, 50
+  split: 2, 2, 2, 2
+  orig: 152, 50
+  offset: 0, 0
+  index: -1
+mainMenuButton
+  rotate: false
+  xy: 155, 1
+  size: 152, 50
+  split: 2, 2, 2, 2
+  orig: 152, 50
+  offset: 0, 0
+  index: -1
+mainMenuButtonPressed
+  rotate: false
+  xy: 309, 53
+  size: 152, 50
+  split: 2, 2, 2, 2
+  orig: 152, 50
+  offset: 0, 0
+  index: -1
+newGameButton
+  rotate: false
+  xy: 463, 105
+  size: 152, 50
+  split: 2, 2, 2, 0
+  orig: 152, 50
+  offset: 0, 0
+  index: -1
+newGameButtonPressed
+  rotate: false
+  xy: 617, 157
+  size: 152, 50
+  split: 2, 2, 2, 2
+  orig: 152, 50
+  offset: 0, 0
+  index: -1
+pressedButtonBackground
+  rotate: false
+  xy: 309, 1
+  size: 152, 50
+  split: 2, 2, 2, 2
+  orig: 152, 50
+  offset: 0, 0
+  index: -1
+questLogButton
+  rotate: false
+  xy: 463, 53
+  size: 152, 50
+  split: 2, 2, 2, 2
+  orig: 152, 50
+  offset: 0, 0
+  index: -1
+questLogButtonPressed
+  rotate: false
+  xy: 617, 105
+  size: 152, 50
+  split: 2, 2, 2, 2
+  orig: 152, 50
+  offset: 0, 0
+  index: -1
+saveGameButton
+  rotate: false
+  xy: 771, 157
+  size: 152, 50
+  split: 2, 2, 2, 2
+  orig: 152, 50
+  offset: 0, 0
+  index: -1
+saveGameButtonPressed
+  rotate: false
+  xy: 463, 1
+  size: 152, 50
+  split: 2, 2, 2, 2
+  orig: 152, 50
+  offset: 0, 0
+  index: -1
+settingsButton
+  rotate: false
+  xy: 617, 53
+  size: 152, 50
+  split: 2, 2, 2, 2
+  orig: 152, 50
+  offset: 0, 0
+  index: -1
+settingsButtonPressed
+  rotate: false
+  xy: 771, 105
+  size: 152, 50
+  split: 2, 2, 2, 2
+  orig: 152, 50
+  offset: 0, 0
+  index: -1

@@ -1,10 +1,50 @@
 package com.mygdx.game.utils;
 
+import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.assets.AssetManager;
+import com.badlogic.gdx.graphics.g2d.TextureAtlas;
+import com.badlogic.gdx.scenes.scene2d.ui.Skin;
+
 /**
  * Created by Michel on 28.4.2016.
  */
 
 public final class AssetStrings {
+
+    public final static String STATUSUI_TEXTURE_ATLAS_PATH = "skins/statusui.atlas";
+    public final static String STATUSUI_SKIN_PATH = "skins/statusui.json";
+    public final static String ITEMS_TEXTURE_ATLAS_PATH = "skins/items.atlas";
+    public final static String ITEMS_SKIN_PATH = "skins/items.json";
+
+    public static TextureAtlas STATUSUI_TEXTUREATLAS = new TextureAtlas(AssetStrings.STATUSUI_TEXTURE_ATLAS_PATH);
+    public static TextureAtlas ITEMS_TEXTUREATLAS = new TextureAtlas(AssetStrings.ITEMS_TEXTURE_ATLAS_PATH);
+
+    public static Skin STATUSUI_SKIN = new Skin(Gdx.files.internal(AssetStrings.STATUSUI_SKIN_PATH), STATUSUI_TEXTUREATLAS);
+
+
+
+
+    /**
+     * Buttons
+     */
+    public static final String NEW_GAME_BUTTON_IMAGE = "buttons/newGameButton.png";
+    public static final String LOAD_GAME_BUTTON_IMAGE = "buttons/loadGameButton.png";
+    public static final String EXIT_GAME_BUTTON_IMAGE = "buttons/exitGameButton.png";
+    public static final String INVENTORY_BUTTON_IMAGE = "buttons/inventoryButton.9.png";
+
+    /**
+     * GUI Elements
+     */
+    public static final String INVENTORY_SLOT_IMAGE = "gui_elements/inventory_slot.9.png";
+    public static final String INVENTORY_BACKGROUND_IMAGE = "gui_elements/inventory_background.9.png";
+    public static final String GUI_BACKGROUND_IMAGE = "gui_elements/gui_background.9.png";
+
+    /**
+     * Status Bars
+     */
+    public static final String HP_BAR_IMAGE = "status_bars/hpBar.9.png";
+    public static final String MP_BAR_IMAGE = "status_bars/mpBar.9.png";
+    public static final String EMPTY_BAR_IMAGE = "status_bars/emptyBar.9.png";
 
     /**
      * Sounds
@@ -16,12 +56,6 @@ public final class AssetStrings {
     public static final String INTERACTION_SOUND = "sounds/interaction.wav";
     public static final String TEMP_DYING_SOUND = "sounds/temp_dying_sound.wav";
 
-    /**
-     * Buttons
-     */
-    public static final String NEW_GAME_BUTTON_IMAGE = "buttons/newGameButton.png";
-    public static final String LOAD_GAME_BUTTON_IMAGE = "buttons/loadGameButton.png";
-    public static final String EXIT_GAME_BUTTON_IMAGE = "buttons/exitGameButton.png";
 
     /* Backgrounds */
     public static final String MAIN_MENU_BACKGROUND_IMAGE = "backgrounds/mainMenuBackground2.png";
