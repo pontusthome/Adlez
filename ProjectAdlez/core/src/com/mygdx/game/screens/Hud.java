@@ -1,46 +1,24 @@
 package com.mygdx.game.screens;
 
-import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
-import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.OrthographicCamera;
-import com.badlogic.gdx.graphics.g2d.BitmapFont;
-import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.scenes.scene2d.Stage;
-import com.badlogic.gdx.scenes.scene2d.ui.*;
-import com.badlogic.gdx.utils.viewport.FitViewport;
 import com.badlogic.gdx.utils.viewport.ScreenViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
-import com.mygdx.game.model.Adlez;
 import com.mygdx.game.model.characters.ICharacter;
 import com.mygdx.game.model.characters.IPlayer;
-import com.mygdx.game.utils.AssetStrings;
-import com.mygdx.game.view.IStatusBar;
 
 /**
  * Created by Viktor on 2016-04-26.
  */
 public class HUD implements Screen{
 
-    private Adlez adlez = Adlez.getInstance();
-    private GameScreen gameScreen;
     private ICharacter player;
-    private OrthographicCamera hudCamera;
     private Stage stage;
     private Viewport viewport;
 
     private StatusUI statusUI;
     private InventoryUI inventoryUI;
-
-
-    private Label healthLabel;
-    private Label manaLabel;
-    private Label experienceLabel;
-    private Label goldLabel;
-
-    private IStatusBar playerHealthBar;
-    private IStatusBar playerManaBar;
-    private IStatusBar playerExperienceBar;
 
 
     public HUD(OrthographicCamera hudCamera, IPlayer player) {

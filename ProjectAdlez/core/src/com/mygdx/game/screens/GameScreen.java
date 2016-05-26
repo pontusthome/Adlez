@@ -73,11 +73,6 @@ public class GameScreen extends AbstractScreen implements GateOpenListener, Shop
     public GameScreen() {
         super();
         batch = new SpriteBatch();
-
-        hudCamera = new OrthographicCamera();
-        hudCamera.setToOrtho(
-                false, Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
-        playerHUD = new HUD(hudCamera, player);
     }
 
     @Override
@@ -93,6 +88,12 @@ public class GameScreen extends AbstractScreen implements GateOpenListener, Shop
         player = adlez.getPlayer();
         playerController = new PlayerController(player);
 
+        //Setting up the player HUD
+        hudCamera = new OrthographicCamera();
+        hudCamera.setToOrtho(
+                false, Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
+
+        playerHUD = new HUD(hudCamera, player);
         batch.setProjectionMatrix(playerHUD.getStage().getCamera().combined);
         playerHUD.getStage().draw();
 
