@@ -68,18 +68,18 @@ public class PlayerController implements ICharacterController{
         player.update(deltaT);
 
         if (Gdx.input.isKeyJustPressed(Input.Keys.SPACE)) {
-            player.MeleeAttack();
+            player.meleeAttack();
         }
         if (Gdx.input.isKeyJustPressed(Input.Keys.E)) {
             if(player.getMana() >= 15) {
-                player.RangeMagicAttack();
+                player.rangeMagicAttack();
             }else{
                 outOfManaSound.play(0.5f);
             }
         }
         if (Gdx.input.isKeyJustPressed(Input.Keys.F)) {
             if(player.getMana() >= 20) {
-                player.AOEMagicAttack();
+                player.aoeMagicAttack();
             }else{
                 outOfManaSound.play(0.5f);
             }

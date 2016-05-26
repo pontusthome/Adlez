@@ -79,7 +79,7 @@ public class Enemy extends NPC implements IEnemy{
 	@Override
 	public void attackPlayer(){
 		if(getAttackCooldown() >= ATTACK_COOLDOWN_LIMIT){
-			AOEMeleeAttack();
+			aoeMeleeAttack();
 			resetAttackCooldown();
 		}
 	}

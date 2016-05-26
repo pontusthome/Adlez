@@ -171,9 +171,9 @@ public class AreaBuilder implements AreaIO {
     private void areaToJson(Area area, StringBuilder jsonAreaHandler) {
         jsonAreaHandler.append(area.getAreaName() + ":{");
 
-        EnemiesToJson(area.getEnemies(), jsonAreaHandler);
-        ObstaclesToJson(area.getObstacles(), jsonAreaHandler);
-        ChestsToJson(area.getChests(), jsonAreaHandler);
+        enemiesToJson(area.getEnemies(), jsonAreaHandler);
+        obstaclesToJson(area.getObstacles(), jsonAreaHandler);
+        chestsToJson(area.getChests(), jsonAreaHandler);
 
         jsonAreaHandler.append("},");
     }
@@ -185,7 +185,7 @@ public class AreaBuilder implements AreaIO {
      * @param enemies the list of enemies that are turned into JSON
      * @param jsonAreaHandler a StringBuilder that the data will be stored in, it contains the JSON file for the AreaHandler
      */
-    private void EnemiesToJson(List<IEnemy> enemies, StringBuilder jsonAreaHandler) {
+    private void enemiesToJson(List<IEnemy> enemies, StringBuilder jsonAreaHandler) {
         jsonAreaHandler.append("enemies:[");
 
         for (IEnemy enemy: enemies) {
@@ -204,7 +204,7 @@ public class AreaBuilder implements AreaIO {
      * @param obstacles the list of obstacles that will be turned into JSON
      * @param jsonAreaHandler a StringBuilder that the data will be stored in, it contains the JSON file for the AreaHandler
      */
-    private void ObstaclesToJson(List<IObstacle> obstacles, StringBuilder jsonAreaHandler) {
+    private void obstaclesToJson(List<IObstacle> obstacles, StringBuilder jsonAreaHandler) {
         jsonAreaHandler.append("obstacles:[");
 
         for (IObstacle obstacle: obstacles) {
@@ -222,7 +222,7 @@ public class AreaBuilder implements AreaIO {
      * @param chests the list of chests that will be turned into JSON
      * @param jsonAreaHandler a StringBuilder that the data will be stored in, it contains the JSON file for the AreaHandler
      */
-    private void ChestsToJson(List<IChest> chests, StringBuilder jsonAreaHandler) {
+    private void chestsToJson(List<IChest> chests, StringBuilder jsonAreaHandler) {
         jsonAreaHandler.append("chests:[");
 
         for (IChest chest: chests) {

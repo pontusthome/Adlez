@@ -12,7 +12,7 @@ import static com.badlogic.gdx.math.MathUtils.random;
 /**
  * @author Pontus
  */
-public class AreaHandler implements Serializable{
+public class AreaHandler {
 
     private static AreaHandler areaHandler = new AreaHandler();
     
