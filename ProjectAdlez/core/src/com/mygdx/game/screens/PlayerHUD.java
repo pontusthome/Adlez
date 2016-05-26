@@ -11,7 +11,7 @@ import com.mygdx.game.model.characters.IPlayer;
 /**
  * Created by Viktor on 2016-04-26.
  */
-public class HUD implements Screen{
+public class PlayerHUD implements Screen{
 
     private ICharacter player;
     private Stage stage;
@@ -21,7 +21,7 @@ public class HUD implements Screen{
     private InventoryUI inventoryUI;
 
 
-    public HUD(OrthographicCamera hudCamera, IPlayer player) {
+    public PlayerHUD(OrthographicCamera hudCamera, IPlayer player) {
 
         this.viewport = new ScreenViewport(hudCamera);
         this.stage = new Stage(viewport);

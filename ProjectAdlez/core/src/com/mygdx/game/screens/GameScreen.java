@@ -68,7 +68,7 @@ public class GameScreen extends AbstractScreen implements GateOpenListener, Shop
     private static final float HEIGHT_SCALE = 2/3f;
 
     private OrthographicCamera hudCamera = null;
-    private HUD playerHUD;
+    private PlayerHUD playerHUD;
 
     public GameScreen() {
         super();
@@ -93,7 +93,7 @@ public class GameScreen extends AbstractScreen implements GateOpenListener, Shop
         hudCamera.setToOrtho(
                 false, Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
 
-        playerHUD = new HUD(hudCamera, player);
+        playerHUD = new PlayerHUD(hudCamera, player);
         batch.setProjectionMatrix(playerHUD.getStage().getCamera().combined);
         playerHUD.getStage().draw();
 
