@@ -42,8 +42,8 @@ public abstract class Character extends WorldObject implements ICharacter, Obser
 	private float vYComponent = 0;
 	
 	//TODO: Remove when debugging is over
-	private IAttack latestAttack = new MeleeAttack();
-	private IInteraction latestInteraction = new Interaction();
+	public IAttack latestAttack = new MeleeAttack();
+	public IInteraction latestInteraction = new Interaction();
 	
 	// Temporary values for cooldown, should maybe be set in constructor or defined as a constant somewhere
 	public static final float ATTACK_COOLDOWN_LIMIT = 2;	//In seconds
@@ -336,41 +336,27 @@ public abstract class Character extends WorldObject implements ICharacter, Obser
 	
 	@Override
 	public void meleeAttack(){
-		IAttack attack = new MeleeAttack(this);
-		notifyObservers(attack);
-		
-		//TODO: Remove when debugging is over
-		latestAttack = attack;
+		notifyObservers("melee_attack");
 	}
 	
 	@Override
 	public void aoeMeleeAttack(){
-		IAttack attack = new AOEMeleeAttack(this);
-		useMana(attack);
-		notifyObservers(attack);
-		
-		//TODO: Remove when debugging is over
-		latestAttack = attack;
+		notifyObservers("aoe_melee_attack");
 	}
 	
 	@Override
 	public void aoeMagicAttack(){
-		IAttack attack = new AOEMagicAttack(this);
-		useMana(attack);
-		notifyObservers(attack);
-		
-		//TODO: Remove when debugging is over
-		latestAttack = attack;
+		notifyObservers("aoe_magic_attack");
 	}
 	
 	@Override
 	public void rangeMagicAttack(){
-		IAttack attack = new RangeMagicAttack(this);
-		useMana(attack);
-		notifyObservers(attack);
-		
-		//TODO: Remove when debugging is over
-		latestAttack = attack;
+		notifyObservers("range_magic_attack");
+	}
+	
+	@Override
+	public void interact(){
+		notifyObservers("interaction");
 	}
 	
 	//TODO: Remove when debugging is over
@@ -380,23 +366,8 @@ public abstract class Character extends WorldObject implements ICharacter, Obser
 	}
 	
 	@Override
-	public void useMana(IAttack attack) {
-		if (attack instanceof MeleeAttack) {
-			setMana(getMana());
-		} else if (attack instanceof AOEMagicAttack) {
-			setMana(getMana() - 20);
-		} else if (attack instanceof RangeMagicAttack) {
-			setMana(getMana() - 15);
-		}
-	}
-	
-	@Override
-	public void interact(){
-		IInteraction interaction = new Interaction(this);
-		notifyObservers(interaction);
-		
-		//TODO: Remove when debugging is over
-		latestInteraction = interaction;
+	public void useMana(int manaUsage) {
+		setMana(getMana() - manaUsage);
 	}
 	
 	//TODO: Remove when debugging is over
@@ -418,9 +389,9 @@ public abstract class Character extends WorldObject implements ICharacter, Obser
 	}
 	
 	@Override
-	public void notifyObservers(Object arg){
+	public void notifyObservers(String action){
 		for(WorldObjectObserver observer : observers){
-			observer.update(this, arg);
+			observer.update(this, action);
 		}
 	}
 }

@@ -9,5 +9,7 @@ import com.mygdx.game.model.characters.ICharacter;
 public interface IAttack extends IAction{
 	void setDamage(ICharacter character);
 	void setDamage(int damage);
+	int getManaUsage();
+	void setManaUsage(int manaUsage);
 	int getDamage();
 }

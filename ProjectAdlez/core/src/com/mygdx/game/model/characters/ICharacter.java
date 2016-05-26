@@ -47,7 +47,7 @@ public interface ICharacter extends IWorldObject {
 	void aoeMeleeAttack();
 	void aoeMagicAttack();
 	void rangeMagicAttack();
-	void useMana(IAttack attack);
+	void useMana(int manaUsage);
 	void interact();
 	void setMoved(boolean moved);
 	boolean moved();

@@ -11,6 +11,7 @@ public class RangeMagicAttack extends Attack{
 	
 	public RangeMagicAttack(ICharacter character){
 		super(character);
+		setManaUsage(15);
 	}
 	
 	@Override
