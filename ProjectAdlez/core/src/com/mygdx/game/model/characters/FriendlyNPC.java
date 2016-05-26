@@ -48,7 +48,9 @@ public class FriendlyNPC extends NPC implements IFriendlyNPC {
 
     @Override
     public void add(ShopOpenListener listener) {
-        listeners.add(listener);
+        if(!listeners.contains(listener)){
+            listeners.add(listener);
+        }
     }
 
     @Override

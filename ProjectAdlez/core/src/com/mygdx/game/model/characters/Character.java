@@ -407,7 +407,9 @@ public abstract class Character extends WorldObject implements ICharacter, Obser
 	
 	@Override
 	public void addObserver(WorldObjectObserver observer){
-		observers.add(observer);
+		if(!observers.contains(observer)){
+			observers.add(observer);
+		}
 	}
 	
 	@Override

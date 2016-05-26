@@ -34,7 +34,9 @@ public class AreaConnection extends WorldObject implements IAreaConnection {
 
     @Override
     public void add(GateOpenListener listener) {
-        listeners.add(listener);
+        if(!listeners.contains(listener)){
+            listeners.add(listener);
+        }
     }
 
     @Override
