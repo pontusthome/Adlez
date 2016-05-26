@@ -7,11 +7,11 @@ Adlez is a school a Java project for the course TDA367 at Chalmers University.
 
 Contributors
 ------------
+- RisKakaN: Martin So
+- michmich89: Michel Folkemark
+- pontusthome: Pontus Thomé
+- Klickor: Viktor Engström
 
-RisKakaN - Martin So
-michmich89 - Michel Folkemark
-pontusthome - Pontus Thomé
-Klickor - Viktor Engström
 > **Note:**
 Full names for grading purposes.
 
