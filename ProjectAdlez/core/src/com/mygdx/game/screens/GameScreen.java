@@ -180,8 +180,10 @@ public class GameScreen extends AbstractScreen implements GateOpenListener, Shop
         friendlyNPCController.render(batch);
         areaConnectionController.render(batch);
         manaFountainController.render(batch);
-        playerHUD.render(delta);
         batch.end();
+        
+        // Render HUD
+        playerHUD.render(delta);
     
         debugRender();
     }
