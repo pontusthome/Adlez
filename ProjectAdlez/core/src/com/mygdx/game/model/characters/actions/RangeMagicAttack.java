@@ -9,10 +9,6 @@ import com.mygdx.game.model.characters.ICharacter;
  */
 public class RangeMagicAttack extends Attack{
 	
-	public RangeMagicAttack(){
-		super();
-	}
-	
 	public RangeMagicAttack(ICharacter character){
 		super(character);
 	}

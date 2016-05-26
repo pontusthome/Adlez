@@ -15,7 +15,7 @@ import com.mygdx.game.view.ICharacterView;
 public class EnemyController implements ICharacterController{
 
     private IEnemy enemy;
-    private CharacterView enemyView;
+    private ICharacterView enemyView;
     private Adlez adlez = Adlez.getInstance();
 
     public EnemyController(IEnemy enemy) {
@@ -34,9 +34,6 @@ public class EnemyController implements ICharacterController{
             case Enemy.DOG_LEVEL_ONE:
                 enemyView = new CharacterView(AssetStrings.BLUE_DOG_MOVE);
                 break;
-            default:
-                enemyView = new CharacterView(AssetStrings.RED_PLAYER_MOVE);
-                break;
         }
     }
 
@@ -49,7 +46,11 @@ public class EnemyController implements ICharacterController{
         }
 
         enemy.update(deltaT);
-        enemyView.viewUpdate(enemy.getDirection());
+
+        // If the enemy moved the sprite of the enemy should move
+        if (enemy.moved()) {
+            enemyView.viewUpdate(enemy.getDirection());
+        }
     }
     
     @Override
@@ -62,7 +63,7 @@ public class EnemyController implements ICharacterController{
         return enemyView;
     }
 
-    public TextureRegion getCurrentFrame() {
+    private TextureRegion getCurrentFrame() {
         return enemyView.getCurrentFrame();
     }
 }

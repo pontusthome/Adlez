@@ -1,11 +1,9 @@
 package com.mygdx.game.model.characters;
 
 
-import com.mygdx.game.model.characters.actions.AOEMagicAttack;
 import com.mygdx.game.model.characters.actions.IAttack;
-import com.mygdx.game.model.characters.actions.MeleeAttack;
-import com.mygdx.game.model.characters.actions.RangeMagicAttack;
 import com.mygdx.game.model.core.Collidable;
+import com.mygdx.game.model.core.Direction;
 import com.mygdx.game.model.exceptions.InventoryFullException;
 import com.mygdx.game.model.exceptions.ItemNotFoundException;
 import com.mygdx.game.model.characters.items.Armor;
@@ -20,7 +18,6 @@ import java.util.List;
  * Created by Michel on 2016-04-19.
  */
 public class Player extends Character implements IPlayer {
-    private int experience;
 
     private IItem swordEquipped;
     private IItem armorEquipped;
@@ -30,16 +27,33 @@ public class Player extends Character implements IPlayer {
     private static final int INVENTORY_MAX_SIZE = 16;
 
     // This constructor should be used.
-    public Player(int direction, float speed,
-                  int width, int height,
-                  float posX, float posY,
-                  int maxHealth, int attackDamage, int gold, int mana) {
+    public Player() {
+        resetPlayer();
+    }
 
-        super(direction, speed, width, height,
-                posX, posY, maxHealth, attackDamage,
-                gold, mana);
+    public void resetPlayer() {
+        setDirection(Direction.NORTH);
+        setSpeed(2f);
+        setWidth(17);
+        setHeight(17);
+        setPosX(0);
+        setPosY(0);
+        setMaxHealth(100);
+        setHealth(100);
+        setMaxMana(100);
+        setMana(100);
+        setGold(0);
+        setAttackDamage(20);
+        setLevel(0);
 
         inventory = new ArrayList<>(INVENTORY_MAX_SIZE);
+
+        try {
+            unEquipArmor(getArmorEquipped());
+            unEquipWeapon(getSwordEquipped());
+        } catch (InventoryFullException e) {
+            e.printStackTrace();
+        }
     }
     
     public void equipItem(IItem item) throws ItemNotFoundException {

@@ -17,33 +17,21 @@ public class Chest extends WorldObject implements IChest {
 
     private int chestSize;
     private int chestSizeCount = 0;
-    private List<IItem> slots = new ArrayList<IItem>(chestSize);
+    private List<IItem> slots;
     private boolean isOpened = false;
-    
-    private int health;
 
-    public Chest(float posX, float posY, int width, int height, int chestSize, int health) {
+    public Chest(float posX, float posY, int width, int height, int chestSize) {
         super(posX, posY, width, height);
         this.chestSize = chestSize;
-        setHealth(health);
+        slots = new ArrayList<>(chestSize);
     }
 
     public Chest(float posX, float posY) {
         super(posX, posY, 16, 16);
         chestSize = 2;
-        setHealth(200);
+        slots = new ArrayList<>(chestSize);
     }
-    
-    @Override
-    public int getHealth() {
-        return health;
-    }
-    
-    @Override
-    public void setHealth(int health) {
-        this.health = health;
-    }
-    
+
     @Override
     public void addItem(IItem type) throws InventoryFullException {
         if (chestSizeCount < chestSize) {
@@ -57,7 +45,6 @@ public class Chest extends WorldObject implements IChest {
     @Override
     public int getSize() {
         return chestSize;
-
     }
     
     @Override
@@ -100,11 +87,6 @@ public class Chest extends WorldObject implements IChest {
 
     public void setIsOpened(boolean isOpened) {
         this.isOpened = isOpened;
-    }
-    
-    @Override
-    public boolean isDestroyed(){
-        return getHealth() <= 0;
     }
     
     @Override

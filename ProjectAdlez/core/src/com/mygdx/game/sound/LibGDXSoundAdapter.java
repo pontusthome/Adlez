@@ -1,4 +1,4 @@
-package com.mygdx.game.model.core;
+package com.mygdx.game.sound;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.audio.Sound;
@@ -17,10 +17,5 @@ public class LibGDXSoundAdapter implements GameSound{
 	@Override
 	public void play(Float volume){
 		sound.play(volume);
-	}
-	
-	@Override
-	public void setSound(String soundAssetString){
-		sound = Gdx.audio.newSound(Gdx.files.internal(soundAssetString));
 	}
 }

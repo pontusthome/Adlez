@@ -4,16 +4,10 @@ import com.mygdx.game.model.characters.*;
 import com.mygdx.game.model.characters.actions.IAttack;
 import com.mygdx.game.model.characters.actions.MeleeAttack;
 import com.mygdx.game.model.characters.items.CompleteItems;
-import com.mygdx.game.model.characters.items.IItem;
-import com.mygdx.game.model.core.Direction;
-import com.mygdx.game.model.exceptions.InsufficientGoldException;
 import com.mygdx.game.model.exceptions.InventoryFullException;
 import com.mygdx.game.model.exceptions.ItemNotFoundException;
 import com.mygdx.game.model.factories.EnemyFactory;
 import org.junit.Test;
-
-import java.util.ArrayList;
-import java.util.List;
 
 import static org.junit.Assert.*;
 
@@ -29,7 +23,9 @@ public class PlayerTest {
      */
     @Test
     public void testTakeDamage() {
-        IPlayer player = new Player(Direction.NORTH, 0, 17, 17, 0, 0, 100, 10, 0, 100);
+        Player player = new Player();
+        player.resetPlayer();
+        player.setMaxHealth(100);
         IEnemy enemy = EnemyFactory.createEnemy(Enemy.REGULAR_LEVEL_ONE, 20, 20);
         IAttack meleeAttack = new MeleeAttack(enemy);
         player.onCollide(meleeAttack);
@@ -42,7 +38,9 @@ public class PlayerTest {
      */
     @Test
     public void testKillEnemy() {
-        IPlayer player = new Player(Direction.NORTH, 0, 17, 17, 0, 0, 100, 50, 0, 100);
+        Player player = new Player();
+        player.resetPlayer();
+        player.setAttackDamage(50);
         IEnemy enemy = EnemyFactory.createEnemy(Enemy.REGULAR_LEVEL_ONE, 20, 20);
         IAttack meleeAttack = new MeleeAttack(player);
         enemy.onCollide(meleeAttack);
@@ -58,7 +56,10 @@ public class PlayerTest {
      */
     @Test
     public void testLootGoldFromEnemy() {
-        IPlayer player = new Player(Direction.NORTH, 0, 17, 17, 0, 0, 100, 100, 0, 100);
+        Player player = new Player();
+        player.resetPlayer();
+        player.setGold(0);
+        player.setAttackDamage(1337);
         IEnemy enemy = EnemyFactory.createEnemy(Enemy.REGULAR_LEVEL_ONE, 20, 20);
         IAttack meleeAttack = new MeleeAttack(player);
         assertTrue(player.getGold() == 0);
@@ -67,11 +68,15 @@ public class PlayerTest {
     }
 
     /**
-     * Player equipping weapon. Final sword with 100 bonus damage.
+     * Player has base attack damage 10.
+     * Equipping weapon.
+     * Final sword with 100 bonus damage.
      */
     @Test
     public void testEquipWeapon() throws ItemNotFoundException, InventoryFullException {
-        Player player = new Player(Direction.NORTH, 0, 17, 17, 0, 0, 100, 10, 0, 100);
+        Player player = new Player();
+        player.resetPlayer();
+        player.setAttackDamage(10);
         try {
             player.lootItem(CompleteItems.FINAL_SWORD);
             player.equipItem(CompleteItems.FINAL_SWORD);
@@ -84,11 +89,15 @@ public class PlayerTest {
     }
 
     /**
-     * Player equipping armor. Final armor with 100 bonus HP.
+     * Player has 100 base health points.
+     * Equipping armor.
+     * Final armor with 100 bonus HP.
      */
     @Test
     public void testEquipArmor() throws ItemNotFoundException, InventoryFullException {
-        Player player = new Player(Direction.NORTH, 0, 17, 17, 0, 0, 100, 10, 0, 100);
+        Player player = new Player();
+        player.resetPlayer();
+        player.setMaxHealth(100);
         try {
             player.lootItem(CompleteItems.FINAL_BODY_ARMOR);
             player.equipItem(CompleteItems.FINAL_BODY_ARMOR);
@@ -105,7 +114,9 @@ public class PlayerTest {
      */
     @Test
     public void testUnEquipWeapon() throws InventoryFullException, ItemNotFoundException {
-        Player player = new Player(Direction.NORTH, 0, 17, 17, 0, 0, 100, 10, 0, 100);
+        Player player = new Player();
+        player.resetPlayer();
+        player.setAttackDamage(10);
         try {
             player.lootItem(CompleteItems.FINAL_SWORD);
             player.equipItem(CompleteItems.FINAL_SWORD);
@@ -123,7 +134,9 @@ public class PlayerTest {
      */
     @Test
     public void testUnEquipArmor() throws InventoryFullException, ItemNotFoundException {
-        Player player = new Player(Direction.NORTH, 0, 17, 17, 0, 0, 100, 10, 0, 100);
+        Player player = new Player();
+        player.resetPlayer();
+        player.setMaxHealth(100);
         try {
             player.lootItem(CompleteItems.FINAL_BODY_ARMOR);
             player.equipItem(CompleteItems.FINAL_BODY_ARMOR);
@@ -141,7 +154,8 @@ public class PlayerTest {
      */
     @Test
     public void testLootItem() throws InventoryFullException {
-        Player player = new Player(Direction.NORTH, 0, 17, 17, 0, 0, 100, 10, 0, 100);
+        Player player = new Player();
+        player.resetPlayer();
         try {
             player.lootItem(CompleteItems.FINAL_SWORD);
             assertTrue(player.getInventory().size() == 1);
@@ -155,7 +169,8 @@ public class PlayerTest {
      */
     @Test
     public void testRemoveItem() throws InventoryFullException, ItemNotFoundException {
-        Player player = new Player(Direction.NORTH, 0, 17, 17, 0, 0, 100, 10, 0, 100);
+        Player player = new Player();
+        player.resetPlayer();
         try {
             player.lootItem(CompleteItems.FINAL_SWORD);
             assertTrue(player.getInventory().size() == 1);

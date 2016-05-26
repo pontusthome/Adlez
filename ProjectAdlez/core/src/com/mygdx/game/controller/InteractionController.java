@@ -3,8 +3,8 @@ package com.mygdx.game.controller;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.mygdx.game.model.Adlez;
 import com.mygdx.game.model.characters.actions.IInteraction;
-import com.mygdx.game.model.core.GameSound;
-import com.mygdx.game.model.core.LibGDXSoundAdapter;
+import com.mygdx.game.sound.GameSound;
+import com.mygdx.game.sound.LibGDXSoundAdapter;
 import com.mygdx.game.utils.AssetStrings;
 
 /**
@@ -14,12 +14,11 @@ public class InteractionController implements IController{
 	
 	private IInteraction interaction;
 	private Adlez adlez;
-	private GameSound interactionSound;
 	
 	public InteractionController(IInteraction interaction){
 		this.interaction = interaction;
 		adlez = Adlez.getInstance();
-		interactionSound = new LibGDXSoundAdapter(AssetStrings.INTERACTION_SOUND);
+		GameSound interactionSound = new LibGDXSoundAdapter(AssetStrings.INTERACTION_SOUND);
 		interactionSound.play(0.5f);
 	}
 	
@@ -35,9 +34,5 @@ public class InteractionController implements IController{
 	@Override
 	public void render(SpriteBatch batch){
 		
-	}
-	
-	public IInteraction getInteraction(){
-		return interaction;
 	}
 }

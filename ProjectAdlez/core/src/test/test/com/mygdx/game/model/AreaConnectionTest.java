@@ -1,14 +1,11 @@
 package com.mygdx.game.model;
 
 import com.mygdx.game.builder.AreaHandler;
-import com.mygdx.game.controller.PlayerController;
 import com.mygdx.game.model.characters.IEnemy;
 import com.mygdx.game.model.characters.IFriendlyNPC;
 import com.mygdx.game.model.characters.IPlayer;
-import com.mygdx.game.model.characters.Player;
 import com.mygdx.game.model.characters.actions.IInteraction;
 import com.mygdx.game.model.characters.actions.Interaction;
-import com.mygdx.game.model.core.Direction;
 import com.mygdx.game.model.core.IWorldObject;
 import com.mygdx.game.model.obstacles.*;
 import org.junit.After;
@@ -28,7 +25,6 @@ public class AreaConnectionTest {
     private IPlayer player;
     private List<IEnemy> enemies;
     private List<IFriendlyNPC> friendlyNPCs;
-    private List<IWorldObject> stationaryObjects;
     private List<IWall> walls;
     private List<IObstacle> obstacles;
     private List<IChest> chests;
@@ -42,7 +38,6 @@ public class AreaConnectionTest {
     public void setUp() throws Exception {
         enemies = new ArrayList<IEnemy>();
         friendlyNPCs = new ArrayList<IFriendlyNPC>();
-        stationaryObjects = new ArrayList<IWorldObject>();
         walls = new ArrayList<IWall>();
         obstacles = new ArrayList<IObstacle>();
         chests = new ArrayList<IChest>();
@@ -67,7 +62,7 @@ public class AreaConnectionTest {
         areaConnections.add(ac);
 
         Area area = new Area(0, 0,
-                enemies, friendlyNPCs, stationaryObjects, walls, obstacles, chests, areaConnections, name, manaFountains);
+                enemies, friendlyNPCs, walls, obstacles, chests, areaConnections, name, manaFountains);
 
         adlez.initiateArea(area);
         player = adlez.getPlayer();

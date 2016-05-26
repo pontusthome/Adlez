@@ -1,20 +1,13 @@
 package com.mygdx.game.model;
 
-import com.mygdx.game.model.characters.IPlayer;
 import com.mygdx.game.model.characters.Player;
 import com.mygdx.game.model.characters.actions.IInteraction;
 import com.mygdx.game.model.characters.actions.Interaction;
 import com.mygdx.game.model.characters.items.CompleteItems;
-import com.mygdx.game.model.core.Direction;
 import com.mygdx.game.model.exceptions.InventoryFullException;
 import com.mygdx.game.model.obstacles.Chest;
 import com.mygdx.game.model.obstacles.IChest;
-import org.junit.After;
-import org.junit.Before;
 import org.junit.Test;
-
-import java.util.ArrayList;
-import java.util.List;
 
 import static org.junit.Assert.*;
 
@@ -31,8 +24,9 @@ public class ChestTest {
      */
     @Test
     public void testChest() throws InventoryFullException {
-        IPlayer player = new Player(Direction.NORTH, 0, 17, 17, 0, 0, 100, 50, 0, 100);
-        IChest chest = new Chest(100, 100, 10, 10, 2, 10);
+        Player player = new Player();
+        player.resetPlayer();
+        IChest chest = new Chest(100, 100, 10, 10, 2);
 
         try {
             assertTrue(chest.isEmpty());

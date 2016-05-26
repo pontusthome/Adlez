@@ -1,13 +1,7 @@
 package com.mygdx.game.model.characters;
 
-import com.mygdx.game.model.Adlez;
-import com.mygdx.game.model.characters.actions.AOEMeleeAttack;
 import com.mygdx.game.model.characters.actions.IAttack;
 import com.mygdx.game.model.core.Collidable;
-import com.mygdx.game.model.core.Direction;
-import com.mygdx.game.model.core.LibGDXSoundAdapter;
-import com.mygdx.game.model.collisionHandler.CollisionHandler;
-import com.mygdx.game.utils.AssetStrings;
 import com.mygdx.game.utils.Utils;
 
 /**
@@ -21,9 +15,7 @@ public class Enemy extends NPC implements IEnemy{
 	public static final int DOG_LEVEL_ONE = 4;
 
 	private int type;
-	private int range = 70;
 	
-	private CollisionHandler collisionHandler = CollisionHandler.getInstance();
 	private IPlayer player;
 
 	public Enemy(IPlayer player,
@@ -50,23 +42,20 @@ public class Enemy extends NPC implements IEnemy{
 				attack.getCharacter().setGold(attack.getCharacter().getGold() + getGold());
 			}
 		}
-		if(other instanceof IPlayer && getAttackCooldown() > ATTACK_COOLDOWN_LIMIT){
-			attackPlayer();
-			resetAttackCooldown();
-		}
 	}
 
 	@Override
 	public void update(float deltaT) {
-		followPlayer(deltaT);
+		followPlayer();
 		super.update(deltaT);
 	}
 
 	@Override
-	public void followPlayer(float deltaT) {
+	public void followPlayer() {
 		float playerX = player.getPosX();
 		float playerY = player.getPosY();
-
+		
+		int range = 70;
 		boolean inRange = Utils.inRange(playerX, getPosX(), playerY, getPosY(), range);
 
 		if (playerY > getPosY() && Math.abs(playerY - getPosY()) > 1 && inRange) {
@@ -86,34 +75,12 @@ public class Enemy extends NPC implements IEnemy{
 		return type;
 	}
 	
-	private void attackPlayer(){
-		AOEMeleeAttack();
-	}
-	
+	// For now an enemy attack is a melee attack in an AOE around the enemy
 	@Override
-	public void handleMoveCollision(int direction){
-		if (collisionHandler.characterCollided(this)) {
-			
-			// Preliminary implementation of enemy attack
-			if(CollisionHandler.collide(this, player) &&
-					getAttackCooldown() >= ATTACK_COOLDOWN_LIMIT){
-				onCollide(player);
-			}
-			
-			switch(direction){
-				case Direction.NORTH:
-					setPosY(getOldPosY());
-					break;
-				case Direction.SOUTH:
-					setPosY(getOldPosY());
-					break;
-				case Direction.EAST:
-					setPosX(getOldPosX());
-					break;
-				case Direction.WEST:
-					setPosX(getOldPosX());
-					break;
-			}
+	public void attackPlayer(){
+		if(getAttackCooldown() >= ATTACK_COOLDOWN_LIMIT){
+			aoeMeleeAttack();
+			resetAttackCooldown();
 		}
 	}
 }

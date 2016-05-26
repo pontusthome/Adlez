@@ -8,10 +8,6 @@ import com.mygdx.game.model.characters.ICharacter;
  */
 public class AOEMagicAttack extends Attack{
 	
-	public AOEMagicAttack(){
-		super();
-	}
-	
 	public AOEMagicAttack(ICharacter character){
 		super(character);
 	}

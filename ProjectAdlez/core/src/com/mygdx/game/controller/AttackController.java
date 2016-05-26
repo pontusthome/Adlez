@@ -3,8 +3,8 @@ package com.mygdx.game.controller;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.mygdx.game.model.*;
 import com.mygdx.game.model.characters.actions.*;
-import com.mygdx.game.model.core.GameSound;
-import com.mygdx.game.model.core.LibGDXSoundAdapter;
+import com.mygdx.game.sound.GameSound;
+import com.mygdx.game.sound.LibGDXSoundAdapter;
 import com.mygdx.game.utils.AssetStrings;
 
 /**
@@ -15,12 +15,13 @@ public class AttackController implements IController{
 	
 	private IAttack attack;
 	private Adlez adlez;
-	private GameSound attackSound;
 	
 	public AttackController(IAttack attack){
 		this.attack = attack;
 		adlez = Adlez.getInstance();
-				
+		
+		GameSound attackSound;
+		
 		if(attack instanceof MeleeAttack || attack instanceof AOEMeleeAttack){
 			attackSound = new LibGDXSoundAdapter(AssetStrings.MELEE_ATTACK_SOUND);
 			attackSound.play(0.1f);
@@ -52,9 +53,5 @@ public class AttackController implements IController{
 	@Override
 	public void render(SpriteBatch batch){
 		
-	}
-	
-	public IAttack getAttack(){
-		return attack;
 	}
 }

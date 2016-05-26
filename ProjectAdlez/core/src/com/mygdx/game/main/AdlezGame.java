@@ -1,9 +1,9 @@
-package com.mygdx.game;
+package com.mygdx.game.main;
 
 import com.badlogic.gdx.Game;
 import com.mygdx.game.screens.ScreenManager;
 
-public class AdlezDesktop extends Game {
+public class AdlezGame extends Game {
 
     @Override
     public void create() {

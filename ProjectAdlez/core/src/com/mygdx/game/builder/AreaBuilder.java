@@ -65,7 +65,7 @@ public class AreaBuilder implements AreaIO {
 
             file.write(jsonPlayer.toString());
         } catch (IOException e) {
-            System.out.println("Cannot save");
+            System.out.println("Cannot save the Player");
         }
     }
 
@@ -75,51 +75,55 @@ public class AreaBuilder implements AreaIO {
      * @return the saved player
      */
     @Override
-    public IPlayer loadPlayer() {
+    public IPlayer loadPlayer() throws IOException {
         IPlayer player = Adlez.getInstance().getPlayer();
 
         BufferedReader bufferedReader;
-        try {
-            String areaHandlerData;
-            bufferedReader = new BufferedReader(new FileReader("player.txt"));
+        String areaHandlerData;
+        bufferedReader = new BufferedReader(new FileReader("player.txt"));
 
-            while ((areaHandlerData = bufferedReader.readLine()) != null) {
-                JsonValue jsonPlayer = new JsonReader().parse(areaHandlerData);
-                //System.out.println(jsonAreaHandler.toString());
+        while ((areaHandlerData = bufferedReader.readLine()) != null) {
+            JsonValue jsonPlayer = new JsonReader().parse(areaHandlerData);
+            //System.out.println(jsonAreaHandler.toString());
 
-                player.setName(jsonPlayer.get("name").asString());
-                player.setPos(jsonPlayer.get("xPos").asFloat(), jsonPlayer.get("yPos").asFloat());
-                player.setWidth(jsonPlayer.get("width").asInt());
-                player.setHeight(jsonPlayer.get("height").asInt());
-                player.setSpeed(jsonPlayer.get("speed").asFloat());
-                player.setMaxHealth(jsonPlayer.get("maxHealth").asInt());
-                player.setHealth(jsonPlayer.get("health").asInt());
-                player.setMaxMana(jsonPlayer.get("maxMana").asInt());
-                player.setMana(jsonPlayer.get("mana").asInt());
-                player.setAttackDamage(jsonPlayer.get("attackDamage").asInt());
-                player.setDirection(jsonPlayer.get("direction").asInt());
-                player.setGold(jsonPlayer.get("gold").asInt());
-                player.setLevel(jsonPlayer.get("level").asInt());
-                if (jsonPlayer.get("armorEquipped") != null) {
+            player.setName(jsonPlayer.get("name").asString());
+            player.setPos(jsonPlayer.get("xPos").asFloat(), jsonPlayer.get("yPos").asFloat());
+            player.setWidth(jsonPlayer.get("width").asInt());
+            player.setHeight(jsonPlayer.get("height").asInt());
+            player.setSpeed(jsonPlayer.get("speed").asFloat());
+            player.setMaxHealth(jsonPlayer.get("maxHealth").asInt());
+            player.setHealth(jsonPlayer.get("health").asInt());
+            player.setMaxMana(jsonPlayer.get("maxMana").asInt());
+            player.setMana(jsonPlayer.get("mana").asInt());
+            player.setAttackDamage(jsonPlayer.get("attackDamage").asInt());
+            player.setDirection(jsonPlayer.get("direction").asInt());
+            player.setGold(jsonPlayer.get("gold").asInt());
+            player.setLevel(jsonPlayer.get("level").asInt());
+            if (jsonPlayer.get("armorEquipped") != null) {
+                try {
                     player.equipItem(getJsonItem(jsonPlayer.get("armorEquipped")));
-                }
-                if (jsonPlayer.get("swordEquipped") != null) {
-                    player.equipItem(getJsonItem(jsonPlayer.get("swordEquipped")));
-                }
-                for (IItem item: getJsonItems(jsonPlayer.get("inventory"))) {
-                    try {
-                        player.lootItem(item);
-                    } catch (InventoryFullException e) {
-                        e.printStackTrace();
-                    }
+                } catch (ItemNotFoundException e) {
+                    System.out.println("Loading player and not finding the armor that should be equipped");
                 }
             }
-
-            // close the BufferedReader when we're done
-            bufferedReader.close();
-        } catch (Exception e) {
-            System.out.println("Cannot load saved player");
+            if (jsonPlayer.get("swordEquipped") != null) {
+                try {
+                    player.equipItem(getJsonItem(jsonPlayer.get("swordEquipped")));
+                } catch (ItemNotFoundException e) {
+                    System.out.println("Loading player and not finding the sword that should be equipped");
+                }
+            }
+            for (IItem item: getJsonItems(jsonPlayer.get("inventory"))) {
+                try {
+                    player.lootItem(item);
+                } catch (InventoryFullException e) {
+                    System.out.println("Loading a player that had too many items?");
+                }
+            }
         }
+
+        // close the BufferedReader when we're done
+        bufferedReader.close();
 
         return player;
     }
@@ -153,7 +157,7 @@ public class AreaBuilder implements AreaIO {
 
             file.write(jsonAreaHandler.toString());
         } catch (IOException e) {
-            System.out.println("Cannot save");
+            System.out.println("Cannot save the AreaHandler");
         }
     }
 
@@ -167,9 +171,9 @@ public class AreaBuilder implements AreaIO {
     private void areaToJson(Area area, StringBuilder jsonAreaHandler) {
         jsonAreaHandler.append(area.getAreaName() + ":{");
 
-        EnemiesToJson(area.getEnemies(), jsonAreaHandler);
-        ObstaclesToJson(area.getObstacles(), jsonAreaHandler);
-        ChestsToJson(area.getChests(), jsonAreaHandler);
+        enemiesToJson(area.getEnemies(), jsonAreaHandler);
+        obstaclesToJson(area.getObstacles(), jsonAreaHandler);
+        chestsToJson(area.getChests(), jsonAreaHandler);
 
         jsonAreaHandler.append("},");
     }
@@ -181,7 +185,7 @@ public class AreaBuilder implements AreaIO {
      * @param enemies the list of enemies that are turned into JSON
      * @param jsonAreaHandler a StringBuilder that the data will be stored in, it contains the JSON file for the AreaHandler
      */
-    private void EnemiesToJson(List<IEnemy> enemies, StringBuilder jsonAreaHandler) {
+    private void enemiesToJson(List<IEnemy> enemies, StringBuilder jsonAreaHandler) {
         jsonAreaHandler.append("enemies:[");
 
         for (IEnemy enemy: enemies) {
@@ -200,7 +204,7 @@ public class AreaBuilder implements AreaIO {
      * @param obstacles the list of obstacles that will be turned into JSON
      * @param jsonAreaHandler a StringBuilder that the data will be stored in, it contains the JSON file for the AreaHandler
      */
-    public void ObstaclesToJson(List<IObstacle> obstacles, StringBuilder jsonAreaHandler) {
+    private void obstaclesToJson(List<IObstacle> obstacles, StringBuilder jsonAreaHandler) {
         jsonAreaHandler.append("obstacles:[");
 
         for (IObstacle obstacle: obstacles) {
@@ -218,13 +222,14 @@ public class AreaBuilder implements AreaIO {
      * @param chests the list of chests that will be turned into JSON
      * @param jsonAreaHandler a StringBuilder that the data will be stored in, it contains the JSON file for the AreaHandler
      */
-    private void ChestsToJson(List<IChest> chests, StringBuilder jsonAreaHandler) {
+    private void chestsToJson(List<IChest> chests, StringBuilder jsonAreaHandler) {
         jsonAreaHandler.append("chests:[");
 
         for (IChest chest: chests) {
             jsonAreaHandler.append("{xPos" + ":" + chest.getPosX() + "," +
                     "yPos" + ":" + chest.getPosY() + "," +
-                    "items" + ":" + itemsToJson(chest.getItems()) + "},");
+                    "items" + ":" + itemsToJson(chest.getItems()) + "," +
+                    "isOpened" + ":" + chest.isOpened() + "}," );
         }
 
         jsonAreaHandler.append("],");
@@ -285,29 +290,25 @@ public class AreaBuilder implements AreaIO {
      * @return the AreaHandler updated with the saved data.
      */
     @Override
-    public AreaHandler loadAreaHandler() {
+    public AreaHandler loadAreaHandler() throws IOException {
         AreaHandler areaHandler = AreaHandler.getInstance();
 
         BufferedReader bufferedReader;
-        try {
-            String areaHandlerData;
-            bufferedReader = new BufferedReader(new FileReader("areaHandler.txt"));
+        String areaHandlerData;
+        bufferedReader = new BufferedReader(new FileReader("areaHandler.txt"));
 
-            while ((areaHandlerData = bufferedReader.readLine()) != null) {
-                JsonValue jsonAreaHandler = new JsonReader().parse(areaHandlerData);
-                //System.out.println(jsonAreaHandler.toString());
+        while ((areaHandlerData = bufferedReader.readLine()) != null) {
+            JsonValue jsonAreaHandler = new JsonReader().parse(areaHandlerData);
+            //System.out.println(jsonAreaHandler.toString());
 
-                loadArea(jsonAreaHandler.get("1"), areaHandler.loadArea1());
-                loadArea(jsonAreaHandler.get("2"), areaHandler.loadArea2());
+            loadArea(jsonAreaHandler.get("1"), areaHandler.loadArea1());
+            loadArea(jsonAreaHandler.get("2"), areaHandler.loadArea2());
 
-                areaHandler.setCurrentArea(jsonAreaHandler.get("currentArea").asInt());
-            }
-
-            // close the BufferedReader when we're done
-            bufferedReader.close();
-        } catch (Exception e) {
-            System.out.println("Cannot find saved game");
+            areaHandler.setCurrentArea(jsonAreaHandler.get("currentArea").asInt());
         }
+
+        // close the BufferedReader when we're done
+        bufferedReader.close();
 
         return areaHandler;
     }
@@ -366,8 +367,13 @@ public class AreaBuilder implements AreaIO {
         for (JsonValue jsonChest : jsonChests) {
             IChest chest = new Chest(jsonChest.get("xPos").asFloat(), jsonChest.get("yPos").asFloat());
             for (IItem item : getJsonItems(jsonChest.get("items"))) {
-
+                try {
+                    chest.addItem(item);
+                } catch (InventoryFullException e) {
+                    e.printStackTrace();
+                }
             }
+            chest.setIsOpened(jsonChest.get("isOpened").asBoolean());
             chests.add(chest);
         }
     }

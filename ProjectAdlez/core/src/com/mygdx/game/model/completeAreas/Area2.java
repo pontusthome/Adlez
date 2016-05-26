@@ -5,7 +5,6 @@ import com.mygdx.game.model.Area;
 import com.mygdx.game.model.characters.*;
 import com.mygdx.game.model.core.Direction;
 import com.mygdx.game.model.factories.EnemyFactory;
-import com.mygdx.game.model.core.IWorldObject;
 import com.mygdx.game.model.exceptions.InventoryFullException;
 import com.mygdx.game.model.obstacles.*;
 import com.mygdx.game.model.obstacles.Chest;
@@ -26,10 +25,9 @@ public class Area2 implements ICompleteArea {
         return area;
     }
 
-    public Area2() throws InventoryFullException {
+    public Area2() {
         List<IEnemy> enemies = new ArrayList<>();
         List<IFriendlyNPC> friendlyNPCs = new ArrayList<>();
-        List<IWorldObject> stationaryObjects = new ArrayList<>();
         Wall wall = new Wall();
         List<IWall> walls = new ArrayList<>();
         List<IObstacle> obstacles = new ArrayList<>();
@@ -111,9 +109,13 @@ public class Area2 implements ICompleteArea {
         enemies.add(EnemyFactory.createEnemy(Enemy.DOG_LEVEL_ONE, 32 * 2, 32 * 8));
         enemies.add(EnemyFactory.createEnemy(Enemy.DOG_LEVEL_ONE, 32 * 2, 32 * 9));
 
-        Chest ch1 = new Chest(32 * 2 + 8, 32 * 5 + 8, 16, 16, 2, 200);
-        ch1.addItem(CompleteItems.FINAL_SWORD);
-        ch1.addItem(CompleteItems.FINAL_BODY_ARMOR);
+        Chest ch1 = new Chest(32 * 2 + 8, 32 * 5 + 8, 16, 16, 2);
+        try {
+            ch1.addItem(CompleteItems.FINAL_SWORD);
+            ch1.addItem(CompleteItems.FINAL_BODY_ARMOR);
+        } catch (InventoryFullException e) {
+            e.printStackTrace();
+        }
         chests.add(ch1);
 
         friendlyNPCs.add(new FriendlyNPC(Direction.SOUTH, 17, 17, 32, 32, 32 * 3, 10, 0, 0, 0));
@@ -123,7 +125,7 @@ public class Area2 implements ICompleteArea {
         areaConnections.add(new AreaConnection(32 * 8, 32 * 18, 32, 32));
         manaFountains.add(new ManaFountain(32*3, 32*3, 32, 32));
 
-        area = new Area(playerPosX, playerPosY, enemies, friendlyNPCs, stationaryObjects, walls, obstacles, chests, areaConnections, AreaHandler.AREA_2, manaFountains);
+        area = new Area(playerPosX, playerPosY, enemies, friendlyNPCs, walls, obstacles, chests, areaConnections, AreaHandler.AREA_2, manaFountains);
     }
 }
 

@@ -2,8 +2,7 @@ package com.mygdx.game.desktop;
 
 import com.badlogic.gdx.backends.lwjgl.LwjglApplication;
 import com.badlogic.gdx.backends.lwjgl.LwjglApplicationConfiguration;
-import com.mygdx.game.AdlezDesktop;
-import org.lwjgl.opengl.Display;
+import com.mygdx.game.main.AdlezGame;
 
 public class DesktopLauncher {
 	public static void main (String[] arg) {
@@ -19,6 +18,6 @@ public class DesktopLauncher {
 		config.x = 1000;
 		config.y = 100;
 		 */
-		new LwjglApplication(new AdlezDesktop(), config);
+		new LwjglApplication(new AdlezGame(), config);
 	}
 }

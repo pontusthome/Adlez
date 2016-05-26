@@ -10,7 +10,7 @@ import java.io.Serializable;
 /**
  * Created by martinso on 15/05/16.
  */
-public class ManaFountain extends WorldObject implements IManaFountain, Serializable {
+public class ManaFountain extends WorldObject implements IManaFountain {
 
     public ManaFountain(float posX, float posY, int width, int height) {
         super(posX, posY, width, height);

@@ -3,9 +3,10 @@ package com.mygdx.game.model;
 import com.mygdx.game.model.characters.actions.IAttack;
 import com.mygdx.game.model.characters.actions.IInteraction;
 import com.mygdx.game.model.characters.*;
-import com.mygdx.game.model.core.Direction;
 import com.mygdx.game.model.core.IWorldObject;
 import com.mygdx.game.model.collisionHandler.CollisionHandler;
+import com.mygdx.game.model.core.ObservableWorldObject;
+import com.mygdx.game.model.core.WorldObjectObserver;
 import com.mygdx.game.model.obstacles.*;
 import com.mygdx.game.model.obstacles.IChest;
 
@@ -14,10 +15,10 @@ import java.util.List;
 
 /**
  * @author Pontus
- *
- * Singleton of the model Adlez
+ *         <p>
+ *         Singleton of the model Adlez
  */
-public class Adlez {
+public class Adlez implements WorldObjectObserver {
     private static Adlez adlez = new Adlez();
 
     public static Adlez getInstance() {
@@ -29,7 +30,6 @@ public class Adlez {
     private IPlayer player;
     private List<IEnemy> enemies;
     private List<IFriendlyNPC> friendlyNPCs;
-    private List<IWorldObject> stationaryObjects;
     private List<IWall> walls;
     private List<IObstacle> obstacles;
     private List<IChest> chests;
@@ -42,19 +42,16 @@ public class Adlez {
     private List<IInteraction> newInteractions = new ArrayList<>();
 
     private Adlez() {
-        /** Set players's width & height to size of texture for debugging purposes */
-        player = new Player(Direction.NORTH, 2f,
-                            17, 17,
-                            0, 0,
-                            100, 20, 100, 100);
+        player = new Player();
+    }
+
+    public void resetPlayer() {
+        player.resetPlayer();
     }
 
     public void initiateArea(Area area) {
         // Reset the world and then set it up for the new area
         worldObjects = new ArrayList<>();
-
-        collisionHandler = CollisionHandler.getInstance();
-        collisionHandler.initiate(player, worldObjects);
 
         // add the player and set him to the new position
         player.setPosX(area.getPlayerXposition());
@@ -63,21 +60,18 @@ public class Adlez {
 
         enemies = area.getEnemies();
         List<IWorldObject> tempList = new ArrayList<>();
-        for(IEnemy enemy : enemies){
-            tempList.add((IWorldObject) enemy);
-        }
-        worldObjects.addAll(tempList);
-        
-        tempList.clear();
-        
-        friendlyNPCs = area.getFriendlyNPCs();
-        for(IFriendlyNPC friendlyNPC : friendlyNPCs){
-            tempList.add((IWorldObject) friendlyNPC);
+        for (IEnemy enemy : enemies) {
+            tempList.add(enemy);
         }
         worldObjects.addAll(tempList);
 
-        stationaryObjects = area.getStationaryObjects();
-        worldObjects.addAll(stationaryObjects);
+        tempList.clear();
+
+        friendlyNPCs = area.getFriendlyNPCs();
+        for (IFriendlyNPC friendlyNPC : friendlyNPCs) {
+            tempList.add(friendlyNPC);
+        }
+        worldObjects.addAll(tempList);
 
         walls = area.getWalls();
         worldObjects.addAll(walls);
@@ -87,14 +81,35 @@ public class Adlez {
 
         chests = area.getChests();
         worldObjects.addAll(chests);
-        
-        attacks = new ArrayList<>();
+
+        attacks.clear();
 
         areaConnections = area.getAreaConnections();
         worldObjects.addAll(areaConnections);
 
         manaFountains = area.getManaFountains();
         worldObjects.addAll(manaFountains);
+
+        collisionHandler = CollisionHandler.getInstance();
+        collisionHandler.initiate(worldObjects, attacks, interactions, player);
+
+        // Add this & collision handler as observers to all characters
+
+        ObservableWorldObject playerObservable = (ObservableWorldObject) player;
+        playerObservable.addObserver(this);
+        playerObservable.addObserver(collisionHandler);
+
+        for (IEnemy enemy : enemies) {
+            ObservableWorldObject enemyObservable = ((ObservableWorldObject) enemy);
+            enemyObservable.addObserver(this);
+            enemyObservable.addObserver(collisionHandler);
+        }
+
+        for (IFriendlyNPC fNPC : friendlyNPCs) {
+            ObservableWorldObject fNPCObservable = ((ObservableWorldObject) fNPC);
+            fNPCObservable.addObserver(this);
+            fNPCObservable.addObserver(collisionHandler);
+        }
     }
 
     public IPlayer getPlayer() {
@@ -105,18 +120,12 @@ public class Adlez {
         this.player = player;
     }
 
-    public List<IEnemy> getEnemies() { return enemies; }
+    public List<IEnemy> getEnemies() {
+        return enemies;
+    }
 
     public List<IFriendlyNPC> getFriendlyNPCs() {
         return friendlyNPCs;
-    }
-
-    public List<IWorldObject> getStationaryObjects() {
-        return stationaryObjects;
-    }
-
-    public List<IWorldObject> getWorldObjects() {
-        return worldObjects;
     }
 
     public List<IWall> getWalls() {
@@ -138,63 +147,60 @@ public class Adlez {
     public List<IManaFountain> getManaFountains() {
         return manaFountains;
     }
-    
-    public void removeEnemyFromWorld(INPC enemy){
+
+    public void removeEnemyFromWorld(INPC enemy) {
         enemies.remove(enemy);
         worldObjects.remove(enemy);
     }
 
-    public void removeChestFromWorld(IChest chest) {
-        chests.remove(chest);
-        worldObjects.remove(chest);
-    }
-
-    public CollisionHandler getCollisionHandler(){
+    public CollisionHandler getCollisionHandler() {
         return collisionHandler;
     }
-    
-    public List<IAttack> getAttacks(){
+
+    public List<IAttack> getAttacks() {
         return attacks;
     }
-    
-    public void removeAttackFromWorld(IAttack attack){
+
+    public void removeAttackFromWorld(IAttack attack) {
         attacks.remove(attack);
-        worldObjects.remove(attack);
     }
-    
-    public List<IAttack> getNewAttacks(){
+
+    public List<IAttack> getNewAttacks() {
         return newAttacks;
     }
-    
-    public void addAttack(IAttack attack){
+
+    private void addAttack(IAttack attack) {
         newAttacks.add(attack);
         attacks.add(attack);
-        worldObjects.add(attack);
     }
-    
-    public void removeObstacleFromWorld(IObstacle obstacle){
+
+    public void removeObstacleFromWorld(IObstacle obstacle) {
         obstacles.remove(obstacle);
         worldObjects.remove(obstacle);
     }
-    
-    public void removeWallFromWorld(IWall wall){
-        walls.remove(wall);
-        worldObjects.remove(wall);
-    }
-    
-    public void addInteraction(IInteraction interaction){
+
+    private void addInteraction(IInteraction interaction) {
         newInteractions.add(interaction);
         interactions.add(interaction);
-        worldObjects.add(interaction);
     }
-    
-    public void removeInteractionFromWorld(IInteraction interaction){
+
+    public void removeInteractionFromWorld(IInteraction interaction) {
         interactions.remove(interaction);
-        worldObjects.remove(interaction);
     }
-    
-    public List<IInteraction> getNewInteractions(){
+
+    public List<IInteraction> getNewInteractions() {
         return newInteractions;
     }
-    
+
+    @Override
+    public void update(IWorldObject worldObject, Object arg) {
+        // To be used for adding a character's attack to the world, coming soon...
+        if (arg instanceof IAttack) {
+            IAttack newAttack = (IAttack) arg;
+            addAttack(newAttack);
+        } else if (arg instanceof IInteraction) {
+            IInteraction newInteraction = (IInteraction) arg;
+            addInteraction(newInteraction);
+        }
+    }
 }

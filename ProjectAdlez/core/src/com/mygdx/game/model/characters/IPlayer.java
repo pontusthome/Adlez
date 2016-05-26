@@ -1,6 +1,5 @@
 package com.mygdx.game.model.characters;
 
-import com.mygdx.game.model.characters.actions.IAttack;
 import com.mygdx.game.model.characters.items.IItem;
 import com.mygdx.game.model.exceptions.InventoryFullException;
 import com.mygdx.game.model.exceptions.ItemNotFoundException;
@@ -21,4 +20,5 @@ public interface IPlayer extends ICharacter {
     IItem getSwordEquipped();
     IItem getArmorEquipped();
     IItem getItemInInventory(IItem item) throws ItemNotFoundException;
+    void resetPlayer();
 }

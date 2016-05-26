@@ -11,7 +11,7 @@ import java.util.List;
  */
 public class Wall extends WorldObject implements IWall {
 
-    List<Wall> walls = new ArrayList<Wall>();
+    private List<Wall> walls = new ArrayList<>();
 
     public Wall() {
         setHeight(32);
@@ -26,9 +26,19 @@ public class Wall extends WorldObject implements IWall {
     }
 
     public List<Wall> createAreaBounds(int height, int width, int size) {
-        
         for (int i = 0; i < height; i++) {
+            if (i > 0 && i < (height - 1)) {
+                Wall newWall1 = new Wall();
+                Wall newWall2 = new Wall();
+                newWall1.setPosX(0);
+                newWall1.setPosY(i * size);
+                newWall2.setPosX((width - 1) * size);
+                newWall2.setPosY(i * size);
+                walls.add(newWall1);
+                walls.add(newWall2);
+            }
             for (int j = 0; j < width; j++) {
+                //
                 if (i == 0) {
                     Wall newWall = new Wall();
                     newWall.setPosX(j * size);
@@ -39,15 +49,6 @@ public class Wall extends WorldObject implements IWall {
                     newWall.setPosX(j * size);
                     newWall.setPosY((height - 1) * size);
                     walls.add(newWall);
-                } else {
-                    Wall newWall1 = new Wall();
-                    Wall newWall2 = new Wall();
-                    newWall1.setPosX(0);
-                    newWall1.setPosY(i * size);
-                    newWall2.setPosX((width - 1) * size);
-                    newWall2.setPosY(i * size);
-                    walls.add(newWall1);
-                    walls.add(newWall2);
                 }
             }
         }
@@ -57,10 +58,10 @@ public class Wall extends WorldObject implements IWall {
     public List<Wall> getWalls() {
         return walls;
     }
-    
-    
+
+
     @Override
-    public void onCollide(Collidable other){
-        
+    public void onCollide(Collidable other) {
+
     }
 }

@@ -16,6 +16,8 @@ import com.mygdx.game.model.Adlez;
 import com.mygdx.game.model.exceptions.ItemNotFoundException;
 import com.mygdx.game.utils.AssetStrings;
 
+import java.io.IOException;
+
 /**
  * Created by Viktor on 2016-04-19.
  */
@@ -56,6 +58,7 @@ public class MainMenuScreen extends AbstractScreen {
             @Override
             public boolean touchDown(InputEvent event, float x,
                                      float y, int pointer, int button) {
+                newGame();
                 initiateGame();
                 return false;
             }
@@ -65,8 +68,7 @@ public class MainMenuScreen extends AbstractScreen {
             @Override
             public boolean touchDown(InputEvent event, float x,
                                      float y, int pointer, int button) {
-                loadGame();
-                initiateGame();
+                loadSavedGame();
                 return false;
             }
         });

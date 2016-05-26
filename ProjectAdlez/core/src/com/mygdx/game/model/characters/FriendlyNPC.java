@@ -1,9 +1,7 @@
 package com.mygdx.game.model.characters;
 
-import com.mygdx.game.model.Adlez;
 import com.mygdx.game.model.characters.actions.IInteraction;
 import com.mygdx.game.model.core.Collidable;
-import com.mygdx.game.model.core.ShopOpenListener;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -14,10 +12,8 @@ import java.util.List;
 
 public class FriendlyNPC extends NPC implements IFriendlyNPC {
 
-    private Adlez adlez = Adlez.getInstance();
-    private IPlayer player = adlez.getPlayer();
     private NPCShop shop;
-    private List<ShopOpenListener> listeners = new ArrayList<ShopOpenListener>();
+    private List<ShopOpenListener> listeners = new ArrayList<>();
 
     public FriendlyNPC(int direction, float speed, int width,
                        int height, float posX, float posY,
@@ -39,24 +35,22 @@ public class FriendlyNPC extends NPC implements IFriendlyNPC {
         return shop;
     }
 
-    /**
-     * Small fee of 5 gold to open the shop.
-     */
     @Override
     public void onCollide(Collidable other) {
-        if(player.getGold() >= 5) {
-            player.setGold(player.getGold() - 5);
-            if (other instanceof IInteraction) {
-                for (ShopOpenListener listener : listeners) {
-                    listener.shopOpen(shop);
-                }
+        if (other instanceof IInteraction) {
+            IInteraction interaction = (IInteraction) other;
+            ICharacter character = interaction.getCharacter();
+            if (character instanceof IPlayer) {
+                notifyListeners();
             }
         }
     }
 
     @Override
     public void add(ShopOpenListener listener) {
-        listeners.add(listener);
+        if(!listeners.contains(listener)){
+            listeners.add(listener);
+        }
     }
 
     @Override
@@ -64,4 +58,9 @@ public class FriendlyNPC extends NPC implements IFriendlyNPC {
         listeners.remove(listener);
     }
 
+    private void notifyListeners() {
+        for (ShopOpenListener listener : listeners) {
+            listener.shopOpen(shop);
+        }
+    }
 }

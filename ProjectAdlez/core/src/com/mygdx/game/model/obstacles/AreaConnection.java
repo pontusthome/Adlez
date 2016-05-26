@@ -1,5 +1,7 @@
 package com.mygdx.game.model.obstacles;
 
+import com.mygdx.game.model.characters.ICharacter;
+import com.mygdx.game.model.characters.IPlayer;
 import com.mygdx.game.model.core.Collidable;
 import com.mygdx.game.model.core.GateOpenListener;
 import com.mygdx.game.model.characters.actions.IInteraction;
@@ -13,7 +15,7 @@ import java.util.List;
  */
 public class AreaConnection extends WorldObject implements IAreaConnection {
 
-    private List<GateOpenListener> listeners = new ArrayList<GateOpenListener>();
+    private List<GateOpenListener> listeners = new ArrayList<>();
 
     public AreaConnection(float posX, float posY, int width, int height) {
         super(posX, posY, width, height);
@@ -22,20 +24,29 @@ public class AreaConnection extends WorldObject implements IAreaConnection {
     @Override
     public void onCollide(Collidable other) {
         if (other instanceof IInteraction) {
-            System.out.println("sadasd");
-            for (GateOpenListener listener : listeners) {
-                listener.gateOpen();
+            IInteraction interaction = (IInteraction) other; 
+            ICharacter interactor = interaction.getCharacter();
+            if(interactor instanceof IPlayer){
+                notifyListeners();
             }
         }
     }
 
     @Override
     public void add(GateOpenListener listener) {
-        listeners.add(listener);
+        if(!listeners.contains(listener)){
+            listeners.add(listener);
+        }
     }
 
     @Override
     public void remove(GateOpenListener listener) {
         listeners.remove(listener);
+    }
+    
+    private void notifyListeners(){
+        for (GateOpenListener listener : listeners) {
+            listener.gateOpen();
+        }
     }
 }
