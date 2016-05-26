@@ -5,14 +5,12 @@ import com.badlogic.gdx.Input;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.mygdx.game.builder.AreaBuilder;
-import com.mygdx.game.builder.AreaHandler;
 import com.mygdx.game.builder.AreaIO;
 import com.mygdx.game.model.characters.actions.*;
 import com.mygdx.game.model.characters.IPlayer;
-import com.mygdx.game.model.core.GameSound;
-import com.mygdx.game.model.core.LibGDXSoundAdapter;
+import com.mygdx.game.sound.GameSound;
+import com.mygdx.game.sound.LibGDXSoundAdapter;
 import com.mygdx.game.utils.AssetStrings;
-import com.mygdx.game.screens.ScreenManager;
 import com.mygdx.game.view.CharacterView;
 import com.mygdx.game.view.ICharacterView;
 
@@ -92,17 +90,6 @@ public class PlayerController implements ICharacterController{
 
         /**
          * ===============================
-         * TEST for changing areas
-         * ===============================
-         */
-        if (Gdx.input.isKeyJustPressed(Input.Keys.NUM_1)) {
-            ScreenManager.getInstance().switchArea(AreaHandler.getInstance().loadArea1());
-        }
-        if (Gdx.input.isKeyJustPressed(Input.Keys.NUM_2)) {
-            ScreenManager.getInstance().switchArea(AreaHandler.getInstance().loadArea2());
-        }
-        /**
-         * ===============================
          * TEST for saving and loading areas
          * ===============================
          */
@@ -110,18 +97,11 @@ public class PlayerController implements ICharacterController{
             AreaIO areaBuilder = new AreaBuilder();
             try {
                 areaBuilder.saveAreaHandler();
+                areaBuilder.savePlayer();
             } catch (IOException e) {
                 System.out.println("Could not save the game");
             }
-            areaBuilder.savePlayer();
         }
-/*        if (Gdx.input.isKeyJustPressed(Input.Keys.L)) {
-            AreaIO areaBuilder = new AreaBuilder();
-            areaBuilder.loadAreaHandler();
-            areaBuilder.loadPlayer();
-
-            ScreenManager.getInstance().switchArea(AreaHandler.getInstance().getCurrentArea());
-        }*/
 
         // If the player moved the sprite of the player should move
         if (player.moved()) {

@@ -1,4 +1,4 @@
-package com.mygdx.game.model.core;
+package com.mygdx.game.sound;
 
 /**
  * Created by Michel on 30.4.2016.

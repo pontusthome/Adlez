@@ -1,1 +1,1 @@
-{name:null,xPos:58.0,yPos:174.0,height:17,width:17,speed:2.0,maxHealth:100,health:89,maxMana:0,mana:100,attackDamage:20,direction:2,gold:0,level:0,inventory:[],}
+{name:null,xPos:32.0,yPos:32.0,height:17,width:17,speed:2.0,maxHealth:100,health:22,maxMana:100,mana:10,attackDamage:20,direction:0,gold:149,level:0,inventory:[{itemType:Weapon,type:type_weapon_sword,name:iron_sword,goldValue:200,stats:60},{itemType:Armor,type:type_armor_body,name:iron_body_armor,goldValue:200,stats:50},],}

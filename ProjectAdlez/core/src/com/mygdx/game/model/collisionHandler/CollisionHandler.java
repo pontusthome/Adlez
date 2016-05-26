@@ -1,10 +1,10 @@
 package com.mygdx.game.model.collisionHandler;
 
 import com.mygdx.game.model.Adlez;
-import com.mygdx.game.model.WorldObjectObserver;
+import com.mygdx.game.model.characters.IPlayer;
+import com.mygdx.game.model.core.WorldObjectObserver;
 import com.mygdx.game.model.characters.ICharacter;
 import com.mygdx.game.model.characters.IEnemy;
-import com.mygdx.game.model.characters.IPlayer;
 import com.mygdx.game.model.characters.actions.IAttack;
 import com.mygdx.game.model.characters.actions.IInteraction;
 import com.mygdx.game.model.core.IWorldObject;
@@ -19,6 +19,7 @@ public class CollisionHandler implements WorldObjectObserver{
 	private List<IWorldObject> worldObjects;
 	private List<IAttack> attacks;
 	private List<IInteraction> interactions;
+	private IPlayer player;
 	private static CollisionHandler collisionHandler = new CollisionHandler();
 	
 	public static CollisionHandler getInstance() {
@@ -30,10 +31,12 @@ public class CollisionHandler implements WorldObjectObserver{
 	}
 	
 	public void initiate(List<IWorldObject> worldObjects,
-						 List<IAttack> attacks, List<IInteraction> interactions){
+						 List<IAttack> attacks, List<IInteraction> interactions,
+						 IPlayer player){
 		this.worldObjects = worldObjects;
 		this.attacks = attacks;
 		this.interactions = interactions;
+		this.player = player;
 	}
 
 	public void updateAttacks() {
@@ -103,7 +106,7 @@ public class CollisionHandler implements WorldObjectObserver{
 			if(stringArg.equals("check_collision") && hasCharacterCollided(character)){
 				
 				// Due to lack of good AI, for now an enemy attacks the player if they have collided
-				if(character instanceof IEnemy && collide(character, Adlez.getInstance().getPlayer())){
+				if(character instanceof IEnemy && collide(character, player)){
 					IEnemy enemy = (IEnemy) character;
 					enemy.attackPlayer();
 				}

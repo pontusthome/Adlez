@@ -5,6 +5,8 @@ import com.mygdx.game.model.characters.actions.IInteraction;
 import com.mygdx.game.model.characters.*;
 import com.mygdx.game.model.core.IWorldObject;
 import com.mygdx.game.model.collisionHandler.CollisionHandler;
+import com.mygdx.game.model.core.ObservableWorldObject;
+import com.mygdx.game.model.core.WorldObjectObserver;
 import com.mygdx.game.model.obstacles.*;
 import com.mygdx.game.model.obstacles.IChest;
 
@@ -89,7 +91,7 @@ public class Adlez implements WorldObjectObserver {
         worldObjects.addAll(manaFountains);
 
         collisionHandler = CollisionHandler.getInstance();
-        collisionHandler.initiate(worldObjects, attacks, interactions);
+        collisionHandler.initiate(worldObjects, attacks, interactions, player);
 
         // Add this & collision handler as observers to all characters
 
