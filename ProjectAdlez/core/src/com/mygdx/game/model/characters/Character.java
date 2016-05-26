@@ -46,7 +46,10 @@ public abstract class Character extends WorldObject implements ICharacter, Obser
 	 */
 
 	
-	// Temporary values for cooldown, should maybe be set in constructor or defined as a constant somewhere
+	/**
+	 * Cooldown for attacking so that a character isn't allowed to attack non-sto . Only used for enemy attacks for 
+	 * now, the player is allowed to attack as fast as the user can press a button, so to speak.
+	 */
 	public static final float ATTACK_COOLDOWN_LIMIT = 2;	//In seconds
 	private float attackCooldown = ATTACK_COOLDOWN_LIMIT;
 	
