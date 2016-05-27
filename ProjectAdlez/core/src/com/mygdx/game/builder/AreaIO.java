@@ -10,7 +10,7 @@ import java.io.IOException;
  * Created by Pontus on 2016-05-14.
  */
 public interface AreaIO {
-    void savePlayer();
+    void savePlayer() throws IOException;
     void saveAreaHandler() throws IOException;
     IPlayer loadPlayer() throws IOException;
     AreaHandler loadAreaHandler() throws IOException;

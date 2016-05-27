@@ -33,40 +33,37 @@ public class AreaBuilder implements AreaIO {
      * Saves all the data in JSON that the player has including the items
      */
     @Override
-    public void savePlayer() {
-        try (FileWriter file = new FileWriter("player.txt")) {
-            IPlayer player = Adlez.getInstance().getPlayer();
-            StringBuilder jsonPlayer = new StringBuilder();
-            jsonPlayer.append("{");
+    public void savePlayer() throws IOException {
+        FileWriter file = new FileWriter("player.txt");
+        IPlayer player = Adlez.getInstance().getPlayer();
+        StringBuilder jsonPlayer = new StringBuilder();
+        jsonPlayer.append("{");
 
-            jsonPlayer.append("name" + ":" + player.getName() + ",");
-            jsonPlayer.append("xPos" + ":" + player.getPosX() + ",");
-            jsonPlayer.append("yPos" + ":" + player.getPosY() + ",");
-            jsonPlayer.append("height" + ":" + player.getHeight() + ",");
-            jsonPlayer.append("width" + ":" + player.getWidth() + ",");
-            jsonPlayer.append("speed" + ":" + player.getSpeed() + ",");
-            jsonPlayer.append("maxHealth" + ":" + player.getMaxHealth() + ",");
-            jsonPlayer.append("health" + ":" + player.getHealth() + ",");
-            jsonPlayer.append("maxMana" + ":" + player.getMaxMana() + ",");
-            jsonPlayer.append("mana" + ":" + player.getMana() + ",");
-            jsonPlayer.append("attackDamage" + ":" + player.getAttackDamage() + ",");
-            jsonPlayer.append("direction" + ":" + player.getDirection() + ",");
-            jsonPlayer.append("gold" + ":" + player.getGold() + ",");
-            jsonPlayer.append("level" + ":" + player.getLevel() + ",");
-            if (player.getArmorEquipped() != null) {
-                jsonPlayer.append("armorEquipped" + ":" + itemToJson(player.getArmorEquipped()) + ",");
-            }
-            if (player.getSwordEquipped() != null) {
-                jsonPlayer.append("swordEquipped" + ":" + itemToJson(player.getSwordEquipped()) + ",");
-            }
-            jsonPlayer.append("inventory" + ":" + itemsToJson(player.getInventory()) + ",");
-
-            jsonPlayer.append("}");
-
-            file.write(jsonPlayer.toString());
-        } catch (IOException e) {
-            System.out.println("Cannot save the Player");
+        jsonPlayer.append("name" + ":" + player.getName() + ",");
+        jsonPlayer.append("xPos" + ":" + player.getPosX() + ",");
+        jsonPlayer.append("yPos" + ":" + player.getPosY() + ",");
+        jsonPlayer.append("height" + ":" + player.getHeight() + ",");
+        jsonPlayer.append("width" + ":" + player.getWidth() + ",");
+        jsonPlayer.append("speed" + ":" + player.getSpeed() + ",");
+        jsonPlayer.append("maxHealth" + ":" + player.getMaxHealth() + ",");
+        jsonPlayer.append("health" + ":" + player.getHealth() + ",");
+        jsonPlayer.append("maxMana" + ":" + player.getMaxMana() + ",");
+        jsonPlayer.append("mana" + ":" + player.getMana() + ",");
+        jsonPlayer.append("attackDamage" + ":" + player.getAttackDamage() + ",");
+        jsonPlayer.append("direction" + ":" + player.getDirection() + ",");
+        jsonPlayer.append("gold" + ":" + player.getGold() + ",");
+        jsonPlayer.append("level" + ":" + player.getLevel() + ",");
+        if (player.getArmorEquipped() != null) {
+            jsonPlayer.append("armorEquipped" + ":" + itemToJson(player.getArmorEquipped()) + ",");
         }
+        if (player.getSwordEquipped() != null) {
+            jsonPlayer.append("swordEquipped" + ":" + itemToJson(player.getSwordEquipped()) + ",");
+        }
+        jsonPlayer.append("inventory" + ":" + itemsToJson(player.getInventory()) + ",");
+
+        jsonPlayer.append("}");
+
+        file.write(jsonPlayer.toString());
     }
 
     /**
