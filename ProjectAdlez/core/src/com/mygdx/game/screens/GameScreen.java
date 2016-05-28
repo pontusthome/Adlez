@@ -172,7 +172,7 @@ public class GameScreen extends AbstractScreen implements GateOpenListener, Shop
         // Render HUD
         playerHUD.render(delta);
     
-        debugRender();
+        //debugRender();
     }
 
     private void updateGame(float delta) {

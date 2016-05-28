@@ -2,7 +2,6 @@ package com.mygdx.game.builder;
 
 import com.badlogic.gdx.utils.JsonReader;
 import com.badlogic.gdx.utils.JsonValue;
-import com.badlogic.gdx.utils.StringBuilder;
 import com.mygdx.game.model.*;
 import com.mygdx.game.model.factories.EnemyFactory;
 import com.mygdx.game.model.characters.IEnemy;
@@ -16,6 +15,8 @@ import com.mygdx.game.model.characters.items.*;
 import java.io.*;
 import java.util.ArrayList;
 import java.util.List;
+
+import static com.mygdx.game.utils.Utils.addJsonAttribute;
 
 
 /**
@@ -38,21 +39,20 @@ public class AreaBuilder implements AreaIO {
         IPlayer player = Adlez.getInstance().getPlayer();
         StringBuilder jsonPlayer = new StringBuilder();
         jsonPlayer.append("{");
-
-        jsonPlayer.append("name" + ":" + player.getName() + ",");
-        jsonPlayer.append("xPos" + ":" + player.getPosX() + ",");
-        jsonPlayer.append("yPos" + ":" + player.getPosY() + ",");
-        jsonPlayer.append("height" + ":" + player.getHeight() + ",");
-        jsonPlayer.append("width" + ":" + player.getWidth() + ",");
-        jsonPlayer.append("speed" + ":" + player.getSpeed() + ",");
-        jsonPlayer.append("maxHealth" + ":" + player.getMaxHealth() + ",");
-        jsonPlayer.append("health" + ":" + player.getHealth() + ",");
-        jsonPlayer.append("maxMana" + ":" + player.getMaxMana() + ",");
-        jsonPlayer.append("mana" + ":" + player.getMana() + ",");
-        jsonPlayer.append("attackDamage" + ":" + player.getAttackDamage() + ",");
-        jsonPlayer.append("direction" + ":" + player.getDirection() + ",");
-        jsonPlayer.append("gold" + ":" + player.getGold() + ",");
-        jsonPlayer.append("level" + ":" + player.getLevel() + ",");
+        addJsonAttribute(jsonPlayer, "name", player.getName());
+        addJsonAttribute(jsonPlayer, "xPos", player.getPosX());
+        addJsonAttribute(jsonPlayer, "yPos", player.getPosY());
+        addJsonAttribute(jsonPlayer, "height", player.getHeight());
+        addJsonAttribute(jsonPlayer, "width", player.getWidth());
+        addJsonAttribute(jsonPlayer, "speed", player.getSpeed());
+        addJsonAttribute(jsonPlayer, "maxHealth", player.getMaxHealth());
+        addJsonAttribute(jsonPlayer, "health", player.getHealth());
+        addJsonAttribute(jsonPlayer, "maxMana", player.getMaxMana());
+        addJsonAttribute(jsonPlayer, "mana", player.getMana());
+        addJsonAttribute(jsonPlayer, "attackDamage", player.getAttackDamage());
+        addJsonAttribute(jsonPlayer, "direction", player.getDirection());
+        addJsonAttribute(jsonPlayer, "gold", player.getGold());
+        addJsonAttribute(jsonPlayer, "level", player.getLevel());
         if (player.getArmorEquipped() != null) {
             jsonPlayer.append("armorEquipped" + ":" + itemToJson(player.getArmorEquipped()) + ",");
         }
@@ -405,4 +405,6 @@ public class AreaBuilder implements AreaIO {
         }
         return null;
     }
+
+
 }
