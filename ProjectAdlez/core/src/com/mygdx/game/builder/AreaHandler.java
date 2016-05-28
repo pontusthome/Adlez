@@ -29,9 +29,7 @@ public class AreaHandler {
 
     // Create the setup for each level
     private AreaHandler() {
-        currentArea = AREA_1;
-        level1 = new Area1().loadArea();
-        level2 = new Area2().loadArea();
+        resetAreaHandler();
     }
 
     public void resetAreaHandler() {
