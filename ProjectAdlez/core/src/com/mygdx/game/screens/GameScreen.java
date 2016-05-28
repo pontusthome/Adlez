@@ -165,23 +165,12 @@ public class GameScreen extends AbstractScreen implements GateOpenListener, Shop
                 player.getPosY() + (playerController.getView().getCurrentFrame().getRegionHeight() / 2),
                 0); // z = 0, non 3D
 
-        // Render player
-        playerController.render(batch);
+        renderWorldObjects();
         
-        //Render enemies
-        for(Map.Entry<IEnemy, ICharacterController> entry : enemies.entrySet()) {
-            IController enemyController = entry.getValue();
-            enemyController.render(batch);
-        }
-        
-        // Render obstacles & chests
-        obstaclesController.render(batch);
-        chestsController.render(batch);
-        friendlyNPCController.render(batch);
-        areaConnectionController.render(batch);
-        manaFountainController.render(batch);
-        playerHUD.render(delta);
         batch.end();
+        
+        // Render HUD
+        playerHUD.render(delta);
     
         debugRender();
     }
@@ -280,6 +269,25 @@ public class GameScreen extends AbstractScreen implements GateOpenListener, Shop
             ScreenManager screenManager = ScreenManager.getInstance();
             screenManager.showScreen(ScreenEnum.GAME_OVER);
         }
+    }
+    
+    private void renderWorldObjects() {
+    
+        // Render player
+        playerController.render(batch);
+    
+        //Render enemies
+        for(Map.Entry<IEnemy, ICharacterController> entry : enemies.entrySet()) {
+            IController enemyController = entry.getValue();
+            enemyController.render(batch);
+        }
+    
+        // Render stationary world objects
+        obstaclesController.render(batch);
+        chestsController.render(batch);
+        friendlyNPCController.render(batch);
+        areaConnectionController.render(batch);
+        manaFountainController.render(batch);
     }
 
     private void debugRender(){
