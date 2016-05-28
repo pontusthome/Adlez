@@ -16,9 +16,6 @@ import java.io.*;
 import java.util.ArrayList;
 import java.util.List;
 
-import static com.mygdx.game.utils.Utils.addJsonAttribute;
-
-
 /**
  * @author Pontus
  */
@@ -54,16 +51,18 @@ public class AreaBuilder implements AreaIO {
         addJsonAttribute(jsonPlayer, "gold", player.getGold());
         addJsonAttribute(jsonPlayer, "level", player.getLevel());
         if (player.getArmorEquipped() != null) {
-            jsonPlayer.append("armorEquipped" + ":" + itemToJson(player.getArmorEquipped()) + ",");
+            addJsonAttribute(jsonPlayer, "armorEquipped", itemToJson(player.getArmorEquipped()));
         }
         if (player.getSwordEquipped() != null) {
-            jsonPlayer.append("swordEquipped" + ":" + itemToJson(player.getSwordEquipped()) + ",");
+            addJsonAttribute(jsonPlayer, "swordEquipped", itemToJson(player.getSwordEquipped()));
         }
-        jsonPlayer.append("inventory" + ":" + itemsToJson(player.getInventory()) + ",");
+        addJsonAttribute(jsonPlayer, "inventory", itemsToJson(player.getInventory()));
 
         jsonPlayer.append("}");
 
         file.write(jsonPlayer.toString());
+        file.flush();
+        file.close();
     }
 
     /**
@@ -136,26 +135,26 @@ public class AreaBuilder implements AreaIO {
      * Data is saved from all areas and what the current area is.
      */
     @Override
-    public void saveAreaHandler() {
+    public void saveAreaHandler() throws IOException {
 
-        try (FileWriter file = new FileWriter("areaHandler.txt")) {
-            AreaHandler areaHandler = AreaHandler.getInstance();
-            StringBuilder jsonAreaHandler = new StringBuilder();
-            jsonAreaHandler.append("{");
+        FileWriter file = new FileWriter("areaHandler.txt");
+        AreaHandler areaHandler = AreaHandler.getInstance();
+        StringBuilder jsonAreaHandler = new StringBuilder();
+        jsonAreaHandler.append("{");
 
-            // Save which area the Player is saving from
-            jsonAreaHandler.append("currentArea" + ":" + areaHandler.getCurrentAreaInt() + ",");
+        // Save which area the Player is saving from
+        addJsonAttribute(jsonAreaHandler, "currentArea", areaHandler.getCurrentAreaInt());
 
-            // Save the individual areas
-            areaToJson(areaHandler.loadArea1(), jsonAreaHandler);
-            areaToJson(areaHandler.loadArea2(), jsonAreaHandler);
+        // Save the individual areas
+        areaToJson(areaHandler.loadArea1(), jsonAreaHandler);
+        areaToJson(areaHandler.loadArea2(), jsonAreaHandler);
 
-            jsonAreaHandler.append("}");
+        jsonAreaHandler.append("}");
 
-            file.write(jsonAreaHandler.toString());
-        } catch (IOException e) {
-            System.out.println("Cannot save the AreaHandler");
-        }
+        file.write(jsonAreaHandler.toString());
+        file.flush();
+        file.close();
+
     }
 
     /**
@@ -186,9 +185,11 @@ public class AreaBuilder implements AreaIO {
         jsonAreaHandler.append("enemies:[");
 
         for (IEnemy enemy: enemies) {
-            jsonAreaHandler.append("{type" + ":" + enemy.getType() + "," +
-                    "xPos" + ":" + enemy.getPosX() + "," +
-                    "yPos" + ":" + enemy.getPosY() + "},");
+            jsonAreaHandler.append("{");
+            addJsonAttribute(jsonAreaHandler, "type", enemy.getType());
+            addJsonAttribute(jsonAreaHandler, "xPos", enemy.getPosX());
+            addJsonAttribute(jsonAreaHandler, "yPos", enemy.getPosY());
+            jsonAreaHandler.append("},");
         }
 
         jsonAreaHandler.append("],");
@@ -205,8 +206,10 @@ public class AreaBuilder implements AreaIO {
         jsonAreaHandler.append("obstacles:[");
 
         for (IObstacle obstacle: obstacles) {
-            jsonAreaHandler.append("{xPos" + ":" + obstacle.getPosX() + "," +
-                    "yPos" + ":" + obstacle.getPosY() + "},");
+            jsonAreaHandler.append("{");
+            addJsonAttribute(jsonAreaHandler, "xPos", obstacle.getPosX());
+            addJsonAttribute(jsonAreaHandler, "yPos", obstacle.getPosY());
+            jsonAreaHandler.append("},");
         }
 
         jsonAreaHandler.append("],");
@@ -223,10 +226,12 @@ public class AreaBuilder implements AreaIO {
         jsonAreaHandler.append("chests:[");
 
         for (IChest chest: chests) {
-            jsonAreaHandler.append("{xPos" + ":" + chest.getPosX() + "," +
-                    "yPos" + ":" + chest.getPosY() + "," +
-                    "items" + ":" + itemsToJson(chest.getItems()) + "," +
-                    "isOpened" + ":" + chest.isOpened() + "}," );
+            jsonAreaHandler.append("{");
+            addJsonAttribute(jsonAreaHandler, "xPos", chest.getPosX());
+            addJsonAttribute(jsonAreaHandler, "yPos", chest.getPosY());
+            addJsonAttribute(jsonAreaHandler, "items", itemsToJson(chest.getItems()));
+            addJsonAttribute(jsonAreaHandler, "isOpened", chest.isOpened());
+            jsonAreaHandler.append("},");
         }
 
         jsonAreaHandler.append("],");
@@ -272,6 +277,11 @@ public class AreaBuilder implements AreaIO {
         }
 
         return jsonItem;
+    }
+
+
+    private void addJsonAttribute(StringBuilder JsonObject, String name, Object value) {
+        JsonObject.append(name + ":" + value + ",");
     }
 
     /**
