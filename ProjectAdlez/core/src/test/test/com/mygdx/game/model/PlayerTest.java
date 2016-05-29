@@ -1,9 +1,9 @@
 package com.mygdx.game.model;
 
 import com.mygdx.game.model.characters.*;
-import com.mygdx.game.model.characters.actions.IAttack;
-import com.mygdx.game.model.characters.actions.MeleeAttack;
-import com.mygdx.game.model.characters.items.CompleteItems;
+import com.mygdx.game.model.actions.IAttack;
+import com.mygdx.game.model.actions.MeleeAttack;
+import com.mygdx.game.model.items.CompleteItems;
 import com.mygdx.game.model.exceptions.InventoryFullException;
 import com.mygdx.game.model.exceptions.ItemNotFoundException;
 import com.mygdx.game.model.factories.EnemyFactory;

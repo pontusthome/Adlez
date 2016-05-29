@@ -4,7 +4,7 @@ import com.mygdx.game.model.characters.ICharacter;
 import com.mygdx.game.model.characters.IPlayer;
 import com.mygdx.game.model.core.Collidable;
 import com.mygdx.game.model.core.GateOpenListener;
-import com.mygdx.game.model.characters.actions.IInteraction;
+import com.mygdx.game.model.actions.IInteraction;
 import com.mygdx.game.model.core.WorldObject;
 
 import java.util.ArrayList;

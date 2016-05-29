@@ -1,7 +1,6 @@
 package com.mygdx.game.model;
 
-import com.mygdx.game.model.characters.Character;
-import com.mygdx.game.model.characters.actions.*;
+import com.mygdx.game.model.actions.*;
 import com.mygdx.game.model.characters.*;
 import com.mygdx.game.model.core.IWorldObject;
 import com.mygdx.game.model.collisionHandler.CollisionHandler;

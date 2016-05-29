@@ -1,12 +1,11 @@
 package com.mygdx.game.model.collisionHandler;
 
-import com.mygdx.game.model.Adlez;
 import com.mygdx.game.model.characters.IPlayer;
 import com.mygdx.game.model.core.WorldObjectObserver;
 import com.mygdx.game.model.characters.ICharacter;
 import com.mygdx.game.model.characters.IEnemy;
-import com.mygdx.game.model.characters.actions.IAttack;
-import com.mygdx.game.model.characters.actions.IInteraction;
+import com.mygdx.game.model.actions.IAttack;
+import com.mygdx.game.model.actions.IInteraction;
 import com.mygdx.game.model.core.IWorldObject;
 
 import java.util.List;

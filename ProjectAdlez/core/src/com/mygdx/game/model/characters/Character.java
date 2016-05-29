@@ -2,7 +2,6 @@ package com.mygdx.game.model.characters;
 
 import com.mygdx.game.model.core.ObservableWorldObject;
 import com.mygdx.game.model.core.WorldObjectObserver;
-import com.mygdx.game.model.characters.actions.*;
 import com.mygdx.game.model.core.Collidable;
 import com.mygdx.game.model.core.Direction;
 import com.mygdx.game.model.core.WorldObject;

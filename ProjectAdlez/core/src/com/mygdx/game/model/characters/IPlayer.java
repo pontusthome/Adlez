@@ -1,6 +1,6 @@
 package com.mygdx.game.model.characters;
 
-import com.mygdx.game.model.characters.items.IItem;
+import com.mygdx.game.model.items.IItem;
 import com.mygdx.game.model.exceptions.InventoryFullException;
 import com.mygdx.game.model.exceptions.ItemNotFoundException;
 

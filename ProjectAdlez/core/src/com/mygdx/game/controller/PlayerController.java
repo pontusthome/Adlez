@@ -4,9 +4,8 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
-import com.mygdx.game.builder.AreaBuilder;
-import com.mygdx.game.builder.AreaIO;
-import com.mygdx.game.model.characters.actions.*;
+import com.mygdx.game.builder.GameBuilder;
+import com.mygdx.game.builder.GameIO;
 import com.mygdx.game.model.characters.IPlayer;
 import com.mygdx.game.sound.GameSound;
 import com.mygdx.game.sound.LibGDXSoundAdapter;
@@ -97,7 +96,7 @@ public class PlayerController implements ICharacterController{
          * ===============================
          */
         if (Gdx.input.isKeyJustPressed(Input.Keys.NUM_0)) {
-            AreaIO areaBuilder = new AreaBuilder();
+            GameIO areaBuilder = new GameBuilder();
             try {
                 areaBuilder.saveAreaHandler();
                 areaBuilder.savePlayer();

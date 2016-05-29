@@ -6,11 +6,10 @@ import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.utils.viewport.StretchViewport;
-import com.mygdx.game.builder.AreaBuilder;
+import com.mygdx.game.builder.GameBuilder;
 import com.mygdx.game.builder.AreaHandler;
-import com.mygdx.game.builder.AreaIO;
+import com.mygdx.game.builder.GameIO;
 import com.mygdx.game.model.Adlez;
-import com.mygdx.game.model.Area;
 
 import java.io.IOException;
 
@@ -64,7 +63,7 @@ public abstract class AbstractScreen extends Stage implements Screen {
 
     protected void loadGame() throws IOException {
         // Load the AreaHandler
-        AreaIO areaBuilder = new AreaBuilder();
+        GameIO areaBuilder = new GameBuilder();
         areaBuilder.loadAreaHandler();
 
         // Load the Player

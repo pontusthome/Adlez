@@ -9,14 +9,7 @@ import com.badlogic.gdx.scenes.scene2d.ui.Image;
 import com.badlogic.gdx.scenes.scene2d.ui.ImageButton;
 import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
 import com.badlogic.gdx.utils.Align;
-import com.mygdx.game.builder.AreaBuilder;
-import com.mygdx.game.builder.AreaHandler;
-import com.mygdx.game.builder.AreaIO;
-import com.mygdx.game.model.Adlez;
-import com.mygdx.game.model.exceptions.ItemNotFoundException;
 import com.mygdx.game.utils.AssetStrings;
-
-import java.io.IOException;
 
 /**
  * Created by Viktor on 2016-04-19.

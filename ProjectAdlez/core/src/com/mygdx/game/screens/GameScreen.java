@@ -14,15 +14,13 @@ import com.mygdx.game.controller.*;
 import com.mygdx.game.builder.AreaHandler;
 import com.mygdx.game.model.*;
 import com.mygdx.game.model.characters.*;
-import com.mygdx.game.model.characters.actions.DebugHitbox;
-import com.mygdx.game.model.characters.actions.IAttack;
-import com.mygdx.game.model.characters.actions.IInteraction;
+import com.mygdx.game.model.actions.IAttack;
+import com.mygdx.game.model.actions.IInteraction;
 import com.mygdx.game.model.collisionHandler.CollisionHandler;
 import com.mygdx.game.sound.GameSound;
 import com.mygdx.game.model.core.GateOpenListener;
 import com.mygdx.game.sound.LibGDXSoundAdapter;
 import com.mygdx.game.model.obstacles.IAreaConnection;
-import com.mygdx.game.model.obstacles.IWall;
 import com.mygdx.game.utils.AssetStrings;
 
 import java.util.ArrayList;

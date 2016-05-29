@@ -2,7 +2,7 @@ package com.mygdx.game.controller;
 
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.mygdx.game.model.Adlez;
-import com.mygdx.game.model.characters.actions.IInteraction;
+import com.mygdx.game.model.actions.IInteraction;
 import com.mygdx.game.sound.GameSound;
 import com.mygdx.game.sound.LibGDXSoundAdapter;
 import com.mygdx.game.utils.AssetStrings;

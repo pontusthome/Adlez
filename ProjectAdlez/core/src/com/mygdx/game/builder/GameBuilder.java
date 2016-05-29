@@ -10,7 +10,7 @@ import com.mygdx.game.model.Area;
 import com.mygdx.game.model.exceptions.InventoryFullException;
 import com.mygdx.game.model.exceptions.ItemNotFoundException;
 import com.mygdx.game.model.obstacles.*;
-import com.mygdx.game.model.characters.items.*;
+import com.mygdx.game.model.items.*;
 
 import java.io.*;
 import java.util.ArrayList;
@@ -19,7 +19,7 @@ import java.util.List;
 /**
  * @author Pontus
  */
-public class AreaBuilder implements AreaIO {
+public class GameBuilder implements GameIO {
 
     /**
      * ==============================

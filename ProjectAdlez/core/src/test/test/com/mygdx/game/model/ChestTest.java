@@ -1,9 +1,9 @@
 package com.mygdx.game.model;
 
 import com.mygdx.game.model.characters.Player;
-import com.mygdx.game.model.characters.actions.IInteraction;
-import com.mygdx.game.model.characters.actions.Interaction;
-import com.mygdx.game.model.characters.items.CompleteItems;
+import com.mygdx.game.model.actions.IInteraction;
+import com.mygdx.game.model.actions.Interaction;
+import com.mygdx.game.model.items.CompleteItems;
 import com.mygdx.game.model.exceptions.InventoryFullException;
 import com.mygdx.game.model.obstacles.Chest;
 import com.mygdx.game.model.obstacles.IChest;
