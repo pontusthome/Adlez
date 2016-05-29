@@ -2,8 +2,8 @@ package com.mygdx.game.model;
 
 import com.mygdx.game.model.characters.IPlayer;
 import com.mygdx.game.model.characters.Player;
-import com.mygdx.game.model.characters.actions.IAttack;
-import com.mygdx.game.model.characters.actions.MeleeAttack;
+import com.mygdx.game.model.actions.IAttack;
+import com.mygdx.game.model.actions.MeleeAttack;
 import com.mygdx.game.model.core.Direction;
 
 import com.mygdx.game.model.obstacles.IObstacle;

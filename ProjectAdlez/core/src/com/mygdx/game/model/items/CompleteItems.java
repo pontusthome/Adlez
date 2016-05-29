@@ -1,4 +1,4 @@
-package com.mygdx.game.model.characters.items;
+package com.mygdx.game.model.items;
 
 import com.mygdx.game.utils.ItemSignatures;
 

@@ -4,7 +4,7 @@ import com.mygdx.game.model.characters.ICharacter;
 import com.mygdx.game.model.characters.IPlayer;
 import com.mygdx.game.model.core.Collidable;
 import com.mygdx.game.model.core.GateOpenListener;
-import com.mygdx.game.model.characters.actions.IInteraction;
+import com.mygdx.game.model.actions.IInteraction;
 import com.mygdx.game.model.core.WorldObject;
 
 import java.util.ArrayList;
@@ -35,6 +35,9 @@ public class AreaConnection extends WorldObject implements IAreaConnection {
     @Override
     public void add(GateOpenListener listener) {
         if(!listeners.contains(listener)){
+            if(!listeners.isEmpty()){
+                listeners.clear();
+            }
             listeners.add(listener);
         }
     }

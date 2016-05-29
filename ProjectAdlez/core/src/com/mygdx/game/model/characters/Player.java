@@ -1,14 +1,14 @@
 package com.mygdx.game.model.characters;
 
 
-import com.mygdx.game.model.characters.actions.IAttack;
-import com.mygdx.game.model.characters.items.Armor;
-import com.mygdx.game.model.characters.items.IItem;
-import com.mygdx.game.model.characters.items.Weapon;
+import com.mygdx.game.model.actions.IAttack;
 import com.mygdx.game.model.core.Collidable;
 import com.mygdx.game.model.core.Direction;
 import com.mygdx.game.model.exceptions.InventoryFullException;
 import com.mygdx.game.model.exceptions.ItemNotFoundException;
+import com.mygdx.game.model.items.Armor;
+import com.mygdx.game.model.items.IItem;
+import com.mygdx.game.model.items.Weapon;
 
 import java.util.ArrayList;
 import java.util.Iterator;

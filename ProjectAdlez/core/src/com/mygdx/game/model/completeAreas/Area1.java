@@ -8,7 +8,7 @@ import com.mygdx.game.model.factories.EnemyFactory;
 import com.mygdx.game.model.exceptions.InventoryFullException;
 import com.mygdx.game.model.obstacles.*;
 import com.mygdx.game.model.obstacles.Chest;
-import com.mygdx.game.model.characters.items.CompleteItems;
+import com.mygdx.game.model.items.CompleteItems;
 import com.mygdx.game.model.obstacles.IChest;
 
 import java.util.ArrayList;

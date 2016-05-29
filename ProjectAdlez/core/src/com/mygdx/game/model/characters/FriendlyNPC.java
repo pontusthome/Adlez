@@ -1,6 +1,6 @@
 package com.mygdx.game.model.characters;
 
-import com.mygdx.game.model.characters.actions.IInteraction;
+import com.mygdx.game.model.actions.IInteraction;
 import com.mygdx.game.model.core.Collidable;
 
 import java.util.ArrayList;

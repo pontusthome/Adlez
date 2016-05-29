@@ -1,7 +1,5 @@
 package com.mygdx.game.model.characters;
 
-import com.mygdx.game.model.characters.actions.IAttack;
-import com.mygdx.game.model.characters.actions.IInteraction;
 import com.mygdx.game.model.core.IWorldObject;
 
 /**
@@ -53,9 +51,9 @@ public interface ICharacter extends IWorldObject {
 	void setMoved(boolean moved);
 	boolean moved();
 
-	
-	
-	//TODO: Remove when debugging is over
+
+	/** For debugging purposes
 	IAttack getLatestAttack();
 	IInteraction getLatestInteraction();
+	 */
 }

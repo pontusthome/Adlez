@@ -1,6 +1,4 @@
-package com.mygdx.game.model.characters.items;
-
-import java.io.Serializable;
+package com.mygdx.game.model.items;
 
 /**
  * Created by martinso on 20/04/16.

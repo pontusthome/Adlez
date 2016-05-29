@@ -1,6 +1,6 @@
 package com.mygdx.game.model.obstacles;
 
-import com.mygdx.game.model.characters.items.IItem;
+import com.mygdx.game.model.items.IItem;
 import com.mygdx.game.model.core.IWorldObject;
 import com.mygdx.game.model.exceptions.InventoryFullException;
 

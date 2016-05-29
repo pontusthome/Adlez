@@ -1,7 +1,7 @@
 package com.mygdx.game.model.obstacles;
 
 import com.mygdx.game.model.core.Collidable;
-import com.mygdx.game.model.characters.actions.IAttack;
+import com.mygdx.game.model.actions.IAttack;
 import com.mygdx.game.model.core.WorldObject;
 
 /**

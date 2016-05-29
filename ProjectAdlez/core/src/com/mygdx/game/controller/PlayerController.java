@@ -4,8 +4,8 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
-import com.mygdx.game.builder.AreaBuilder;
-import com.mygdx.game.builder.AreaIO;
+import com.mygdx.game.builder.GameBuilder;
+import com.mygdx.game.builder.GameIO;
 import com.mygdx.game.model.characters.IPlayer;
 import com.mygdx.game.model.characters.actions.IAttack;
 import com.mygdx.game.model.characters.actions.IInteraction;
@@ -30,10 +30,11 @@ public class PlayerController implements ICharacterController, IMenuController{
 
     private boolean inventoryOpen;
     private boolean gameMenuOpen;
-    
-    //TODO: Remove when debugging is over
+
+    /** For debugging purposes
     public static IAttack currentAttack;
     public static IInteraction currentInteraction;
+     */
 
     public PlayerController(IPlayer player) {
         this.player = player;
@@ -43,10 +44,11 @@ public class PlayerController implements ICharacterController, IMenuController{
 
         inventoryOpen = false;
         gameMenuOpen = false;
-    
-        //TODO: Remove when debugging is over
+
+        /** For debugging purposes
         currentAttack = player.getLatestAttack();
         currentInteraction = player.getLatestInteraction();
+         */
     }
 
     /**
@@ -56,10 +58,11 @@ public class PlayerController implements ICharacterController, IMenuController{
      */
     @Override
     public void update(float deltaT) {
-        //TODO: Remove when debugging is over
+        /** For debugging purposes
         currentAttack = player.getLatestAttack();
         currentInteraction = player.getLatestInteraction();
-        
+         */
+
         if (Gdx.input.isKeyPressed(Input.Keys.W)) {
             player.setMovingNorth();
         }else if (Gdx.input.isKeyPressed(Input.Keys.S)) {
@@ -117,7 +120,7 @@ public class PlayerController implements ICharacterController, IMenuController{
          * ===============================
          */
         if (Gdx.input.isKeyJustPressed(Input.Keys.NUM_0)) {
-            AreaIO areaBuilder = new AreaBuilder();
+            GameIO areaBuilder = new GameBuilder();
             try {
                 areaBuilder.saveAreaHandler();
                 areaBuilder.savePlayer();

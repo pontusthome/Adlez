@@ -1,4 +1,4 @@
-package com.mygdx.game.model.characters.actions;
+package com.mygdx.game.model.actions;
 
 import com.mygdx.game.model.core.WorldObject;
 import com.mygdx.game.model.characters.ICharacter;
@@ -9,7 +9,7 @@ import com.mygdx.game.model.characters.Player;
  */
 public abstract class Action extends WorldObject implements IAction{
 	
-	private HitBox hitBox = new HitBox();
+	private DebugHitbox debugHitbox = new DebugHitbox();
 	private boolean isFinished;
 	private ICharacter character;
 	private boolean byPlayer;
@@ -22,14 +22,13 @@ public abstract class Action extends WorldObject implements IAction{
 	public Action(ICharacter character){
 		this.character = character;
 		setInitLocation(character);
-		hitBox = new HitBox(getPosX(), getPosY(), getWidth(), getHeight());
+		debugHitbox = new DebugHitbox(getPosX(), getPosY(), getWidth(), getHeight());
 		
 		byPlayer = character instanceof Player;
 	}
 	
-	@Override
-	public HitBox getHitBox(){
-		return hitBox;
+	public DebugHitbox getDebugHitbox(){
+		return debugHitbox;
 	}
 	
 	@Override

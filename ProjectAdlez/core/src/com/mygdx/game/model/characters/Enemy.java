@@ -1,6 +1,6 @@
 package com.mygdx.game.model.characters;
 
-import com.mygdx.game.model.characters.actions.IAttack;
+import com.mygdx.game.model.actions.IAttack;
 import com.mygdx.game.model.core.Collidable;
 import com.mygdx.game.utils.Utils;
 

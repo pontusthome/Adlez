@@ -1,7 +1,6 @@
 package com.mygdx.game.model;
 
-import com.mygdx.game.model.characters.Character;
-import com.mygdx.game.model.characters.actions.*;
+import com.mygdx.game.model.actions.*;
 import com.mygdx.game.model.characters.*;
 import com.mygdx.game.model.core.IWorldObject;
 import com.mygdx.game.model.collisionHandler.CollisionHandler;
@@ -28,18 +27,12 @@ public class Adlez implements WorldObjectObserver {
     private List<IWorldObject> worldObjects;
 
     private IPlayer player;
-    private List<IEnemy> enemies;
-    private List<IFriendlyNPC> friendlyNPCs;
-    private List<IWall> walls;
-    private List<IObstacle> obstacles;
-    private List<IChest> chests;
-    private List<IAreaConnection> areaConnections;
-    private List<IManaFountain> manaFountains;
+    private Area area;
     private CollisionHandler collisionHandler;
-    private List<IAttack> attacks = new ArrayList<>();
-    private List<IAttack> newAttacks = new ArrayList<>();
-    private List<IInteraction> interactions = new ArrayList<>();
-    private List<IInteraction> newInteractions = new ArrayList<>();
+    private List<IAttack> attacks;
+    private List<IAttack> newAttacks;
+    private List<IInteraction> interactions;
+    private List<IInteraction> newInteractions;
 
     private Adlez() {
         player = new Player();
@@ -51,44 +44,26 @@ public class Adlez implements WorldObjectObserver {
 
     public void initiateArea(Area area) {
         // Reset the world and then set it up for the new area
+        this.area = area;
         worldObjects = new ArrayList<>();
+    
+        interactions = new ArrayList<>();
+        newInteractions = new ArrayList<>();
+        attacks = new ArrayList<>();
+        newAttacks = new ArrayList<>();
 
         // add the player and set him to the new position
         player.setPosX(area.getPlayerXposition());
         player.setPosY(area.getPlayerYposition());
         worldObjects.add(player);
 
-        enemies = area.getEnemies();
-        List<IWorldObject> tempList = new ArrayList<>();
-        for (IEnemy enemy : enemies) {
-            tempList.add(enemy);
-        }
-        worldObjects.addAll(tempList);
-
-        tempList.clear();
-
-        friendlyNPCs = area.getFriendlyNPCs();
-        for (IFriendlyNPC friendlyNPC : friendlyNPCs) {
-            tempList.add(friendlyNPC);
-        }
-        worldObjects.addAll(tempList);
-
-        walls = area.getWalls();
-        worldObjects.addAll(walls);
-
-        obstacles = area.getObstacles();
-        worldObjects.addAll(obstacles);
-
-        chests = area.getChests();
-        worldObjects.addAll(chests);
-
-        attacks.clear();
-
-        areaConnections = area.getAreaConnections();
-        worldObjects.addAll(areaConnections);
-
-        manaFountains = area.getManaFountains();
-        worldObjects.addAll(manaFountains);
+        worldObjects.addAll(area.getEnemies());
+        worldObjects.addAll(area.getFriendlyNPCs());
+        worldObjects.addAll(area.getWalls());
+        worldObjects.addAll(area.getObstacles());
+        worldObjects.addAll(area.getChests());
+        worldObjects.addAll(area.getAreaConnections());
+        worldObjects.addAll(area.getManaFountains());
 
         collisionHandler = CollisionHandler.getInstance();
         collisionHandler.initiate(worldObjects, attacks, interactions, player);
@@ -99,13 +74,13 @@ public class Adlez implements WorldObjectObserver {
         playerObservable.addObserver(this);
         playerObservable.addObserver(collisionHandler);
 
-        for (IEnemy enemy : enemies) {
+        for (IEnemy enemy : area.getEnemies()) {
             ObservableWorldObject enemyObservable = ((ObservableWorldObject) enemy);
             enemyObservable.addObserver(this);
             enemyObservable.addObserver(collisionHandler);
         }
 
-        for (IFriendlyNPC fNPC : friendlyNPCs) {
+        for (IFriendlyNPC fNPC : area.getFriendlyNPCs()) {
             ObservableWorldObject fNPCObservable = ((ObservableWorldObject) fNPC);
             fNPCObservable.addObserver(this);
             fNPCObservable.addObserver(collisionHandler);
@@ -121,35 +96,35 @@ public class Adlez implements WorldObjectObserver {
     }
 
     public List<IEnemy> getEnemies() {
-        return enemies;
+        return area.getEnemies();
     }
 
     public List<IFriendlyNPC> getFriendlyNPCs() {
-        return friendlyNPCs;
+        return area.getFriendlyNPCs();
     }
 
     public List<IWall> getWalls() {
-        return walls;
+        return area.getWalls();
     }
 
     public List<IObstacle> getObstacles() {
-        return obstacles;
+        return area.getObstacles();
     }
 
     public List<IChest> getChests() {
-        return chests;
+        return area.getChests();
     }
 
     public List<IAreaConnection> getAreaConnections() {
-        return areaConnections;
+        return area.getAreaConnections();
     }
 
     public List<IManaFountain> getManaFountains() {
-        return manaFountains;
+        return area.getManaFountains();
     }
 
     public void removeEnemyFromWorld(INPC enemy) {
-        enemies.remove(enemy);
+        area.getEnemies().remove(enemy);
         worldObjects.remove(enemy);
     }
 
@@ -175,7 +150,7 @@ public class Adlez implements WorldObjectObserver {
     }
 
     public void removeObstacleFromWorld(IObstacle obstacle) {
-        obstacles.remove(obstacle);
+        area.getObstacles().remove(obstacle);
         worldObjects.remove(obstacle);
     }
 
@@ -200,43 +175,48 @@ public class Adlez implements WorldObjectObserver {
                 case "melee_attack":{
                     IAttack attack = new MeleeAttack(character);
                     addAttack(attack);
-            
-                    //TODO: Remove when debugging is over
-                    ((Character) character).latestAttack = attack;
+    
+                    /** For debugging purposes
+                     ((Character) character).latestAttack = attack;
+                     */
                     break;
                 }
                 case "aoe_melee_attack":{
                     IAttack attack = new AOEMeleeAttack(character);
                     addAttack(attack);
-            
-                    //TODO: Remove when debugging is over
-                    ((Character) character).latestAttack = attack;
+    
+                    /** For debugging purposes
+                     ((Character) character).latestAttack = attack;
+                     */
                     break;
                 }
                 case "range_magic_attack":{
                     IAttack attack = new RangeMagicAttack(character);
                     character.useMana(attack.getManaUsage());
                     addAttack(attack);
-            
-                    //TODO: Remove when debugging is over
-                    ((Character) character).latestAttack = attack;
+    
+                    /** For debugging purposes
+                     ((Character) character).latestAttack = attack;
+                     */
                     break;
                 }
                 case "aoe_magic_attack":{
                     IAttack attack = new AOEMagicAttack(character);
                     character.useMana(attack.getManaUsage());
                     addAttack(attack);
-            
-                    //TODO: Remove when debugging is over
-                    ((Character) character).latestAttack = attack;
+    
+                    /** For debugging purposes
+                     ((Character) character).latestAttack = attack;
+                     */
                     break;
                 }
                 case "interaction":
                     IInteraction interaction = new Interaction(character);
                     addInteraction(interaction);
-            
-                    //TODO: Remove when debugging is over
-                    ((Character) character).latestInteraction = interaction;
+    
+                    /** For debugging purposes
+                     ((Character) character).latestInteraction = interaction;
+                     */
                     break;
             }
         }

@@ -1,25 +1,30 @@
-package com.mygdx.game.model.characters.actions;
+package com.mygdx.game.model.actions;
 
 import com.mygdx.game.model.core.Collidable;
 import com.mygdx.game.model.core.Direction;
 import com.mygdx.game.model.characters.ICharacter;
 
 /**
- * Created by Michel on 8.5.2016.
+ * Created by Michel on 4.5.2016.
  */
-public class Interaction extends Action implements IInteraction{
+public class MeleeAttack extends Attack{
 	
-	public Interaction(){
+	public MeleeAttack(){
 		super();
 	}
 	
-	public Interaction(ICharacter character){
+	public MeleeAttack(ICharacter character){
 		super(character);
 	}
 	
+	/**
+	 * Temporarily set to the character's attack damage.
+	 *
+	 * Should depend on something like "character.getWeaponEquipped.getDamage()".
+	 */
 	@Override
-	public void onCollide(Collidable other){
-		
+	public void setDamage(ICharacter character){
+		setDamage(character.getAttackDamage());
 	}
 	
 	@Override
@@ -41,5 +46,10 @@ public class Interaction extends Action implements IInteraction{
 				setPos(character.getPosX() - character.getWidth(), character.getPosY());
 				break;
 		}
+	}
+	
+	@Override
+	public void onCollide(Collidable other){
+		
 	}
 }

@@ -1,4 +1,4 @@
-package com.mygdx.game.model.characters.actions;
+package com.mygdx.game.model.actions;
 
 
 import com.mygdx.game.model.characters.ICharacter;
