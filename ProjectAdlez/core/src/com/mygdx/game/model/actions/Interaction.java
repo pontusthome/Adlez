@@ -13,8 +13,9 @@ public class Interaction extends Action implements IInteraction{
 		super();
 	}
 	
-	public Interaction(ICharacter character){
-		super(character);
+	public Interaction(float characterXPos, float characterYPos, int characterWidth, int characterHeight,
+					   int characterDirection, boolean byPlayer){
+		super(characterXPos, characterYPos, characterWidth, characterHeight, characterDirection, byPlayer);
 	}
 	
 	@Override
@@ -23,22 +24,23 @@ public class Interaction extends Action implements IInteraction{
 	}
 	
 	@Override
-	public void setInitLocation(ICharacter character){
-		setWidth(character.getWidth());
-		setHeight(character.getHeight());
+	public void setInitLocation(float characterXPos, float characterYPos, int characterWidth, int characterHeight,
+								int characterDirection){
+		setWidth(characterWidth);
+		setHeight(characterHeight);
 		
-		switch(character.getDirection()){
+		switch(characterDirection){
 			case Direction.NORTH:
-				setPos(character.getPosX(), character.getPosY() + character.getHeight());
+				setPos(characterXPos, characterYPos + characterHeight);
 				break;
 			case Direction.SOUTH:
-				setPos(character.getPosX(), character.getPosY() - character.getHeight());
+				setPos(characterXPos, characterYPos - characterHeight);
 				break;
 			case Direction.EAST:
-				setPos(character.getPosX() + character.getWidth(), character.getPosY());
+				setPos(characterXPos + characterWidth, characterYPos);
 				break;
 			case Direction.WEST:
-				setPos(character.getPosX() - character.getWidth(), character.getPosY());
+				setPos(characterXPos - characterWidth, characterYPos);
 				break;
 		}
 	}

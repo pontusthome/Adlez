@@ -6,6 +6,8 @@ import com.mygdx.game.model.core.IWorldObject;
 import com.mygdx.game.model.collisionHandler.CollisionHandler;
 import com.mygdx.game.model.core.ObservableWorldObject;
 import com.mygdx.game.model.core.WorldObjectObserver;
+import com.mygdx.game.model.exceptions.InventoryFullException;
+import com.mygdx.game.model.items.IItem;
 import com.mygdx.game.model.obstacles.*;
 import com.mygdx.game.model.obstacles.IChest;
 
@@ -67,9 +69,9 @@ public class Adlez implements WorldObjectObserver {
 
         collisionHandler = CollisionHandler.getInstance();
         collisionHandler.initiate(worldObjects, attacks, interactions, player);
-
-        // Add this & collision handler as observers to all characters
-
+        
+        
+        // Add this & collision handler as observers to all characters, chests & mana fountains
         ObservableWorldObject playerObservable = (ObservableWorldObject) player;
         playerObservable.addObserver(this);
         playerObservable.addObserver(collisionHandler);
@@ -84,6 +86,16 @@ public class Adlez implements WorldObjectObserver {
             ObservableWorldObject fNPCObservable = ((ObservableWorldObject) fNPC);
             fNPCObservable.addObserver(this);
             fNPCObservable.addObserver(collisionHandler);
+        }
+    
+        for (IChest chest : area.getChests()) {
+            ObservableWorldObject chestObservable = ((ObservableWorldObject) chest);
+            chestObservable.addObserver(this);
+        }
+    
+        for (IManaFountain mf : area.getManaFountains()) {
+            ObservableWorldObject mfObservable = ((ObservableWorldObject) mf);
+            mfObservable.addObserver(this);
         }
     }
 
@@ -168,12 +180,19 @@ public class Adlez implements WorldObjectObserver {
     }
 
     @Override
-    public void update(IWorldObject worldObject, String action) {
+    public void update(IWorldObject worldObject, String action, IWorldObject other) {
         if (worldObject instanceof ICharacter) {
             ICharacter character = (ICharacter) worldObject;
+	
+			/** For now, attack damage of different attacks vary depending on only the value of
+             * "character.getMeleeAttackDamage()". In future implementation a magic attack should depend on som other value.
+             */
+            
             switch(action){
                 case "melee_attack":{
-                    IAttack attack = new MeleeAttack(character);
+                    IAttack attack = new MeleeAttack(character.getPosX(), character.getPosY(), character.getWidth(), 
+                            character.getHeight(), character.getDirection(), character instanceof IPlayer, 
+                            character.getMeleeAttackDamage());
                     addAttack(attack);
     
                     /** For debugging purposes
@@ -182,7 +201,9 @@ public class Adlez implements WorldObjectObserver {
                     break;
                 }
                 case "aoe_melee_attack":{
-                    IAttack attack = new AOEMeleeAttack(character);
+                    IAttack attack = new AOEMeleeAttack(character.getPosX(), character.getPosY(), character.getWidth(),
+                            character.getHeight(), character.getDirection(), character instanceof IPlayer,
+                            character.getMeleeAttackDamage());
                     addAttack(attack);
     
                     /** For debugging purposes
@@ -191,7 +212,9 @@ public class Adlez implements WorldObjectObserver {
                     break;
                 }
                 case "range_magic_attack":{
-                    IAttack attack = new RangeMagicAttack(character);
+                    IAttack attack = new RangeMagicAttack(character.getPosX(), character.getPosY(), character.getWidth(),
+                            character.getHeight(), character.getDirection(), character instanceof IPlayer,
+                            Attack.RANGE_MAGIC_ATTACK_DAMAGE);
                     character.useMana(attack.getManaUsage());
                     addAttack(attack);
     
@@ -201,7 +224,9 @@ public class Adlez implements WorldObjectObserver {
                     break;
                 }
                 case "aoe_magic_attack":{
-                    IAttack attack = new AOEMagicAttack(character);
+                    IAttack attack = new AOEMagicAttack(character.getPosX(), character.getPosY(), character.getWidth(),
+                            character.getHeight(), character.getDirection(), character instanceof IPlayer,
+                            Attack.AOE_MAGIC_ATTACK_DAMAGE);
                     character.useMana(attack.getManaUsage());
                     addAttack(attack);
     
@@ -211,14 +236,35 @@ public class Adlez implements WorldObjectObserver {
                     break;
                 }
                 case "interaction":
-                    IInteraction interaction = new Interaction(character);
+                    IInteraction interaction = new Interaction(character.getPosX(), character.getPosY(), character.getWidth(),
+                            character.getHeight(), character.getDirection(), character instanceof IPlayer);
                     addInteraction(interaction);
     
                     /** For debugging purposes
                      ((Character) character).latestInteraction = interaction;
                      */
                     break;
+                // Transfer enemy's gold to player when enemy is killed
+                case "enemy_killed":
+                    player.setGold(character.getGold() + character.getGold());
             }
+        } else if(worldObject instanceof IChest){
+            IChest chest = (IChest) worldObject;
+            if(!chest.isOpened()) {
+                for (IItem item : chest.getSlots()) {
+                    try {
+                        chest.setIsOpened(true);
+                        player.lootItem(item);
+                    } catch (InventoryFullException e) {
+                        break;
+                    }
+                }
+            }
+        } else if(worldObject instanceof IManaFountain){
+            IManaFountain mf = (IManaFountain) worldObject;
+            
+            // Sets players current mana to max.
+            player.setMana(100);
         }
     }
 }

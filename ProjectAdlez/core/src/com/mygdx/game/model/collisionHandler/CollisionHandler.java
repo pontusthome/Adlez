@@ -98,7 +98,7 @@ public class CollisionHandler implements WorldObjectObserver{
 	
 	
 	@Override
-	public void update(IWorldObject object, String action){
+	public void update(IWorldObject object, String action, IWorldObject other){
 		if(object instanceof ICharacter && action.equals("check_collision")){
 			ICharacter character = (ICharacter) object;
 			if(hasCharacterCollided(character)){

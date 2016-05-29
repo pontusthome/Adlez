@@ -42,7 +42,7 @@ public class AttackController implements IController{
 		
 		/** 
 		 * Attacks that should be in only one game loop are set as finished immediately.
-		 * Other attacks though, such as projectiles, could survive several game loops.
+		 * In future implementation other attacks such as projectiles should be able to survive several game loops.
 		 */
 		if(attack instanceof MeleeAttack || attack instanceof RangeMagicAttack
 				|| attack instanceof AOEMagicAttack || attack instanceof AOEMeleeAttack){
@@ -52,6 +52,6 @@ public class AttackController implements IController{
 	
 	@Override
 	public void render(SpriteBatch batch){
-		
+		// No graphical representation
 	}
 }

@@ -25,8 +25,7 @@ public class AreaConnection extends WorldObject implements IAreaConnection {
     public void onCollide(Collidable other) {
         if (other instanceof IInteraction) {
             IInteraction interaction = (IInteraction) other; 
-            ICharacter interactor = interaction.getCharacter();
-            if(interactor instanceof IPlayer){
+            if(interaction.byPlayer()){
                 notifyListeners();
             }
         }

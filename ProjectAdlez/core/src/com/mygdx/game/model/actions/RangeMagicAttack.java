@@ -9,9 +9,10 @@ import com.mygdx.game.model.characters.ICharacter;
  */
 public class RangeMagicAttack extends Attack{
 	
-	public RangeMagicAttack(ICharacter character){
-		super(character);
-		setManaUsage(15);
+	public RangeMagicAttack(float characterXPos, float characterYPos, int characterWidth, int characterHeight,
+							int characterDirection , boolean byPlayer, int damage){
+		super(characterXPos, characterYPos, characterWidth, characterHeight, characterDirection, byPlayer, damage);
+		setManaUsage(Attack.RANGE_MAGIC_ATTACK_MANA_USAGE);
 	}
 	
 	@Override
@@ -19,38 +20,30 @@ public class RangeMagicAttack extends Attack{
 		
 	}
 	
-	/**
-	 * Temporarily set to 5 times the character's attack damage.
-	 * 
-	 * Should depend on something like "character.getRangeMagicAttackDamage()".
-	 */
 	@Override
-	public void setDamage(ICharacter character){
-		setDamage(character.getAttackDamage() * 5);
-	}
-	
-	@Override
-	public void setInitLocation(ICharacter character){
-		switch(character.getDirection()){
+	public void setInitLocation(float characterXPos, float characterYPos, int characterWidth, int characterHeight,
+								int characterDirection){
+		// For now, set size and position of attack depending on the attacker's size and position
+		switch(characterDirection){
 			case Direction.NORTH:
-				setPos(character.getPosX(), character.getPosY() + character.getHeight());
-				setWidth(character.getWidth());
-				setHeight(character.getHeight() * 3);
+				setPos(characterXPos, characterYPos + characterHeight);
+				setWidth(characterWidth);
+				setHeight(characterHeight * 3);
 				break;
 			case Direction.SOUTH:
-				setPos(character.getPosX(), character.getPosY() - character.getHeight() * 3);
-				setWidth(character.getWidth());
-				setHeight(character.getHeight() * 3);
+				setPos(characterXPos, characterYPos - characterHeight *3);
+				setWidth(characterWidth);
+				setHeight(characterHeight * 3);
 				break;
 			case Direction.EAST:
-				setPos(character.getPosX() + character.getWidth(), character.getPosY());
-				setWidth(character.getWidth() * 3);
-				setHeight(character.getHeight());
+				setPos(characterXPos + characterWidth, characterYPos);
+				setWidth(characterWidth * 3);
+				setHeight(characterHeight);
 				break;
 			case Direction.WEST:
-				setPos(character.getPosX() - character.getWidth() * 3, character.getPosY());
-				setWidth(character.getWidth() * 3);
-				setHeight(character.getHeight());
+				setPos(characterXPos - characterWidth * 3, characterYPos);
+				setWidth(characterWidth * 3);
+				setHeight(characterHeight);
 				break;
 		}
 	}

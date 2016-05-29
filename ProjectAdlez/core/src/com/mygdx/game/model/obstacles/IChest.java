@@ -11,19 +11,13 @@ import java.util.List;
  */
 
 public interface IChest extends IWorldObject {
-    public void addItem(IItem type) throws InventoryFullException;
-
-    public List<IItem> getItems();
-
-    public boolean isEmpty();
-
-    public int getSize();
-
-    public boolean isFull();
-
-    public void removeItem(IItem item);
-
-    public boolean isOpened();
-
-    public void setIsOpened(boolean isOpened);
+    void addItem(IItem type) throws InventoryFullException;
+    List<IItem> getItems();
+    boolean isEmpty();
+    int getSize();
+    boolean isFull();
+    void removeItem(IItem item);
+    boolean isOpened();
+    void setIsOpened(boolean isOpened);
+    List<IItem> getSlots();
 }

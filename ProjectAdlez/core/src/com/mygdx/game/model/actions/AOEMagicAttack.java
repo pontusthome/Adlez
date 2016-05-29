@@ -8,9 +8,10 @@ import com.mygdx.game.model.characters.ICharacter;
  */
 public class AOEMagicAttack extends Attack{
 	
-	public AOEMagicAttack(ICharacter character){
-		super(character);
-		setManaUsage(20);
+	public AOEMagicAttack(float characterXPos, float characterYPos, int characterWidth, int characterHeight,
+						  int characterDirection , boolean byPlayer, int damage){
+		super(characterXPos, characterYPos, characterWidth, characterHeight, characterDirection, byPlayer, damage);
+		setManaUsage(Attack.AOE_MAGIC_ATTACK_MANA_USAGE);
 	}
 	
 	@Override
@@ -18,20 +19,12 @@ public class AOEMagicAttack extends Attack{
 		
 	}
 	
-	/**
-	 * Temporarily set to 5 times the character's attack damage.
-	 *
-	 * Should depend on something like "character.getRangeMagicAttackDamage()".
-	 */
 	@Override
-	public void setDamage(ICharacter character){
-		setDamage(character.getAttackDamage() * 5);
-	}
-	
-	@Override
-	public void setInitLocation(ICharacter character){
-		setPos(character.getPosX() - character.getWidth(), character.getPosY() - character.getHeight());
-		setWidth(character.getWidth() * 3);
-		setHeight(character.getHeight() * 3);
+	public void setInitLocation(float characterXPos, float characterYPos, int characterWidth, int characterHeight,
+								int characterDirection){
+		// For now, set size of attack depending on the attacker's size
+		setPos(characterXPos - characterWidth, characterYPos - characterHeight);
+		setWidth(characterWidth * 3);
+		setHeight(characterHeight * 3);
 	}
 }

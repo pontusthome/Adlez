@@ -13,37 +13,30 @@ public class MeleeAttack extends Attack{
 		super();
 	}
 	
-	public MeleeAttack(ICharacter character){
-		super(character);
+	public MeleeAttack(float characterXPos, float characterYPos, int characterWidth, int characterHeight,
+					   int characterDirection , boolean byPlayer, int damage){
+		super(characterXPos, characterYPos, characterWidth, characterHeight, characterDirection, byPlayer, damage);
 	}
-	
-	/**
-	 * Temporarily set to the character's attack damage.
-	 *
-	 * Should depend on something like "character.getWeaponEquipped.getDamage()".
-	 */
-	@Override
-	public void setDamage(ICharacter character){
-		setDamage(character.getAttackDamage());
-	}
-	
-	@Override
-	public void setInitLocation(ICharacter character){
-		setWidth(character.getWidth());
-		setHeight(character.getHeight());
 		
-		switch(character.getDirection()){
+	@Override
+	public void setInitLocation(float characterXPos, float characterYPos, int characterWidth, int characterHeight,
+								int characterDirection){
+		// For now, set size of attack depending on the attacker's size
+		setWidth(characterWidth);
+		setHeight(characterHeight);
+		
+		switch(characterDirection){
 			case Direction.NORTH:
-				setPos(character.getPosX(), character.getPosY() + character.getHeight());
+				setPos(characterXPos, characterYPos + characterHeight);
 				break;
 			case Direction.SOUTH:
-				setPos(character.getPosX(), character.getPosY() - character.getHeight());
+				setPos(characterXPos, characterYPos - characterHeight);
 				break;
 			case Direction.EAST:
-				setPos(character.getPosX() + character.getWidth(), character.getPosY());
+				setPos(characterXPos + characterWidth, characterYPos);
 				break;
 			case Direction.WEST:
-				setPos(character.getPosX() - character.getWidth(), character.getPosY());
+				setPos(characterXPos - characterWidth, characterYPos);
 				break;
 		}
 	}

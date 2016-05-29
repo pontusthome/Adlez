@@ -46,7 +46,7 @@ public class GameBuilder implements GameIO {
         addJsonAttribute(jsonPlayer, "health", player.getHealth());
         addJsonAttribute(jsonPlayer, "maxMana", player.getMaxMana());
         addJsonAttribute(jsonPlayer, "mana", player.getMana());
-        addJsonAttribute(jsonPlayer, "attackDamage", player.getAttackDamage());
+        addJsonAttribute(jsonPlayer, "attackDamage", player.getMeleeAttackDamage());
         addJsonAttribute(jsonPlayer, "direction", player.getDirection());
         addJsonAttribute(jsonPlayer, "gold", player.getGold());
         addJsonAttribute(jsonPlayer, "level", player.getLevel());
@@ -91,7 +91,7 @@ public class GameBuilder implements GameIO {
             player.setHealth(jsonPlayer.get("health").asInt());
             player.setMaxMana(jsonPlayer.get("maxMana").asInt());
             player.setMana(jsonPlayer.get("mana").asInt());
-            player.setAttackDamage(jsonPlayer.get("attackDamage").asInt());
+            player.setMeleeAttackDamage(jsonPlayer.get("attackDamage").asInt());
             player.setDirection(jsonPlayer.get("direction").asInt());
             player.setGold(jsonPlayer.get("gold").asInt());
             player.setLevel(jsonPlayer.get("level").asInt());

@@ -1,9 +1,8 @@
 package com.mygdx.game.model.obstacles;
 
+import com.mygdx.game.model.core.*;
 import com.mygdx.game.model.items.IItem;
-import com.mygdx.game.model.core.Collidable;
 import com.mygdx.game.model.actions.IInteraction;
-import com.mygdx.game.model.core.WorldObject;
 import com.mygdx.game.model.characters.IPlayer;
 import com.mygdx.game.model.exceptions.InventoryFullException;
 
@@ -13,23 +12,24 @@ import java.util.List;
 /**
  * Created by martinso on 20/04/16.
  */
-public class Chest extends WorldObject implements IChest {
+public class Chest extends WorldObject implements IChest, ObservableWorldObject{
 
     private int chestSize;
     private int chestSizeCount = 0;
     private List<IItem> slots;
     private boolean isOpened = false;
+    private List<WorldObjectObserver> observers;
 
     public Chest(float posX, float posY, int width, int height, int chestSize) {
         super(posX, posY, width, height);
         this.chestSize = chestSize;
         slots = new ArrayList<>(chestSize);
+        observers = new ArrayList<>();
     }
-
+    
+    // Standard size for chests
     public Chest(float posX, float posY) {
-        super(posX, posY, 16, 16);
-        chestSize = 2;
-        slots = new ArrayList<>(chestSize);
+        this(posX, posY, 16, 16, 2);
     }
 
     @Override
@@ -65,18 +65,8 @@ public class Chest extends WorldObject implements IChest {
     public void onCollide(Collidable other){
         if(other instanceof IInteraction){
             IInteraction interaction = (IInteraction) other;
-            if(interaction.getCharacter() instanceof IPlayer){
-                IPlayer player = (IPlayer) interaction.getCharacter();
-                if(!isOpened()) {
-                    for (IItem item : slots) {
-                        try {
-                            setIsOpened(true);
-                            player.lootItem(item);
-                        } catch (InventoryFullException e) {
-                            break;
-                        }
-                    }
-                }
+            if(interaction.byPlayer()){
+                notifyObservers("chest_opened", null);
             }
         }
     }
@@ -90,7 +80,31 @@ public class Chest extends WorldObject implements IChest {
     }
     
     @Override
+    public List<IItem> getSlots(){
+        return slots;
+    }
+    
+    @Override
     public boolean isEmpty(){
         return chestSizeCount <= 0;
+    }
+    
+    @Override
+    public void addObserver(WorldObjectObserver observer){
+        if(!observers.contains(observer)){
+            observers.add(observer);
+        }
+    }
+    
+    @Override
+    public void removeObserver(WorldObjectObserver observer){
+        observers.remove(observer);
+    }
+    
+    @Override
+    public void notifyObservers(String action, IWorldObject other){
+        for(WorldObjectObserver observer : observers){
+            observer.update(this, action, other);
+        }
     }
 }

@@ -1,10 +1,6 @@
 package com.mygdx.game.model.characters;
 
-import com.mygdx.game.model.core.ObservableWorldObject;
-import com.mygdx.game.model.core.WorldObjectObserver;
-import com.mygdx.game.model.core.Collidable;
-import com.mygdx.game.model.core.Direction;
-import com.mygdx.game.model.core.WorldObject;
+import com.mygdx.game.model.core.*;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -63,7 +59,7 @@ public abstract class Character extends WorldObject implements ICharacter, Obser
 	public Character(int direction, float speed,
 			   int width, int height,
 			   float posX, float posY,
-			   int maxHealth, int attackDamage, int gold, int mana) {
+			   int maxHealth, int meleeAttackDamage, int gold, int mana) {
 		
 		super(posX, posY, width, height);
 		
@@ -71,7 +67,7 @@ public abstract class Character extends WorldObject implements ICharacter, Obser
 		setSpeed(speed);
 		setMaxHealth(maxHealth);
 		setHealth(maxHealth);
-		setAttackDamage(attackDamage);
+		setMeleeAttackDamage(meleeAttackDamage);
 		setGold(gold);
 		setMana(mana);
 		
@@ -88,7 +84,7 @@ public abstract class Character extends WorldObject implements ICharacter, Obser
 		oldPosY = getPosY();
 		setPosY(getPosY() + vYComponent * getSpeed() * deltaT * velocityScalar);
 		setDirection(Direction.NORTH);
-		notifyObservers("check_collision");
+		notifyObservers("check_collision", null);
 	}
 	
 	@Override
@@ -96,7 +92,7 @@ public abstract class Character extends WorldObject implements ICharacter, Obser
 		oldPosY = getPosY();
 		setPosY(getPosY() - vYComponent * getSpeed() * deltaT * velocityScalar);
 		setDirection(Direction.SOUTH);
-		notifyObservers("check_collision");
+		notifyObservers("check_collision", null);
 	}
 	
 	@Override
@@ -104,7 +100,7 @@ public abstract class Character extends WorldObject implements ICharacter, Obser
 		oldPosX = getPosX();
 		setPosX(getPosX() + vXComponent * getSpeed() * deltaT * velocityScalar);
 		setDirection(Direction.EAST);
-		notifyObservers("check_collision");
+		notifyObservers("check_collision", null);
 	}
 	
 	@Override
@@ -112,7 +108,7 @@ public abstract class Character extends WorldObject implements ICharacter, Obser
 		oldPosX = getPosX();
 		setPosX(getPosX() - vXComponent * getSpeed() * deltaT * velocityScalar);
 		setDirection(Direction.WEST);
-		notifyObservers("check_collision");
+		notifyObservers("check_collision", null);
 	}
 
 	@Override
@@ -125,12 +121,12 @@ public abstract class Character extends WorldObject implements ICharacter, Obser
 		return moved;
 	}
 	@Override
-	public int getAttackDamage() {
+	public int getMeleeAttackDamage() {
 		return attackDamage;
 	}
 
 	@Override
-	public void setAttackDamage(int attackDamage) {
+	public void setMeleeAttackDamage(int attackDamage) {
 		this.attackDamage = attackDamage;
 	}
 
@@ -340,27 +336,27 @@ public abstract class Character extends WorldObject implements ICharacter, Obser
 	
 	@Override
 	public void meleeAttack(){
-		notifyObservers("melee_attack");
+		notifyObservers("melee_attack", null);
 	}
 	
 	@Override
 	public void aoeMeleeAttack(){
-		notifyObservers("aoe_melee_attack");
+		notifyObservers("aoe_melee_attack", null);
 	}
 	
 	@Override
 	public void aoeMagicAttack(){
-		notifyObservers("aoe_magic_attack");
+		notifyObservers("aoe_magic_attack", null);
 	}
 	
 	@Override
 	public void rangeMagicAttack(){
-		notifyObservers("range_magic_attack");
+		notifyObservers("range_magic_attack", null);
 	}
 	
 	@Override
 	public void interact(){
-		notifyObservers("interaction");
+		notifyObservers("interaction", null);
 	}
 	
 	@Override
@@ -378,6 +374,7 @@ public abstract class Character extends WorldObject implements ICharacter, Obser
 	}
 	 
 	 */
+	
 	@Override
 	public void addObserver(WorldObjectObserver observer){
 		if(!observers.contains(observer)){
@@ -391,9 +388,9 @@ public abstract class Character extends WorldObject implements ICharacter, Obser
 	}
 	
 	@Override
-	public void notifyObservers(String action){
+	public void notifyObservers(String action, IWorldObject other){
 		for(WorldObjectObserver observer : observers){
-			observer.update(this, action);
+			observer.update(this, action, other);
 		}
 	}
 }

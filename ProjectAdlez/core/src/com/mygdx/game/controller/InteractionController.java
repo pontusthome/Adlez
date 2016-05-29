@@ -28,6 +28,7 @@ public class InteractionController implements IController{
 			adlez.removeInteractionFromWorld(interaction);
 		}
 		
+		// Is for now set as finished in the first update so that it only is present during one game loop
 		interaction.setFinished();
 	}
 	

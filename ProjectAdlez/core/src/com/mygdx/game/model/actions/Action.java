@@ -1,8 +1,6 @@
 package com.mygdx.game.model.actions;
 
 import com.mygdx.game.model.core.WorldObject;
-import com.mygdx.game.model.characters.ICharacter;
-import com.mygdx.game.model.characters.Player;
 
 /**
  * Created by Michel on 8.5.2016.
@@ -11,7 +9,6 @@ public abstract class Action extends WorldObject implements IAction{
 	
 	private DebugHitbox debugHitbox = new DebugHitbox();
 	private boolean isFinished;
-	private ICharacter character;
 	private boolean byPlayer;
 	
 	public Action(){
@@ -19,12 +16,12 @@ public abstract class Action extends WorldObject implements IAction{
 	}
 	
 	/** Set position of action in front of character. For now also set size the same as character's size */
-	public Action(ICharacter character){
-		this.character = character;
-		setInitLocation(character);
+	public Action(float characterXPos, float characterYPos, int characterWidth, int characterHeight,
+				  int characterDirection, boolean byPlayer){
+		setInitLocation(characterXPos, characterYPos, characterWidth, characterHeight, characterDirection);
 		debugHitbox = new DebugHitbox(getPosX(), getPosY(), getWidth(), getHeight());
 		
-		byPlayer = character instanceof Player;
+		this.byPlayer = byPlayer;
 	}
 	
 	public DebugHitbox getDebugHitbox(){
@@ -39,11 +36,6 @@ public abstract class Action extends WorldObject implements IAction{
 	@Override
 	public void setFinished(){
 		isFinished = true;
-	}
-	
-	@Override
-	public ICharacter getCharacter(){
-		return character;
 	}
 	
 	@Override

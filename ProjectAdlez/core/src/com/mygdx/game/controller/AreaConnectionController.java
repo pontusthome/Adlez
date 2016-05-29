@@ -20,7 +20,7 @@ public class AreaConnectionController implements IController {
 
     @Override
     public void update(float deltaT) {
-
+        // Nothing for now
     }
 
     @Override

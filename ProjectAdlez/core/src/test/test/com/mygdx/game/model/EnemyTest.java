@@ -36,7 +36,7 @@ public class EnemyTest {
     public void testEnemyType() {
         IPlayer player = new Player();
         player.resetPlayer();
-        player.setAttackDamage(10);
+        player.setMeleeAttackDamage(10);
         IEnemy enemy1 = new Enemy(player, Direction.NORTH, 2, 17, 17, 0, 0, 20, 300, 0, 0, Enemy.REGULAR_LEVEL_ONE);
         IEnemy enemy2 = new Enemy(player, Direction.NORTH, 2, 17, 17, 0, 0, 20, 300, 0, 0, Enemy.REGULAR_LEVEL_TWO);
         IEnemy enemy3 = new Enemy(player, Direction.NORTH, 2, 17, 17, 0, 0, 20, 300, 0, 0, Enemy.DARK_ONE_LEVEL_ONE);

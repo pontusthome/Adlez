@@ -12,8 +12,8 @@ public interface ICharacter extends IWorldObject {
 	void moveEast(float deltaT);
 	void move(float deltaT);
 
-	int getAttackDamage();
-	void setAttackDamage(int attackDamage);
+	int getMeleeAttackDamage();
+	void setMeleeAttackDamage(int attackDamage);
 	int getHealth();
 	void setHealth(int health);
 	int getMana();

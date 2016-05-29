@@ -43,7 +43,7 @@ public class Player extends Character implements IPlayer {
         setMaxMana(100);
         setMana(100);
         setGold(0);
-        setAttackDamage(20);
+        setMeleeAttackDamage(20);
         setLevel(0);
 
         inventory = new ArrayList<>(INVENTORY_MAX_SIZE);
@@ -61,7 +61,7 @@ public class Player extends Character implements IPlayer {
             if (isWepSlotEmpty) {
                 isWepSlotEmpty = false;
                 swordEquipped = item;
-                setAttackDamage(getAttackDamage() + item.getStats());
+                setMeleeAttackDamage(getMeleeAttackDamage() + item.getStats());
                 removeItem(item);
             }
         } else if (item instanceof Armor) {
@@ -78,7 +78,7 @@ public class Player extends Character implements IPlayer {
         if (!isWepSlotEmpty) {
             isWepSlotEmpty = true;
             swordEquipped = null;
-            setAttackDamage(getAttackDamage() - item.getStats());
+            setMeleeAttackDamage(getMeleeAttackDamage() - item.getStats());
             lootItem(item);
         }
     }

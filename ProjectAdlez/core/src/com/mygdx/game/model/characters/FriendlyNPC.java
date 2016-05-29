@@ -39,8 +39,7 @@ public class FriendlyNPC extends NPC implements IFriendlyNPC {
     public void onCollide(Collidable other) {
         if (other instanceof IInteraction) {
             IInteraction interaction = (IInteraction) other;
-            ICharacter character = interaction.getCharacter();
-            if (character instanceof IPlayer) {
+            if (interaction.byPlayer()) {
                 notifyListeners();
             }
         }
