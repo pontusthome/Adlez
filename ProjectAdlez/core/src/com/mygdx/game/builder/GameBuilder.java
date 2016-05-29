@@ -71,7 +71,7 @@ public class GameBuilder implements GameIO {
      * @return the saved player
      */
     @Override
-    public IPlayer loadPlayer() throws IOException {
+    public IPlayer loadPlayer() throws IOException, ItemNotFoundException, InventoryFullException {
         IPlayer player = Adlez.getInstance().getPlayer();
 
         BufferedReader bufferedReader;
@@ -80,7 +80,6 @@ public class GameBuilder implements GameIO {
 
         while ((areaHandlerData = bufferedReader.readLine()) != null) {
             JsonValue jsonPlayer = new JsonReader().parse(areaHandlerData);
-            //System.out.println(jsonAreaHandler.toString());
 
             player.setName(jsonPlayer.get("name").asString());
             player.setPos(jsonPlayer.get("xPos").asFloat(), jsonPlayer.get("yPos").asFloat());
@@ -96,25 +95,13 @@ public class GameBuilder implements GameIO {
             player.setGold(jsonPlayer.get("gold").asInt());
             player.setLevel(jsonPlayer.get("level").asInt());
             if (jsonPlayer.get("armorEquipped") != null) {
-                try {
-                    player.equipItem(getJsonItem(jsonPlayer.get("armorEquipped")));
-                } catch (ItemNotFoundException e) {
-                    System.out.println("Loading player and not finding the armor that should be equipped");
-                }
+                player.equipItem(getJsonItem(jsonPlayer.get("armorEquipped")));
             }
             if (jsonPlayer.get("swordEquipped") != null) {
-                try {
-                    player.equipItem(getJsonItem(jsonPlayer.get("swordEquipped")));
-                } catch (ItemNotFoundException e) {
-                    System.out.println("Loading player and not finding the sword that should be equipped");
-                }
+                player.equipItem(getJsonItem(jsonPlayer.get("swordEquipped")));
             }
             for (IItem item: getJsonItems(jsonPlayer.get("inventory"))) {
-                try {
-                    player.lootItem(item);
-                } catch (InventoryFullException e) {
-                    System.out.println("Loading a player that had too many items?");
-                }
+                player.lootItem(item);
             }
         }
 
@@ -297,7 +284,7 @@ public class GameBuilder implements GameIO {
      * @return the AreaHandler updated with the saved data.
      */
     @Override
-    public AreaHandler loadAreaHandler() throws IOException {
+    public AreaHandler loadAreaHandler() throws IOException, InventoryFullException {
         AreaHandler areaHandler = AreaHandler.getInstance();
 
         BufferedReader bufferedReader;
@@ -326,7 +313,7 @@ public class GameBuilder implements GameIO {
      * @param jsonArea is the saved area data in JSON format
      * @param area is the area that is being updated with the saved data
      */
-    private void loadArea(JsonValue jsonArea, Area area) {
+    private void loadArea(JsonValue jsonArea, Area area) throws InventoryFullException {
         loadEnemies(jsonArea.get("enemies"), area);
         loadObstacles(jsonArea.get("obstacles"), area);
         loadChests(jsonArea.get("chests"), area);
@@ -368,17 +355,13 @@ public class GameBuilder implements GameIO {
      * @param jsonChests is the saved chests' data in JSON format
      * @param area is the area that is being updated with the saved data
      */
-    private void loadChests(JsonValue jsonChests, Area area) {
+    private void loadChests(JsonValue jsonChests, Area area) throws InventoryFullException {
         List<IChest> chests = area.getChests();
         chests.clear();
         for (JsonValue jsonChest : jsonChests) {
             IChest chest = new Chest(jsonChest.get("xPos").asFloat(), jsonChest.get("yPos").asFloat(), 16, 16, 2);
             for (IItem item : getJsonItems(jsonChest.get("items"))) {
-                try {
-                    chest.addItem(item);
-                } catch (InventoryFullException e) {
-                    e.printStackTrace();
-                }
+                chest.addItem(item);
             }
             chest.setIsOpened(jsonChest.get("isOpened").asBoolean());
             chests.add(chest);

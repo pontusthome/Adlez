@@ -10,6 +10,8 @@ import com.mygdx.game.builder.GameBuilder;
 import com.mygdx.game.builder.AreaHandler;
 import com.mygdx.game.builder.GameIO;
 import com.mygdx.game.model.Adlez;
+import com.mygdx.game.model.exceptions.InventoryFullException;
+import com.mygdx.game.model.exceptions.ItemNotFoundException;
 
 import java.io.IOException;
 
@@ -52,7 +54,7 @@ public abstract class AbstractScreen extends Stage implements Screen {
     protected void loadSavedGame() {
         try {
             loadGame();
-        } catch (IOException e) {
+        } catch (Exception e) {
             System.out.println("Could not find saved game.");
             System.out.println("Starting new game.");
             newGame();
@@ -61,7 +63,7 @@ public abstract class AbstractScreen extends Stage implements Screen {
         }
     }
 
-    protected void loadGame() throws IOException {
+    protected void loadGame() throws IOException, InventoryFullException, ItemNotFoundException {
         // Load the AreaHandler
         GameIO areaBuilder = new GameBuilder();
         areaBuilder.loadAreaHandler();
