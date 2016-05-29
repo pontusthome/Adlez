@@ -52,7 +52,7 @@ public interface ICharacter extends IWorldObject {
 	boolean moved();
 
 
-	/** For debugging purposes 
+	/** For debugging purposes
 	IAttack getLatestAttack();
 	IInteraction getLatestInteraction();
 	 */

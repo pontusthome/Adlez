@@ -18,14 +18,17 @@ import java.io.IOException;
 /**
  * Created by martinso on 27/03/16.
  */
-public class PlayerController implements ICharacterController{
+public class PlayerController implements ICharacterController, IMenuController{
 
 // Have a screens not extend a screens
 
     private IPlayer player;
     private ICharacterView playerView;
     private GameSound outOfManaSound;
-    
+
+    private boolean inventoryOpen;
+    private boolean gameMenuOpen;
+
     /** For debugging purposes
     public static IAttack currentAttack;
     public static IInteraction currentInteraction;
@@ -36,7 +39,10 @@ public class PlayerController implements ICharacterController{
         playerView = new CharacterView(AssetStrings.PLAYER_MOVE);
     
         outOfManaSound = new LibGDXSoundAdapter(AssetStrings.OUT_OF_MANA_SOUND);
-    
+
+        inventoryOpen = false;
+        gameMenuOpen = false;
+
         /** For debugging purposes
         currentAttack = player.getLatestAttack();
         currentInteraction = player.getLatestInteraction();
@@ -54,7 +60,7 @@ public class PlayerController implements ICharacterController{
         currentAttack = player.getLatestAttack();
         currentInteraction = player.getLatestInteraction();
          */
-        
+
         if (Gdx.input.isKeyPressed(Input.Keys.W)) {
             player.setMovingNorth();
         }else if (Gdx.input.isKeyPressed(Input.Keys.S)) {
@@ -88,6 +94,22 @@ public class PlayerController implements ICharacterController{
         }
         if (Gdx.input.isKeyJustPressed(Input.Keys.ENTER)) {
             player.interact();
+        }
+
+        if(Gdx.input.isKeyJustPressed(Input.Keys.I)){
+            if(inventoryOpen == false){
+                inventoryOpen = true;
+            }else {
+                inventoryOpen = false;
+            }
+        }
+
+        if(Gdx.input.isKeyJustPressed(Input.Keys.ESCAPE)){
+            if(gameMenuOpen== false){
+                gameMenuOpen = true;
+            }else {
+                gameMenuOpen = false;
+            }
         }
 
         /**
@@ -124,4 +146,13 @@ public class PlayerController implements ICharacterController{
     private TextureRegion getCurrentFrame() {
         return playerView.getCurrentFrame();
     }
+
+    public boolean getInventoryOpen(){
+        return inventoryOpen;
+    }
+
+    public boolean getGameMenuOpen(){
+        return gameMenuOpen;
+    }
+
 }

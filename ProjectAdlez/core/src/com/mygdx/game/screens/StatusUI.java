@@ -1,13 +1,8 @@
 package com.mygdx.game.screens;
 
-import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.graphics.Color;
-import com.badlogic.gdx.graphics.Texture;
-import com.badlogic.gdx.graphics.g2d.BitmapFont;
-import com.badlogic.gdx.graphics.g2d.TextureRegion;
+
 import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.scenes.scene2d.ui.*;
-import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
 import com.badlogic.gdx.utils.Align;
 import com.mygdx.game.model.characters.IPlayer;
 import com.mygdx.game.utils.AssetStrings;
@@ -42,9 +37,14 @@ public class StatusUI extends Window{
 
     private IPlayer player;
 
+    private boolean openInventory;
+
 
     public StatusUI(IPlayer player) {
         super("Player Status",AssetStrings.STATUSUI_SKIN);
+
+        openInventory = false;
+
         this.player = player;
         WidgetGroup group = new WidgetGroup();
         WidgetGroup group2 = new WidgetGroup();
@@ -65,6 +65,7 @@ public class StatusUI extends Window{
         currentGoldLabel = new Label(String.valueOf(currentGoldValue), AssetStrings.STATUSUI_SKIN);
 
         inventoryButton = new ImageButton(AssetStrings.STATUSUI_SKIN, "inventory-button");
+
         //Align images
         hpBar.setPosition(3, 6);
         mpBar.setPosition(3, 6);
@@ -87,12 +88,11 @@ public class StatusUI extends Window{
         this.add(currentHpLabel).align(Align.left);
         this.row();
 
-        this.add(group).size(bar.getWidth(), bar.getHeight()).padRight(10);
+        this.add(group2).size(bar.getWidth(), bar.getHeight()).padRight(10);
         this.add(manaLabel);
         this.add(currentMpLabel).align(Align.left);
         this.row();
 
-        this.add(group).size(bar.getWidth(), bar.getHeight()).padRight(10);
         this.add(goldLabel);
         this.add(currentGoldLabel).align(Align.left);
         this.row();
@@ -105,13 +105,16 @@ public class StatusUI extends Window{
 
     public void update(){
         currentGoldValue = player.getGold();
+        currentGoldLabel.setText(String.valueOf(currentGoldValue));
 
         currentHpValue = player.getHealth();
         maxHP = player.getMaxHealth();
+        currentHpLabel.setText(String.valueOf(currentHpValue));
         updateBar(hpBar,currentHpValue,maxHP);
 
         currentMpValue = player.getMana();
         maxMP = player.getMaxMana();
+        currentMpLabel.setText(String.valueOf(currentMpValue));
         updateBar(mpBar,currentMpValue,maxMP);
     }
 
@@ -120,5 +123,9 @@ public class StatusUI extends Window{
         float tempPercent = (float) val / (float) maxVal;
         float percentage = MathUtils.clamp(tempPercent, 0, 100);
         bar.setSize(barWidth*percentage, barHeight);
+    }
+
+    public boolean getOpenInventory(){
+        return openInventory;
     }
 }

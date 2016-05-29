@@ -34,3 +34,8 @@ Working directory: ../Adlez/ProjectAdlez/core/assets
 Use of classpath of module: desktop
 Java: 1.8
 ```
+Set up Project structure:
+```
+Modules => core => dependencies
+Mark JUNIT and change Scope to compile.
+```

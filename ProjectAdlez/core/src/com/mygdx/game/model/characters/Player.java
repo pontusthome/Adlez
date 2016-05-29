@@ -25,6 +25,7 @@ public class Player extends Character implements IPlayer {
     private boolean isArmorSlotEmpty = true;
     private List<IItem> inventory;
     private static final int INVENTORY_MAX_SIZE = 16;
+    private boolean isInventoryChanged;
 
     // This constructor should be used.
     public Player() {
@@ -32,6 +33,7 @@ public class Player extends Character implements IPlayer {
     }
 
     public void resetPlayer() {
+        setName("Player");
         setDirection(Direction.NORTH);
         setSpeed(2f);
         setWidth(17);
@@ -44,16 +46,16 @@ public class Player extends Character implements IPlayer {
         setMana(100);
         setGold(0);
         setMeleeAttackDamage(20);
-        setLevel(0);
+        setLevel(1);
 
         inventory = new ArrayList<>(INVENTORY_MAX_SIZE);
-
         try {
             unEquipArmor(getArmorEquipped());
             unEquipWeapon(getSwordEquipped());
         } catch (InventoryFullException e) {
             e.printStackTrace();
         }
+        setIsInventoryChanged();
     }
     
     public void equipItem(IItem item) throws ItemNotFoundException {
@@ -63,6 +65,7 @@ public class Player extends Character implements IPlayer {
                 swordEquipped = item;
                 setMeleeAttackDamage(getMeleeAttackDamage() + item.getStats());
                 removeItem(item);
+                setIsInventoryChanged();
             }
         } else if (item instanceof Armor) {
             if (isArmorSlotEmpty) {
@@ -80,6 +83,7 @@ public class Player extends Character implements IPlayer {
             swordEquipped = null;
             setMeleeAttackDamage(getMeleeAttackDamage() - item.getStats());
             lootItem(item);
+            setIsInventoryChanged();
         }
     }
 
@@ -89,6 +93,7 @@ public class Player extends Character implements IPlayer {
             armorEquipped = null;
             setMaxHealth(getMaxHealth() - item.getStats());
             lootItem(item);
+            setIsInventoryChanged();
         }
     }
 
@@ -97,6 +102,7 @@ public class Player extends Character implements IPlayer {
             throw new InventoryFullException("Inventory Full");
         } else {
             inventory.add(item);
+            setIsInventoryChanged();
         }
     }
 
@@ -106,6 +112,7 @@ public class Player extends Character implements IPlayer {
 
     public void removeItem(IItem item) throws ItemNotFoundException {
         inventory.remove(getItemInInventory(item));
+        setIsInventoryChanged();
     }
 
     public IItem getItemInInventory(IItem item) throws ItemNotFoundException {
@@ -134,5 +141,21 @@ public class Player extends Character implements IPlayer {
             IAttack attack = (IAttack) other;
             setHealth(getHealth() - attack.getDamage());
         }
+    }
+
+    private void setIsInventoryChanged(){
+        isInventoryChanged = true;
+    }
+    private void resetIsInventoryChanged(){
+        isInventoryChanged = false;
+    }
+    public boolean getIsInventoryChanged(){
+        return isInventoryChanged;
+    }
+
+    @Override
+    public void update(float deltaT){
+        super.update(deltaT);
+        resetIsInventoryChanged();
     }
 }

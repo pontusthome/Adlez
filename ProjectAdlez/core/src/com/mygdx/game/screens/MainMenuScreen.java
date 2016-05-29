@@ -65,6 +65,15 @@ public class MainMenuScreen extends AbstractScreen {
                 return false;
             }
         });
+
+        exitGameButton.addListener(new InputListener() {
+            @Override
+            public boolean touchDown(InputEvent event, float x,
+                                     float y, int pointer, int button) {
+                Gdx.app.exit();
+                return false;
+            }
+        });
     }
 
     @Override

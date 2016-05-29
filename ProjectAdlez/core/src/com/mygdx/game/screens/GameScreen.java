@@ -12,7 +12,8 @@ import com.badlogic.gdx.maps.tiled.renderers.OrthoCachedTiledMapRenderer;
 
 import com.mygdx.game.controller.*;
 import com.mygdx.game.builder.AreaHandler;
-import com.mygdx.game.model.*;
+import com.mygdx.game.controller.*;
+import com.mygdx.game.model.Adlez;
 import com.mygdx.game.model.characters.*;
 import com.mygdx.game.model.actions.IAttack;
 import com.mygdx.game.model.actions.IInteraction;
@@ -91,7 +92,7 @@ public class GameScreen extends AbstractScreen implements GateOpenListener, Shop
         hudCamera.setToOrtho(
                 false, Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
 
-        playerHUD = new PlayerHUD(hudCamera, player);
+        playerHUD = new PlayerHUD(hudCamera, player, playerController);
         batch.setProjectionMatrix(playerHUD.getStage().getCamera().combined);
         playerHUD.getStage().draw();
 
@@ -164,12 +165,12 @@ public class GameScreen extends AbstractScreen implements GateOpenListener, Shop
                 0); // z = 0, non 3D
 
         renderWorldObjects();
-        
+
         batch.end();
-        
+
         // Render HUD
         playerHUD.render(delta);
-    
+
         //debugRender();
     }
 
@@ -268,18 +269,18 @@ public class GameScreen extends AbstractScreen implements GateOpenListener, Shop
             screenManager.showScreen(ScreenEnum.GAME_OVER);
         }
     }
-    
+
     private void renderWorldObjects() {
-    
+
         // Render player
         playerController.render(batch);
-    
+
         //Render enemies
         for(Map.Entry<IEnemy, ICharacterController> entry : enemies.entrySet()) {
             IController enemyController = entry.getValue();
             enemyController.render(batch);
         }
-    
+
         // Render stationary world objects
         obstaclesController.render(batch);
         chestsController.render(batch);
@@ -287,7 +288,7 @@ public class GameScreen extends AbstractScreen implements GateOpenListener, Shop
         areaConnectionController.render(batch);
         manaFountainController.render(batch);
     }
-    
+
     /** For debugging purposes
     private void debugRender(){
         debugRenderer.setProjectionMatrix(playerCam.combined);
@@ -296,7 +297,7 @@ public class GameScreen extends AbstractScreen implements GateOpenListener, Shop
         DebugHitbox attackDebugHitbox = PlayerController.currentAttack.getDebugHitbox();
         DebugHitbox interactionDebugHitbox = PlayerController.currentInteraction.getDebugHitbox();
         debugRenderer.rect(attackDebugHitbox.getX(), attackDebugHitbox.getY(), attackDebugHitbox.getWidth(), attackDebugHitbox.getHeight());
-        debugRenderer.rect(interactionDebugHitbox.getX(), interactionDebugHitbox.getY(), 
+        debugRenderer.rect(interactionDebugHitbox.getX(), interactionDebugHitbox.getY(),
                 interactionDebugHitbox.getWidth(), interactionDebugHitbox.getHeight());
         debugRenderer.rect(player.getPosX(), player.getPosY(), player.getWidth(), player.getHeight());
         List <IWall> tempList = adlez.getWalls();

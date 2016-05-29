@@ -1,6 +1,10 @@
 package com.mygdx.game.model.characters;
 
-import com.mygdx.game.model.core.*;
+import com.mygdx.game.model.core.ObservableWorldObject;
+import com.mygdx.game.model.core.WorldObjectObserver;
+import com.mygdx.game.model.core.Collidable;
+import com.mygdx.game.model.core.Direction;
+import com.mygdx.game.model.core.WorldObject;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -10,7 +14,7 @@ import java.util.List;
  */
 public abstract class Character extends WorldObject implements ICharacter, ObservableWorldObject{
 
-	private int attackDamage;
+	private int meleeAttackDamage;
 	private int health;
 	private int maxHealth;
 	private int mana;
@@ -29,7 +33,7 @@ public abstract class Character extends WorldObject implements ICharacter, Obser
 	private float oldPosY;
 	private boolean moved;
 	private List<WorldObjectObserver> observers;
-	
+
 	/** Speed components in x & y. Are set to 1 if only moving in either x or y, otherwise adjusted so 
 	 * that the character doesn't move faster when moving diagonally.
 	 */
@@ -40,7 +44,7 @@ public abstract class Character extends WorldObject implements ICharacter, Obser
 	 public IAttack latestAttack = new MeleeAttack();
 	 public IInteraction latestInteraction = new Interaction();
 	 */
-	
+
 	
 	/**
 	 * Cooldown for attacking so that a character isn't allowed to attack non-sto . Only used for enemy attacks for 
@@ -126,8 +130,8 @@ public abstract class Character extends WorldObject implements ICharacter, Obser
 	}
 
 	@Override
-	public void setMeleeAttackDamage(int attackDamage) {
-		this.attackDamage = attackDamage;
+	public void setAttackDamage(int meleeAttackDamage) {
+		this.meleeAttackDamage = meleeAttackDamage;
 	}
 
 	@Override
@@ -138,9 +142,10 @@ public abstract class Character extends WorldObject implements ICharacter, Obser
 	@Override
 	public void setHealth(int health){
 		if (health < 0) {
-			health = 0;
+			this.health = 0;
+		}else{
+			this.health = health;
 		}
-		this.health = health;
 	}
 	
 	@Override
@@ -150,7 +155,11 @@ public abstract class Character extends WorldObject implements ICharacter, Obser
 	
 	@Override
 	public void setLevel(int level){
-		this.level = level;
+		if(level < 1){
+			this.level = 1;
+		}else {
+			this.level = level;
+		}
 	}
 	
 	@Override
@@ -159,8 +168,12 @@ public abstract class Character extends WorldObject implements ICharacter, Obser
 	}
 	
 	@Override
-	public void setName(String name){
-		this.name = name;
+	public void setName(String name) {
+		if (name.length() < 3) {
+			this.name = "too short";
+		} else {
+			this.name = name;
+		}
 	}
 	
 	@Override
@@ -170,17 +183,26 @@ public abstract class Character extends WorldObject implements ICharacter, Obser
 	
 	@Override
 	public void setMana(int mana){
-		this.mana = mana;
-	}
-	
+		if(mana < 0){
+			this.mana = 0;
+		}
+		else{
+			this.mana = mana;
+		}
+		}
+
 	@Override
 	public int getGold(){
 		return gold;
 	}
 	
 	@Override
-	public void setGold(int gold){
-		this.gold = gold;
+	public void setGold(int gold) {
+		if (gold < 0) {
+			this.gold = 0;
+		} else {
+			this.gold = gold;
+		}
 	}
 	
 	@Override
@@ -189,8 +211,12 @@ public abstract class Character extends WorldObject implements ICharacter, Obser
 	}
 	
 	@Override
-	public void setMaxHealth(int maxHealth){
-		this.maxHealth = maxHealth;
+	public void setMaxHealth(int maxHealth) {
+		if (maxHealth < 0) {
+			this.maxHealth = 0;
+		} else {
+			this.maxHealth = maxHealth;
+		}
 	}
 	
 	@Override
@@ -199,8 +225,12 @@ public abstract class Character extends WorldObject implements ICharacter, Obser
 	}
 	
 	@Override
-	public void setMaxMana(int maxMana){
-		this.maxMana = maxMana;
+	public void setMaxMana(int maxMana) {
+		if (maxMana < 0) {
+			this.maxMana = 0;
+		} else {
+			this.maxMana = maxMana;
+		}
 	}
 
 	@Override
@@ -358,7 +388,7 @@ public abstract class Character extends WorldObject implements ICharacter, Obser
 	public void interact(){
 		notifyObservers("interaction", null);
 	}
-	
+
 	@Override
 	public void useMana(int manaUsage) {
 		setMana(getMana() - manaUsage);
@@ -368,11 +398,11 @@ public abstract class Character extends WorldObject implements ICharacter, Obser
 	public IAttack getLatestAttack(){
 		return latestAttack;
 	}
-	 
+
 	public IInteraction getLatestInteraction(){
 		return latestInteraction;
 	}
-	 
+
 	 */
 	
 	@Override
