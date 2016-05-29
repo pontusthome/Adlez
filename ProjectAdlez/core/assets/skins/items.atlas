@@ -10,7 +10,7 @@ iron_body_armor
   orig: 52, 52
   offset: 0, 0
   index: -1
-ARMOR02
+finalBody
   rotate: false
   xy: 1, 163
   size: 52, 52
@@ -304,7 +304,7 @@ WEAPON03
   orig: 52, 52
   offset: 0, 0
   index: -1
-WEAPON04
+finalSword
   rotate: false
   xy: 433, 55
   size: 52, 52
