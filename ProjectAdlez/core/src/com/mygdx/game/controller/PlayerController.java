@@ -7,8 +7,6 @@ import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.mygdx.game.builder.GameBuilder;
 import com.mygdx.game.builder.GameIO;
 import com.mygdx.game.model.characters.IPlayer;
-import com.mygdx.game.model.characters.actions.IAttack;
-import com.mygdx.game.model.characters.actions.IInteraction;
 import com.mygdx.game.sound.GameSound;
 import com.mygdx.game.sound.LibGDXSoundAdapter;
 import com.mygdx.game.utils.AssetStrings;

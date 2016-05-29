@@ -7,7 +7,7 @@ import com.badlogic.gdx.scenes.scene2d.ui.ImageButton;
 import com.badlogic.gdx.scenes.scene2d.ui.Window;
 import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
 import com.mygdx.game.model.characters.IPlayer;
-import com.mygdx.game.model.characters.items.IItem;
+import com.mygdx.game.model.items.IItem;
 import com.mygdx.game.utils.AssetStrings;
 
 import java.util.ArrayList;
