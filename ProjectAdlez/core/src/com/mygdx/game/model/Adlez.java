@@ -30,10 +30,10 @@ public class Adlez implements WorldObjectObserver {
     private IPlayer player;
     private Area area;
     private CollisionHandler collisionHandler;
-    private List<IAttack> attacks = new ArrayList<>();
-    private List<IAttack> newAttacks = new ArrayList<>();
-    private List<IInteraction> interactions = new ArrayList<>();
-    private List<IInteraction> newInteractions = new ArrayList<>();
+    private List<IAttack> attacks;
+    private List<IAttack> newAttacks;
+    private List<IInteraction> interactions;
+    private List<IInteraction> newInteractions;
 
     private Adlez() {
         player = new Player();
@@ -47,6 +47,11 @@ public class Adlez implements WorldObjectObserver {
         // Reset the world and then set it up for the new area
         this.area = area;
         worldObjects = new ArrayList<>();
+    
+        interactions = new ArrayList<>();
+        newInteractions = new ArrayList<>();
+        attacks = new ArrayList<>();
+        newAttacks = new ArrayList<>();
 
         // add the player and set him to the new position
         player.setPosX(area.getPlayerXposition());
