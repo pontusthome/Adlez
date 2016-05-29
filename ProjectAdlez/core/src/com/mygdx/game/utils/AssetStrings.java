@@ -48,6 +48,7 @@ public final class AssetStrings {
     public static final String MAIN_MENU_BACKGROUND_IMAGE = "backgrounds/mainMenuBackground2.png";
     public static final String INTRO_SCREEN_BACKGROUND_IMAGE = "backgrounds/ZeldaIntro.png";
     public static final String GAME_OVER_BACKGROUND_IMAGE = "backgrounds/gameoverBackground.png";
+    public static final String INSTRUCTIONS_BACKGROUND_IMAGE = "backgrounds/instructionsBackground.png";
 
     /* Stationary obstacles */
     public static final String BOX_OBSTACLE_IMAGE = "obstacles/boxObstacle.jpeg";
