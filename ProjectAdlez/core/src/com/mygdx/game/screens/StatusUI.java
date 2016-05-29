@@ -124,8 +124,4 @@ public class StatusUI extends Window{
         float percentage = MathUtils.clamp(tempPercent, 0, 100);
         bar.setSize(barWidth*percentage, barHeight);
     }
-
-    public boolean getOpenInventory(){
-        return openInventory;
-    }
 }

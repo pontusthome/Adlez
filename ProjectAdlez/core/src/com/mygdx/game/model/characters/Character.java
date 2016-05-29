@@ -1,10 +1,6 @@
 package com.mygdx.game.model.characters;
 
-import com.mygdx.game.model.core.ObservableWorldObject;
-import com.mygdx.game.model.core.WorldObjectObserver;
-import com.mygdx.game.model.core.Collidable;
-import com.mygdx.game.model.core.Direction;
-import com.mygdx.game.model.core.WorldObject;
+import com.mygdx.game.model.core.*;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -145,7 +141,11 @@ public abstract class Character extends WorldObject implements ICharacter, Obser
 		if (health < 0) {
 			this.health = 0;
 		}else{
-			this.health = health;
+			if(health > maxHealth){
+				this.health = maxHealth;
+			}else {
+				this.health = health;
+			}
 		}
 	}
 	
@@ -188,8 +188,11 @@ public abstract class Character extends WorldObject implements ICharacter, Obser
 			this.mana = 0;
 		}
 		else{
+			if(mana > maxMana){
+				this.mana = maxMana;
+			}else{
 			this.mana = mana;
-		}
+		}}
 		}
 
 	@Override

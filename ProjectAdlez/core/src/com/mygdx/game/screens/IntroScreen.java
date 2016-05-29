@@ -24,8 +24,7 @@ public class IntroScreen extends AbstractScreen {
     @Override
     public void buildStage() {
         ImageButton button = new ImageButton(new TextureRegionDrawable(new TextureRegion(backgroundTexture)));
-
-        //Image backGround = new Image(introBackground);
+        button.setSize(1280,720);
         addActor(button);
         button.addListener(new InputListener() {
             @Override

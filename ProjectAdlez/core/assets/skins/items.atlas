@@ -3,7 +3,7 @@ items.png
 format: RGBA8888
 filter: Nearest,Nearest
 repeat: none
-ARMOR01
+iron_body_armor
   rotate: false
   xy: 1, 217
   size: 52, 52
@@ -283,7 +283,7 @@ WANDS05
   orig: 52, 52
   offset: 0, 0
   index: -1
-WEAPON01
+iron_sword
   rotate: false
   xy: 379, 55
   size: 52, 52

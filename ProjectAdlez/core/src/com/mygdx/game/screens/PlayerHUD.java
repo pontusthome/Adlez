@@ -24,6 +24,7 @@ public class PlayerHUD implements Screen{
     private InventoryUI inventoryUI;
     private InGameMenuUI gameMenuUI;
 
+    //Not in yet
     private ImageButton inventoryButton;
 
 

@@ -30,6 +30,7 @@ public class InGameMenuUI extends Window {
         mainMenuButton = new ImageButton(new TextureRegionDrawable(new TextureRegion(new Texture(Gdx.files.internal(AssetStrings.MAIN_MENU_BUTTON_IMAGE)))));
         exitGameButton = new ImageButton(new TextureRegionDrawable(new TextureRegion(new Texture(Gdx.files.internal(AssetStrings.EXIT_GAME_BUTTON_IMAGE)))));
 
+        //Not doing anything yet since the buttons is not connected to anything
         WidgetGroup group1 = new WidgetGroup();
         WidgetGroup group2 = new WidgetGroup();
         WidgetGroup group3 = new WidgetGroup();
@@ -50,20 +51,6 @@ public class InGameMenuUI extends Window {
         add(mainMenuButton);
         row();
         add(exitGameButton);
-
-
-        /*
-        saveButton.setPosition(getWidth()/2, getHeight()/5*1, Align.center);
-        addActor(saveButton);
-        loadButton.setPosition(getWidth()/2, getHeight()/5*2, Align.center);
-        addActor(loadButton);
-        settingsButton.setPosition(getWidth()/2, getHeight()/5*3, Align.center);
-        addActor(settingsButton);
-        mainMenuButton.setPosition(getWidth()/2, getHeight()/5*4, Align.center);
-        addActor(mainMenuButton);
-        exitGameButton.setPosition(getWidth()/2, getHeight()/5*5, Align.center);
-        addActor(exitGameButton);
-        */
 
     }
 }

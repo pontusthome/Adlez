@@ -40,6 +40,7 @@ public class Enemy extends NPC implements IEnemy{
 			setHealth(getHealth() - attack.getDamage());
 			if(getHealth() <= 0) {
 				attack.getCharacter().setGold(attack.getCharacter().getGold() + getGold());
+
 			}
 		}
 	}

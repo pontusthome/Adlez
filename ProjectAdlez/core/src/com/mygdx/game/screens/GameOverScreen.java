@@ -32,6 +32,7 @@ public class GameOverScreen extends AbstractScreen{
     @Override
     public void buildStage() {
         Image backGround = new Image(backGroundTexture);
+        backGround.setSize(1280,720);
         addActor(backGround);
 
         ImageButton newGameButton = new ImageButton(new TextureRegionDrawable(new TextureRegion(newGameButtonTexture)));
