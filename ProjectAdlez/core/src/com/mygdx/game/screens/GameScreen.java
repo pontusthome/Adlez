@@ -14,7 +14,7 @@ import com.mygdx.game.controller.*;
 import com.mygdx.game.builder.AreaHandler;
 import com.mygdx.game.model.*;
 import com.mygdx.game.model.characters.*;
-import com.mygdx.game.model.characters.actions.HitBox;
+import com.mygdx.game.model.characters.actions.DebugHitbox;
 import com.mygdx.game.model.characters.actions.IAttack;
 import com.mygdx.game.model.characters.actions.IInteraction;
 import com.mygdx.game.model.collisionHandler.CollisionHandler;
@@ -289,16 +289,17 @@ public class GameScreen extends AbstractScreen implements GateOpenListener, Shop
         areaConnectionController.render(batch);
         manaFountainController.render(batch);
     }
-
+    
+    /** For debugging purposes
     private void debugRender(){
         debugRenderer.setProjectionMatrix(playerCam.combined);
         debugRenderer.begin(ShapeRenderer.ShapeType.Line);
         debugRenderer.setColor(1, 1, 0, 1);
-        HitBox attackHitBox = PlayerController.currentAttack.getHitBox();
-        HitBox interactionHitBox = PlayerController.currentInteraction.getHitBox();
-        debugRenderer.rect(attackHitBox.getX(), attackHitBox.getY(), attackHitBox.getWidth(), attackHitBox.getHeight());
-        debugRenderer.rect(interactionHitBox.getX(), interactionHitBox.getY(), 
-                interactionHitBox.getWidth(), interactionHitBox.getHeight());
+        DebugHitbox attackDebugHitbox = PlayerController.currentAttack.getDebugHitbox();
+        DebugHitbox interactionDebugHitbox = PlayerController.currentInteraction.getDebugHitbox();
+        debugRenderer.rect(attackDebugHitbox.getX(), attackDebugHitbox.getY(), attackDebugHitbox.getWidth(), attackDebugHitbox.getHeight());
+        debugRenderer.rect(interactionDebugHitbox.getX(), interactionDebugHitbox.getY(), 
+                interactionDebugHitbox.getWidth(), interactionDebugHitbox.getHeight());
         debugRenderer.rect(player.getPosX(), player.getPosY(), player.getWidth(), player.getHeight());
         List <IWall> tempList = adlez.getWalls();
         for(IWall wall : tempList){
@@ -306,6 +307,7 @@ public class GameScreen extends AbstractScreen implements GateOpenListener, Shop
         }
         debugRenderer.end();
     }
+     */
 
     @Override
     public void gateOpen() {

@@ -27,9 +27,10 @@ public class PlayerController implements ICharacterController{
     private ICharacterView playerView;
     private GameSound outOfManaSound;
     
-    //TODO: Remove when debugging is over
+    /** For debugging purposes
     public static IAttack currentAttack;
     public static IInteraction currentInteraction;
+     */
 
     public PlayerController(IPlayer player) {
         this.player = player;
@@ -37,9 +38,10 @@ public class PlayerController implements ICharacterController{
     
         outOfManaSound = new LibGDXSoundAdapter(AssetStrings.OUT_OF_MANA_SOUND);
     
-        //TODO: Remove when debugging is over
+        /** For debugging purposes
         currentAttack = player.getLatestAttack();
         currentInteraction = player.getLatestInteraction();
+         */
     }
 
     /**
@@ -49,9 +51,10 @@ public class PlayerController implements ICharacterController{
      */
     @Override
     public void update(float deltaT) {
-        //TODO: Remove when debugging is over
+        /** For debugging purposes
         currentAttack = player.getLatestAttack();
         currentInteraction = player.getLatestInteraction();
+         */
         
         if (Gdx.input.isKeyPressed(Input.Keys.W)) {
             player.setMovingNorth();

@@ -1,23 +1,25 @@
 package com.mygdx.game.model.characters.actions;
 
-//TODO: Remove HitBox since it's only for debugging
 /**
  * Created by Michel on 30.4.2016.
+ * 
+ * Class used for debugging of an action's position
+ * 
  */
-public class HitBox{
+public class DebugHitbox{
 	private float x;
 	private float y;
 	private float width;
 	private float height;
 	
-	public HitBox(){
+	public DebugHitbox(){
 		this.x = 0;
 		this.y = 0;
 		this.width = 0;
 		this.height = 0;
 	}
 	
-	public HitBox(float x, float y, float width, float height){
+	public DebugHitbox(float x, float y, float width, float height){
 		this.x = x;
 		this.y = y;
 		this.width = width;

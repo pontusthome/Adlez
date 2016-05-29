@@ -51,9 +51,10 @@ public interface ICharacter extends IWorldObject {
 	void interact();
 	void setMoved(boolean moved);
 	boolean moved();
-	
-	
-	//TODO: Remove when debugging is over
+
+
+	/** For debugging purposes 
 	IAttack getLatestAttack();
 	IInteraction getLatestInteraction();
+	 */
 }

@@ -179,43 +179,48 @@ public class Adlez implements WorldObjectObserver {
                 case "melee_attack":{
                     IAttack attack = new MeleeAttack(character);
                     addAttack(attack);
-            
-                    //TODO: Remove when debugging is over
-                    ((Character) character).latestAttack = attack;
+    
+                    /** For debugging purposes
+                     ((Character) character).latestAttack = attack;
+                     */
                     break;
                 }
                 case "aoe_melee_attack":{
                     IAttack attack = new AOEMeleeAttack(character);
                     addAttack(attack);
-            
-                    //TODO: Remove when debugging is over
-                    ((Character) character).latestAttack = attack;
+    
+                    /** For debugging purposes
+                     ((Character) character).latestAttack = attack;
+                     */
                     break;
                 }
                 case "range_magic_attack":{
                     IAttack attack = new RangeMagicAttack(character);
                     character.useMana(attack.getManaUsage());
                     addAttack(attack);
-            
-                    //TODO: Remove when debugging is over
-                    ((Character) character).latestAttack = attack;
+    
+                    /** For debugging purposes
+                     ((Character) character).latestAttack = attack;
+                     */
                     break;
                 }
                 case "aoe_magic_attack":{
                     IAttack attack = new AOEMagicAttack(character);
                     character.useMana(attack.getManaUsage());
                     addAttack(attack);
-            
-                    //TODO: Remove when debugging is over
-                    ((Character) character).latestAttack = attack;
+    
+                    /** For debugging purposes
+                     ((Character) character).latestAttack = attack;
+                     */
                     break;
                 }
                 case "interaction":
                     IInteraction interaction = new Interaction(character);
                     addInteraction(interaction);
-            
-                    //TODO: Remove when debugging is over
-                    ((Character) character).latestInteraction = interaction;
+    
+                    /** For debugging purposes
+                     ((Character) character).latestInteraction = interaction;
+                     */
                     break;
             }
         }

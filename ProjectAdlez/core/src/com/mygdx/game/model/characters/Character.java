@@ -41,9 +41,11 @@ public abstract class Character extends WorldObject implements ICharacter, Obser
 	private float vXComponent = 0;
 	private float vYComponent = 0;
 	
-	//TODO: Remove when debugging is over
-	public IAttack latestAttack = new MeleeAttack();
-	public IInteraction latestInteraction = new Interaction();
+	/** For debugging purposes
+	 public IAttack latestAttack = new MeleeAttack();
+	 public IInteraction latestInteraction = new Interaction();
+	 */
+	
 	
 	// Temporary values for cooldown, should maybe be set in constructor or defined as a constant somewhere
 	public static final float ATTACK_COOLDOWN_LIMIT = 2;	//In seconds
@@ -359,23 +361,21 @@ public abstract class Character extends WorldObject implements ICharacter, Obser
 		notifyObservers("interaction");
 	}
 	
-	//TODO: Remove when debugging is over
-	@Override
-	public IAttack getLatestAttack(){
-		return latestAttack;
-	}
-	
 	@Override
 	public void useMana(int manaUsage) {
 		setMana(getMana() - manaUsage);
 	}
-	
-	//TODO: Remove when debugging is over
-	@Override
+
+	/** For debugging purposes
+	public IAttack getLatestAttack(){
+		return latestAttack;
+	}
+	 
 	public IInteraction getLatestInteraction(){
 		return latestInteraction;
 	}
-	
+	 
+	 */
 	@Override
 	public void addObserver(WorldObjectObserver observer){
 		if(!observers.contains(observer)){
