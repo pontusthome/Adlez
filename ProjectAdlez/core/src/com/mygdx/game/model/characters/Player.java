@@ -33,6 +33,7 @@ public class Player extends Character implements IPlayer {
     }
 
     public void resetPlayer() {
+        setName("Player");
         setDirection(Direction.NORTH);
         setSpeed(2f);
         setWidth(17);
