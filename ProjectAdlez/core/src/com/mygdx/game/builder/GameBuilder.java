@@ -100,6 +100,7 @@ public class GameBuilder implements GameIO {
             if (jsonPlayer.get("swordEquipped") != null) {
                 player.equipItem(getJsonItem(jsonPlayer.get("swordEquipped")));
             }
+            player.getInventory().clear();
             for (IItem item: getJsonItems(jsonPlayer.get("inventory"))) {
                 player.lootItem(item);
             }
