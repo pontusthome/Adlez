@@ -25,6 +25,11 @@ public enum ScreenEnum {
         public AbstractScreen getScreen() {
             return new GameOverScreen();
         }
+    },
+    INSTRUCTIONS {
+        public AbstractScreen getScreen(){
+            return new InstructionsScreen();
+        }
     };
 
     public abstract AbstractScreen getScreen();
