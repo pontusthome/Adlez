@@ -26,12 +26,6 @@ public class Chest extends WorldObject implements IChest {
         slots = new ArrayList<>(chestSize);
     }
 
-    public Chest(float posX, float posY) {
-        super(posX, posY, 16, 16);
-        chestSize = 2;
-        slots = new ArrayList<>(chestSize);
-    }
-
     @Override
     public void addItem(IItem type) throws InventoryFullException {
         if (chestSizeCount < chestSize) {

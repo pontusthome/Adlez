@@ -372,7 +372,7 @@ public class GameBuilder implements GameIO {
         List<IChest> chests = area.getChests();
         chests.clear();
         for (JsonValue jsonChest : jsonChests) {
-            IChest chest = new Chest(jsonChest.get("xPos").asFloat(), jsonChest.get("yPos").asFloat());
+            IChest chest = new Chest(jsonChest.get("xPos").asFloat(), jsonChest.get("yPos").asFloat(), 16, 16, 2);
             for (IItem item : getJsonItems(jsonChest.get("items"))) {
                 try {
                     chest.addItem(item);
