@@ -63,9 +63,6 @@ public class Adlez implements WorldObjectObserver {
         worldObjects.addAll(area.getWalls());
         worldObjects.addAll(area.getObstacles());
         worldObjects.addAll(area.getChests());
-
-        attacks.clear();
-
         worldObjects.addAll(area.getAreaConnections());
         worldObjects.addAll(area.getManaFountains());
 
