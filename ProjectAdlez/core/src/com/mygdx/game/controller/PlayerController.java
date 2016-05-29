@@ -6,6 +6,8 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.mygdx.game.builder.GameBuilder;
 import com.mygdx.game.builder.GameIO;
+import com.mygdx.game.model.actions.IAttack;
+import com.mygdx.game.model.actions.IInteraction;
 import com.mygdx.game.model.characters.IPlayer;
 import com.mygdx.game.sound.GameSound;
 import com.mygdx.game.sound.LibGDXSoundAdapter;
@@ -29,10 +31,9 @@ public class PlayerController implements ICharacterController, IMenuController{
     private boolean inventoryOpen;
     private boolean gameMenuOpen;
 
-    /** For debugging purposes
+    // For debugging purposes
     public static IAttack currentAttack;
     public static IInteraction currentInteraction;
-     */
 
     public PlayerController(IPlayer player) {
         this.player = player;
@@ -43,10 +44,9 @@ public class PlayerController implements ICharacterController, IMenuController{
         inventoryOpen = false;
         gameMenuOpen = false;
 
-        /** For debugging purposes
+        // For debugging purposes
         currentAttack = player.getLatestAttack();
         currentInteraction = player.getLatestInteraction();
-         */
     }
 
     /**
@@ -56,10 +56,9 @@ public class PlayerController implements ICharacterController, IMenuController{
      */
     @Override
     public void update(float deltaT) {
-        /** For debugging purposes
+        // For debugging purposes
         currentAttack = player.getLatestAttack();
         currentInteraction = player.getLatestInteraction();
-         */
 
         if (Gdx.input.isKeyPressed(Input.Keys.W)) {
             player.setMovingNorth();
@@ -97,7 +96,7 @@ public class PlayerController implements ICharacterController, IMenuController{
         }
 
         if(Gdx.input.isKeyJustPressed(Input.Keys.I)){
-            if(inventoryOpen == false){
+            if(!inventoryOpen){
                 inventoryOpen = true;
             }else {
                 inventoryOpen = false;
@@ -105,7 +104,7 @@ public class PlayerController implements ICharacterController, IMenuController{
         }
 
         if(Gdx.input.isKeyJustPressed(Input.Keys.ESCAPE)){
-            if(gameMenuOpen== false){
+            if(!gameMenuOpen){
                 gameMenuOpen = true;
             }else {
                 gameMenuOpen = false;

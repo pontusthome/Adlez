@@ -1,5 +1,9 @@
 package com.mygdx.game.model.characters;
 
+import com.mygdx.game.model.actions.IAttack;
+import com.mygdx.game.model.actions.IInteraction;
+import com.mygdx.game.model.actions.Interaction;
+import com.mygdx.game.model.actions.MeleeAttack;
 import com.mygdx.game.model.core.*;
 
 import java.util.ArrayList;
@@ -36,10 +40,10 @@ public abstract class Character extends WorldObject implements ICharacter, Obser
 	private float vXComponent = 0;
 	private float vYComponent = 0;
 	
-	/** For debugging purposes
-	 public IAttack latestAttack = new MeleeAttack();
-	 public IInteraction latestInteraction = new Interaction();
-	 */
+	// For debugging purposes
+	public IAttack latestAttack = new MeleeAttack();
+	public IInteraction latestInteraction = new Interaction();
+	
 
 	
 	/**
@@ -400,17 +404,27 @@ public abstract class Character extends WorldObject implements ICharacter, Obser
 	public void useMana(int manaUsage) {
 		setMana(getMana() - manaUsage);
 	}
-
-	/** For debugging purposes
+	
+	
+	
+	
+	// For debugging purposes
 	public IAttack getLatestAttack(){
 		return latestAttack;
 	}
-
 	public IInteraction getLatestInteraction(){
 		return latestInteraction;
 	}
-
-	 */
+	public void setLatestAttack(IAttack latestAttack){
+		this.latestAttack = latestAttack;
+	}
+	public void setLatestInteraction(IInteraction latestInteraction){
+		this.latestInteraction = latestInteraction;
+	}
+	
+	
+	
+	
 	@Override
 	public void addObserver(WorldObjectObserver observer){
 		if(!observers.contains(observer)){

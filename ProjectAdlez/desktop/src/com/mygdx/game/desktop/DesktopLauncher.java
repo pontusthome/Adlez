@@ -11,13 +11,6 @@ public class DesktopLauncher {
 		config.width = 1280;
 		config.height = 720;
 		
-		/**
-		Setting for easier debugging /Michel
-		config.width = 800;
-		config.height = 500;
-		config.x = 1000;
-		config.y = 100;
-		 */
 		new LwjglApplication(new AdlezGame(), config);
 	}
 }

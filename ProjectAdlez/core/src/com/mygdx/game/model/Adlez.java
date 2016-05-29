@@ -176,18 +176,16 @@ public class Adlez implements WorldObjectObserver {
                     IAttack attack = new MeleeAttack(character);
                     addAttack(attack);
     
-                    /** For debugging purposes
-                     ((Character) character).latestAttack = attack;
-                     */
+                    // For debugging purposes
+                    character.setLatestAttack(attack);
                     break;
                 }
                 case "aoe_melee_attack":{
                     IAttack attack = new AOEMeleeAttack(character);
                     addAttack(attack);
     
-                    /** For debugging purposes
-                     ((Character) character).latestAttack = attack;
-                     */
+                    // For debugging purposes
+                    character.setLatestAttack(attack);
                     break;
                 }
                 case "range_magic_attack":{
@@ -195,9 +193,8 @@ public class Adlez implements WorldObjectObserver {
                     character.useMana(attack.getManaUsage());
                     addAttack(attack);
     
-                    /** For debugging purposes
-                     ((Character) character).latestAttack = attack;
-                     */
+                    // For debugging purposes
+                    character.setLatestAttack(attack);
                     break;
                 }
                 case "aoe_magic_attack":{
@@ -205,18 +202,16 @@ public class Adlez implements WorldObjectObserver {
                     character.useMana(attack.getManaUsage());
                     addAttack(attack);
     
-                    /** For debugging purposes
-                     ((Character) character).latestAttack = attack;
-                     */
+                    // For debugging purposes
+                    character.setLatestAttack(attack);
                     break;
                 }
                 case "interaction":
                     IInteraction interaction = new Interaction(character);
                     addInteraction(interaction);
     
-                    /** For debugging purposes
-                     ((Character) character).latestInteraction = interaction;
-                     */
+                    // For debugging purposes
+                    character.setLatestInteraction(interaction);
                     break;
             }
         }

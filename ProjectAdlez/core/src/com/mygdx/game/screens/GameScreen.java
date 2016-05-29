@@ -14,10 +14,12 @@ import com.mygdx.game.controller.*;
 import com.mygdx.game.builder.AreaHandler;
 import com.mygdx.game.controller.*;
 import com.mygdx.game.model.Adlez;
+import com.mygdx.game.model.actions.DebugHitbox;
 import com.mygdx.game.model.characters.*;
 import com.mygdx.game.model.actions.IAttack;
 import com.mygdx.game.model.actions.IInteraction;
 import com.mygdx.game.model.collisionHandler.CollisionHandler;
+import com.mygdx.game.model.obstacles.IWall;
 import com.mygdx.game.sound.GameSound;
 import com.mygdx.game.model.core.GateOpenListener;
 import com.mygdx.game.sound.LibGDXSoundAdapter;
@@ -171,7 +173,7 @@ public class GameScreen extends AbstractScreen implements GateOpenListener, Shop
         // Render HUD
         playerHUD.render(delta);
 
-        //debugRender();
+        debugRender();
     }
 
     private void updateGame(float delta) {
@@ -289,7 +291,7 @@ public class GameScreen extends AbstractScreen implements GateOpenListener, Shop
         manaFountainController.render(batch);
     }
 
-    /** For debugging purposes
+    // For debugging purposes
     private void debugRender(){
         debugRenderer.setProjectionMatrix(playerCam.combined);
         debugRenderer.begin(ShapeRenderer.ShapeType.Line);
@@ -299,14 +301,17 @@ public class GameScreen extends AbstractScreen implements GateOpenListener, Shop
         debugRenderer.rect(attackDebugHitbox.getX(), attackDebugHitbox.getY(), attackDebugHitbox.getWidth(), attackDebugHitbox.getHeight());
         debugRenderer.rect(interactionDebugHitbox.getX(), interactionDebugHitbox.getY(),
                 interactionDebugHitbox.getWidth(), interactionDebugHitbox.getHeight());
+        
+        /**
         debugRenderer.rect(player.getPosX(), player.getPosY(), player.getWidth(), player.getHeight());
         List <IWall> tempList = adlez.getWalls();
         for(IWall wall : tempList){
             debugRenderer.rect(wall.getPosX(), wall.getPosY(), wall.getWidth(), wall.getHeight());
         }
+        */
+        
         debugRenderer.end();
     }
-     */
 
     @Override
     public void gateOpen() {
