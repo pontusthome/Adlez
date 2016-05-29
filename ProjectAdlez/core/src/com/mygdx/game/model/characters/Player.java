@@ -2,13 +2,13 @@ package com.mygdx.game.model.characters;
 
 
 import com.mygdx.game.model.characters.actions.IAttack;
+import com.mygdx.game.model.characters.items.Armor;
+import com.mygdx.game.model.characters.items.IItem;
+import com.mygdx.game.model.characters.items.Weapon;
 import com.mygdx.game.model.core.Collidable;
 import com.mygdx.game.model.core.Direction;
 import com.mygdx.game.model.exceptions.InventoryFullException;
 import com.mygdx.game.model.exceptions.ItemNotFoundException;
-import com.mygdx.game.model.characters.items.Armor;
-import com.mygdx.game.model.characters.items.IItem;
-import com.mygdx.game.model.characters.items.Weapon;
 
 import java.util.ArrayList;
 import java.util.Iterator;
@@ -25,6 +25,7 @@ public class Player extends Character implements IPlayer {
     private boolean isArmorSlotEmpty = true;
     private List<IItem> inventory;
     private static final int INVENTORY_MAX_SIZE = 16;
+    private boolean isInventoryChanged;
 
     // This constructor should be used.
     public Player() {
@@ -44,16 +45,16 @@ public class Player extends Character implements IPlayer {
         setMana(100);
         setGold(0);
         setAttackDamage(20);
-        setLevel(0);
+        setLevel(1);
 
         inventory = new ArrayList<>(INVENTORY_MAX_SIZE);
-
         try {
             unEquipArmor(getArmorEquipped());
             unEquipWeapon(getSwordEquipped());
         } catch (InventoryFullException e) {
             e.printStackTrace();
         }
+        setIsInventoryChanged();
     }
     
     public void equipItem(IItem item) throws ItemNotFoundException {
@@ -63,6 +64,7 @@ public class Player extends Character implements IPlayer {
                 swordEquipped = item;
                 setAttackDamage(getAttackDamage() + item.getStats());
                 removeItem(item);
+                setIsInventoryChanged();
             }
         } else if (item instanceof Armor) {
             if (isArmorSlotEmpty) {
@@ -80,6 +82,7 @@ public class Player extends Character implements IPlayer {
             swordEquipped = null;
             setAttackDamage(getAttackDamage() - item.getStats());
             lootItem(item);
+            setIsInventoryChanged();
         }
     }
 
@@ -89,6 +92,7 @@ public class Player extends Character implements IPlayer {
             armorEquipped = null;
             setMaxHealth(getMaxHealth() - item.getStats());
             lootItem(item);
+            setIsInventoryChanged();
         }
     }
 
@@ -97,6 +101,7 @@ public class Player extends Character implements IPlayer {
             throw new InventoryFullException("Inventory Full");
         } else {
             inventory.add(item);
+            setIsInventoryChanged();
         }
     }
 
@@ -106,6 +111,7 @@ public class Player extends Character implements IPlayer {
 
     public void removeItem(IItem item) throws ItemNotFoundException {
         inventory.remove(getItemInInventory(item));
+        setIsInventoryChanged();
     }
 
     public IItem getItemInInventory(IItem item) throws ItemNotFoundException {
@@ -134,5 +140,21 @@ public class Player extends Character implements IPlayer {
             IAttack attack = (IAttack) other;
             setHealth(getHealth() - attack.getDamage());
         }
+    }
+
+    private void setIsInventoryChanged(){
+        isInventoryChanged = true;
+    }
+    private void resetIsInventoryChanged(){
+        isInventoryChanged = false;
+    }
+    public boolean getIsInventoryChanged(){
+        return isInventoryChanged;
+    }
+
+    @Override
+    public void update(float deltaT){
+        super.update(deltaT);
+        resetIsInventoryChanged();
     }
 }

@@ -6,8 +6,9 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.mygdx.game.builder.AreaBuilder;
 import com.mygdx.game.builder.AreaIO;
-import com.mygdx.game.model.characters.actions.*;
 import com.mygdx.game.model.characters.IPlayer;
+import com.mygdx.game.model.characters.actions.IAttack;
+import com.mygdx.game.model.characters.actions.IInteraction;
 import com.mygdx.game.sound.GameSound;
 import com.mygdx.game.sound.LibGDXSoundAdapter;
 import com.mygdx.game.utils.AssetStrings;
@@ -19,13 +20,16 @@ import java.io.IOException;
 /**
  * Created by martinso on 27/03/16.
  */
-public class PlayerController implements ICharacterController{
+public class PlayerController implements ICharacterController, IMenuController{
 
 // Have a screens not extend a screens
 
     private IPlayer player;
     private ICharacterView playerView;
     private GameSound outOfManaSound;
+
+    private boolean inventoryOpen;
+    private boolean gameMenuOpen;
     
     //TODO: Remove when debugging is over
     public static IAttack currentAttack;
@@ -36,6 +40,9 @@ public class PlayerController implements ICharacterController{
         playerView = new CharacterView(AssetStrings.PLAYER_MOVE);
     
         outOfManaSound = new LibGDXSoundAdapter(AssetStrings.OUT_OF_MANA_SOUND);
+
+        inventoryOpen = false;
+        gameMenuOpen = false;
     
         //TODO: Remove when debugging is over
         currentAttack = player.getLatestAttack();
@@ -88,6 +95,22 @@ public class PlayerController implements ICharacterController{
             player.interact();
         }
 
+        if(Gdx.input.isKeyJustPressed(Input.Keys.I)){
+            if(inventoryOpen == false){
+                inventoryOpen = true;
+            }else {
+                inventoryOpen = false;
+            }
+        }
+
+        if(Gdx.input.isKeyJustPressed(Input.Keys.ESCAPE)){
+            if(gameMenuOpen== false){
+                gameMenuOpen = true;
+            }else {
+                gameMenuOpen = false;
+            }
+        }
+
         /**
          * ===============================
          * TEST for saving and loading areas
@@ -122,4 +145,13 @@ public class PlayerController implements ICharacterController{
     private TextureRegion getCurrentFrame() {
         return playerView.getCurrentFrame();
     }
+
+    public boolean getInventoryOpen(){
+        return inventoryOpen;
+    }
+
+    public boolean getGameMenuOpen(){
+        return gameMenuOpen;
+    }
+
 }

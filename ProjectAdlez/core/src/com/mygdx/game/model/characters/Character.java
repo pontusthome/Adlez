@@ -1,11 +1,10 @@
 package com.mygdx.game.model.characters;
 
-import com.mygdx.game.model.core.ObservableWorldObject;
-import com.mygdx.game.model.core.WorldObjectObserver;
-import com.mygdx.game.model.characters.actions.*;
-import com.mygdx.game.model.core.Collidable;
-import com.mygdx.game.model.core.Direction;
-import com.mygdx.game.model.core.WorldObject;
+import com.mygdx.game.model.characters.actions.IAttack;
+import com.mygdx.game.model.characters.actions.IInteraction;
+import com.mygdx.game.model.characters.actions.Interaction;
+import com.mygdx.game.model.characters.actions.MeleeAttack;
+import com.mygdx.game.model.core.*;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -34,35 +33,35 @@ public abstract class Character extends WorldObject implements ICharacter, Obser
 	private float oldPosY;
 	private boolean moved;
 	private List<WorldObjectObserver> observers;
-	
+
 	/** Speed components in x & y. Are set to 1 if only moving in either x or y, otherwise adjusted so 
 	 * that the character doesn't move faster when moving diagonally.
 	 */
 	private float vXComponent = 0;
 	private float vYComponent = 0;
-	
+
 	//TODO: Remove when debugging is over
 	public IAttack latestAttack = new MeleeAttack();
 	public IInteraction latestInteraction = new Interaction();
-	
+
 	// Temporary values for cooldown, should maybe be set in constructor or defined as a constant somewhere
 	public static final float ATTACK_COOLDOWN_LIMIT = 2;	//In seconds
 	private float attackCooldown = ATTACK_COOLDOWN_LIMIT;
-	
+
 	public Character() {
 		this(Direction.NORTH, 2f,
 				17, 17,
 				0, 0,
 				100, 5, 0, 100);
 	}
-	
+
 	public Character(int direction, float speed,
-			   int width, int height,
-			   float posX, float posY,
-			   int maxHealth, int attackDamage, int gold, int mana) {
-		
+					 int width, int height,
+					 float posX, float posY,
+					 int maxHealth, int attackDamage, int gold, int mana) {
+
 		super(posX, posY, width, height);
-		
+
 		setDirection(direction);
 		setSpeed(speed);
 		setMaxHealth(maxHealth);
@@ -70,12 +69,12 @@ public abstract class Character extends WorldObject implements ICharacter, Obser
 		setAttackDamage(attackDamage);
 		setGold(gold);
 		setMana(mana);
-		
+
 		clearMoveFlags();
-		
+
 		oldPosX = getPosX();
 		oldPosY = getPosY();
-		
+
 		observers = new ArrayList<>();
 	}
 
@@ -86,7 +85,7 @@ public abstract class Character extends WorldObject implements ICharacter, Obser
 		setDirection(Direction.NORTH);
 		notifyObservers("check_collision");
 	}
-	
+
 	@Override
 	public void moveSouth(float deltaT) {
 		oldPosY = getPosY();
@@ -94,7 +93,7 @@ public abstract class Character extends WorldObject implements ICharacter, Obser
 		setDirection(Direction.SOUTH);
 		notifyObservers("check_collision");
 	}
-	
+
 	@Override
 	public void moveEast(float deltaT) {
 		oldPosX = getPosX();
@@ -102,7 +101,7 @@ public abstract class Character extends WorldObject implements ICharacter, Obser
 		setDirection(Direction.EAST);
 		notifyObservers("check_collision");
 	}
-	
+
 	@Override
 	public void moveWest(float deltaT) {
 		oldPosX = getPosX();
@@ -127,80 +126,110 @@ public abstract class Character extends WorldObject implements ICharacter, Obser
 
 	@Override
 	public void setAttackDamage(int attackDamage) {
-		this.attackDamage = attackDamage;
+		if(attackDamage < 0){
+			this.attackDamage = 0;
+		}else {
+			this.attackDamage = attackDamage;
+		}
 	}
 
 	@Override
 	public int getHealth(){
 		return health;
 	}
-	
+
 	@Override
 	public void setHealth(int health){
 		if (health < 0) {
-			health = 0;
+			this.health = 0;
+		}else{
+			this.health = health;
 		}
-		this.health = health;
 	}
-	
+
 	@Override
 	public int getLevel(){
 		return level;
 	}
-	
+
 	@Override
 	public void setLevel(int level){
-		this.level = level;
+		if(level < 1){
+			this.level = 1;
+		}else {
+			this.level = level;
+		}
 	}
-	
+
 	@Override
 	public String getName(){
 		return name;
 	}
-	
+
 	@Override
-	public void setName(String name){
-		this.name = name;
+	public void setName(String name) {
+		if (name.length() < 3) {
+			this.name = "too short";
+		} else {
+			this.name = name;
+		}
 	}
-	
+
 	@Override
 	public int getMana(){
 		return mana;
 	}
-	
+
 	@Override
 	public void setMana(int mana){
-		this.mana = mana;
-	}
-	
+		if(mana < 0){
+			this.mana = 0;
+		}
+		else{
+			this.mana = mana;
+		}
+		}
+
 	@Override
 	public int getGold(){
 		return gold;
 	}
-	
+
 	@Override
-	public void setGold(int gold){
-		this.gold = gold;
+	public void setGold(int gold) {
+		if (gold < 0) {
+			this.gold = 0;
+		} else {
+			this.gold = gold;
+		}
 	}
-	
+
 	@Override
 	public int getMaxHealth(){
 		return maxHealth;
 	}
-	
+
 	@Override
-	public void setMaxHealth(int maxHealth){
-		this.maxHealth = maxHealth;
+	public void setMaxHealth(int maxHealth) {
+		if (maxHealth < 0) {
+			this.maxHealth = 0;
+		} else {
+			this.maxHealth = maxHealth;
+		}
 	}
-	
+
 	@Override
 	public int getMaxMana(){
 		return maxMana;
 	}
-	
+
 	@Override
-	public void setMaxMana(int maxMana){
-		this.maxMana = maxMana;
+	public void setMaxMana(int maxMana) {
+		if (maxMana < 0) {
+			this.maxMana = 0;
+		} else {
+			this.maxMana = maxMana;
+		}
 	}
 
 	@Override
@@ -222,24 +251,24 @@ public abstract class Character extends WorldObject implements ICharacter, Obser
 	public void setSpeed(float speed) {
 		this.speed = speed;
 	}
-	
+
 	@Override
 	public void onCollide(Collidable other){
-		
+
 	}
-	
+
 	private void clearMoveFlags(){
 		movingNorth = false;
 		movingSouth = false;
 		movingEast = false;
 		movingWest = false;
 	}
-	
+
 	@Override
 	public boolean isAlive(){
 		return getHealth() > 0;
 	}
-	
+
 	@Override
 	public void move(float deltaT){
 		/** Check if moving diagonally. If so, set x & y speed components so that the total speed is equal to the 
@@ -252,13 +281,13 @@ public abstract class Character extends WorldObject implements ICharacter, Obser
 			vXComponent = 1;
 			vYComponent = 1;
 		}
-		
+
 		if(movingNorth){
 			moveNorth(deltaT);
 		}else if(movingSouth){
 			moveSouth(deltaT);
 		}
-		
+
 		if(movingEast){
 			moveEast(deltaT);
 		}else if(movingWest){
@@ -275,47 +304,47 @@ public abstract class Character extends WorldObject implements ICharacter, Obser
 
 		clearMoveFlags();
 	}
-	
+
 	@Override
 	public void setMovingNorth(){
 		movingNorth = true;
 	}
-	
+
 	@Override
 	public void setMovingSouth(){
 		movingSouth = true;
 	}
-	
+
 	@Override
 	public void setMovingEast(){
 		movingEast = true;
 	}
-	
+
 	@Override
 	public void setMovingWest(){
 		movingWest = true;
 	}
-	
+
 	@Override
 	public void update(float deltaT){
 		attackCooldown += deltaT;
 		move(deltaT);
 	}
-		
+
 	@Override
 	public void setAttackCooldown(float attackCooldown){
 		this.attackCooldown = attackCooldown;
 	}
-	
+
 	@Override
 	public float getAttackCooldown(){
 		return attackCooldown;
 	}
-	
+
 	public void resetAttackCooldown(){
 		attackCooldown = 0;
 	}
-	
+
 	@Override
 	public void handleMoveCollision(){
 		switch(getDirection()){
@@ -333,61 +362,61 @@ public abstract class Character extends WorldObject implements ICharacter, Obser
 				break;
 		}
 	}
-	
+
 	@Override
 	public void meleeAttack(){
 		notifyObservers("melee_attack");
 	}
-	
+
 	@Override
 	public void aoeMeleeAttack(){
 		notifyObservers("aoe_melee_attack");
 	}
-	
+
 	@Override
 	public void aoeMagicAttack(){
 		notifyObservers("aoe_magic_attack");
 	}
-	
+
 	@Override
 	public void rangeMagicAttack(){
 		notifyObservers("range_magic_attack");
 	}
-	
+
 	@Override
 	public void interact(){
 		notifyObservers("interaction");
 	}
-	
+
 	//TODO: Remove when debugging is over
 	@Override
 	public IAttack getLatestAttack(){
 		return latestAttack;
 	}
-	
+
 	@Override
 	public void useMana(int manaUsage) {
 		setMana(getMana() - manaUsage);
 	}
-	
+
 	//TODO: Remove when debugging is over
 	@Override
 	public IInteraction getLatestInteraction(){
 		return latestInteraction;
 	}
-	
+
 	@Override
 	public void addObserver(WorldObjectObserver observer){
 		if(!observers.contains(observer)){
 			observers.add(observer);
 		}
 	}
-	
+
 	@Override
 	public void removeObserver(WorldObjectObserver observer){
 		observers.remove(observer);
 	}
-	
+
 	@Override
 	public void notifyObservers(String action){
 		for(WorldObjectObserver observer : observers){

@@ -25,10 +25,13 @@ public final class AssetStrings {
     /**
      * Buttons
      */
-    public static final String NEW_GAME_BUTTON_IMAGE = "buttons/newGameButton.png";
-    public static final String LOAD_GAME_BUTTON_IMAGE = "buttons/loadGameButton.png";
-    public static final String EXIT_GAME_BUTTON_IMAGE = "buttons/exitGameButton.png";
+    public static final String NEW_GAME_BUTTON_IMAGE = "buttons/newGameButton.9.png";
+    public static final String LOAD_GAME_BUTTON_IMAGE = "buttons/loadGameButton.9.png";
+    public static final String EXIT_GAME_BUTTON_IMAGE = "buttons/exitGameButton.9.png";
     public static final String INVENTORY_BUTTON_IMAGE = "buttons/inventoryButton.9.png";
+    public static final String SAVE_GAME_BUTTON_IMAGE = "buttons/saveGameButton.9.png";
+    public static final String SETTINGS_BUTTON_IMAGE = "buttons/settingsButton.9.png";
+    public static final String MAIN_MENU_BUTTON_IMAGE = "buttons/mainMenuButton.9.png";
 
     /**
      * Sounds
@@ -72,6 +75,7 @@ public final class AssetStrings {
     public static final String CLOTH_BODY_ARMOR = "items/cloth_body_armor_32x32.png";
     public static final String IRON_BODY_ARMOR = "items/iron_body_armor_32x32.png";
     public static final String FINAL_BODY_ARMOR = "items/final_body_armor_32x32.png";
+    public static final String INVENTORY_SLOI = "items/inventorySlot.png";
 
     /**
      * Areas
